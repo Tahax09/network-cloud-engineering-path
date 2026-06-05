@@ -5,40 +5,42 @@ course: Google Cloud Networking Specialization
 cert_track: gcp-networking
 module: Routing & Addressing
 date: 2025-05-28
-status: In Progress
-transcript_coverage: Tasks 1–3 ingested; Tasks 4+ pending
+status: Complete
 quiz_attempted: No
 weak_areas: []
-tags: [gcp, dns, geolocation, lab, cloud-dns, routing-policy, firewall, iap, dig]
+tags: [gcp, dns, geolocation, lab, cloud-dns, routing-policy, firewall, iap, curl, dig]
 ---
 
 # GCP05 — Lab: Traffic Steering Using Geolocation
 
 ## Overview
-Cloud DNS routing policies enable DNS-based traffic steering. This lab configures and tests a **Geolocation (GEO) routing policy** — DNS returns different A records depending on where the query originates. When the source region has no explicit mapping, the nearest configured region is used (nearest-match fallback).
+Cloud DNS routing policies enable DNS-based traffic steering. This lab configures and tests a **Geolocation (GEO) routing policy** — DNS returns a different A record depending on where the query originates. When the source region has no explicit mapping, the **nearest configured region** is returned (nearest-match fallback).
 
-**WRR vs GEO (both are routing policy types):**
+**WRR vs GEO:**
 - **WRR:** Different weights per record → distributes traffic proportionally
 - **GEO:** Source geography → returns DNS answer for that region; nearest-match for unmapped sources
 
 ## Architecture
 
-**Default VPC — Client VMs (3 regions):**
-- `us-client-vm` — us-west1 (or us-east1)
-- `europe-client-vm` — europe-central2 (or europe-west2)
-- `asia-client-vm` — asia-southeast1 (nearest-match test — no server in this region)
+```
+Default VPC
+├── us-east1-subnet
+│   ├── us-client-vm      ← client only
+│   └── us-web-vm         ← server: "Page served from: us-west1"
+├── europe-west2-subnet
+│   ├── europe-client-vm  ← client only
+│   └── europe-web-vm     ← server: "Page served from: europe-central2-c"
+└── asia-south1-subnet
+    └── asia-client-vm    ← client only (NO server in Asia → nearest-match test)
 
-**Server VMs (2 regions only — no Asia server):**
-- `us-web-vm` — us-east1-subnet
-- `europe-web-vm` — europe-west2-subnet
+Cloud DNS Private Zone: example.com
+  geo.example.com  A  GEO policy
+    us-west1      → us-web-vm internal IP
+    europe-central2 → europe-web-vm internal IP
+    asia (any)    → nearest match (us-west1 or europe-central2)
+```
 
-**Cloud DNS Private Zone:** `geo.example.com`
-- GEO routing policy on the record set
-- us-east1 → us-web-vm IP
-- europe-west2 → europe-web-vm IP
-- asia-client-vm → nearest match (returns closest server IP)
-
-**Key insight:** asia-client-vm has no matching server region. Cloud DNS nearest-match returns the geographically closest configured target — demonstrating the fallback behavior.
+**Key design decision:** No server VM is created in Asia. This is intentional — the Asia client tests the nearest-match fallback behavior of the GEO routing policy.
 
 ---
 
@@ -53,20 +55,18 @@ gcloud services enable dns.googleapis.com
 
 # Verify both are enabled
 gcloud services list | grep -E 'compute|dns'
-# Expected output:
+# Expected:
 # NAME: compute.googleapis.com
 # NAME: dns.googleapis.com
 ```
 
-**Why:** Both APIs must be explicitly enabled in a GCP project before using their resources. Cloud DNS is not enabled by default even though Compute is in most environments.
+**Why:** APIs must be explicitly enabled per project. Cloud DNS is not on by default.
 
 ---
 
 ## Task 2 — Configure Firewall Rules
 
-Two rules required before creating any VMs:
-
-### Rule 1 — Allow SSH via IAP
+### Rule 1 — SSH via IAP
 ```bash
 gcloud compute firewall-rules create fw-default-iapproxy \
   --direction=INGRESS \
@@ -77,13 +77,9 @@ gcloud compute firewall-rules create fw-default-iapproxy \
   --source-ranges=35.235.240.0/20
 ```
 
-**Why `35.235.240.0/20`:** This is Google's Identity-Aware Proxy (IAP) source range. IAP tunnels SSH through Google's infrastructure — you SSH to a GCP endpoint, which proxies the connection to your VM. Allows SSH without assigning a public IP to the VM.
+**`35.235.240.0/20` = Google's IAP source range.** IAP tunnels SSH through Google's infrastructure — no public IP needed on the VM. This is the secure, production-correct way to SSH into GCP instances.
 
-**IAP vs direct SSH:**
-- Direct SSH: needs public IP + firewall rule allowing 0.0.0.0/0:22 (bad practice)
-- IAP SSH: VM can be private; only IAP range (35.235.240.0/20) needs access to port 22
-
-### Rule 2 — Allow HTTP to Web Servers
+### Rule 2 — HTTP to Web Servers
 ```bash
 gcloud compute firewall-rules create allow-http-traffic \
   --direction=INGRESS \
@@ -95,83 +91,272 @@ gcloud compute firewall-rules create allow-http-traffic \
   --target-tags=http-server
 ```
 
-**Why `--target-tags=http-server`:** The rule only applies to VMs that have the `http-server` network tag. Client VMs don't get this tag → the rule doesn't apply to them. Server VMs get the tag at creation time.
-
-**Network tag pattern:** Tag-based firewall rules are how GCP applies rules to specific VM groups without subnet-level rules. Equivalent to AWS security groups attached to specific instances.
+**`--target-tags=http-server`** scopes this rule to VMs that carry the `http-server` network tag. Client VMs don't get this tag → rule doesn't apply to them. Server VMs will be created with the tag. Same concept as the route network tags from [[GCP01]].
 
 ---
 
 ## Task 3 — Launch Client VMs
 
-One client VM per region. These are the machines that will query DNS and test geolocation routing.
+One client per region. No `http-server` tag — these machines only make DNS queries and curl requests.
 
-### US Client
 ```bash
+# US client
 gcloud compute instances create us-client-vm \
   --machine-type=e2-micro \
   --zone us-west1-c
-```
 
-### Europe Client
-```bash
+# Europe client
 gcloud compute instances create europe-client-vm \
   --machine-type=e2-micro \
   --zone "europe-central2-c"
-```
 
-### Asia Client (the nearest-match test VM)
-```bash
+# Asia client (nearest-match test — no server in this region)
 gcloud compute instances create asia-client-vm \
   --machine-type=e2-micro \
   --zone "asia-southeast1-c"
 ```
 
-**Why no Asia server:** asia-client-vm is in asia-southeast1 but there will be no web server in Asia. This VM tests the nearest-match fallback — Cloud DNS will route its queries to the geographically nearest configured server (US or Europe, whichever is closer).
+---
 
-**e2-micro:** The smallest general-purpose machine type. Sufficient for a client that only runs `curl` and `dig` commands.
+## Task 4 — Launch Server VMs
+
+Server VMs in **US and Europe only** — intentionally none in Asia. Each runs Apache with a startup script that writes the region name to its index page, making it easy to verify which server responded.
+
+### US Server
+```bash
+gcloud compute instances create us-web-vm \
+  --machine-type=e2-micro \
+  --zone=us-west1-c \
+  --network=default \
+  --subnet=default \
+  --tags=http-server \
+  --metadata=startup-script='#! /bin/bash
+    apt-get update
+    apt-get install apache2 -y
+    echo "Page served from: us-west1" | tee /var/www/html/index.html
+    systemctl restart apache2'
+```
+
+### Europe Server
+```bash
+gcloud compute instances create europe-web-vm \
+  --machine-type=e2-micro \
+  --zone=europe-central2-c \
+  --network=default \
+  --subnet=default \
+  --tags=http-server \
+  --metadata=startup-script='#! /bin/bash
+    apt-get update
+    apt-get install apache2 -y
+    echo "Page served from: europe-central2-c" | tee /var/www/html/index.html
+    systemctl restart apache2'
+```
+
+**`--tags=http-server`:** Applies the network tag → the HTTP firewall rule from Task 2 now applies to these VMs.
+
+**Startup script pattern:** `--metadata=startup-script` runs on first boot. Installs Apache and writes a regional identifier to the default webpage. This is how you verify DNS routing — each curl response tells you which server (region) answered.
 
 ---
 
-## Tasks 4+ — Pending
-*(Paste the remaining transcript to complete this page)*
+## Task 5 — Set Environment Variables
 
-Expected remaining tasks:
-- Task 4: Launch server VMs (US + Europe only, with `http-server` tag)
-- Task 5: Create Cloud DNS private zone for `example.com`
-- Task 6: Create GEO routing policy record set
-- Task 7: Test DNS resolution from each client VM
+Capture internal IPs before creating DNS records.
+
+```bash
+export US_WEB_IP=$(gcloud compute instances describe us-web-vm \
+  --zone=us-west1-c \
+  --format="value(networkInterfaces.networkIP)")
+
+export EUROPE_WEB_IP=$(gcloud compute instances describe europe-web-vm \
+  --zone=europe-central2-c \
+  --format="value(networkInterfaces.networkIP)")
+```
+
+**Why internal IPs:** The DNS private zone resolves to internal IPs — traffic stays within the VPC. External IPs would work but are unnecessary for private zone resolution and would incur egress costs.
+
+**`--format="value(...)"` pattern:** Extracts a single field from gcloud output into a shell variable. Standard GCP scripting pattern — works in Terraform, CI pipelines, and automation scripts.
 
 ---
 
-## Concepts Demonstrated So Far
+## Task 6 — Create the Private DNS Zone
 
-| Concept | Where |
-|---------|-------|
-| API enablement | Task 1 — services must be explicitly enabled |
-| IAP SSH (35.235.240.0/20) | Task 2 — secure SSH without public IPs |
-| Network tags | Task 2 — scopes firewall rule to specific VMs |
-| Regional VM deployment | Task 3 — one client per region |
-| Nearest-match design | Task 3 — intentional gap in Asia server coverage |
+```bash
+gcloud dns managed-zones create example \
+  --description=test \
+  --dns-name=example.com \
+  --networks=default \
+  --visibility=private
+```
 
-## Key Terms from This Lab
+**Key flags:**
+- `--dns-name=example.com` — the domain this zone is authoritative for (trailing dot is added automatically here)
+- `--networks=default` — scopes the zone to the default VPC; VMs in this VPC can resolve it; external queries get NXDOMAIN
+- `--visibility=private` — zone is not visible on the public internet
 
-| Term | Meaning |
-|------|---------|
-| IAP | Identity-Aware Proxy — SSH tunnel through Google's infrastructure |
-| `35.235.240.0/20` | IAP source IP range; allow this for SSH without public IPs |
-| `http-server` tag | Network tag applied to web servers; scopes HTTP firewall rule |
-| `e2-micro` | Smallest general-purpose VM type (2 vCPU shared, 1 GB RAM) |
-| GEO routing policy | DNS returns different IPs based on query source region |
-| Nearest-match | When no exact region match exists, returns closest configured target |
+**Note:** `example.com` is a real public domain but it's safe to use in a private zone because private zone resolution takes precedence for VMs in the associated VPC. External DNS queries for example.com still resolve to the real public domain.
 
-## What to Observe (when complete)
-- US client → resolves to US server IP
-- Europe client → resolves to Europe server IP
-- Asia client → no mapping → resolves to nearest server IP (nearest-match)
-- Query from outside VPC → NXDOMAIN (private zone isolation confirmed)
-- TTL 5s → prevents caching during testing; use 300s+ in production
+---
+
+## Task 7 — Create the GEO Routing Policy Record
+
+```bash
+gcloud dns record-sets create geo.example.com \
+  --ttl=5 \
+  --type=A \
+  --zone=example \
+  --routing-policy-type=GEO \
+  --routing-policy-data="us-west1=$US_WEB_IP;europe-central2=$EUROPE_WEB_IP"
+```
+
+**Breakdown:**
+- `--ttl=5` — 5-second TTL for testing (prevents cached responses between test iterations). Use 300+ seconds in production.
+- `--routing-policy-type=GEO` — enables geolocation routing
+- `--routing-policy-data` — semicolon-delimited list: `region=IP;region=IP`
+
+**Verify the record:**
+```bash
+gcloud dns record-sets list --zone=example
+```
+
+Expected output includes:
+```
+NAME: geo.example.com.
+TYPE: A
+TTL: 5
+DATA: us-west1: 10.142.0.3; europe-central2: 10.154.0.3
+```
+
+Also shows NS and SOA records auto-created by GCP for the zone — `ns-gcp-private.googledomains.com` handles private zone resolution.
+
+---
+
+## Task 8 — Testing
+
+**Test pattern:** `curl geo.example.com` from each client VM. The startup script wrote the region name to each server's index page → the curl response tells you which server (region) answered.
+
+**The loop:** `for i in {1..10}; do echo $i; curl geo.example.com; sleep 6; done`
+- 10 iterations with 6-second sleep
+- TTL is 5 seconds → sleep ensures each curl gets a fresh (uncached) DNS response
+- Confirms consistent routing, not just a single lucky hit
+
+### SSH into VMs via IAP
+```bash
+gcloud compute ssh europe-client-vm --zone europe-central2-c --tunnel-through-iap
+gcloud compute ssh us-client-vm --zone us-west1-c --tunnel-through-iap
+gcloud compute ssh asia-client-vm --zone <SELECTED-ZONE> --tunnel-through-iap
+```
+
+`--tunnel-through-iap` — uses the IAP firewall rule from Task 2. No public IP on the VM required.
+
+### Test Results
+
+| Client VM | Zone | Expected Response | Why |
+|-----------|------|-------------------|-----|
+| europe-client-vm | europe-central2-c | `Page served from: europe-central2-c` | Exact GEO match |
+| us-client-vm | us-west1-c | `Page served from: us-west1` | Exact GEO match |
+| asia-client-vm | asia-southeast1-c | `Page served from: us-west1` OR `europe-central2-c` | No Asia mapping → nearest match |
+
+**Europe test output (all 10 iterations consistent):**
+```
+1
+Page served from: europe-central2-c
+2
+Page served from: europe-central2-c
+...
+10
+Page served from: europe-central2-c
+```
+
+**Asia test:** Cloud DNS applies nearest-match — asia-southeast1 is geographically closest to either us-west1 or europe-central2 depending on GCP's internal geography calculation. Response is consistent (same server every time) because Cloud DNS nearest-match is deterministic.
+
+---
+
+## Key Lessons from This Lab
+
+### 1. GEO routing is DNS-level, not network-level
+Traffic steering happens at DNS resolution — the client receives a different IP based on where the query originates. No packet inspection, no load balancer rules. The client connects directly to the regional server IP returned by DNS.
+
+### 2. Nearest-match is guaranteed
+You don't need to enumerate every possible source region. Cloud DNS always returns a response — it never returns NXDOMAIN for an unmapped source region. Unmapped → nearest configured target.
+
+### 3. TTL controls testing vs production behavior
+TTL 5s = every curl loop gets a fresh DNS lookup. This is critical for testing but wasteful in production (every client hits DNS more frequently → higher query volume, slightly more latency). Production TTL of 300s means clients cache the response for 5 minutes.
+
+### 4. Private zone + internal IPs = traffic never leaves the VPC
+The DNS record points to internal IPs. curl traffic goes from client VM → internal network → server VM. No public internet involved despite the `http-server` tag allowing port 80 from `0.0.0.0/0`.
+
+### 5. Network tags are the GCP security boundary primitive
+The same tag mechanism used in Task 2 (firewall) also applies in GCP01 (routes). Tags let you apply policies to VM subsets without subnet-level rules.
+
+---
+
+## Complete Lab Command Reference
+
+```bash
+# Task 1 — Enable APIs
+gcloud services enable compute.googleapis.com
+gcloud services enable dns.googleapis.com
+
+# Task 2 — Firewall
+gcloud compute firewall-rules create fw-default-iapproxy \
+  --direction=INGRESS --priority=1000 --network=default \
+  --action=ALLOW --rules=tcp:22,icmp --source-ranges=35.235.240.0/20
+
+gcloud compute firewall-rules create allow-http-traffic \
+  --direction=INGRESS --priority=1000 --network=default \
+  --action=ALLOW --rules=tcp:80 --source-ranges=0.0.0.0/0 --target-tags=http-server
+
+# Task 3 — Client VMs
+gcloud compute instances create us-client-vm --machine-type=e2-micro --zone us-west1-c
+gcloud compute instances create europe-client-vm --machine-type=e2-micro --zone europe-central2-c
+gcloud compute instances create asia-client-vm --machine-type=e2-micro --zone asia-southeast1-c
+
+# Task 4 — Server VMs (with startup script)
+gcloud compute instances create us-web-vm --machine-type=e2-micro --zone=us-west1-c \
+  --network=default --subnet=default --tags=http-server \
+  --metadata=startup-script='#! /bin/bash
+    apt-get update && apt-get install apache2 -y
+    echo "Page served from: us-west1" | tee /var/www/html/index.html
+    systemctl restart apache2'
+
+gcloud compute instances create europe-web-vm --machine-type=e2-micro --zone=europe-central2-c \
+  --network=default --subnet=default --tags=http-server \
+  --metadata=startup-script='#! /bin/bash
+    apt-get update && apt-get install apache2 -y
+    echo "Page served from: europe-central2-c" | tee /var/www/html/index.html
+    systemctl restart apache2'
+
+# Task 5 — Capture internal IPs
+export US_WEB_IP=$(gcloud compute instances describe us-web-vm \
+  --zone=us-west1-c --format="value(networkInterfaces.networkIP)")
+export EUROPE_WEB_IP=$(gcloud compute instances describe europe-web-vm \
+  --zone=europe-central2-c --format="value(networkInterfaces.networkIP)")
+
+# Task 6 — Private DNS Zone
+gcloud dns managed-zones create example \
+  --description=test --dns-name=example.com --networks=default --visibility=private
+
+# Task 7 — GEO Routing Policy Record
+gcloud dns record-sets create geo.example.com \
+  --ttl=5 --type=A --zone=example \
+  --routing-policy-type=GEO \
+  --routing-policy-data="us-west1=$US_WEB_IP;europe-central2=$EUROPE_WEB_IP"
+
+# Verify
+gcloud dns record-sets list --zone=example
+
+# Task 8 — Test from each client
+gcloud compute ssh europe-client-vm --zone europe-central2-c --tunnel-through-iap
+# (inside VM): for i in {1..10}; do echo $i; curl geo.example.com; sleep 6; done
+
+gcloud compute ssh us-client-vm --zone us-west1-c --tunnel-through-iap
+# (inside VM): for i in {1..10}; do echo $i; curl geo.example.com; sleep 6; done
+
+gcloud compute ssh asia-client-vm --zone asia-southeast1-c --tunnel-through-iap
+# (inside VM): for i in {1..10}; do echo $i; curl geo.example.com; sleep 6; done
+```
 
 ## Related
 - [[GCP04]] — Cloud DNS routing policies (theory behind this lab)
+- [[GCP01]] — network tags for routes (same mechanism as Task 2 firewall tags)
 - [[GCP06]] — module quick reference
-- [[GCP01]] — network tags scoping routes (same concept applies here for firewall rules)
