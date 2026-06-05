@@ -22,7 +22,7 @@
 | GCP02 | IPv6 in Google Cloud | Routing & Addressing | 2025-05-28 | Complete | Pending |
 | GCP03 | BYOIP — Bring Your Own IP | Routing & Addressing | 2025-05-28 | Complete | Pending |
 | GCP04 | Cloud DNS | Routing & Addressing | 2025-05-28 | Complete | Pending |
-| GCP05 | Lab: Traffic Steering Using Geolocation | Routing & Addressing | 2025-05-28 | Complete | Pending |
+| — | Lab moved to wiki/labs/gcp-geolocation-lab.md | — | — | — | — |
 | GCP06 | Module Debrief: Routing & Addressing | Routing & Addressing | 2025-05-28 | Complete | — |
 | GCP07 | — | — | — | Pending | — |
 

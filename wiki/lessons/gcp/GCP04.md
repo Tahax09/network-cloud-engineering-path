@@ -129,7 +129,7 @@ Result: Tokyo → Asia NLB → GKE Asia | New York → US NLB → GKE US | Frank
 | Failover policy | Private zones only; active-backup |
 
 ## Related
-- [[GCP05]] — geolocation lab with CLI commands
+- [[gcp-geolocation-lab]] — geolocation lab with CLI commands
 - [[GCP06]] — Cloud DNS quick reference
 - [[concepts/gcp-dns]] — full concept reference
 - [[L04]] — DNS port 53 (TCP and UDP)

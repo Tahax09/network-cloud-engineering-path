@@ -21,7 +21,6 @@
 | [GCP02](lessons/gcp/GCP02.md) | IPv6 in Google Cloud | Routing & Addressing | 2025-05-28 | Complete |
 | [GCP03](lessons/gcp/GCP03.md) | BYOIP — Bring Your Own IP | Routing & Addressing | 2025-05-28 | Complete |
 | [GCP04](lessons/gcp/GCP04.md) | Cloud DNS | Routing & Addressing | 2025-05-28 | Complete |
-| [GCP05](lessons/gcp/GCP05.md) | Lab: Traffic Steering Using Geolocation | Routing & Addressing | 2025-05-28 | Complete |
 | [GCP06](lessons/gcp/GCP06.md) | Module Debrief: Routing & Addressing | Routing & Addressing | 2025-05-28 | Complete |
 
 ## Concepts
@@ -54,3 +53,4 @@
 | Page | Description | Status |
 |------|-------------|--------|
 | [k3s-lab](labs/k3s-lab.md) | k3s observability stack — Kubeshark, ES, Kibana | Ongoing |
+| [gcp-geolocation-lab](labs/gcp-geolocation-lab.md) | GCP Cloud DNS geolocation routing policy — full 9-task lab | Complete |

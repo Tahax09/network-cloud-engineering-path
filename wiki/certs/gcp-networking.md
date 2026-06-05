@@ -16,7 +16,7 @@ target_date: TBD
 | [GCP02](../lessons/gcp/GCP02.md) | IPv6 in Google Cloud | ✅ Complete |
 | [GCP03](../lessons/gcp/GCP03.md) | BYOIP — Bring Your Own IP | ✅ Complete |
 | [GCP04](../lessons/gcp/GCP04.md) | Cloud DNS | ✅ Complete |
-| [GCP05](../lessons/gcp/GCP05.md) | Lab: Traffic Steering (Geolocation) | ✅ Complete |
+| [gcp-geolocation-lab](../labs/gcp-geolocation-lab.md) | Lab: Traffic Steering (Geolocation) | ✅ Complete |
 | [GCP06](../lessons/gcp/GCP06.md) | Module Debrief: Routing & Addressing | ✅ Complete |
 
 ## Key Exam Facts (collected from sessions)

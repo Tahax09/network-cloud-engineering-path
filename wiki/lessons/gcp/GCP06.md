@@ -100,4 +100,4 @@ Configuration required:
 - [[GCP02]] — IPv6 detail
 - [[GCP03]] — BYOIP detail
 - [[GCP04]] — Cloud DNS detail
-- [[GCP05]] — Geolocation lab
+- [[gcp-geolocation-lab]] — Geolocation lab
