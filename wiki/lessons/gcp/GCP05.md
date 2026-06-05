@@ -356,6 +356,60 @@ gcloud compute ssh asia-client-vm --zone asia-southeast1-c --tunnel-through-iap
 # (inside VM): for i in {1..10}; do echo $i; curl geo.example.com; sleep 6; done
 ```
 
+---
+
+## Task 9 — Delete Lab Resources
+
+Good practice: always clean up resources after a lab to avoid unexpected charges. Delete in reverse dependency order — records before zones, VMs before firewall rules.
+
+```bash
+# Delete VMs
+gcloud compute instances delete -q us-client-vm --zone us-west1-c
+gcloud compute instances delete -q us-web-vm --zone us-west1-c
+gcloud compute instances delete -q europe-client-vm --zone europe-central2-c
+gcloud compute instances delete -q europe-web-vm --zone europe-central2-c
+gcloud compute instances delete -q asia-client-vm --zone SELECTED-ZONE
+
+# Delete firewall rules
+gcloud compute firewall-rules delete -q allow-http-traffic
+gcloud compute firewall-rules delete -q fw-default-iapproxy
+
+# Delete DNS record set (must delete records before deleting the zone)
+gcloud dns record-sets delete geo.example.com --type=A --zone=example
+
+# Delete private zone
+gcloud dns managed-zones delete example
+```
+
+**`-q` flag:** Skips the confirmation prompt (`--quiet`). Safe to use in cleanup scripts where you know exactly what you're deleting.
+
+**Deletion order matters:**
+1. DNS record sets must be deleted before the managed zone (zone cannot be deleted while it contains records other than NS and SOA)
+2. VMs can be deleted in any order
+3. Firewall rules can be deleted after VMs (VMs don't depend on firewall rules to be deleted)
+
+---
+
+## Lab Summary
+
+| Task | What Was Done |
+|------|--------------|
+| 1 | Enabled Compute and Cloud DNS APIs |
+| 2 | Created IAP SSH firewall rule + HTTP rule with `http-server` tag |
+| 3 | Launched client VMs in US, Europe, Asia (3 regions) |
+| 4 | Launched server VMs in US and Europe only (no Asia server) |
+| 5 | Captured server internal IPs as environment variables |
+| 6 | Created private DNS zone for `example.com` |
+| 7 | Created `geo.example.com` A record with GEO routing policy |
+| 8 | Tested from all 3 clients — verified exact match + nearest-match |
+| 9 | Deleted all resources |
+
+**What was proven:**
+- US client → always resolves to US server ✅
+- Europe client → always resolves to Europe server ✅
+- Asia client → no policy item → nearest-match server responds ✅
+- Private zone → NXDOMAIN from outside VPC ✅
+
 ## Related
 - [[GCP04]] — Cloud DNS routing policies (theory behind this lab)
 - [[GCP01]] — network tags for routes (same mechanism as Task 2 firewall tags)
