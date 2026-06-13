@@ -12,7 +12,8 @@
 | L06 | Network Topologies, Architectures & Traffic Flows | 1.6 | 2025-05-28 | Complete | Pending |
 | L07 | IP Addressing | 1.7 | 2025-05-28 | Complete | Pending |
 | L08 | Modern Networks | 1.8 | 2025-05-28 | Complete | Pending |
-| L09 | — | — | — | Pending | — |
+| L09 | Routing Technologies | 2.0 | 2026-06-14 | Complete | Pending |
+| L10 | — | — | — | Pending | — |
 
 ## Google Cloud Networking Specialization
 

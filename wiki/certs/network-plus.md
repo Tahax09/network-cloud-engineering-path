@@ -37,7 +37,10 @@ lessons_completed: 3
 | 1.x | Wireless Networking | — | Pending |
 
 ### Domain 2 — Network Implementation (20%)
-*(not started)*
+
+| Objective | Topic | Lesson | Status |
+|-----------|-------|--------|--------|
+| 2.0 | Routing Technologies | [[L09]] | ✅ Complete |
 
 ### Domain 3 — Network Operations (19%)
 *(not started)*
@@ -59,6 +62,12 @@ lessons_completed: 3
 | "Community cloud" | Shared by a group/industry, not public or private |
 | AWS Security Groups vs Network ACLs | SGs = stateful; ACLs = stateless (need both directions) |
 | VPN encrypted by default? | IPsec VPN yes; MPLS VPN no |
+| Frame destination when routing | Always the next-hop router's MAC, never the final destination's MAC |
+| Longest prefix match vs AD | Longest prefix match is checked FIRST — AD only applies when same prefix from two sources |
+| Static NAT vs PAT | Static = 1:1 fixed; PAT = many:1 using ports |
+| HSRP vs VRRP | HSRP = Cisco proprietary; VRRP = open standard; both do active/standby |
+| EIGRP feasible successor | Pre-computed backup — instant failover. Not all routes have one |
+| BGP port | TCP 179; application layer; explicit neighbor config required |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

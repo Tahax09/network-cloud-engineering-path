@@ -20,5 +20,8 @@ Five lessons ingested from study guide: Ports/Protocols, Network Media, Topologi
 ## [2026-06-05] ingest | GCP01–GCP06 — Google Cloud Networking Specialization (Routing & Addressing module)
 Six GCP lessons ingested: Routes, IPv6, BYOIP, Cloud DNS, Geolocation Lab, Module Debrief. Created lessons/gcp/GCP01–GCP06.md. Created concept pages: gcp-routing, gcp-dns. Created certs/gcp-networking.md.
 
+## [2026-06-14] ingest | L09 — Routing Technologies (CompTIA Network+ N10-009, Objective 2.0)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L09.md covering static routing, route selection (longest match → AD → metric), subinterfaces, OSPF/EIGRP/BGP, NAT/PAT, and FHRP (HSRP/VRRP/GLBP). Updated index.md, course_tracker.md, certs/network-plus.md.
+
 ## [2026-06-05] refactor | Reorganized lessons/ into subfolders
 Split wiki/lessons/ into wiki/lessons/network-plus/ and wiki/lessons/gcp/ for better organization as multiple courses accumulate.
