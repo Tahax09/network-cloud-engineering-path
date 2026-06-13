@@ -52,7 +52,8 @@
 
 | ID | Title | Covers | Date | Status |
 |----|-------|--------|------|--------|
-| [NQ01](quizzes/NQ01_Networking_Concepts.md) | Networking Concepts | L01–L08 | 2026-06-14 | Reviewed |
+| [NQ01](quizzes/NQ01_Networking_Concepts.md) | Networking Concepts (Coursera graded) | L01–L08 | 2026-06-14 | Reviewed |
+| [NQ02](quizzes/NQ02_Networking_Concepts_Practice.md) | Networking Concepts (Practice) | L01–L08 | 2026-06-14 | Practice |
 
 ## Labs
 
