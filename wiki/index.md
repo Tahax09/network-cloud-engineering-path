@@ -48,6 +48,12 @@
 | [aws-saa](certs/aws-saa.md) | AWS Solutions Architect – Associate | Not Started |
 | [gcp-networking](certs/gcp-networking.md) | Google Cloud Networking Specialization | In Progress |
 
+## Quizzes
+
+| ID | Title | Covers | Date | Status |
+|----|-------|--------|------|--------|
+| [NQ01](quizzes/NQ01_Networking_Concepts.md) | Networking Concepts | L01–L08 | 2026-06-14 | Reviewed |
+
 ## Labs
 
 | Page | Description | Status |
