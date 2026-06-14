@@ -41,6 +41,7 @@ lessons_completed: 3
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
 | 2.0 | Routing Technologies | [[L09]] | ✅ Complete |
+| 2.2 | Switching Technologies | [[L10]] | ✅ Complete |
 
 ### Domain 3 — Network Operations (19%)
 *(not started)*
@@ -68,6 +69,12 @@ lessons_completed: 3
 | HSRP vs VRRP | HSRP = Cisco proprietary; VRRP = open standard; both do active/standby |
 | EIGRP feasible successor | Pre-computed backup — instant failover. Not all routes have one |
 | BGP port | TCP 179; application layer; explicit neighbor config required |
+| STP root bridge | Lowest Bridge ID (priority + MAC) wins; default priority = 32768 |
+| PortFast + BPDU Guard | Always pair them — PortFast skips STP delay; BPDU Guard shuts port if switch connected |
+| Native VLAN | Frames cross trunk untagged; mismatch = security risk + STP issues |
+| EtherChannel requirements | Speed, duplex, mode, VLAN, native VLAN, STP must all match on member ports |
+| RSTP alternate port | Pre-computed backup to root — instant failover, no re-election |
+| Jumbo frames | > 1518 bytes; must be enabled end-to-end on every device in path |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

@@ -13,6 +13,7 @@
 | [L07](lessons/network-plus/L07.md) | IP Addressing | 1.7 | 2025-05-28 | Complete |
 | [L08](lessons/network-plus/L08.md) | Modern Networks | 1.8 | 2025-05-28 | Complete |
 | [L09](lessons/network-plus/L09.md) | Routing Technologies | 2.0 | 2026-06-14 | Complete |
+| [L10](lessons/network-plus/L10.md) | Switching Technologies | 2.2 | 2026-06-14 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 
