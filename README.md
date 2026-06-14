@@ -46,6 +46,7 @@ Networking + Cloud/
 | L07 | IP Addressing | 1.0 |
 | L08 | Modern Networks (SDN, VXLAN, Zero Trust, IaC, IPv6) | 1.0 |
 | L09 | Routing Technologies (Static, OSPF, EIGRP, BGP, NAT, FHRP) | 2.0 |
+| L10 | Switching Technologies (VLANs, STP, RSTP, EtherChannel, LACP) | 2.2 |
 
 ### Google Cloud Networking Specialization — Routing & Addressing Module
 
