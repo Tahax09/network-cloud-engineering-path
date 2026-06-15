@@ -42,6 +42,8 @@ lessons_completed: 3
 |-----------|-------|--------|--------|
 | 2.0 | Routing Technologies | [[L09]] | ✅ Complete |
 | 2.2 | Switching Technologies | [[L10]] | ✅ Complete |
+| 2.3 | Wireless Devices and Technologies | [[L11]] | ✅ Complete |
+| 2.4 | Physical Installations | [[L12]] | ✅ Complete |
 
 ### Domain 3 — Network Operations (19%)
 *(not started)*
@@ -75,6 +77,15 @@ lessons_completed: 3
 | EtherChannel requirements | Speed, duplex, mode, VLAN, native VLAN, STP must all match on member ports |
 | RSTP alternate port | Pre-computed backup to root — instant failover, no re-election |
 | Jumbo frames | > 1518 bytes; must be enabled end-to-end on every device in path |
+| 2.4 GHz non-overlapping channels | Only 1, 6, 11 — any other channel selection causes interference |
+| WPA2-PSK vs WPA2-Enterprise | PSK = shared passphrase (brute-forceable); Enterprise = 802.1X + EAP + RADIUS |
+| WPA3 vs WPA2 cipher | WPA3 uses AES-GCMP; WPA2 uses AES-CCMP |
+| WPA3 SAE | Prevents offline dictionary attacks — can't crack a captured handshake |
+| Autonomous vs lightweight AP | Autonomous = standalone; lightweight = WLAN controller managed (CAPWAP) |
+| MDF vs IDF | MDF = carrier/ISP handoff + aggregation; IDF = per-floor, patch panels + switches |
+| UPS purpose | Graceful shutdown only — not for extended operation; generator handles that |
+| Low humidity risk | Electrostatic discharge (ESD); high humidity risk = condensation/shorts |
+| MDF fire suppression | Clean-agent (FM-200, Novec, CO₂) — never water-based near electrical equipment |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

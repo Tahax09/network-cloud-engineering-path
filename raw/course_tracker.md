@@ -14,7 +14,9 @@
 | L08 | Modern Networks | 1.8 | 2025-05-28 | Complete | Pending |
 | L09 | Routing Technologies | 2.0 | 2026-06-14 | Complete | Pending |
 | L10 | Switching Technologies | 2.2 | 2026-06-14 | Complete | Pending |
-| L11 | — | — | — | Pending | — |
+| L11 | Wireless Devices and Technologies | 2.3 | 2026-06-15 | Complete | Pending |
+| L12 | Physical Installations | 2.4 | 2026-06-15 | Complete | Pending |
+| L13 | — | — | — | Pending | — |
 
 ## Google Cloud Networking Specialization
 

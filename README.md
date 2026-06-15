@@ -14,14 +14,14 @@ Networking + Cloud/
 ├── raw/
 │   ├── course_tracker.md            ← lesson tracking table
 │   └── transcripts/
-│       ├── network-plus/            ← L01–L09 raw Coursera transcripts
+│       ├── network-plus/            ← L01–L12 raw Coursera transcripts
 │       └── gcp/                     ← GCP transcript files
 └── wiki/
     ├── index.md                     ← full catalog
     ├── overview.md                  ← roadmap and progress
     ├── log.md                       ← activity log
     ├── lessons/
-    │   ├── network-plus/            ← L01–L09 (CompTIA Network+ N10-009)
+    │   ├── network-plus/            ← L01–L12 (CompTIA Network+ N10-009)
     │   └── gcp/                     ← GCP01–GCP06 (Google Cloud Networking)
     ├── concepts/                    ← technology reference pages
     ├── certs/                       ← per-certification progress tracking
@@ -47,6 +47,8 @@ Networking + Cloud/
 | L08 | Modern Networks (SDN, VXLAN, Zero Trust, IaC, IPv6) | 1.0 |
 | L09 | Routing Technologies (Static, OSPF, EIGRP, BGP, NAT, FHRP) | 2.0 |
 | L10 | Switching Technologies (VLANs, STP, RSTP, EtherChannel, LACP) | 2.2 |
+| L11 | Wireless Devices and Technologies (802.11, WPA2/WPA3, Channels, MIMO) | 2.3 |
+| L12 | Physical Installations (MDF/IDF, Racks, UPS, Environmental) | 2.4 |
 
 ### Google Cloud Networking Specialization — Routing & Addressing Module
 
@@ -66,6 +68,7 @@ Networking + Cloud/
 |----|-------|--------|
 | NQ01 | Networking Concepts (Coursera graded) | L01–L08 |
 | NQ02 | Networking Concepts (Practice) | L01–L08 |
+| NQ03 | Network Implementation (Coursera graded) | L09–L12 |
 
 ---
 
