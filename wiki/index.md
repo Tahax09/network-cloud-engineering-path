@@ -60,6 +60,7 @@
 | [NQ01](quizzes/NQ01_Networking_Concepts.md) | Networking Concepts (Coursera graded) | L01–L08 | 2026-06-14 | Reviewed |
 | [NQ02](quizzes/NQ02_Networking_Concepts_Practice.md) | Networking Concepts (Practice) | L01–L08 | 2026-06-14 | Practice |
 | [NQ03](quizzes/NQ03_Network_Implementation.md) | Network Implementation (Coursera graded) | L09 + L10–L12 | 2026-06-14 | Reviewed |
+| [NQ04](quizzes/NQ04_Network_Operations.md) | Network Operations (Coursera graded) | L13–L17 | 2026-06-16 | Reviewed |
 
 ## Labs
 

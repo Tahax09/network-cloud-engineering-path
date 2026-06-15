@@ -26,6 +26,9 @@ Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L10.
 ## [2026-06-14] ingest | L09 — Routing Technologies (CompTIA Network+ N10-009, Objective 2.0)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L09.md covering static routing, route selection (longest match → AD → metric), subinterfaces, OSPF/EIGRP/BGP, NAT/PAT, and FHRP (HSRP/VRRP/GLBP). Updated index.md, course_tracker.md, certs/network-plus.md.
 
+## [2026-06-16] quiz | NQ04 — Network Operations (Coursera graded, 26 questions)
+Saved Module 3 graded quiz. Covers L13–L17 (Process/Procedure, Network Monitoring, Disaster Recovery, IP Services, Network Access and Management). Key topics: RPO vs RTO, MTBF vs MTTR, hot/warm/cold site, SNMP traps, port mirroring vs NetFlow, PTP vs NTP, DHCP relay/reservation, DoH vs DoT, TLS VPN, split-tunnel, jump box.
+
 ## [2026-06-16] ingest | L13 — Organizational Processes and Procedures (CompTIA Network+ N10-009, Objective 3.1)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L13.md covering documentation types (physical/logical/rack/cable diagrams, asset inventory, IPAM, wireless heat maps, SLAs), lifecycle management (planning→installation→maintenance→decommissioning, EoL vs EoS, legacy equipment), change management (ticket-based process, knowledge documentation), and configuration management (baseline configs, config items, backup/restore).
 
