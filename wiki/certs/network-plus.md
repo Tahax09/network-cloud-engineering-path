@@ -50,6 +50,7 @@ lessons_completed: 3
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
 | 3.1 | Organizational Processes and Procedures | [[L13]] | ✅ Complete |
+| 3.2 | Network Monitoring | [[L14]] | ✅ Complete |
 
 ### Domain 4 — Network Security (16%)
 *(not started)*
@@ -93,6 +94,14 @@ lessons_completed: 3
 | Physical vs logical diagram | Physical shows cable connections; logical shows VLANs/IPs — same switch ≠ same network |
 | Change management vs config management | Change = process for approving/documenting changes; Config = storing the actual device config |
 | Legacy equipment | Past EoS — new CVEs are permanently unpatched; must be replaced or isolated |
+| SNMP ports | GET/SET = UDP 161; Trap/Inform = UDP 162 |
+| SNMPv1/v2 vs v3 | v1/v2 = clear text community strings; v3 = encrypted + authenticated |
+| SNMP Get vs Trap | Get = manager polls agent; Trap = device pushes unsolicited event notification |
+| Flow data vs packet capture | Flow = metadata (who talked to whom, how much); Packet capture = full content |
+| Syslog UDP port | UDP 514; severity 0 (Emergency) to 7 (Debug) |
+| Port Mirroring / SPAN | Copies switch port traffic to a monitor port; does NOT disrupt live traffic |
+| NetFlow flow definition | src IP + dst IP + src port + dst port + L3 protocol + ToS + ingress interface |
+| Baseline | Defined "normal" profile; compare live metrics to detect anomalies; rebuild after major changes |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

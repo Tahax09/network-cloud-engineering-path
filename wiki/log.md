@@ -26,6 +26,9 @@ Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L10.
 ## [2026-06-14] ingest | L09 — Routing Technologies (CompTIA Network+ N10-009, Objective 2.0)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L09.md covering static routing, route selection (longest match → AD → metric), subinterfaces, OSPF/EIGRP/BGP, NAT/PAT, and FHRP (HSRP/VRRP/GLBP). Updated index.md, course_tracker.md, certs/network-plus.md.
 
+## [2026-06-16] ingest | L14 — Network Monitoring (CompTIA Network+ N10-009, Objective 3.2)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L14.md covering SNMP (agent/manager/MIB/OID, GET/SET/Trap/Inform, UDP 161/162, v1 clear text → v3 encrypted), syslog (UDP 514, severity 0–7), flow data (NetFlow/sFlow, 7-field flow definition), packet capture (tcpdump/Wireshark, TAP, port mirroring/SPAN), baseline metrics, APIs, and monitoring solution types (discovery/traffic/performance/availability/config).
+
 ## [2026-06-16] quiz | NQ04 — Network Operations (Coursera graded, 26 questions)
 Saved Module 3 graded quiz. Covers L13–L17 (Process/Procedure, Network Monitoring, Disaster Recovery, IP Services, Network Access and Management). Key topics: RPO vs RTO, MTBF vs MTTR, hot/warm/cold site, SNMP traps, port mirroring vs NetFlow, PTP vs NTP, DHCP relay/reservation, DoH vs DoT, TLS VPN, split-tunnel, jump box.
 

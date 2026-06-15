@@ -14,14 +14,14 @@ Networking + Cloud/
 ├── raw/
 │   ├── course_tracker.md            ← lesson tracking table
 │   └── transcripts/
-│       ├── network-plus/            ← L01–L13 raw Coursera transcripts
+│       ├── network-plus/            ← L01–L14 raw Coursera transcripts
 │       └── gcp/                     ← GCP transcript files
 └── wiki/
     ├── index.md                     ← full catalog
     ├── overview.md                  ← roadmap and progress
     ├── log.md                       ← activity log
     ├── lessons/
-    │   ├── network-plus/            ← L01–L13 (CompTIA Network+ N10-009)
+    │   ├── network-plus/            ← L01–L14 (CompTIA Network+ N10-009)
     │   └── gcp/                     ← GCP01–GCP06 (Google Cloud Networking)
     ├── concepts/                    ← technology reference pages
     ├── certs/                       ← per-certification progress tracking
@@ -50,6 +50,7 @@ Networking + Cloud/
 | L11 | Wireless Devices and Technologies (802.11, WPA2/WPA3, Channels, MIMO) | 2.3 |
 | L12 | Physical Installations (MDF/IDF, Racks, UPS, Environmental) | 2.4 |
 | L13 | Organizational Processes and Procedures (Docs, Lifecycle, Change/Config Mgmt) | 3.1 |
+| L14 | Network Monitoring (SNMP, Syslog, NetFlow, Packet Capture, SIEM, Baseline) | 3.2 |
 
 ### Google Cloud Networking Specialization — Routing & Addressing Module
 
