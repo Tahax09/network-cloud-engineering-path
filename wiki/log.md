@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-06-16] ingest | L16 — IP Services (CompTIA Network+ N10-009, Objective 3.4)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L16.md covering DHCP (scope/lease/reservation/exclusion, DORA 4-step, relay agent/ip helper-address), IPv6 SLAAC (FE80 link-local, router solicitation/advertisement, EUI-64, stateless DHCPv6), DNS architecture (resolver vs name server, UDP 53), all DNS record types (A, AAAA, NS, MX, CNAME, TXT, PTR/in-addr.arpa), DNS security (DNSSEC signatures, DoH port 443, DoT port 853), /etc/hosts file, NTP (UDP 123), PTP (UDP 319/320, sub-microsecond), and NTS (NTP over TLS).
+
 ## [2026-06-16] ingest | L15 — Disaster Recovery (CompTIA Network+ N10-009, Objective 3.3)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L15.md covering DR metrics (RPO vs RTO, MTBF vs MTTR), DR site types (hot/warm/cold), high availability approaches (active-active vs active-passive, fail back), and DR testing methods (tabletop exercise vs validation test). Updated index.md, course_tracker.md, certs/network-plus.md, log.md, README.md.
 

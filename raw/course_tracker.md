@@ -19,7 +19,8 @@
 | L13 | Organizational Processes and Procedures | 3.1 | 2026-06-16 | Complete | Pending |
 | L14 | Network Monitoring | 3.2 | 2026-06-16 | Complete | Pending |
 | L15 | Disaster Recovery | 3.3 | 2026-06-16 | Complete | Pending |
-| L16 | — | — | — | Pending | — |
+| L16 | IP Services | 3.4 | 2026-06-16 | Complete | Pending |
+| L17 | — | — | — | Pending | — |
 
 ## Google Cloud Networking Specialization
 

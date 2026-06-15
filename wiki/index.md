@@ -19,6 +19,7 @@
 | [L13](lessons/network-plus/L13.md) | Organizational Processes and Procedures | 3.1 | 2026-06-16 | Complete |
 | [L14](lessons/network-plus/L14.md) | Network Monitoring | 3.2 | 2026-06-16 | Complete |
 | [L15](lessons/network-plus/L15.md) | Disaster Recovery | 3.3 | 2026-06-16 | Complete |
+| [L16](lessons/network-plus/L16.md) | IP Services | 3.4 | 2026-06-16 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 

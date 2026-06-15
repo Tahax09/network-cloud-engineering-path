@@ -52,6 +52,7 @@ lessons_completed: 3
 | 3.1 | Organizational Processes and Procedures | [[L13]] | ✅ Complete |
 | 3.2 | Network Monitoring | [[L14]] | ✅ Complete |
 | 3.3 | Disaster Recovery | [[L15]] | ✅ Complete |
+| 3.4 | IP Services | [[L16]] | ✅ Complete |
 
 ### Domain 4 — Network Security (16%)
 *(not started)*
@@ -108,6 +109,16 @@ lessons_completed: 3
 | Hot vs warm vs cold site | Hot = live mirror (fast/expensive); Warm = hardware ready, data not live (medium); Cold = empty space (slow/cheap) |
 | Active-Active vs Active-Passive | Active-Active = all nodes process live traffic; Active-Passive = standby node waits for failure |
 | Tabletop vs validation test | Tabletop = discussion walkthrough, no systems moved; Validation = real-world failover/restore test |
+| DHCP reservation vs exclusion | Reservation = always assigns that IP to a specific MAC; Exclusion = never assigns that IP from the pool |
+| DHCP Discover broadcast | Discover is broadcast — won't cross routers without a relay agent (ip helper-address) |
+| PTR record format | Reverse octet order + `.in-addr.arpa` (e.g., 100.1.168.192.in-addr.arpa for 192.168.1.100) |
+| CNAME vs A record | CNAME is an alias pointing to another name; A record maps name to IP — CNAME can't be at zone apex |
+| MX priority | Lower MX priority number = preferred mail server (try lowest first) |
+| DNSSEC vs DoH/DoT | DNSSEC = signs records for authenticity verification; DoH/DoT = encrypts DNS traffic in transit |
+| DoH port vs DoT port | DoH = port 443 (inside HTTPS); DoT = port 853 (dedicated TLS) |
+| NTP vs PTP | NTP = UDP 123, millisecond accuracy; PTP = UDP 319/320, sub-microsecond for finance/5G |
+| /etc/hosts file | Checked before DNS; static entries; loopback always present (127.0.0.1 localhost) |
+| Authoritative vs non-authoritative DNS | Authoritative = from the actual name server; non-authoritative = from a resolver's cache |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*
