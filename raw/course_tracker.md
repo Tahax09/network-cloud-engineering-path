@@ -18,7 +18,8 @@
 | L12 | Physical Installations | 2.4 | 2026-06-15 | Complete | Pending |
 | L13 | Organizational Processes and Procedures | 3.1 | 2026-06-16 | Complete | Pending |
 | L14 | Network Monitoring | 3.2 | 2026-06-16 | Complete | Pending |
-| L15 | — | — | — | Pending | — |
+| L15 | Disaster Recovery | 3.3 | 2026-06-16 | Complete | Pending |
+| L16 | — | — | — | Pending | — |
 
 ## Google Cloud Networking Specialization
 

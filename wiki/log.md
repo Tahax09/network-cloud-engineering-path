@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-06-16] ingest | L15 — Disaster Recovery (CompTIA Network+ N10-009, Objective 3.3)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L15.md covering DR metrics (RPO vs RTO, MTBF vs MTTR), DR site types (hot/warm/cold), high availability approaches (active-active vs active-passive, fail back), and DR testing methods (tabletop exercise vs validation test). Updated index.md, course_tracker.md, certs/network-plus.md, log.md, README.md.
+
 ## [2025-05-28] ingest | L01 — The OSI Model (CompTIA Network+ N10-009)
 Lesson ingested from Coursera transcript. Created wiki/lessons/L01.md, updated concepts/osi-model.md. Quiz questions generated; weak areas TBD.
 

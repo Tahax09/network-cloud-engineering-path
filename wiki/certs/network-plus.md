@@ -51,6 +51,7 @@ lessons_completed: 3
 |-----------|-------|--------|--------|
 | 3.1 | Organizational Processes and Procedures | [[L13]] | ✅ Complete |
 | 3.2 | Network Monitoring | [[L14]] | ✅ Complete |
+| 3.3 | Disaster Recovery | [[L15]] | ✅ Complete |
 
 ### Domain 4 — Network Security (16%)
 *(not started)*
@@ -102,6 +103,11 @@ lessons_completed: 3
 | Port Mirroring / SPAN | Copies switch port traffic to a monitor port; does NOT disrupt live traffic |
 | NetFlow flow definition | src IP + dst IP + src port + dst port + L3 protocol + ToS + ingress interface |
 | Baseline | Defined "normal" profile; compare live metrics to detect anomalies; rebuild after major changes |
+| RPO vs RTO | RPO = data loss (how old can restore point be?); RTO = downtime (how long can systems be down?) |
+| MTBF vs MTTR | MTBF = uptime between failures (maximize); MTTR = repair time (minimize) |
+| Hot vs warm vs cold site | Hot = live mirror (fast/expensive); Warm = hardware ready, data not live (medium); Cold = empty space (slow/cheap) |
+| Active-Active vs Active-Passive | Active-Active = all nodes process live traffic; Active-Passive = standby node waits for failure |
+| Tabletop vs validation test | Tabletop = discussion walkthrough, no systems moved; Validation = real-world failover/restore test |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*
