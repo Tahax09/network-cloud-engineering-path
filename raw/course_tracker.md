@@ -16,7 +16,8 @@
 | L10 | Switching Technologies | 2.2 | 2026-06-14 | Complete | Pending |
 | L11 | Wireless Devices and Technologies | 2.3 | 2026-06-15 | Complete | Pending |
 | L12 | Physical Installations | 2.4 | 2026-06-15 | Complete | Pending |
-| L13 | — | — | — | Pending | — |
+| L13 | Organizational Processes and Procedures | 3.1 | 2026-06-16 | Complete | Pending |
+| L14 | — | — | — | Pending | — |
 
 ## Google Cloud Networking Specialization
 

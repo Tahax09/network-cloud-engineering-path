@@ -26,6 +26,9 @@ Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L10.
 ## [2026-06-14] ingest | L09 — Routing Technologies (CompTIA Network+ N10-009, Objective 2.0)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L09.md covering static routing, route selection (longest match → AD → metric), subinterfaces, OSPF/EIGRP/BGP, NAT/PAT, and FHRP (HSRP/VRRP/GLBP). Updated index.md, course_tracker.md, certs/network-plus.md.
 
+## [2026-06-16] ingest | L13 — Organizational Processes and Procedures (CompTIA Network+ N10-009, Objective 3.1)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L13.md covering documentation types (physical/logical/rack/cable diagrams, asset inventory, IPAM, wireless heat maps, SLAs), lifecycle management (planning→installation→maintenance→decommissioning, EoL vs EoS, legacy equipment), change management (ticket-based process, knowledge documentation), and configuration management (baseline configs, config items, backup/restore).
+
 ## [2026-06-15] ingest | L11 — Wireless Devices and Technologies (CompTIA Network+ N10-009, Objective 2.3)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L11.md covering 802.11 channels (1/6/11), 2.4/5/6 GHz bands, BSS/ESS/captive portal, WPA2 vs WPA3 (SAE, AES-GCMP), autonomous vs controller-based APs, omnidirectional vs directional antennas, and MIMO.
 

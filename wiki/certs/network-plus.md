@@ -46,7 +46,10 @@ lessons_completed: 3
 | 2.4 | Physical Installations | [[L12]] | ✅ Complete |
 
 ### Domain 3 — Network Operations (19%)
-*(not started)*
+
+| Objective | Topic | Lesson | Status |
+|-----------|-------|--------|--------|
+| 3.1 | Organizational Processes and Procedures | [[L13]] | ✅ Complete |
 
 ### Domain 4 — Network Security (16%)
 *(not started)*
@@ -86,6 +89,10 @@ lessons_completed: 3
 | UPS purpose | Graceful shutdown only — not for extended operation; generator handles that |
 | Low humidity risk | Electrostatic discharge (ESD); high humidity risk = condensation/shorts |
 | MDF fire suppression | Clean-agent (FM-200, Novec, CO₂) — never water-based near electrical equipment |
+| End of Life vs End of Support | EoL = no longer sold; EoS = no more patches — EoS is the security risk |
+| Physical vs logical diagram | Physical shows cable connections; logical shows VLANs/IPs — same switch ≠ same network |
+| Change management vs config management | Change = process for approving/documenting changes; Config = storing the actual device config |
+| Legacy equipment | Past EoS — new CVEs are permanently unpatched; must be replaced or isolated |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

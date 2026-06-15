@@ -16,6 +16,7 @@
 | [L10](lessons/network-plus/L10.md) | Switching Technologies | 2.2 | 2026-06-14 | Complete |
 | [L11](lessons/network-plus/L11.md) | Wireless Devices and Technologies | 2.3 | 2026-06-15 | Complete |
 | [L12](lessons/network-plus/L12.md) | Physical Installations | 2.4 | 2026-06-15 | Complete |
+| [L13](lessons/network-plus/L13.md) | Organizational Processes and Procedures | 3.1 | 2026-06-16 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 
