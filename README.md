@@ -14,14 +14,14 @@ Networking + Cloud/
 ├── raw/
 │   ├── course_tracker.md            ← lesson tracking table
 │   └── transcripts/
-│       ├── network-plus/            ← L01–L16 raw Coursera transcripts
+│       ├── network-plus/            ← L01–L17 raw Coursera transcripts
 │       └── gcp/                     ← GCP transcript files
 └── wiki/
     ├── index.md                     ← full catalog
     ├── overview.md                  ← roadmap and progress
     ├── log.md                       ← activity log
     ├── lessons/
-    │   ├── network-plus/            ← L01–L16 (CompTIA Network+ N10-009)
+    │   ├── network-plus/            ← L01–L17 (CompTIA Network+ N10-009)
     │   └── gcp/                     ← GCP01–GCP06 (Google Cloud Networking)
     ├── concepts/                    ← technology reference pages
     ├── certs/                       ← per-certification progress tracking
@@ -53,6 +53,7 @@ Networking + Cloud/
 | L14 | Network Monitoring (SNMP, Syslog, NetFlow, Packet Capture, SIEM, Baseline) | 3.2 |
 | L15 | Disaster Recovery (RPO/RTO, MTBF/MTTR, Hot/Warm/Cold Site, Active-Active/Passive) | 3.3 |
 | L16 | IP Services (DHCP, DORA, SLAAC, DNS Records, DNSSEC, DoH/DoT, NTP/PTP) | 3.4 |
+| L17 | Network Access and Management (VPN, IPsec, TLS VPN, Split/Full Tunnel, Jump Box, OOB Mgmt) | 3.5 |
 
 ### Google Cloud Networking Specialization — Routing & Addressing Module
 

@@ -53,6 +53,7 @@ lessons_completed: 3
 | 3.2 | Network Monitoring | [[L14]] | ✅ Complete |
 | 3.3 | Disaster Recovery | [[L15]] | ✅ Complete |
 | 3.4 | IP Services | [[L16]] | ✅ Complete |
+| 3.5 | Network Access and Management | [[L17]] | ✅ Complete |
 
 ### Domain 4 — Network Security (16%)
 *(not started)*
@@ -119,6 +120,13 @@ lessons_completed: 3
 | NTP vs PTP | NTP = UDP 123, millisecond accuracy; PTP = UDP 319/320, sub-microsecond for finance/5G |
 | /etc/hosts file | Checked before DNS; static entries; loopback always present (127.0.0.1 localhost) |
 | Authoritative vs non-authoritative DNS | Authoritative = from the actual name server; non-authoritative = from a resolver's cache |
+| Site-to-site vs client-to-site VPN | Site-to-site = gateway-to-gateway (IPsec); client-to-site = individual device to corp (TLS or IPsec) |
+| Clientless VPN | Browser-based TLS VPN portal; no software install; limited to web traffic |
+| Full tunnel vs split tunnel | Full = all traffic through VPN (more secure); Split = only corp traffic through VPN (less bandwidth, more risk) |
+| IPsec AH vs ESP | AH = authentication only (no encryption); ESP = authentication + encryption (use ESP) |
+| IPsec tunnel mode vs transport mode | Tunnel = wraps entire packet (hides IPs, used for site-to-site); Transport = preserves original IP headers |
+| Jump box / bastion host | Single hardened public entry point to internal resources; concentrate monitoring here |
+| In-band vs out-of-band management | In-band = mgmt traffic shares user data path; Out-of-band = dedicated management VLAN/network |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

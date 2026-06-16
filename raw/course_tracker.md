@@ -20,7 +20,7 @@
 | L14 | Network Monitoring | 3.2 | 2026-06-16 | Complete | Pending |
 | L15 | Disaster Recovery | 3.3 | 2026-06-16 | Complete | Pending |
 | L16 | IP Services | 3.4 | 2026-06-16 | Complete | Pending |
-| L17 | — | — | — | Pending | — |
+| L17 | Network Access and Management | 3.5 | 2026-06-16 | Complete | Pending |
 
 ## Google Cloud Networking Specialization
 
