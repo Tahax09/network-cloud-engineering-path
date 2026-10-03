@@ -56,7 +56,10 @@ lessons_completed: 3
 | 3.5 | Network Access and Management | [[L17]] | ✅ Complete |
 
 ### Domain 4 — Network Security (16%)
-*(not started)*
+
+| Objective | Topic | Lesson | Status |
+|-----------|-------|--------|--------|
+| 4.1 | Basic Network Security Concepts | [[L18]] | ✅ Complete |
 
 ### Domain 5 — Network Troubleshooting (22%)
 *(not started)*
@@ -127,6 +130,14 @@ lessons_completed: 3
 | IPsec tunnel mode vs transport mode | Tunnel = wraps entire packet (hides IPs, used for site-to-site); Transport = preserves original IP headers |
 | Jump box / bastion host | Single hardened public entry point to internal resources; concentrate monitoring here |
 | In-band vs out-of-band management | In-band = mgmt traffic shares user data path; Out-of-band = dedicated management VLAN/network |
+| Password + PIN = MFA? | No — both "something you know"; MFA needs two *different* factor types |
+| Non-repudiation | Requires signing with sender's private key; symmetric (AES) can't provide it |
+| RADIUS vs TACACS+ | RADIUS = UDP 1812/1813, encrypts password only, network access; TACACS+ = TCP 49, full encryption, per-command authZ, device admin |
+| LDAP vs LDAPS port | LDAP = TCP 389; LDAPS = TCP 636 |
+| PCI DSS a law? | No — industry standard enforced contractually by card brands/banks |
+| GDPR scope | Any org processing EU residents' personal data, wherever the org is located; opt-in consent |
+| Cameras as a control | Detective/audit — don't prevent access |
+| Honeypot vs honeynet | Honeypot = single decoy system; honeynet = whole decoy network |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

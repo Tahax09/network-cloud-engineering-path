@@ -21,6 +21,7 @@
 | [L15](lessons/network-plus/L15.md) | Disaster Recovery | 3.3 | 2026-06-16 | Complete |
 | [L16](lessons/network-plus/L16.md) | IP Services | 3.4 | 2026-06-16 | Complete |
 | [L17](lessons/network-plus/L17.md) | Network Access and Management | 3.5 | 2026-06-16 | Complete |
+| [L18](lessons/network-plus/L18.md) | Basic Network Security | 4.1 | 2026-10-03 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 

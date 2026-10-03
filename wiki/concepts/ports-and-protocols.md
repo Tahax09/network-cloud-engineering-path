@@ -29,6 +29,9 @@
 | Syslog | 514 | UDP |
 | SMTP secure | 587 | TCP |
 | LDAPS | 636 | TCP |
+| TACACS+ | 49 | TCP |
+| RADIUS auth | 1812 (legacy 1645) | UDP |
+| RADIUS accounting | 1813 (legacy 1646) | UDP |
 | POP3 | 110 | TCP |
 | IMAPS | 993 | TCP |
 | POP3S | 995 | TCP |

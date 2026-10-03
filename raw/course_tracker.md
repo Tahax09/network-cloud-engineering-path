@@ -21,6 +21,7 @@
 | L15 | Disaster Recovery | 3.3 | 2026-06-16 | Complete | Pending |
 | L16 | IP Services | 3.4 | 2026-06-16 | Complete | Pending |
 | L17 | Network Access and Management | 3.5 | 2026-06-16 | Complete | Pending |
+| L18 | Basic Network Security | 4.1 | 2026-10-03 | Complete | Pending |
 
 ## Google Cloud Networking Specialization
 

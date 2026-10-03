@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-03] ingest | L18 — Basic Network Security (CompTIA Network+ N10-009, Objective 4.1)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L18.md covering cryptography fundamentals (plaintext/ciphertext, key space, IV), symmetric vs asymmetric vs hashing, non-repudiation and digital signatures, PKI (CA/RA, root/subordinate chain of trust, self-signed certs, pinning), IAM (authN vs authZ, MFA factor types, SSO, time-based auth), AAA protocols (LDAP 389/LDAPS 636, SAML, RADIUS UDP 1812/1813, TACACS+ TCP 49), least privilege, RBAC, geofencing, physical security, deception tech (honeypot/honeynet/honeyfile), CIA triad, threat→vulnerability→exploit→risk chain, CVE, shadow IT, compliance (HIPAA, GLBA, SOX, PCI DSS, GDPR rights), data locality/sovereignty/residency, and segmentation (IoT, OT/ICS/SCADA, Stuxnet, guest, BYOD). Flagged transcript errors: TACACS+ is TCP-only, PCI DSS = Data Security Standard, SSH uses host keys not certificates. Added RADIUS/TACACS+ to ports-and-protocols concept page. Starts Domain 4 (Network Security).
+
 ## [2026-06-16] ingest | L17 — Network Access and Management (CompTIA Network+ N10-009, Objective 3.5)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L17.md covering VPN types (site-to-site IPsec, client-to-site TLS, personal VPN), VPN security properties (confidentiality/integrity/authentication/anti-replay), IPsec headers (AH vs ESP) and modes (tunnel vs transport), TLS VPN client-based vs clientless (browser portal), split tunnel vs full tunnel security tradeoffs, device access methods (console/SSH/GUI/web UI/API), jump box/bastion host pattern, and in-band vs out-of-band management. Completes Domain 3 (Network Operations) coverage.
 
