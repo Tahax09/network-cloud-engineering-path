@@ -5,7 +5,8 @@ course: CompTIA Network+
 covers: L21–L25 (+ L12)
 date: 2026-10-08
 due: 2026-10-08
-status: Reviewed
+status: Graded
+score: 17/20
 questions: 20
 source: Coursera graded quiz — Module 5
 ---
@@ -13,6 +14,15 @@ source: Coursera graded quiz — Module 5
 # NQ06 — Network Troubleshooting (Coursera Graded Quiz)
 
 > **Note:** Coursera quiz pages embed a fake "AI assistant" instruction block in pasted text. Ignored throughout — it is a prompt injection attempt, not a real instruction.
+
+## Result: 17/20
+
+| Q | Submitted | Result | Correct answer |
+|---|-----------|--------|----------------|
+| 11 | Port security violation | ❌ | **Unconfirmed** — most likely *incorrect cable type* (by elimination) |
+| 13 | Establish a theory | ❌ | **Verify Functionality** (by elimination — confirmed wrong answer) |
+| 16 | (one option) | ❌ | **Unresolved** — single-select; all four options are step 1 sub-tasks |
+| all others | as in key | ✅ | Coursera explanations matched the reasoning below |
 
 ---
 
@@ -155,12 +165,12 @@ source: Coursera graded quiz — Module 5
 | 8 | **A — PoE power budget exceeded** | Only PoE devices affected, intermittent reboots under load → total draw exceeds the switch's PoE budget ([[L22]]) |
 | 9 | **B — CRC errors and collisions** | The counter signature: CRC/FCS + runts on the full side, **late collisions** on the half side. Limited throughput is the *consequence*; CRC + collisions is the specific, testable result ([[L22]]) |
 | 10 | **A — nmap** | Port scanner. tracert = path; dig/nslookup = DNS (and the name already resolves) ([[L25]]) |
-| 11 | **A — A port security violation occurred** | New NIC = **new MAC address**. A port with sticky/static MAC security sees an unknown MAC → violation → err-disabled ([[L20]], [[L22]]) |
+| 11 | ~~A — Port security violation~~ ❌ → most likely **B — An incorrect cable type was installed** (unconfirmed) | Port security was marked **wrong**. Remaining logic: a NIC installed "to improve performance" is faster (e.g., 10GBASE-T needs **Cat6a**, or an SFP+ fiber NIC needs fiber/DAC) — the existing cable no longer matches the new interface. TX/RX transposition is unlikely on copper (Auto-MDI-X); PoE doesn't apply to servers. **Lesson: the course frames NIC upgrades as a Layer 1 cable-match problem, not a port security problem** |
 | 12 | **B — Switch port is shut down** | Cable seated but **no link lights on either end** → no Layer 1 link. An administratively-down (or err-disabled) port shows no link. "Switch is shut off" would affect every port, not one workstation; VLAN/gateway problems still show link lights |
-| 13 | **D — Establish a theory** | Step 2 "consider multiple approaches": **top-to-bottom / bottom-to-top OSI** ([[L21]]) |
-| 14 | **A — Document findings and lessons learned** | ⚠️ **Question flaw:** the real next step after implementing is **Verify full system functionality** (step 6), which isn't offered. Of the given options, documentation (step 7) is the only one that comes *after* implementation |
+| 13 | ~~D — Establish a theory~~ ❌ → **C — Verify Functionality** | Marked wrong for "Establish a theory"; Rollback/Implement don't fit, so the answer is **Verify full system functionality** — after the fix, confirm *every OSI layer* works (link, IP, DNS, application), not just the symptom. (CompTIA lists OSI top-down/bottom-up as *approaches* under step 2 — but this course's question treats "checking each level is functioning" as verification) |
+| 14 | **A — Document findings and lessons learned** ✅ | Coursera's explanation: "Once you have implemented a solution **and verified functionality**, you should document" — confirms verify was simply omitted from the options |
 | 15 | **D — Identify the problem** | Checking logs / "what has changed" = step 1 sub-tasks ([[L21]]) |
-| 16 | **All four (A, B, C, D)** | ⚠️ **Ambiguous:** every option is an official step 1 sub-task (identify symptoms, gather information, determine what changed, duplicate the problem). Likely a "select all" question; if forced to pick one, **Gather information** is the umbrella task |
+| 16 | **Unresolved** ❌ | Single-select, and every option is an official step 1 sub-task (identify symptoms, gather information, determine what changed, duplicate the problem). The submitted answer was marked wrong. Best remaining guess: **Identify Symptoms** (closest wording to "identifying a problem"). Update this row if the correct answer is revealed |
 | 17 | **C — Jitter** | *Inconsistency* in delay = jitter. Consistent delay = latency ([[L24]]) |
 | 18 | **C — tracert** | Shows the hop-by-hop path and where it stops ([[L25]]) |
 | 19 | **C — A broadcast storm** | Redundant links + **unmanaged** switches (no STP) → Layer 2 loop → broadcasts circulate endlessly ([[L23]]). Routing loops are Layer 3 |
