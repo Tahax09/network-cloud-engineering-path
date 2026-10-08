@@ -78,6 +78,7 @@ Networking + Cloud/
 | NQ02 | Networking Concepts (Practice) | L01–L08 |
 | NQ03 | Network Implementation (Coursera graded) | L09–L12 |
 | NQ04 | Network Operations (Coursera graded) | L13–L17 |
+| NQ05 | Network Security (Coursera graded) | L18–L20 |
 
 ---
 

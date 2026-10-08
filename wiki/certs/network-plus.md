@@ -161,6 +161,9 @@ lessons_completed: 3
 | Drop vs reject | Drop = silent (reveals nothing); reject = ICMP unreachable/RST back |
 | Screened subnet | Former "DMZ" — public services isolated from trusted internal network |
 | Key escrow | Stored key copy for recovery (e.g., lost BitLocker key) |
+| 802.1X vs 802.1Q | X = port authentication (NAC); Q = VLAN tagging |
+| Dictionary vs brute force | Wordlist = dictionary; every combination = brute force; rainbow table defeated by salting |
+| Vulnerability notice vs EoS | Patch available → patch; vendor no longer supports → replace |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

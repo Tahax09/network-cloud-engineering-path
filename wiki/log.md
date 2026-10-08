@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] quiz | NQ05 — Network Security (Coursera graded, 19 questions)
+Saved Module 4 graded quiz with answer key and reasoning. Covers L18–L20 (Basic Network Security, Network Attacks, Defense Techniques). Key topics: hardening, DNS poisoning vs ARP spoofing, 802.1X vs 802.1Q, rogue DHCP, VLAN hopping, honeypot, data at rest, SAML, GDPR, OT segmentation, port security, PKI, RADIUS, content filtering. Gaps found: password attacks (dictionary/brute force/rainbow table/pass-the-hash) not in L19 transcript — reference table added to quiz page; patch-vs-replace response hierarchy. Added 3 exam traps to cert page.
+
 ## [2026-10-08] ingest | L20 — Network Defense Techniques (CompTIA Network+ N10-009, Objective 4.3)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L20.md covering device hardening (unused ports/services, default credentials, CIS/STIG baselines), NAC with posture checks, port security (max/sticky/static, violation modes), 802.1X (supplicant/authenticator/auth server, EAPOL, EAP-TLS, MAB), MAC filtering weaknesses, key management (symmetric rotation, private key protection, revocation, escrow, HSM/KMS), network ACLs (first match, implicit deny, wildcard masks, standard vs extended placement), URL vs content filtering/DLP/TLS inspection, zones (trusted/untrusted, drop vs reject), and screened subnet. Corrected transcript's misread wildcard mask (0.255.255.255 = 10.0.0.0/8). Added 11 exam traps to cert page.
 
