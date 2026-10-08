@@ -60,6 +60,7 @@ lessons_completed: 3
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
 | 4.1 | Basic Network Security Concepts | [[L18]] | ✅ Complete |
+| 4.2 | Network Attacks | [[L19]] | ✅ Complete |
 
 ### Domain 5 — Network Troubleshooting (22%)
 *(not started)*
@@ -138,6 +139,16 @@ lessons_completed: 3
 | GDPR scope | Any org processing EU residents' personal data, wherever the org is located; opt-in consent |
 | Cameras as a control | Detective/audit — don't prevent access |
 | Honeypot vs honeynet | Honeypot = single decoy system; honeynet = whole decoy network |
+| MAC flooding defense | Port security (limit MACs per port) — not DHCP snooping |
+| ARP poisoning defense | Dynamic ARP Inspection (uses DHCP snooping binding table) |
+| Rogue DHCP defense | DHCP snooping (trusted/untrusted ports) |
+| Double tagging vs switch spoofing | Double tag = native VLAN abuse, one-way → change/tag native VLAN; switch spoofing = DTP trunk → `nonegotiate` |
+| Reflected vs amplified | Reflected = spoofed source sends replies to victim; amplified = response much larger than request (DNS, NTP, memcached) |
+| Evil twin vs rogue AP | Rogue AP = any unauthorized AP; evil twin = rogue AP impersonating legit SSID |
+| SSL stripping defense | HSTS |
+| Tailgating vs piggybacking | Tailgating = without consent; piggybacking = victim knowingly lets you in |
+| Whaling vs spear phishing | Whaling = spear phishing targeting executives (subset) |
+| Virus vs worm vs trojan | Virus needs execution; worm self-propagates; trojan = disguised delivery |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

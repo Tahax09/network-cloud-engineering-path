@@ -14,14 +14,14 @@ Networking + Cloud/
 ├── raw/
 │   ├── course_tracker.md            ← lesson tracking table
 │   └── transcripts/
-│       ├── network-plus/            ← L01–L18 raw Coursera transcripts
+│       ├── network-plus/            ← L01–L19 raw Coursera transcripts
 │       └── gcp/                     ← GCP transcript files
 └── wiki/
     ├── index.md                     ← full catalog
     ├── overview.md                  ← roadmap and progress
     ├── log.md                       ← activity log
     ├── lessons/
-    │   ├── network-plus/            ← L01–L18 (CompTIA Network+ N10-009)
+    │   ├── network-plus/            ← L01–L19 (CompTIA Network+ N10-009)
     │   └── gcp/                     ← GCP01–GCP06 (Google Cloud Networking)
     ├── concepts/                    ← technology reference pages
     ├── certs/                       ← per-certification progress tracking
@@ -55,6 +55,7 @@ Networking + Cloud/
 | L16 | IP Services (DHCP, DORA, SLAAC, DNS Records, DNSSEC, DoH/DoT, NTP/PTP) | 3.4 |
 | L17 | Network Access and Management (VPN, IPsec, TLS VPN, Split/Full Tunnel, Jump Box, OOB Mgmt) | 3.5 |
 | L18 | Basic Network Security (Crypto, PKI, IAM/MFA, LDAP/SAML/RADIUS/TACACS+, CIA, Compliance, Segmentation) | 4.1 |
+| L19 | Network Attacks (DDoS, VLAN Hopping, MAC Flooding, ARP/DNS Poisoning, Rogue DHCP/AP, Social Eng, Malware) | 4.2 |
 
 ### Google Cloud Networking Specialization — Routing & Addressing Module
 
