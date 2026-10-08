@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] grade | NQ06 — Network Troubleshooting scored 17/20
+Missed Q11 (port security — wrong; likely cable type mismatch, unconfirmed), Q13 (establish theory — wrong; correct by elimination: verify functionality), Q16 (ambiguous single-select, correct option not revealed). Q14 "Document" confirmed. Updated NQ06 answer key, exam traps, cert page weak areas, and L21 weak areas.
+
 ## [2026-10-08] quiz | NQ06 — Network Troubleshooting (Coursera graded, 20 questions)
 Saved Module 5 graded quiz with answer key and reasoning. Covers L21–L25 plus L11/L12 crossovers. Key topics: fiber polarity, cross-connect TX/RX, DHCP exhaustion, missing default route, toner, PoE budget, duplex counters, nmap, port security after NIC swap, admin-down port, methodology steps, jitter, tracert, broadcast storm, 2.4 GHz 20 MHz channels, hot/cold aisle. Flagged Q14 (verify not offered) and Q16 (all options are step 1 sub-tasks) as flawed/ambiguous. Added 5 exam traps to cert page.
 

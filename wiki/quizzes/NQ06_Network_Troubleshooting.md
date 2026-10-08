@@ -184,13 +184,13 @@ source: Coursera graded quiz — Module 5
 |------|-----------------|
 | "Try FIRST" on a new fiber link | Cheapest/fastest common fix → **reverse the fibers** (polarity) before re-terminating |
 | Patch cords swapped, still no fiber link | Remaining hop (cross-connect) has **TX/RX reversed** |
-| New NIC → server unreachable | New MAC → **port security violation** |
+| New NIC → server unreachable | ⚠️ Coursera marked port security **wrong** — think **cable type mismatch** with the faster NIC (Cat6a / fiber / DAC) |
 | No link lights on either end, cable seated | Port **administratively shut down** (or err-disabled), not VLAN/gateway |
 | Inter-VLAN OK, internet fails (router) | **Missing default route** |
 | Unmanaged switches + redundant links | **Broadcast storm** (no STP) — not a routing loop |
 | Duplex mismatch result | **CRC errors + (late) collisions** |
 | Latency vs jitter | Delay = latency; *variation/inconsistency* in delay = jitter |
-| OSI layer-by-layer checks | Part of **Establish a theory** (multiple approaches) |
+| "Checking each OSI level is functioning" | **Verify Functionality** (per this course) — OSI *approaches* for diagnosis are step 2, but confirming every layer works after the fix is step 6 |
 | Next step after implement | **Verify** (step 6) — then document |
 | 2.4 GHz channel width in dense deployments | **20 MHz** |
 | Hot/cold aisle | Intake front (cold), exhaust **rear** (hot) |
@@ -203,6 +203,7 @@ source: Coursera graded quiz — Module 5
 - **Q5 (hot aisle/cold aisle)** comes from objective 2.4 — physical installations ([[L12]]), not Domain 5.
 - **Q20 (channel width)** is Domain 2 wireless ([[L11]]): 2.4 GHz supports only 20/40 MHz; 5 GHz supports 20/40/80/160; 6 GHz up to 320 MHz (Wi-Fi 7). Wider channel = more throughput per client but fewer non-overlapping channels → more co-channel interference in dense deployments.
 - **Q14/Q16** are flawed/ambiguous as written — know the official 7-step order cold so you can pick the "least wrong" answer.
+- **Missed (Q11, Q13)** — see Weak Areas on [[certs/network-plus]].
 
 ---
 

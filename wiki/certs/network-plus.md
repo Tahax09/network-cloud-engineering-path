@@ -214,7 +214,8 @@ lessons_completed: 3
 | running vs startup config | Running = RAM (current); startup = NVRAM (boot) — unsaved changes lost on reload |
 | Windows vs Linux ping | Windows = 4 packets (-n); Linux = continuous (-c) |
 | New fiber link, no light — try FIRST | Reverse the fibers (TX/RX polarity) before re-terminating |
-| New NIC → server unreachable | New MAC triggers port security violation |
+| New NIC → server unreachable | Coursera: NOT port security — likely cable type mismatch with faster NIC (Cat6a / fiber) |
+| "Check each OSI level is functioning" | Verify Functionality (step 6) — not Establish a theory |
 | No link lights either end, cable seated | Switch port administratively shut down / err-disabled |
 | Hot aisle / cold aisle | Equipment intake front (cold), exhaust rear (hot) |
 | 2.4 GHz channel width (dense) | 20 MHz — only 3 non-overlapping channels |
@@ -224,7 +225,9 @@ lessons_completed: 3
 
 | Area | Flagged In | Priority |
 |------|-----------|----------|
-| — | — | — |
+| Methodology: "check each OSI layer works" = Verify functionality, not theory | NQ06 Q13 | High |
+| Methodology: step 1 sub-task single-select questions (identify symptoms vs gather info) | NQ06 Q16 | Medium |
+| NIC upgrade → cable/interface mismatch (not port security) | NQ06 Q11 | Medium |
 
 ## Study Resources
 - Coursera: CompTIA Network+ N10-009 (transcript-based study)
