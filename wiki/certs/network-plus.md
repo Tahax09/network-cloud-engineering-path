@@ -71,6 +71,7 @@ lessons_completed: 3
 | 5.2 | Cabling and Physical Interface Issues | [[L22]] | ✅ Complete |
 | 5.3 | Network Service Issues | [[L23]] | ✅ Complete |
 | 5.4 | Network Performance Issues | [[L24]] | ✅ Complete |
+| 5.5 | Troubleshooting Tools | [[L25]] | ✅ Complete |
 
 ## Key Exam Traps (collected from sessions)
 
@@ -201,6 +202,17 @@ lessons_completed: 3
 | 2.4 vs 5 vs 6 GHz | 2.4 = best range/penetration, slowest; 6 = fastest, shortest range |
 | Calls drop walking between APs | Roaming misconfig (association instead of reassociation, VLAN mismatch) → 802.11r |
 | Sticky client | Client refuses to roam from weak AP; 802.11k/v help |
+| ping vs service check | ping = L3 only (ICMP); service up? → netstat/ss on server, nmap/nc from outside |
+| traceroute mechanism | Increasing TTL → ICMP Time Exceeded; Windows tracert = ICMP, Linux traceroute = UDP |
+| `* * *` mid-path, later hops OK | Hop filters probes — not a failure |
+| Nmap filtered vs closed | Filtered = firewall dropping; closed = host RST, nothing listening |
+| CDP vs LLDP | CDP = Cisco proprietary; LLDP = vendor-neutral 802.1AB |
+| Toner vs cable tester | Toner = find/trace which cable; tester = verify wiring (open/short/cross) |
+| TDR vs OTDR vs VFL | TDR = copper fault distance; OTDR = fiber fault distance/loss; VFL = red light shows fiber break |
+| TAP vs SPAN | TAP = passive hardware, no drops, errored frames; SPAN = switch mirror, may drop |
+| Find device from IP | show ip arp (IP→MAC) → show mac address-table (MAC→port) |
+| running vs startup config | Running = RAM (current); startup = NVRAM (boot) — unsaved changes lost on reload |
+| Windows vs Linux ping | Windows = 4 packets (-n); Linux = continuous (-c) |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

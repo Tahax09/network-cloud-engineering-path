@@ -14,14 +14,14 @@ Networking + Cloud/
 ├── raw/
 │   ├── course_tracker.md            ← lesson tracking table
 │   └── transcripts/
-│       ├── network-plus/            ← L01–L24 raw Coursera transcripts
+│       ├── network-plus/            ← L01–L25 raw Coursera transcripts
 │       └── gcp/                     ← GCP transcript files
 └── wiki/
     ├── index.md                     ← full catalog
     ├── overview.md                  ← roadmap and progress
     ├── log.md                       ← activity log
     ├── lessons/
-    │   ├── network-plus/            ← L01–L24 (CompTIA Network+ N10-009)
+    │   ├── network-plus/            ← L01–L25 (CompTIA Network+ N10-009)
     │   └── gcp/                     ← GCP01–GCP06 (Google Cloud Networking)
     ├── concepts/                    ← technology reference pages
     ├── certs/                       ← per-certification progress tracking
@@ -61,6 +61,7 @@ Networking + Cloud/
 | L22 | Cabling & Physical Issues (Fiber/Copper Types, EMI/Attenuation, Duplex Mismatch, CRC/Runts/Giants, Err-disabled, PoE, SFPs) | 5.2 |
 | L23 | Network Service Troubleshooting (STP Root/Roles, VLAN/Trunk, Switch ACLs, Default Route, DHCP Exhaustion, Gateway/Mask/Duplicate IP) | 5.3 |
 | L24 | Network Performance Issues (Congestion, Bottlenecks, Bandwidth vs Throughput, Latency/Jitter/Loss, Wi-Fi Interference/Coverage/Roaming) | 5.4 |
+| L25 | Troubleshooting Tools (Wireshark, ping/traceroute, dig, tcpdump, netstat, Nmap, CDP/LLDP, iperf, Toner/TDR/OTDR/TAP, Cisco show commands) | 5.5 |
 
 ### Google Cloud Networking Specialization — Routing & Addressing Module
 

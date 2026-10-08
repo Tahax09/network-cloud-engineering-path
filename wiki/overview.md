@@ -6,16 +6,16 @@ Become a cloud/network infrastructure engineer. Build deep, practical understand
 ## Active Certifications
 | Cert | Priority | Status | Target Date |
 |------|----------|--------|-------------|
-| CompTIA Network+ N10-009 | 1st | In Progress (Domains 1–4 complete, Domain 5 started) | TBD |
+| CompTIA Network+ N10-009 | 1st | Course complete (L01–L25) — exam prep | TBD |
 | Google Cloud Networking Specialization | 2nd | In Progress (Routing & Addressing module complete) | TBD |
 | AWS Cloud Practitioner | 3rd | Not Started | TBD |
 | AWS Solutions Architect – Associate | 4th | Not Started | TBD |
 
 ## Current Focus
-**CompTIA Network+ N10-009** — Domains 1–4 complete (L01–L20, NQ05). Domain 5 (Network Troubleshooting) in progress — L21 (5.1), L22 (5.2), L23 (5.3), and L24 (5.4) done.
+**CompTIA Network+ N10-009** — All 5 domains complete (L01–L25). Next: Domain 5 graded quiz, full review, practice exams, schedule exam.
 **Google Cloud Networking** — Routing & Addressing module complete (GCP01–GCP06).
 
-Lessons completed: L01–L24 (Network+), GCP01–GCP06 (GCP)
+Lessons completed: L01–L25 (Network+), GCP01–GCP06 (GCP)
 
 ## Roadmap
 

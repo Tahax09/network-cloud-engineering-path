@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] ingest | L25 — Troubleshooting Tools (CompTIA Network+ N10-009, Objective 5.5)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L25.md covering protocol analyzers (Wireshark, TLS decryption, statistics), ping (Windows vs Linux options), traceroute/tracert (TTL + ICMP Time Exceeded, UDP vs ICMP probes, pathping/mtr), nslookup/dig, tcpdump/tshark, ip/ifconfig/ipconfig, netstat/ss, arp, Nmap (open/closed/filtered), CDP vs LLDP, iperf/speed tests, hardware tools (toner, cable tester/certifier, TAP vs SPAN, Wi-Fi analyzer, TDR, OTDR, VFL), and Cisco show commands (mac address-table, ip route, interfaces, running vs startup config, vlan, ip arp, power inline). Added "which tool?" cheat sheet and IP→MAC→port workflow. Corrected transcript: netstat port 53 = DNS (not DHCP), toner generator/probe roles reversed, TAPs not legacy, Linux traceroute uses UDP. Added 12 exam traps. Completes Domain 5 and all Network+ N10-009 objectives (L01–L25).
+
 ## [2026-10-08] ingest | L24 — Troubleshooting Network Performance Issues (CompTIA Network+ N10-009, Objective 5.4)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L24.md covering congestion/contention (CSMA/CD vs CSMA/CA, airtime, disabling low data rates), bottlenecks, bandwidth vs throughput (contracted CIR), QoS metrics (latency ≤150 ms, jitter <30 ms, loss <1%, RTP/UDP, jitter buffer, DSCP EF/LLQ), wireless interference (microwave, co-channel, SNR, noise floor), signal degradation (absorption, 2.4/5/6 GHz trade-offs, RSSI −67 dBm), insufficient coverage (site survey, heat maps, TX power), roaming (reassociation vs association), disassociation, sticky clients, and 802.11k/v/r/w. Added symptom→cause cheat sheet and shape-to-CIR QoS scenario. Added 10 exam traps to cert page.
 
