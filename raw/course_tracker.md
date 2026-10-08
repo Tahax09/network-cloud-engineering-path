@@ -27,6 +27,7 @@
 | L21 | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete | Pending |
 | L22 | Troubleshooting Cabling and Physical Issues | 5.2 | 2026-10-08 | Complete | Pending |
 | L23 | Network Service Troubleshooting | 5.3 | 2026-10-08 | Complete | Pending |
+| L24 | Troubleshooting Network Performance Issues | 5.4 | 2026-10-08 | Complete | Pending |
 
 ## Google Cloud Networking Specialization
 

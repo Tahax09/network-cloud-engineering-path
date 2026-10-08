@@ -70,6 +70,7 @@ lessons_completed: 3
 | 5.1 | Troubleshooting Methodology | [[L21]] | ✅ Complete |
 | 5.2 | Cabling and Physical Interface Issues | [[L22]] | ✅ Complete |
 | 5.3 | Network Service Issues | [[L23]] | ✅ Complete |
+| 5.4 | Network Performance Issues | [[L24]] | ✅ Complete |
 
 ## Key Exam Traps (collected from sessions)
 
@@ -191,6 +192,15 @@ lessons_completed: 3
 | DHCP exhaustion fix | Shorten lease, expand scope, clear stale leases |
 | Wrong subnet mask | Host misjudges on-net vs off-net → ARPs for remote hosts or routes local ones |
 | Subnet range | Defined by mask, not third octet (/22 = 192.168.100.0–103.255) |
+| Bandwidth vs throughput | Bandwidth = max capacity (tech or contract); throughput = actual delivered rate |
+| 1 Gbps port, 200 Mbps delivered | Contracted CIR, not interface speed |
+| Latency vs jitter vs loss (VoIP) | Talk-over/echo = latency (≤150 ms); choppy/robotic = jitter (<30 ms); gaps = loss (<1%) |
+| Wi-Fi access method | CSMA/CA (avoidance); wired half-duplex = CSMA/CD (detection) |
+| Legacy client slowing whole AP | Disable low data rates (1/2/5.5/11 Mbps) — airtime hog |
+| Microwave interference | 2.4 GHz; non-overlapping channels 1/6/11 |
+| 2.4 vs 5 vs 6 GHz | 2.4 = best range/penetration, slowest; 6 = fastest, shortest range |
+| Calls drop walking between APs | Roaming misconfig (association instead of reassociation, VLAN mismatch) → 802.11r |
+| Sticky client | Client refuses to roam from weak AP; 802.11k/v help |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

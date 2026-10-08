@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] ingest | L24 — Troubleshooting Network Performance Issues (CompTIA Network+ N10-009, Objective 5.4)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L24.md covering congestion/contention (CSMA/CD vs CSMA/CA, airtime, disabling low data rates), bottlenecks, bandwidth vs throughput (contracted CIR), QoS metrics (latency ≤150 ms, jitter <30 ms, loss <1%, RTP/UDP, jitter buffer, DSCP EF/LLQ), wireless interference (microwave, co-channel, SNR, noise floor), signal degradation (absorption, 2.4/5/6 GHz trade-offs, RSSI −67 dBm), insufficient coverage (site survey, heat maps, TX power), roaming (reassociation vs association), disassociation, sticky clients, and 802.11k/v/r/w. Added symptom→cause cheat sheet and shape-to-CIR QoS scenario. Added 10 exam traps to cert page.
+
 ## [2026-10-08] ingest | L23 — Network Service Troubleshooting (CompTIA Network+ N10-009, Objective 5.3)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L23.md covering STP faults (root bridge election by Bridge ID, 802.1D vs RSTP states/roles, path cost, broadcast storms), incorrect VLAN assignment (static vs DHCP symptoms), trunk allowed-VLAN isolation, switch ACLs blocking DHCP/IPv6 ND, routing table sources (connected/static/dynamic/default), missing default route, unreachable next hop, routes not learned, DHCP pool exhaustion (stale leases, lease time, scope sizing), wrong default gateway, duplicate IP, wrong subnet mask and on-net/off-net decision. Clarified transcript on default-route "wildcard" (0.0.0.0/0), static vs dynamic route withdrawal, DHCP lease reclamation, and subnetting being in scope (obj 1.7). Added 9 exam traps to cert page.
 
