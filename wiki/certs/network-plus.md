@@ -213,6 +213,11 @@ lessons_completed: 3
 | Find device from IP | show ip arp (IP→MAC) → show mac address-table (MAC→port) |
 | running vs startup config | Running = RAM (current); startup = NVRAM (boot) — unsaved changes lost on reload |
 | Windows vs Linux ping | Windows = 4 packets (-n); Linux = continuous (-c) |
+| New fiber link, no light — try FIRST | Reverse the fibers (TX/RX polarity) before re-terminating |
+| New NIC → server unreachable | New MAC triggers port security violation |
+| No link lights either end, cable seated | Switch port administratively shut down / err-disabled |
+| Hot aisle / cold aisle | Equipment intake front (cold), exhaust rear (hot) |
+| 2.4 GHz channel width (dense) | 20 MHz — only 3 non-overlapping channels |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*
