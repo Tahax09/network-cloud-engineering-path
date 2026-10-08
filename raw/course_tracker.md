@@ -25,6 +25,7 @@
 | L19 | Network Attacks | 4.2 | 2026-10-08 | Complete | Pending |
 | L20 | Network Defense Techniques | 4.3 | 2026-10-08 | Complete | Pending |
 | L21 | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete | Pending |
+| L22 | Troubleshooting Cabling and Physical Issues | 5.2 | 2026-10-08 | Complete | Pending |
 
 ## Google Cloud Networking Specialization
 

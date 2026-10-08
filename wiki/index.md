@@ -25,6 +25,7 @@
 | [L19](lessons/network-plus/L19.md) | Network Attacks | 4.2 | 2026-10-08 | Complete |
 | [L20](lessons/network-plus/L20.md) | Network Defense Techniques | 4.3 | 2026-10-08 | Complete |
 | [L21](lessons/network-plus/L21.md) | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete |
+| [L22](lessons/network-plus/L22.md) | Troubleshooting Cabling and Physical Issues | 5.2 | 2026-10-08 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 

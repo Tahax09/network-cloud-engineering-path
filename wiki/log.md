@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] ingest | L22 — Troubleshooting Cabling and Physical Issues (CompTIA Network+ N10-009, Objective 5.2)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L22.md covering SMF vs MMF optics matching, fiber connectors (ST/SC/LC/MPO), copper categories, crosstalk/EMI/attenuation, termination faults (open/short/cross/split pair), TX/RX transposition and Auto-MDI-X, speed vs duplex mismatch with counter signatures, CRC/runts/giants/late collisions/drops, port status (admin down, err-disabled causes and recovery, suspended), PoE (PSE/PD, 802.3af/at/bt, power budget), and transceivers (type, cleanliness, seating, DOM signal strength). Added symptom→cause cheat sheet. Corrected transcript: runts (not "runs"), Auto-MDI-X, parallel-detection duplex fallback. Added 8 exam traps to cert page.
+
 ## [2026-10-08] ingest | L21 — Network Troubleshooting Methodology (CompTIA Network+ N10-009, Objective 5.1)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L21.md covering CompTIA 7-step methodology (identify, theory, test, plan, implement/escalate, verify + preventive measures, document + lessons learned), step 1 sub-tasks, question-the-obvious, top-to-bottom / bottom-to-top / divide-and-conquer approaches, APIPA test example, escalation, rollback planning, and a step-identification cheat sheet for narrative exam questions. Starts Domain 5 (Network Troubleshooting).
 

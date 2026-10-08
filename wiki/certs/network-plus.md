@@ -68,6 +68,7 @@ lessons_completed: 3
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
 | 5.1 | Troubleshooting Methodology | [[L21]] | ✅ Complete |
+| 5.2 | Cabling and Physical Interface Issues | [[L22]] | ✅ Complete |
 
 ## Key Exam Traps (collected from sessions)
 
@@ -173,6 +174,14 @@ lessons_completed: 3
 | "What changed?" / duplicate issue | Step 1 — Identify the problem |
 | Preventive measures | Step 6 (with verify), not step 4 or 7 |
 | Reachable by IP, not by name | DNS |
+| Speed vs duplex mismatch | Speed mismatch = link DOWN; duplex mismatch = link UP but slow + errors |
+| Duplex mismatch counters | Half side = late collisions; full side = CRC/FCS + runts |
+| Runt vs giant | Runt < 64 bytes; giant > 1518 bytes (giants → MTU/jumbo mismatch) |
+| Cat5 for gigabit? | No — Cat5e minimum for 1 Gbps |
+| EMI vs attenuation | EMI = near motors/power (copper only, fix: reroute/fiber); attenuation = too long (both media) |
+| Err-disabled causes | Port security violation, BPDU guard, link flapping; recover with shut/no shut or errdisable recovery |
+| PoE standards | 802.3af 15.4 W; 802.3at PoE+ 30 W; 802.3bt 60–100 W |
+| ST connector | Bayonet (twist-lock); SC/LC push-pull; LC = duplex in one connector |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*
