@@ -24,6 +24,7 @@
 | L18 | Basic Network Security | 4.1 | 2026-10-03 | Complete | Pending |
 | L19 | Network Attacks | 4.2 | 2026-10-08 | Complete | Pending |
 | L20 | Network Defense Techniques | 4.3 | 2026-10-08 | Complete | Pending |
+| L21 | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete | Pending |
 
 ## Google Cloud Networking Specialization
 

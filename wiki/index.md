@@ -24,6 +24,7 @@
 | [L18](lessons/network-plus/L18.md) | Basic Network Security | 4.1 | 2026-10-03 | Complete |
 | [L19](lessons/network-plus/L19.md) | Network Attacks | 4.2 | 2026-10-08 | Complete |
 | [L20](lessons/network-plus/L20.md) | Network Defense Techniques | 4.3 | 2026-10-08 | Complete |
+| [L21](lessons/network-plus/L21.md) | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 

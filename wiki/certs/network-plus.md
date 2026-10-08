@@ -64,7 +64,10 @@ lessons_completed: 3
 | 4.3 | Network Defense Techniques | [[L20]] | ✅ Complete |
 
 ### Domain 5 — Network Troubleshooting (22%)
-*(not started)*
+
+| Objective | Topic | Lesson | Status |
+|-----------|-------|--------|--------|
+| 5.1 | Troubleshooting Methodology | [[L21]] | ✅ Complete |
 
 ## Key Exam Traps (collected from sessions)
 
@@ -164,6 +167,12 @@ lessons_completed: 3
 | 802.1X vs 802.1Q | X = port authentication (NAC); Q = VLAN tagging |
 | Dictionary vs brute force | Wordlist = dictionary; every combination = brute force; rainbow table defeated by salting |
 | Vulnerability notice vs EoS | Patch available → patch; vendor no longer supports → replace |
+| Troubleshooting step order | Identify → Theory → Test → Plan → Implement/escalate → Verify + preventive → Document |
+| Theory not confirmed → next? | Establish new theory OR escalate (not implement) |
+| Theory confirmed → next? | Establish plan of action (rollback, effects on other systems) |
+| "What changed?" / duplicate issue | Step 1 — Identify the problem |
+| Preventive measures | Step 6 (with verify), not step 4 or 7 |
+| Reachable by IP, not by name | DNS |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

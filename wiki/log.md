@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] ingest | L21 — Network Troubleshooting Methodology (CompTIA Network+ N10-009, Objective 5.1)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L21.md covering CompTIA 7-step methodology (identify, theory, test, plan, implement/escalate, verify + preventive measures, document + lessons learned), step 1 sub-tasks, question-the-obvious, top-to-bottom / bottom-to-top / divide-and-conquer approaches, APIPA test example, escalation, rollback planning, and a step-identification cheat sheet for narrative exam questions. Starts Domain 5 (Network Troubleshooting).
+
 ## [2026-10-08] quiz | NQ05 — Network Security (Coursera graded, 19 questions)
 Saved Module 4 graded quiz with answer key and reasoning. Covers L18–L20 (Basic Network Security, Network Attacks, Defense Techniques). Key topics: hardening, DNS poisoning vs ARP spoofing, 802.1X vs 802.1Q, rogue DHCP, VLAN hopping, honeypot, data at rest, SAML, GDPR, OT segmentation, port security, PKI, RADIUS, content filtering. Gaps found: password attacks (dictionary/brute force/rainbow table/pass-the-hash) not in L19 transcript — reference table added to quiz page; patch-vs-replace response hierarchy. Added 3 exam traps to cert page.
 

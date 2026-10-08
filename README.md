@@ -14,14 +14,14 @@ Networking + Cloud/
 ├── raw/
 │   ├── course_tracker.md            ← lesson tracking table
 │   └── transcripts/
-│       ├── network-plus/            ← L01–L20 raw Coursera transcripts
+│       ├── network-plus/            ← L01–L21 raw Coursera transcripts
 │       └── gcp/                     ← GCP transcript files
 └── wiki/
     ├── index.md                     ← full catalog
     ├── overview.md                  ← roadmap and progress
     ├── log.md                       ← activity log
     ├── lessons/
-    │   ├── network-plus/            ← L01–L20 (CompTIA Network+ N10-009)
+    │   ├── network-plus/            ← L01–L21 (CompTIA Network+ N10-009)
     │   └── gcp/                     ← GCP01–GCP06 (Google Cloud Networking)
     ├── concepts/                    ← technology reference pages
     ├── certs/                       ← per-certification progress tracking
@@ -57,6 +57,7 @@ Networking + Cloud/
 | L18 | Basic Network Security (Crypto, PKI, IAM/MFA, LDAP/SAML/RADIUS/TACACS+, CIA, Compliance, Segmentation) | 4.1 |
 | L19 | Network Attacks (DDoS, VLAN Hopping, MAC Flooding, ARP/DNS Poisoning, Rogue DHCP/AP, Social Eng, Malware) | 4.2 |
 | L20 | Network Defense Techniques (Hardening, NAC, Port Security, 802.1X, Key Mgmt, ACLs, URL/Content Filtering, Zones, Screened Subnet) | 4.3 |
+| L21 | Network Troubleshooting Methodology (7 Steps, Top-Down/Bottom-Up/Divide & Conquer, Escalation) | 5.1 |
 
 ### Google Cloud Networking Specialization — Routing & Addressing Module
 
