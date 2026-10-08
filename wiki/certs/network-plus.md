@@ -69,6 +69,7 @@ lessons_completed: 3
 |-----------|-------|--------|--------|
 | 5.1 | Troubleshooting Methodology | [[L21]] | ✅ Complete |
 | 5.2 | Cabling and Physical Interface Issues | [[L22]] | ✅ Complete |
+| 5.3 | Network Service Issues | [[L23]] | ✅ Complete |
 
 ## Key Exam Traps (collected from sessions)
 
@@ -182,6 +183,14 @@ lessons_completed: 3
 | Err-disabled causes | Port security violation, BPDU guard, link flapping; recover with shut/no shut or errdisable recovery |
 | PoE standards | 802.3af 15.4 W; 802.3at PoE+ 30 W; 802.3bt 60–100 W |
 | ST connector | Bayonet (twist-lock); SC/LC push-pull; LC = duplex in one connector |
+| STP root election | Lowest Bridge ID (priority 32768 default + MAC) → lowest MAC wins if untuned; set priority on core |
+| RSTP states vs roles | States: discarding/learning/forwarding. Roles: root/designated/alternate/backup; all root-bridge ports = designated |
+| Static IP on wrong VLAN vs DHCP on wrong VLAN | Static = nothing reachable; DHCP = gets other VLAN's IP |
+| Internet unreachable, internal OK | Router: missing default route (0.0.0.0/0). Single host: wrong default gateway |
+| APIPA 169.254.x.x | DHCP failed — pool exhausted, ACL blocking UDP 67/68, wrong VLAN, no relay |
+| DHCP exhaustion fix | Shorten lease, expand scope, clear stale leases |
+| Wrong subnet mask | Host misjudges on-net vs off-net → ARPs for remote hosts or routes local ones |
+| Subnet range | Defined by mask, not third octet (/22 = 192.168.100.0–103.255) |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*

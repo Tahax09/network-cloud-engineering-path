@@ -26,6 +26,7 @@
 | [L20](lessons/network-plus/L20.md) | Network Defense Techniques | 4.3 | 2026-10-08 | Complete |
 | [L21](lessons/network-plus/L21.md) | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete |
 | [L22](lessons/network-plus/L22.md) | Troubleshooting Cabling and Physical Issues | 5.2 | 2026-10-08 | Complete |
+| [L23](lessons/network-plus/L23.md) | Network Service Troubleshooting | 5.3 | 2026-10-08 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 

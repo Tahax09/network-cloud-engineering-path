@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] ingest | L23 — Network Service Troubleshooting (CompTIA Network+ N10-009, Objective 5.3)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L23.md covering STP faults (root bridge election by Bridge ID, 802.1D vs RSTP states/roles, path cost, broadcast storms), incorrect VLAN assignment (static vs DHCP symptoms), trunk allowed-VLAN isolation, switch ACLs blocking DHCP/IPv6 ND, routing table sources (connected/static/dynamic/default), missing default route, unreachable next hop, routes not learned, DHCP pool exhaustion (stale leases, lease time, scope sizing), wrong default gateway, duplicate IP, wrong subnet mask and on-net/off-net decision. Clarified transcript on default-route "wildcard" (0.0.0.0/0), static vs dynamic route withdrawal, DHCP lease reclamation, and subnetting being in scope (obj 1.7). Added 9 exam traps to cert page.
+
 ## [2026-10-08] ingest | L22 — Troubleshooting Cabling and Physical Issues (CompTIA Network+ N10-009, Objective 5.2)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L22.md covering SMF vs MMF optics matching, fiber connectors (ST/SC/LC/MPO), copper categories, crosstalk/EMI/attenuation, termination faults (open/short/cross/split pair), TX/RX transposition and Auto-MDI-X, speed vs duplex mismatch with counter signatures, CRC/runts/giants/late collisions/drops, port status (admin down, err-disabled causes and recovery, suspended), PoE (PSE/PD, 802.3af/at/bt, power budget), and transceivers (type, cleanliness, seating, DOM signal strength). Added symptom→cause cheat sheet. Clarified caption artifacts: runts (captioned "runs"), Auto-MDI-X; parallel-detection duplex fallback. Added 8 exam traps to cert page.
 

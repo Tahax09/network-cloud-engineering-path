@@ -12,10 +12,10 @@ Become a cloud/network infrastructure engineer. Build deep, practical understand
 | AWS Solutions Architect – Associate | 4th | Not Started | TBD |
 
 ## Current Focus
-**CompTIA Network+ N10-009** — Domains 1–4 complete (L01–L20, NQ05). Domain 5 (Network Troubleshooting) in progress — L21 (5.1) and L22 (5.2) done.
+**CompTIA Network+ N10-009** — Domains 1–4 complete (L01–L20, NQ05). Domain 5 (Network Troubleshooting) in progress — L21 (5.1), L22 (5.2), and L23 (5.3) done.
 **Google Cloud Networking** — Routing & Addressing module complete (GCP01–GCP06).
 
-Lessons completed: L01–L22 (Network+), GCP01–GCP06 (GCP)
+Lessons completed: L01–L23 (Network+), GCP01–GCP06 (GCP)
 
 ## Roadmap
 
