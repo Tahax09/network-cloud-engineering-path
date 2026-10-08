@@ -19,8 +19,8 @@ lessons_completed: 3
 | 1.0 | 23% | Networking Concepts |
 | 2.0 | 20% | Network Implementation |
 | 3.0 | 19% | Network Operations |
-| 4.0 | 16% | Network Security |
-| 5.0 | 22% | Network Troubleshooting |
+| 4.0 | 14% | Network Security |
+| 5.0 | 24% | Network Troubleshooting |
 
 ## Progress by Objective
 
@@ -55,7 +55,7 @@ lessons_completed: 3
 | 3.4 | IP Services | [[L16]] | ✅ Complete |
 | 3.5 | Network Access and Management | [[L17]] | ✅ Complete |
 
-### Domain 4 — Network Security (16%)
+### Domain 4 — Network Security (14%)
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
@@ -63,7 +63,7 @@ lessons_completed: 3
 | 4.2 | Network Attacks | [[L19]] | ✅ Complete |
 | 4.3 | Network Defense Techniques | [[L20]] | ✅ Complete |
 
-### Domain 5 — Network Troubleshooting (22%)
+### Domain 5 — Network Troubleshooting (24%)
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|

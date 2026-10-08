@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] create | PE01 practice exam + WD01 weak-area drill
+Generated PE01 — 90 original questions across all N10-009 objectives, weighted to official domain split (23/20/19/14/24 → 21/18/17/13/21 Q), 90-minute format, command-output exhibits, answer key with objective + lesson links, per-domain score sheet. Generated WD01 — 12-question drill targeting NQ06 misses (verify vs establish theory, step 1 sub-tasks, NIC upgrade cable type). Corrected cert page domain weights (Domain 4 = 14%, Domain 5 = 24%; were 16%/22%).
+
 ## [2026-10-08] grade | NQ06 — Network Troubleshooting scored 17/20
 Missed Q11 (port security — wrong; likely cable type mismatch, unconfirmed), Q13 (establish theory — wrong; correct by elimination: verify functionality), Q16 (ambiguous single-select, correct option not revealed). Q14 "Document" confirmed. Updated NQ06 answer key, exam traps, cert page weak areas, and L21 weak areas.
 

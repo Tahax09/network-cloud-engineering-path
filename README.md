@@ -85,6 +85,8 @@ Networking + Cloud/
 | NQ04 | Network Operations (Coursera graded) | L13–L17 |
 | NQ05 | Network Security (Coursera graded) | L18–L20 |
 | NQ06 | Network Troubleshooting (Coursera graded) | L21–L25 |
+| PE01 | Practice Exam 1 (90 Q, timed, N10-009 domain weights) | L01–L25 |
+| WD01 | Weak-Area Drill — Troubleshooting Methodology | L21–L22 |
 
 ---
 
