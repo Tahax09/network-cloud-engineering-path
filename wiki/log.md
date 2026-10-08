@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-08] ingest | L20 — Network Defense Techniques (CompTIA Network+ N10-009, Objective 4.3)
+Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L20.md covering device hardening (unused ports/services, default credentials, CIS/STIG baselines), NAC with posture checks, port security (max/sticky/static, violation modes), 802.1X (supplicant/authenticator/auth server, EAPOL, EAP-TLS, MAB), MAC filtering weaknesses, key management (symmetric rotation, private key protection, revocation, escrow, HSM/KMS), network ACLs (first match, implicit deny, wildcard masks, standard vs extended placement), URL vs content filtering/DLP/TLS inspection, zones (trusted/untrusted, drop vs reject), and screened subnet. Corrected transcript's misread wildcard mask (0.255.255.255 = 10.0.0.0/8). Added 11 exam traps to cert page.
+
 ## [2026-10-08] ingest | L19 — Network Attacks (CompTIA Network+ N10-009, Objective 4.2)
 Lesson ingested from Coursera transcript. Created wiki/lessons/network-plus/L19.md covering DoS vs DDoS (botnet/C2, reflection, amplification vectors DNS/NTP/memcached, black hole vs sinkhole, BCP 38), VLAN hopping (double tagging, switch spoofing/DTP), MAC flooding (CAM table fail-open, port security), ARP poisoning (DHCP snooping + DAI), DNS cache poisoning (DNSSEC, DoH/DoT, HTTPS), rogue DHCP, rogue AP vs evil twin, on-path attacks and SSL stripping (HSTS), social engineering (phishing/spear/whaling/smishing/vishing, tailgating vs piggybacking), and malware (virus subtypes, worm, trojan, RAT, rootkit, ransomware, logic bomb). Added attack→defense cheat sheet. Flagged transcript errors: CAM = Content Addressable Memory, "ARP TAC-A" = arp -a, ARP spoofing/poisoning used interchangeably. Added 11 exam traps to cert page.
 

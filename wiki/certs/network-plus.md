@@ -61,6 +61,7 @@ lessons_completed: 3
 |-----------|-------|--------|--------|
 | 4.1 | Basic Network Security Concepts | [[L18]] | ✅ Complete |
 | 4.2 | Network Attacks | [[L19]] | ✅ Complete |
+| 4.3 | Network Defense Techniques | [[L20]] | ✅ Complete |
 
 ### Domain 5 — Network Troubleshooting (22%)
 *(not started)*
@@ -149,6 +150,17 @@ lessons_completed: 3
 | Tailgating vs piggybacking | Tailgating = without consent; piggybacking = victim knowingly lets you in |
 | Whaling vs spear phishing | Whaling = spear phishing targeting executives (subset) |
 | Virus vs worm vs trojan | Virus needs execution; worm self-propagates; trojan = disguised delivery |
+| 802.1X roles | Supplicant = client; authenticator = switch/AP; authentication server = RADIUS |
+| Unauthorized 802.1X port passes… | EAPOL only |
+| MAB / MAC filtering weakness | MACs sent in cleartext → easily spoofed/cloned |
+| Port security defaults | Max 1 MAC; violation = shutdown (err-disabled); protect = silent drop |
+| ACL processing | Top-down, first match wins, implicit deny at end — deny-only ACL blocks everything |
+| Wildcard mask | Inverse of subnet mask: /24 → 0.0.0.255 |
+| Standard vs extended ACL placement | Standard near destination; extended near source |
+| URL vs content filtering | URL = where you go; content = what's inside (needs proxy/TLS inspection; DLP) |
+| Drop vs reject | Drop = silent (reveals nothing); reject = ICMP unreachable/RST back |
+| Screened subnet | Former "DMZ" — public services isolated from trusted internal network |
+| Key escrow | Stored key copy for recovery (e.g., lost BitLocker key) |
 
 ## Weak Areas to Revisit
 *(populated as sessions progress)*
