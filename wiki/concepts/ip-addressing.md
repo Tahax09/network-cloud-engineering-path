@@ -71,6 +71,6 @@ ip route show            # routing table
 ```
 
 ## Linked Lessons
-- [[L07]] — full lesson
-- [[L03]] — VPC and private address space
-- [[GCP01]] — GCP subnet rules
+- [[L07 - IP Addressing]] — full lesson
+- [[L03 - Network Virtualization & Cloud Technologies]] — VPC and private address space
+- [[GCP01 - Routes and Route Preferences]] — GCP subnet rules

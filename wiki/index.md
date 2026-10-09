@@ -4,47 +4,47 @@
 
 | ID | Title | Objective | Date | Status |
 |----|-------|-----------|------|--------|
-| [L01](lessons/network-plus/L01.md) | The OSI Model | 1.0 | 2025-05-28 | Complete |
-| [L02](lessons/network-plus/L02.md) | Networking Appliances & Applications | 1.2 | 2025-05-28 | Complete |
-| [L03](lessons/network-plus/L03.md) | Network Virtualization & Cloud Technologies | 1.0 | 2025-05-28 | Complete |
-| [L04](lessons/network-plus/L04.md) | Ports, Protocols & Services | 1.4 | 2025-05-28 | Complete |
-| [L05](lessons/network-plus/L05.md) | Network Transmission: Media, Standards & Connectors | 1.5 | 2025-05-28 | Complete |
-| [L06](lessons/network-plus/L06.md) | Network Topologies, Architectures & Traffic Flows | 1.6 | 2025-05-28 | Complete |
-| [L07](lessons/network-plus/L07.md) | IP Addressing | 1.7 | 2025-05-28 | Complete |
-| [L08](lessons/network-plus/L08.md) | Modern Networks | 1.8 | 2025-05-28 | Complete |
-| [L09](lessons/network-plus/L09.md) | Routing Technologies | 2.0 | 2026-06-14 | Complete |
-| [L10](lessons/network-plus/L10.md) | Switching Technologies | 2.2 | 2026-06-14 | Complete |
-| [L11](lessons/network-plus/L11.md) | Wireless Devices and Technologies | 2.3 | 2026-06-15 | Complete |
-| [L12](lessons/network-plus/L12.md) | Physical Installations | 2.4 | 2026-06-15 | Complete |
-| [L13](lessons/network-plus/L13.md) | Organizational Processes and Procedures | 3.1 | 2026-06-16 | Complete |
-| [L14](lessons/network-plus/L14.md) | Network Monitoring | 3.2 | 2026-06-16 | Complete |
-| [L15](lessons/network-plus/L15.md) | Disaster Recovery | 3.3 | 2026-06-16 | Complete |
-| [L16](lessons/network-plus/L16.md) | IP Services | 3.4 | 2026-06-16 | Complete |
-| [L17](lessons/network-plus/L17.md) | Network Access and Management | 3.5 | 2026-06-16 | Complete |
-| [L18](lessons/network-plus/L18.md) | Basic Network Security | 4.1 | 2026-10-03 | Complete |
-| [L19](lessons/network-plus/L19.md) | Network Attacks | 4.2 | 2026-10-08 | Complete |
-| [L20](lessons/network-plus/L20.md) | Network Defense Techniques | 4.3 | 2026-10-08 | Complete |
-| [L21](lessons/network-plus/L21.md) | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete |
-| [L22](lessons/network-plus/L22.md) | Troubleshooting Cabling and Physical Issues | 5.2 | 2026-10-08 | Complete |
-| [L23](lessons/network-plus/L23.md) | Network Service Troubleshooting | 5.3 | 2026-10-08 | Complete |
-| [L24](lessons/network-plus/L24.md) | Troubleshooting Network Performance Issues | 5.4 | 2026-10-08 | Complete |
-| [L25](lessons/network-plus/L25.md) | Troubleshooting Tools | 5.5 | 2026-10-08 | Complete |
+| [L01](lessons/network-plus/L01%20-%20The%20OSI%20Model.md) | The OSI Model | 1.0 | 2025-05-28 | Complete |
+| [L02](lessons/network-plus/L02%20-%20Networking%20Appliances%20%26%20Applications.md) | Networking Appliances & Applications | 1.2 | 2025-05-28 | Complete |
+| [L03](lessons/network-plus/L03%20-%20Network%20Virtualization%20%26%20Cloud%20Technologies.md) | Network Virtualization & Cloud Technologies | 1.0 | 2025-05-28 | Complete |
+| [L04](lessons/network-plus/L04%20-%20Ports%2C%20Protocols%20%26%20Services.md) | Ports, Protocols & Services | 1.4 | 2025-05-28 | Complete |
+| [L05](lessons/network-plus/L05%20-%20Network%20Transmission%20-%20Media%2C%20Standards%20%26%20Connectors.md) | Network Transmission: Media, Standards & Connectors | 1.5 | 2025-05-28 | Complete |
+| [L06](lessons/network-plus/L06%20-%20Network%20Topologies%2C%20Architectures%20%26%20Traffic%20Flows.md) | Network Topologies, Architectures & Traffic Flows | 1.6 | 2025-05-28 | Complete |
+| [L07](lessons/network-plus/L07%20-%20IP%20Addressing.md) | IP Addressing | 1.7 | 2025-05-28 | Complete |
+| [L08](lessons/network-plus/L08%20-%20Modern%20Networks.md) | Modern Networks | 1.8 | 2025-05-28 | Complete |
+| [L09](lessons/network-plus/L09%20-%20Routing%20Technologies.md) | Routing Technologies | 2.0 | 2026-06-14 | Complete |
+| [L10](lessons/network-plus/L10%20-%20Switching%20Technologies.md) | Switching Technologies | 2.2 | 2026-06-14 | Complete |
+| [L11](lessons/network-plus/L11%20-%20Wireless%20Devices%20and%20Technologies.md) | Wireless Devices and Technologies | 2.3 | 2026-06-15 | Complete |
+| [L12](lessons/network-plus/L12%20-%20Physical%20Installations.md) | Physical Installations | 2.4 | 2026-06-15 | Complete |
+| [L13](lessons/network-plus/L13%20-%20Organizational%20Processes%20and%20Procedures.md) | Organizational Processes and Procedures | 3.1 | 2026-06-16 | Complete |
+| [L14](lessons/network-plus/L14%20-%20Network%20Monitoring.md) | Network Monitoring | 3.2 | 2026-06-16 | Complete |
+| [L15](lessons/network-plus/L15%20-%20Disaster%20Recovery.md) | Disaster Recovery | 3.3 | 2026-06-16 | Complete |
+| [L16](lessons/network-plus/L16%20-%20IP%20Services.md) | IP Services | 3.4 | 2026-06-16 | Complete |
+| [L17](lessons/network-plus/L17%20-%20Network%20Access%20and%20Management.md) | Network Access and Management | 3.5 | 2026-06-16 | Complete |
+| [L18](lessons/network-plus/L18%20-%20Basic%20Network%20Security.md) | Basic Network Security | 4.1 | 2026-10-03 | Complete |
+| [L19](lessons/network-plus/L19%20-%20Network%20Attacks.md) | Network Attacks | 4.2 | 2026-10-08 | Complete |
+| [L20](lessons/network-plus/L20%20-%20Network%20Defense%20Techniques.md) | Network Defense Techniques | 4.3 | 2026-10-08 | Complete |
+| [L21](lessons/network-plus/L21%20-%20Network%20Troubleshooting%20Methodology.md) | Network Troubleshooting Methodology | 5.1 | 2026-10-08 | Complete |
+| [L22](lessons/network-plus/L22%20-%20Troubleshooting%20Cabling%20and%20Physical%20Issues.md) | Troubleshooting Cabling and Physical Issues | 5.2 | 2026-10-08 | Complete |
+| [L23](lessons/network-plus/L23%20-%20Network%20Service%20Troubleshooting.md) | Network Service Troubleshooting | 5.3 | 2026-10-08 | Complete |
+| [L24](lessons/network-plus/L24%20-%20Troubleshooting%20Network%20Performance%20Issues.md) | Troubleshooting Network Performance Issues | 5.4 | 2026-10-08 | Complete |
+| [L25](lessons/network-plus/L25%20-%20Troubleshooting%20Tools.md) | Troubleshooting Tools | 5.5 | 2026-10-08 | Complete |
 
 ## Lessons — Google Cloud Networking Specialization
 
 | ID | Title | Module | Date | Status |
 |----|-------|--------|------|--------|
-| [GCP01](lessons/gcp/GCP01.md) | Routes and Route Preferences | Routing & Addressing | 2025-05-28 | Complete |
-| [GCP02](lessons/gcp/GCP02.md) | IPv6 in Google Cloud | Routing & Addressing | 2025-05-28 | Complete |
-| [GCP03](lessons/gcp/GCP03.md) | BYOIP — Bring Your Own IP | Routing & Addressing | 2025-05-28 | Complete |
-| [GCP04](lessons/gcp/GCP04.md) | Cloud DNS | Routing & Addressing | 2025-05-28 | Complete |
-| [GCP06](lessons/gcp/GCP06.md) | Module Debrief: Routing & Addressing | Routing & Addressing | 2025-05-28 | Complete |
-| [GCP07](lessons/gcp/GCP07.md) | Private Connection Options — Overview | Private Connection Options | 2026-10-09 | Complete |
-| [GCP08](lessons/gcp/GCP08.md) | Private Google Access | Private Connection Options | 2026-10-09 | Complete |
-| [GCP09](lessons/gcp/GCP09.md) | Private Service Connect | Private Connection Options | 2026-10-09 | Complete |
-| [GCP10](lessons/gcp/GCP10.md) | Private Services Access | Private Connection Options | 2026-10-09 | Complete |
-| [GCP11](lessons/gcp/GCP11.md) | Cloud NAT | Private Connection Options | 2026-10-09 | Complete |
-| [GCP12](lessons/gcp/GCP12.md) | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete |
+| [GCP01](lessons/gcp/GCP01%20-%20Routes%20and%20Route%20Preferences.md) | Routes and Route Preferences | Routing & Addressing | 2025-05-28 | Complete |
+| [GCP02](lessons/gcp/GCP02%20-%20IPv6%20in%20Google%20Cloud.md) | IPv6 in Google Cloud | Routing & Addressing | 2025-05-28 | Complete |
+| [GCP03](lessons/gcp/GCP03%20-%20BYOIP%20-%20Bring%20Your%20Own%20IP.md) | BYOIP — Bring Your Own IP | Routing & Addressing | 2025-05-28 | Complete |
+| [GCP04](lessons/gcp/GCP04%20-%20Cloud%20DNS.md) | Cloud DNS | Routing & Addressing | 2025-05-28 | Complete |
+| [GCP06](lessons/gcp/GCP06%20-%20Module%20Debrief%20-%20Routing%20%26%20Addressing.md) | Module Debrief: Routing & Addressing | Routing & Addressing | 2025-05-28 | Complete |
+| [GCP07](lessons/gcp/GCP07%20-%20Private%20Connection%20Options%20-%20Overview.md) | Private Connection Options — Overview | Private Connection Options | 2026-10-09 | Complete |
+| [GCP08](lessons/gcp/GCP08%20-%20Private%20Google%20Access.md) | Private Google Access | Private Connection Options | 2026-10-09 | Complete |
+| [GCP09](lessons/gcp/GCP09%20-%20Private%20Service%20Connect.md) | Private Service Connect | Private Connection Options | 2026-10-09 | Complete |
+| [GCP10](lessons/gcp/GCP10%20-%20Private%20Services%20Access.md) | Private Services Access | Private Connection Options | 2026-10-09 | Complete |
+| [GCP11](lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | Private Connection Options | 2026-10-09 | Complete |
+| [GCP12](lessons/gcp/GCP12%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete |
 
 ## Concepts
 

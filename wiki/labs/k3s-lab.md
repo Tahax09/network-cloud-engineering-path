@@ -35,13 +35,13 @@ Run a production-like observability stack on a local k3s cluster. Use it as a li
 
 | k3s Component | Network Device Equivalent | Lesson |
 |--------------|--------------------------|--------|
-| iptables rules | Stateful firewall | [[L02]] |
-| kube-proxy | Layer 4 load balancer | [[L02]] |
-| NGINX Ingress | Reverse proxy | [[L02]] |
-| CNI plugin | L3 router (pod network) | [[L01]], [[L02]] |
-| Kubeshark | IDS / packet analyzer (promiscuous mode) | [[L01]] |
-| kube-proxy NAT | NAT Gateway | [[L03]] |
-| Pod CIDR | VPC CIDR / private subnet | [[L03]] |
+| iptables rules | Stateful firewall | [[L02 - Networking Appliances & Applications]] |
+| kube-proxy | Layer 4 load balancer | [[L02 - Networking Appliances & Applications]] |
+| NGINX Ingress | Reverse proxy | [[L02 - Networking Appliances & Applications]] |
+| CNI plugin | L3 router (pod network) | [[L01 - The OSI Model]], [[L02 - Networking Appliances & Applications]] |
+| Kubeshark | IDS / packet analyzer (promiscuous mode) | [[L01 - The OSI Model]] |
+| kube-proxy NAT | NAT Gateway | [[L03 - Network Virtualization & Cloud Technologies]] |
+| Pod CIDR | VPC CIDR / private subnet | [[L03 - Network Virtualization & Cloud Technologies]] |
 
 ## Key Commands
 

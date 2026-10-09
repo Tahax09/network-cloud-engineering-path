@@ -55,5 +55,5 @@ OSI                  TCP/IP
 | L1–L2 | `tcpdump`, Wireshark, Kubeshark | Raw frames and up |
 
 ## Linked Lessons
-- [[L01]] — full lesson on OSI model
-- [[L02]] — devices at each layer
+- [[L01 - The OSI Model]] — full lesson on OSI model
+- [[L02 - Networking Appliances & Applications]] — devices at each layer

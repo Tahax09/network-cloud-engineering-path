@@ -717,96 +717,96 @@ Users can reach each other across VLANs but not the internet. What should be add
 
 | # | Ans | Obj | Explanation | Lesson |
 |---|-----|-----|-------------|--------|
-| 1 | **C** | 1.1 | MAC addresses and frames are Layer 2. Routers decide on IP (L3). | [[L01]] |
-| 2 | **A** | 1.1 | Layer 6 (Presentation) handles formatting, compression, and encryption in the classic OSI model. | [[L01]] |
-| 3 | **A** | 1.2 | Load balancers distribute sessions and run health checks against pool members. | [[L02]] |
-| 4 | **D** | 1.2 | An IDS is out-of-band (passive) — detect and alert only. An IPS sits inline and can block. | [[L02]] |
-| 5 | **A** | 1.2 | A CDN caches content at edge locations near users. | [[L02]] |
-| 6 | **B** | 1.3 | In IaaS the provider secures the physical host and hypervisor; the customer owns the guest OS and up. | [[L03]] |
-| 7 | **D** | 1.3 | A site-to-site VPN is encrypted but still rides the internet. Direct Connect/Interconnect is a private circuit. | [[L03]] |
-| 8 | **A** | 1.3 | A NAT gateway allows outbound-initiated traffic only. An internet gateway route makes a subnet public. | [[L03]] |
-| 9 | **D** | 1.4 | LDAP = 389, LDAPS = 636. | [[L04]] |
-| 10 | **D** | 1.4 | Agents listen on UDP 161 (get/set); the manager receives traps on UDP 162. 514 = syslog, 69 = TFTP. | [[L04]] |
-| 11 | **A** | 1.4 | RDP uses TCP 3389. | [[L04]] |
-| 12 | **A** | 1.4 | GRE is IP protocol 47 (not a port). ESP is IP protocol 50; UDP 4500 is IPsec NAT-T. | [[L04]] |
-| 13 | **A** | 1.5 | Multimode reaches hundreds of meters; copper reaches 100 m. Kilometers = single-mode. | [[L05]] |
-| 14 | **C** | 1.5 | Plenum cable resists fire and produces less toxic smoke in air-handling spaces. | [[L05]] |
-| 15 | **B** | 1.6 | Spine-and-leaf: every leaf connects to every spine; consistent hop count, ideal for east-west traffic. | [[L06]] |
-| 16 | **C** | 1.6 | East-west = within the data center. North-south = in/out of the data center. | [[L06]] |
-| 17 | **C** | 1.7 | /27 = 32 addresses − network − broadcast = 30. | [[L07]] |
-| 18 | **A** | 1.7 | /26 = blocks of 64: .64 (network) – .127 (broadcast). Hosts .65–.126. | [[L07]] |
-| 19 | **A** | 1.7 | Private: 10/8, 172.16/12 (172.16–172.31), 192.168/16. 169.254 = APIPA, 100.64/10 = CGNAT. | [[L07]] |
-| 20 | **B** | 1.8 | Zero trust: never trust, always verify — identity and context per request. | [[L08]] |
-| 21 | **C** | 1.8 | NAT64 translates IPv6↔IPv4. Dual stack requires both stacks on the client; tunneling carries v6 over v4. | [[L08]] |
-| 22 | **D** | 2.1 | Longest prefix match is evaluated first, before administrative distance. | [[L09]] |
-| 23 | **D** | 2.1 | Same prefix length → lowest administrative distance wins. Metrics only compare routes from the same protocol. | [[L09]] |
-| 24 | **A** | 2.1 | BGP is the exterior gateway protocol of the internet. | [[L09]] |
-| 25 | **A** | 2.1 | FHRPs provide a virtual gateway IP shared by multiple routers. | [[L09]] |
-| 26 | **B** | 2.1 | PAT maps many private IP:port pairs to one public IP with unique ports. | [[L09]] |
-| 27 | **C** | 2.1 | Router-on-a-stick: one subinterface per VLAN, each tagged with its VLAN ID. | [[L09]] |
-| 28 | **C** | 2.2 | Native VLAN traffic crosses the trunk untagged (default VLAN 1). | [[L10]] |
-| 29 | **A** | 2.2 | LACP (802.3ad) negotiates link aggregation / port channels. | [[L10]] |
-| 30 | **A** | 2.2 | Jumbo frames carry more payload per frame — common for storage traffic. All devices in the path must match. | [[L10]] |
-| 31 | **D** | 2.2 | The voice VLAN tags phone traffic separately while the PC uses the access (data) VLAN. | [[L10]] |
-| 32 | **C** | 2.2 | Trunks carry multiple tagged VLANs; access ports carry one. | [[L10]] |
-| 33 | **A** | 2.3 | Wi-Fi 4 = n, Wi-Fi 5 = ac, Wi-Fi 6/6E = ax, Wi-Fi 7 = be. | [[L11]] |
-| 34 | **B** | 2.3 | Enterprise mode uses 802.1X/EAP with RADIUS; Personal uses a shared passphrase. | [[L11]] |
-| 35 | **D** | 2.3 | Point-to-point links focus energy in one direction. | [[L11]] |
-| 36 | **D** | 2.3 | DFS channels are shared with radar systems; APs must vacate when radar is detected. | [[L11]] |
-| 37 | **C** | 2.4 | A UPS bridges the gap with battery power. A PDU distributes power; it doesn't store it. | [[L12]] |
-| 38 | **C** | 2.4 | 1U = 1.75 in, so 2U = 3.5 in. | [[L12]] |
-| 39 | **B** | 2.4 | MDF = main equipment room / demarc; IDFs serve individual floors. | [[L12]] |
-| 40 | **D** | 3.1 | The AUP sets the rules of use for users. | [[L13]] |
-| 41 | **D** | 3.1 | SLAs define measurable service commitments. | [[L13]] |
-| 42 | **B** | 3.1 | Baseline configurations are the approved standard; differences = drift. | [[L13]] |
-| 43 | **C** | 3.1 | End of sale = can't buy it; end of support = no more patches → plan replacement. | [[L13]] |
-| 44 | **B** | 3.2 | Traps are pushed by the agent; gets/sets/walks are initiated by the manager. | [[L14]] |
-| 45 | **D** | 3.2 | Flow data records metadata (src/dst/ports/bytes), not payloads. | [[L14]] |
-| 46 | **A** | 3.2 | Lower number = more severe; 0 is Emergency. | [[L14]] |
-| 47 | **B** | 3.2 | v1/v2c use cleartext community strings; v3 adds user auth and privacy (encryption). | [[L14]] |
-| 48 | **B** | 3.3 | RPO = acceptable data loss (age of the last good copy). RTO = acceptable downtime. | [[L15]] |
-| 49 | **D** | 3.3 | Hot = live/replicated data; warm = equipment ready, data restore needed; cold = space and power only. | [[L15]] |
-| 50 | **D** | 3.3 | A tabletop is a discussion-based walkthrough. | [[L15]] |
-| 51 | **C** | 3.4 | A = IPv4, AAAA = IPv6, PTR = reverse lookup, CNAME = alias. | [[L16]] |
-| 52 | **B** | 3.4 | Reservations bind an IP to a MAC. Exclusions remove addresses from the pool entirely. | [[L16]] |
-| 53 | **C** | 3.4 | DHCP DISCOVER is a broadcast; a relay forwards it as unicast to the server on another subnet. | [[L16]] |
-| 54 | **C** | 3.4 | NTP synchronizes clocks (UDP 123). PTP is for sub-microsecond precision needs. | [[L16]] |
-| 55 | **B** | 3.5 | Split tunnel sends only corporate routes through the VPN; full tunnel sends everything. | [[L17]] |
-| 56 | **D** | 3.5 | OOB = separate management path (dedicated network, console servers). | [[L17]] |
-| 57 | **C** | 4.1 | Hashes detect changes → integrity. | [[L18]] |
-| 58 | **D** | 4.1 | MFA requires different factor types. Password+PIN and password+question are both 'know'; fingerprint+retina are both 'are'. | [[L18]] |
-| 59 | **C** | 4.1 | Least privilege = minimum access needed for the job. | [[L18]] |
-| 60 | **D** | 4.1 | TACACS+ (TCP 49) encrypts the full payload and supports per-command authorization; RADIUS encrypts only the password. | [[L18]] |
-| 61 | **A** | 4.1 | PCI DSS covers cardholder data (contractually enforced). | [[L18]] |
-| 62 | **A** | 4.1 | A honeypot is a decoy; any interaction is suspicious. | [[L18]] |
-| 63 | **A** | 4.2 | Double tagging exploits the untagged native VLAN. Switch spoofing negotiates a trunk instead. | [[L19]] |
-| 64 | **A** | 4.2 | A full CAM table makes the switch fail open (act like a hub). | [[L19]] |
-| 65 | **D** | 4.2 | An evil twin is a rogue AP that impersonates a legitimate SSID. | [[L19]] |
-| 66 | **A** | 4.2 | Whaling = spear phishing aimed at executives. | [[L19]] |
-| 67 | **D** | 4.3 | DHCP snooping blocks DHCP offers from untrusted ports. | [[L20]] |
-| 68 | **C** | 4.3 | 802.1X: supplicant → authenticator (switch) → authentication server (RADIUS). | [[L20]] |
-| 69 | **D** | 4.3 | The screened subnet (formerly DMZ) isolates public services behind another firewall layer. | [[L20]] |
-| 70 | **C** | 5.1 | Identify → theory → test → PLAN → implement → verify → document. | [[L21]] |
-| 71 | **D** | 5.1 | Verify comes before documentation. | [[L21]] |
-| 72 | **D** | 5.1 | Determining what changed is a step 1 sub-task. | [[L21]] |
-| 73 | **B** | 5.1 | Theory not confirmed → establish a new theory or escalate. | [[L21]] |
-| 74 | **D** | 5.2 | Late collisions on the half-duplex side are the duplex-mismatch signature. A speed mismatch would bring the link down. | [[L22]] |
-| 75 | **D** | 5.2 | Giants are frames larger than 1518 bytes — classic jumbo frame/MTU mismatch. | [[L22]] |
-| 76 | **D** | 5.2 | Motors and power equipment induce electromagnetic interference on copper. | [[L22]] |
-| 77 | **B** | 5.2 | BPDU guard err-disables a PortFast edge port when a BPDU (from another switch) arrives. | [[L22]] |
-| 78 | **B** | 5.2 | Gigabit Ethernet requires at least Cat5e. | [[L22]] |
-| 79 | **A** | 5.2 | Copper Ethernet is limited to 100 m; beyond that the signal weakens too much. | [[L22]] |
-| 80 | **D** | 5.3 | 169.254.x.x is APIPA — DHCP failed (pool exhausted, server unreachable, wrong VLAN, no relay). | [[L23]] |
-| 81 | **B** | 5.3 | A gateway outside the host's subnet can't be ARPed; local traffic still works. | [[L23]] |
-| 82 | **C** | 5.3 | Only connected routes exist; without 0.0.0.0/0 the router can't forward internet-bound traffic. | [[L23]] |
-| 83 | **C** | 5.3 | MAC flapping + pegged CPUs + total outage = Layer 2 loop (STP disabled or bypassed). | [[L23]] |
-| 84 | **A** | 5.3 | A pruned or missing VLAN on the trunk isolates it to one switch. | [[L23]] |
-| 85 | **A** | 5.4 | Choppy/robotic audio = variation in packet arrival (jitter). Latency causes talk-over and echo. | [[L24]] |
-| 86 | **B** | 5.4 | Microwave ovens emit around 2.4 GHz. | [[L24]] |
-| 87 | **A** | 5.4 | Bandwidth = rated capacity; throughput = actual delivered rate. | [[L24]] |
-| 88 | **C** | 5.5 | The MAC address table maps MAC → port (and VLAN). | [[L25]] |
-| 89 | **C** | 5.5 | netstat/ss lists listening sockets. ping only proves Layer 3 reachability. | [[L25]] |
-| 90 | **D** | 5.5 | An optical time-domain reflectometer measures distance to fiber faults. A TDR is the copper equivalent. | [[L25]] |
+| 1 | **C** | 1.1 | MAC addresses and frames are Layer 2. Routers decide on IP (L3). | [[L01 - The OSI Model]] |
+| 2 | **A** | 1.1 | Layer 6 (Presentation) handles formatting, compression, and encryption in the classic OSI model. | [[L01 - The OSI Model]] |
+| 3 | **A** | 1.2 | Load balancers distribute sessions and run health checks against pool members. | [[L02 - Networking Appliances & Applications]] |
+| 4 | **D** | 1.2 | An IDS is out-of-band (passive) — detect and alert only. An IPS sits inline and can block. | [[L02 - Networking Appliances & Applications]] |
+| 5 | **A** | 1.2 | A CDN caches content at edge locations near users. | [[L02 - Networking Appliances & Applications]] |
+| 6 | **B** | 1.3 | In IaaS the provider secures the physical host and hypervisor; the customer owns the guest OS and up. | [[L03 - Network Virtualization & Cloud Technologies]] |
+| 7 | **D** | 1.3 | A site-to-site VPN is encrypted but still rides the internet. Direct Connect/Interconnect is a private circuit. | [[L03 - Network Virtualization & Cloud Technologies]] |
+| 8 | **A** | 1.3 | A NAT gateway allows outbound-initiated traffic only. An internet gateway route makes a subnet public. | [[L03 - Network Virtualization & Cloud Technologies]] |
+| 9 | **D** | 1.4 | LDAP = 389, LDAPS = 636. | [[L04 - Ports, Protocols & Services]] |
+| 10 | **D** | 1.4 | Agents listen on UDP 161 (get/set); the manager receives traps on UDP 162. 514 = syslog, 69 = TFTP. | [[L04 - Ports, Protocols & Services]] |
+| 11 | **A** | 1.4 | RDP uses TCP 3389. | [[L04 - Ports, Protocols & Services]] |
+| 12 | **A** | 1.4 | GRE is IP protocol 47 (not a port). ESP is IP protocol 50; UDP 4500 is IPsec NAT-T. | [[L04 - Ports, Protocols & Services]] |
+| 13 | **A** | 1.5 | Multimode reaches hundreds of meters; copper reaches 100 m. Kilometers = single-mode. | [[L05 - Network Transmission - Media, Standards & Connectors]] |
+| 14 | **C** | 1.5 | Plenum cable resists fire and produces less toxic smoke in air-handling spaces. | [[L05 - Network Transmission - Media, Standards & Connectors]] |
+| 15 | **B** | 1.6 | Spine-and-leaf: every leaf connects to every spine; consistent hop count, ideal for east-west traffic. | [[L06 - Network Topologies, Architectures & Traffic Flows]] |
+| 16 | **C** | 1.6 | East-west = within the data center. North-south = in/out of the data center. | [[L06 - Network Topologies, Architectures & Traffic Flows]] |
+| 17 | **C** | 1.7 | /27 = 32 addresses − network − broadcast = 30. | [[L07 - IP Addressing]] |
+| 18 | **A** | 1.7 | /26 = blocks of 64: .64 (network) – .127 (broadcast). Hosts .65–.126. | [[L07 - IP Addressing]] |
+| 19 | **A** | 1.7 | Private: 10/8, 172.16/12 (172.16–172.31), 192.168/16. 169.254 = APIPA, 100.64/10 = CGNAT. | [[L07 - IP Addressing]] |
+| 20 | **B** | 1.8 | Zero trust: never trust, always verify — identity and context per request. | [[L08 - Modern Networks]] |
+| 21 | **C** | 1.8 | NAT64 translates IPv6↔IPv4. Dual stack requires both stacks on the client; tunneling carries v6 over v4. | [[L08 - Modern Networks]] |
+| 22 | **D** | 2.1 | Longest prefix match is evaluated first, before administrative distance. | [[L09 - Routing Technologies]] |
+| 23 | **D** | 2.1 | Same prefix length → lowest administrative distance wins. Metrics only compare routes from the same protocol. | [[L09 - Routing Technologies]] |
+| 24 | **A** | 2.1 | BGP is the exterior gateway protocol of the internet. | [[L09 - Routing Technologies]] |
+| 25 | **A** | 2.1 | FHRPs provide a virtual gateway IP shared by multiple routers. | [[L09 - Routing Technologies]] |
+| 26 | **B** | 2.1 | PAT maps many private IP:port pairs to one public IP with unique ports. | [[L09 - Routing Technologies]] |
+| 27 | **C** | 2.1 | Router-on-a-stick: one subinterface per VLAN, each tagged with its VLAN ID. | [[L09 - Routing Technologies]] |
+| 28 | **C** | 2.2 | Native VLAN traffic crosses the trunk untagged (default VLAN 1). | [[L10 - Switching Technologies]] |
+| 29 | **A** | 2.2 | LACP (802.3ad) negotiates link aggregation / port channels. | [[L10 - Switching Technologies]] |
+| 30 | **A** | 2.2 | Jumbo frames carry more payload per frame — common for storage traffic. All devices in the path must match. | [[L10 - Switching Technologies]] |
+| 31 | **D** | 2.2 | The voice VLAN tags phone traffic separately while the PC uses the access (data) VLAN. | [[L10 - Switching Technologies]] |
+| 32 | **C** | 2.2 | Trunks carry multiple tagged VLANs; access ports carry one. | [[L10 - Switching Technologies]] |
+| 33 | **A** | 2.3 | Wi-Fi 4 = n, Wi-Fi 5 = ac, Wi-Fi 6/6E = ax, Wi-Fi 7 = be. | [[L11 - Wireless Devices and Technologies]] |
+| 34 | **B** | 2.3 | Enterprise mode uses 802.1X/EAP with RADIUS; Personal uses a shared passphrase. | [[L11 - Wireless Devices and Technologies]] |
+| 35 | **D** | 2.3 | Point-to-point links focus energy in one direction. | [[L11 - Wireless Devices and Technologies]] |
+| 36 | **D** | 2.3 | DFS channels are shared with radar systems; APs must vacate when radar is detected. | [[L11 - Wireless Devices and Technologies]] |
+| 37 | **C** | 2.4 | A UPS bridges the gap with battery power. A PDU distributes power; it doesn't store it. | [[L12 - Physical Installations]] |
+| 38 | **C** | 2.4 | 1U = 1.75 in, so 2U = 3.5 in. | [[L12 - Physical Installations]] |
+| 39 | **B** | 2.4 | MDF = main equipment room / demarc; IDFs serve individual floors. | [[L12 - Physical Installations]] |
+| 40 | **D** | 3.1 | The AUP sets the rules of use for users. | [[L13 - Organizational Processes and Procedures]] |
+| 41 | **D** | 3.1 | SLAs define measurable service commitments. | [[L13 - Organizational Processes and Procedures]] |
+| 42 | **B** | 3.1 | Baseline configurations are the approved standard; differences = drift. | [[L13 - Organizational Processes and Procedures]] |
+| 43 | **C** | 3.1 | End of sale = can't buy it; end of support = no more patches → plan replacement. | [[L13 - Organizational Processes and Procedures]] |
+| 44 | **B** | 3.2 | Traps are pushed by the agent; gets/sets/walks are initiated by the manager. | [[L14 - Network Monitoring]] |
+| 45 | **D** | 3.2 | Flow data records metadata (src/dst/ports/bytes), not payloads. | [[L14 - Network Monitoring]] |
+| 46 | **A** | 3.2 | Lower number = more severe; 0 is Emergency. | [[L14 - Network Monitoring]] |
+| 47 | **B** | 3.2 | v1/v2c use cleartext community strings; v3 adds user auth and privacy (encryption). | [[L14 - Network Monitoring]] |
+| 48 | **B** | 3.3 | RPO = acceptable data loss (age of the last good copy). RTO = acceptable downtime. | [[L15 - Disaster Recovery]] |
+| 49 | **D** | 3.3 | Hot = live/replicated data; warm = equipment ready, data restore needed; cold = space and power only. | [[L15 - Disaster Recovery]] |
+| 50 | **D** | 3.3 | A tabletop is a discussion-based walkthrough. | [[L15 - Disaster Recovery]] |
+| 51 | **C** | 3.4 | A = IPv4, AAAA = IPv6, PTR = reverse lookup, CNAME = alias. | [[L16 - IP Services]] |
+| 52 | **B** | 3.4 | Reservations bind an IP to a MAC. Exclusions remove addresses from the pool entirely. | [[L16 - IP Services]] |
+| 53 | **C** | 3.4 | DHCP DISCOVER is a broadcast; a relay forwards it as unicast to the server on another subnet. | [[L16 - IP Services]] |
+| 54 | **C** | 3.4 | NTP synchronizes clocks (UDP 123). PTP is for sub-microsecond precision needs. | [[L16 - IP Services]] |
+| 55 | **B** | 3.5 | Split tunnel sends only corporate routes through the VPN; full tunnel sends everything. | [[L17 - Network Access and Management]] |
+| 56 | **D** | 3.5 | OOB = separate management path (dedicated network, console servers). | [[L17 - Network Access and Management]] |
+| 57 | **C** | 4.1 | Hashes detect changes → integrity. | [[L18 - Basic Network Security]] |
+| 58 | **D** | 4.1 | MFA requires different factor types. Password+PIN and password+question are both 'know'; fingerprint+retina are both 'are'. | [[L18 - Basic Network Security]] |
+| 59 | **C** | 4.1 | Least privilege = minimum access needed for the job. | [[L18 - Basic Network Security]] |
+| 60 | **D** | 4.1 | TACACS+ (TCP 49) encrypts the full payload and supports per-command authorization; RADIUS encrypts only the password. | [[L18 - Basic Network Security]] |
+| 61 | **A** | 4.1 | PCI DSS covers cardholder data (contractually enforced). | [[L18 - Basic Network Security]] |
+| 62 | **A** | 4.1 | A honeypot is a decoy; any interaction is suspicious. | [[L18 - Basic Network Security]] |
+| 63 | **A** | 4.2 | Double tagging exploits the untagged native VLAN. Switch spoofing negotiates a trunk instead. | [[L19 - Network Attacks]] |
+| 64 | **A** | 4.2 | A full CAM table makes the switch fail open (act like a hub). | [[L19 - Network Attacks]] |
+| 65 | **D** | 4.2 | An evil twin is a rogue AP that impersonates a legitimate SSID. | [[L19 - Network Attacks]] |
+| 66 | **A** | 4.2 | Whaling = spear phishing aimed at executives. | [[L19 - Network Attacks]] |
+| 67 | **D** | 4.3 | DHCP snooping blocks DHCP offers from untrusted ports. | [[L20 - Network Defense Techniques]] |
+| 68 | **C** | 4.3 | 802.1X: supplicant → authenticator (switch) → authentication server (RADIUS). | [[L20 - Network Defense Techniques]] |
+| 69 | **D** | 4.3 | The screened subnet (formerly DMZ) isolates public services behind another firewall layer. | [[L20 - Network Defense Techniques]] |
+| 70 | **C** | 5.1 | Identify → theory → test → PLAN → implement → verify → document. | [[L21 - Network Troubleshooting Methodology]] |
+| 71 | **D** | 5.1 | Verify comes before documentation. | [[L21 - Network Troubleshooting Methodology]] |
+| 72 | **D** | 5.1 | Determining what changed is a step 1 sub-task. | [[L21 - Network Troubleshooting Methodology]] |
+| 73 | **B** | 5.1 | Theory not confirmed → establish a new theory or escalate. | [[L21 - Network Troubleshooting Methodology]] |
+| 74 | **D** | 5.2 | Late collisions on the half-duplex side are the duplex-mismatch signature. A speed mismatch would bring the link down. | [[L22 - Troubleshooting Cabling and Physical Issues]] |
+| 75 | **D** | 5.2 | Giants are frames larger than 1518 bytes — classic jumbo frame/MTU mismatch. | [[L22 - Troubleshooting Cabling and Physical Issues]] |
+| 76 | **D** | 5.2 | Motors and power equipment induce electromagnetic interference on copper. | [[L22 - Troubleshooting Cabling and Physical Issues]] |
+| 77 | **B** | 5.2 | BPDU guard err-disables a PortFast edge port when a BPDU (from another switch) arrives. | [[L22 - Troubleshooting Cabling and Physical Issues]] |
+| 78 | **B** | 5.2 | Gigabit Ethernet requires at least Cat5e. | [[L22 - Troubleshooting Cabling and Physical Issues]] |
+| 79 | **A** | 5.2 | Copper Ethernet is limited to 100 m; beyond that the signal weakens too much. | [[L22 - Troubleshooting Cabling and Physical Issues]] |
+| 80 | **D** | 5.3 | 169.254.x.x is APIPA — DHCP failed (pool exhausted, server unreachable, wrong VLAN, no relay). | [[L23 - Network Service Troubleshooting]] |
+| 81 | **B** | 5.3 | A gateway outside the host's subnet can't be ARPed; local traffic still works. | [[L23 - Network Service Troubleshooting]] |
+| 82 | **C** | 5.3 | Only connected routes exist; without 0.0.0.0/0 the router can't forward internet-bound traffic. | [[L23 - Network Service Troubleshooting]] |
+| 83 | **C** | 5.3 | MAC flapping + pegged CPUs + total outage = Layer 2 loop (STP disabled or bypassed). | [[L23 - Network Service Troubleshooting]] |
+| 84 | **A** | 5.3 | A pruned or missing VLAN on the trunk isolates it to one switch. | [[L23 - Network Service Troubleshooting]] |
+| 85 | **A** | 5.4 | Choppy/robotic audio = variation in packet arrival (jitter). Latency causes talk-over and echo. | [[L24 - Troubleshooting Network Performance Issues]] |
+| 86 | **B** | 5.4 | Microwave ovens emit around 2.4 GHz. | [[L24 - Troubleshooting Network Performance Issues]] |
+| 87 | **A** | 5.4 | Bandwidth = rated capacity; throughput = actual delivered rate. | [[L24 - Troubleshooting Network Performance Issues]] |
+| 88 | **C** | 5.5 | The MAC address table maps MAC → port (and VLAN). | [[L25 - Troubleshooting Tools]] |
+| 89 | **C** | 5.5 | netstat/ss lists listening sockets. ping only proves Layer 3 reachability. | [[L25 - Troubleshooting Tools]] |
+| 90 | **D** | 5.5 | An optical time-domain reflectometer measures distance to fiber faults. A TDR is the copper equivalent. | [[L25 - Troubleshooting Tools]] |
 
 ---
 

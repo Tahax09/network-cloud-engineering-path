@@ -1,0 +1,249 @@
+---
+id: L14
+aliases: [L14]
+title: Network Monitoring
+course: CompTIA Network+
+cert_track: network-plus
+objective: "3.2 — Network Operations: Network Monitoring"
+date: 2026-06-16
+status: Complete
+quiz_attempted: No
+weak_areas: []
+tags: [snmp, syslog, netflow, packet-capture, port-mirroring, siem, baseline, monitoring, flow-data]
+---
+
+# L14 — Network Monitoring
+
+## Summary
+
+Network monitoring is how you know your infrastructure is healthy — or compromised — before users complain. This lesson covers the five main data sources (SNMP, syslog, flow data, packet capture, APIs) and the monitoring solution types (discovery, traffic analysis, performance, availability, config). For the exam: know SNMP port numbers and version security differences, syslog severity levels, what defines a flow, and the difference between flow data vs packet capture.
+
+---
+
+## Core Concepts
+
+### SNMP (Simple Network Management Protocol)
+
+**Architecture:**
+- **Agent** — software running on the managed device; responds to queries and sends traps
+- **Manager (Monitor)** — the NMS client; polls devices and receives traps
+- **MIB (Management Information Base)** — the list of queryable objects on a device; each object has an **OID** (Object Identifier)
+
+**Message types:**
+
+| Message | Direction | Port | Description |
+|---------|-----------|------|-------------|
+| GET request | Manager → Agent | UDP 161 | Query a specific MIB object |
+| SET request | Manager → Agent | UDP 161 | Configure a value on the device |
+| Response | Agent → Manager | UDP 161 | Reply to GET/SET |
+| Trap | Agent → Manager | UDP 162 | Unsolicited event notification (threshold crossed, interface down) |
+| Inform (v2+) | Agent → Manager | UDP 162 | Acknowledged trap — device knows manager received it |
+
+**SNMP versions:**
+
+| Version | Security | Notes |
+|---------|----------|-------|
+| v1 | None | Clear text; community strings: `public` (read) / `private` (read-write) |
+| v2c | None (still clear text) | Added Inform (acknowledged trap) and bulk GET |
+| v3 | Auth + encryption | Per-user authentication; encrypted messages; MIB views limit access by group |
+
+> **Exam trap:** SNMPv1/v2 community strings travel in clear text — trivial to sniff. SNMPv3 is the only secure version.
+
+### Syslog & Logging
+
+- **Protocol:** syslog, **UDP port 514** (or TCP 514/6514 with TLS)
+- Log messages contain: timestamp, facility, severity, message text
+- **Flow:** Device → Local file / memory / console → Syslog server (log aggregation) → SIEM
+
+**Syslog Severity Levels (memorize 0–7):**
+
+| Level | Name | Mnemonic |
+|-------|------|---------|
+| 0 | Emergency | **E** |
+| 1 | Alert | **A** |
+| 2 | Critical | **C** |
+| 3 | Error | **E** |
+| 4 | Warning | **W** |
+| 5 | Notice | **N** |
+| 6 | Informational | **I** |
+| 7 | Debug | **D** |
+
+Mnemonic: **"Every Awful Crisis Escalates — Watch Network Infra Daily"** (0–7)
+
+**SIEM (Security Information and Event Management):**
+- Aggregates logs + SNMP + flow data from all sources
+- Adds correlation logic to detect patterns and generate alerts
+- Examples: Splunk, Microsoft Sentinel, IBM QRadar
+- Must be configured with correct parsing rules (source types) per device/application
+
+### Flow Data (NetFlow / sFlow)
+
+Flow data = **metadata about traffic**, not the actual packet contents.
+
+**A flow is defined by 7 fields:**
+1. Source IP
+2. Destination IP
+3. Source port
+4. Destination port
+5. Layer 3 protocol (TCP/UDP/ICMP)
+6. ToS / QoS class
+7. Ingress interface
+
+**Use cases:**
+- Biggest talkers (who's consuming most bandwidth)
+- Most common destinations
+- Upload vs download ratios
+- Unexpected protocol or endpoint detection
+- Anomaly baselines
+
+**Tools:** Cisco NetFlow (exported from router/switch), sFlow (vendor-neutral sampling), collected by a flow analyzer/reporter
+
+> **Exam trap:** Flow data ≠ packet capture. Flow data tells you *who talked to whom and how much* — not *what they said*.
+
+### Packet Capture (Sniffing)
+
+- Captures **full packet contents** — L2 through L7 payload
+- High storage requirement; often triggered by events rather than continuous
+- **Tools:** `tcpdump`, `tshark`, Wireshark, vendor-specific capture tools
+
+**Capture methods:**
+
+| Method | How |
+|--------|-----|
+| Local host capture | Run Wireshark/tcpdump on the machine receiving traffic |
+| TAP (Test Access Point) | Physical inline device that copies all traffic — completely passive |
+| Port Mirroring / SPAN | Switch configured to copy traffic from one port to a monitor port |
+
+**SPAN (Switch Port Analyzer)** — also called RSPAN (Remote SPAN) when the monitor port is on a different switch.
+
+### Baseline Metrics
+
+- **Purpose:** Define "normal" so anomalies are detectable
+- **What to baseline:** bandwidth utilization, protocol mix, common source/destination IPs, latency/delay, error rates
+- **Anomaly detection:** compare live metrics to baseline → alert on deviations (traffic surge, new protocols, unexpected endpoints)
+- **Maintenance:** Baselines go stale — rebuild after major changes (new app deployment, network expansion)
+- Many monitoring platforms maintain a **sliding window baseline** that continuously recalculates normal
+
+### APIs for Monitoring
+
+- Modern network devices expose REST APIs for both monitoring and configuration
+- More scalable than SNMP for cloud-native and modern environments
+- SIEM tools load API connectors to integrate with specific platforms
+- Configuration via API = the foundation of NetDevOps / Infrastructure as Code
+
+### Monitoring Solution Types
+
+| Solution Type | What It Does |
+|---------------|-------------|
+| **Network discovery** | Scans for all connected devices; compares to asset inventory; detects rogue APs, unauthorized VMs; tools: NMAP, vulnerability scanners |
+| **Traffic analysis** | Analyzes flow data for biggest talkers, anomalies, known-bad IPs/domains (threat intel feeds) |
+| **Performance monitoring** | Tracks CPU, memory, storage, throughput, errors, capacity — ensures resources don't hit limits |
+| **Availability monitoring** | Uptime, response times, denied requests — ensures services are reachable |
+| **Configuration monitoring** | Compares running config to stored baseline; detects unauthorized or undocumented changes; supports compliance auditing |
+
+---
+
+## Key Terms
+
+| Term | Definition |
+|------|-----------|
+| SNMP Agent | Software on managed device that responds to queries and sends traps |
+| SNMP Manager | NMS client that polls agents and receives traps |
+| MIB | Management Information Base — the tree of queryable objects on a device |
+| OID | Object Identifier — unique address for each MIB object |
+| SNMP Trap | Unsolicited event notification from agent to manager (UDP 162) |
+| SNMP Inform | Acknowledged trap (v2+) — agent retries until manager confirms receipt |
+| GET / SET | Manager queries (GET) or configures (SET) agent values |
+| Syslog | UDP 514; standard log message protocol; aggregated to central log server |
+| SIEM | Security Information and Event Management; correlates logs, SNMP, flow data |
+| NetFlow | Cisco flow export protocol; collects flow metadata from routers/switches |
+| sFlow | Vendor-neutral sampling protocol for flow data |
+| Flow | Defined by: src IP, dst IP, src port, dst port, L3 protocol, ToS, ingress interface |
+| Packet capture / sniffing | Full packet content capture using Wireshark, tcpdump, tshark |
+| TAP | Test Access Point — inline passive hardware tap for packet capture |
+| SPAN / Port Mirroring | Switch copies traffic from one port to a monitor port |
+| Baseline | Defined "normal" traffic profile; used to detect anomalies |
+
+---
+
+## Real-World Connections
+
+**k3s lab:** You're already doing this — Kubeshark is a packet capture and flow analysis tool for Kubernetes. It's essentially Wireshark + NetFlow combined, running at the pod network level. Your Elasticsearch + Kibana stack is a lightweight SIEM: aggregating logs, indexing them, and letting you query/visualize anomalies.
+
+**SNMP in production:** Every enterprise switch and router runs an SNMP agent. Your NMS (PRTG, LibreNMS, Zabbix, Datadog) polls via GET every 60–300s. Interface counters (ifInOctets, ifOutOctets) feed your bandwidth graphs. SNMPv3 is mandatory in any serious environment — v1/v2 community strings have been sniffed in real attacks.
+
+**NetFlow → Security:** NetFlow is what SOC teams use to detect lateral movement. If a server that normally talks to 2 other servers suddenly starts connecting to 50 endpoints, that's visible in flow data before any log says anything. Darktrace, ExtraHop, and similar tools build behavioral baselines exactly like this.
+
+**Configuration monitoring:** Compare to GitOps in Kubernetes — `kubectl` tracks all config state in etcd. RANCID/Oxidized does the same for network devices: pulls configs nightly, diffs against previous, alerts on unexpected changes.
+
+---
+
+## Troubleshooting Scenario
+
+**Symptom:** Core router CPU is spiking to 90% intermittently. Users report slow internet. The SNMP monitoring graph shows the spikes but gives no clue about the cause.
+
+**Diagnosis path:**
+1. **Flow data first** — pull NetFlow from the router; look for biggest talkers, unexpected destinations, unusual protocol ratios. If one internal IP is generating massive outbound UDP, that's a red flag.
+2. **Baseline comparison** — is this spike pattern new, or does it happen every day at the same time (backup job? scheduled task)?
+3. **SNMP deep-dive** — query interface error counters (ifInErrors, ifOutErrors); high error rates suggest a physical layer problem (duplex mismatch, bad cable) amplified by retransmits.
+4. **Packet capture** — if flow data points to a specific flow, set up a SPAN on that interface and capture with Wireshark; look at what's in the packets.
+5. If CPU spike coincides with SNMP polling cycles, the SNMP poll interval may be too aggressive — increase poll interval or switch to SNMPv3 with UDP-only.
+
+---
+
+## Hands-On Ideas
+
+1. Install **LibreNMS** or **Zabbix** in a VM — add your home router (if it supports SNMP); enable SNMPv3 and poll interface counters
+2. Run `snmpwalk -v3 -u admin -A password -X privpass <device-ip> 1.3.6.1.2.1.1` — walk the system MIB
+3. Set up **syslog** on your k3s nodes: `rsyslog` sending to a central aggregator; query with `journalctl` or forward to Kibana
+4. Run a **tcpdump** on your k3s node and capture DNS traffic: `tcpdump -i eth0 -n port 53 -w dns.pcap` — open in Wireshark
+5. Configure **port mirroring** on a managed switch if you have one; send traffic to a monitoring NIC running Wireshark
+6. Enable **NetFlow export** on a Cisco/MikroTik router; use ntopng or nfdump to visualize flow data
+
+---
+
+## Quiz
+
+1. What is the difference between SNMP GET and SNMP Trap?
+   - A) GET is sent from agent to manager; Trap is sent from manager to agent
+   - B) GET is manager polling the agent; Trap is an unsolicited event notification from agent to manager
+   - C) Both are sent on UDP 161
+   - D) Traps require SNMPv3; GET works on all versions
+
+2. A security team wants to capture the actual contents of packets traversing a specific switch port without disrupting traffic. Which method should they use?
+   - A) NetFlow export
+   - B) SNMP SET request
+   - C) Port Mirroring (SPAN)
+   - D) Syslog forwarding
+
+3. Which SNMP version added encryption and per-user authentication?
+   - A) SNMPv1
+   - B) SNMPv2c
+   - C) SNMPv3
+   - D) SNMP Inform
+
+4. A network engineer wants to identify which internal server is consuming the most bandwidth. Which monitoring data source is best suited for this?
+   - A) Syslog messages
+   - B) SNMP Traps
+   - C) Flow data (NetFlow)
+   - D) Packet capture
+
+5. Which syslog severity level number represents a Warning?
+   - A) 2
+   - B) 3
+   - C) 4
+   - D) 5
+
+6. A monitoring team notices traffic patterns that deviate significantly from normal. What is the term for the reference point used for comparison?
+   - A) Threshold
+   - B) Baseline
+   - C) MIB
+   - D) Flow record
+
+**Answers:** 1-B, 2-C, 3-C, 4-C, 5-C, 6-B
+
+---
+
+## Weak Areas to Revisit
+
+*(none flagged yet)*

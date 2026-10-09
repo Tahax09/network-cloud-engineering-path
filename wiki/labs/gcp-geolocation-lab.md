@@ -91,7 +91,7 @@ gcloud compute firewall-rules create allow-http-traffic \
   --target-tags=http-server
 ```
 
-**`--target-tags=http-server`** scopes this rule to VMs that carry the `http-server` network tag. Client VMs don't get this tag → rule doesn't apply to them. Server VMs will be created with the tag. Same concept as the route network tags from [[GCP01]].
+**`--target-tags=http-server`** scopes this rule to VMs that carry the `http-server` network tag. Client VMs don't get this tag → rule doesn't apply to them. Server VMs will be created with the tag. Same concept as the route network tags from [[GCP01 - Routes and Route Preferences]].
 
 ---
 
@@ -411,6 +411,6 @@ gcloud dns managed-zones delete example
 - Private zone → NXDOMAIN from outside VPC ✅
 
 ## Related
-- [[GCP04]] — Cloud DNS routing policies (theory behind this lab)
-- [[GCP01]] — network tags for routes (same mechanism as Task 2 firewall tags)
-- [[GCP06]] — module quick reference
+- [[GCP04 - Cloud DNS]] — Cloud DNS routing policies (theory behind this lab)
+- [[GCP01 - Routes and Route Preferences]] — network tags for routes (same mechanism as Task 2 firewall tags)
+- [[GCP06 - Module Debrief - Routing & Addressing]] — module quick reference

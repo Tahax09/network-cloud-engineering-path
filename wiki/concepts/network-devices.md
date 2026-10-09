@@ -88,6 +88,6 @@
 - `traceroute` exploits this to map hops
 
 ## Linked Lessons
-- [[L02]] — full lesson on appliances
-- [[L01]] — OSI layers these devices operate at
-- [[L03]] — virtualized equivalents in cloud
+- [[L02 - Networking Appliances & Applications]] — full lesson on appliances
+- [[L01 - The OSI Model]] — OSI layers these devices operate at
+- [[L03 - Network Virtualization & Cloud Technologies]] — virtualized equivalents in cloud

@@ -50,7 +50,7 @@ Managed BGP router. Used with: Dedicated Interconnect, Partner Interconnect, HA 
 | Cannot overlap | VPC subnet or alias ranges |
 
 ## Linked Lessons
-- [[GCP01]] — routes detail
-- [[GCP02]] — IPv6 detail
-- [[GCP03]] — BYOIP detail
-- [[GCP06]] — full module reference
+- [[GCP01 - Routes and Route Preferences]] — routes detail
+- [[GCP02 - IPv6 in Google Cloud]] — IPv6 detail
+- [[GCP03 - BYOIP - Bring Your Own IP]] — BYOIP detail
+- [[GCP06 - Module Debrief - Routing & Addressing]] — full module reference

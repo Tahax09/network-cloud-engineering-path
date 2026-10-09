@@ -46,6 +46,6 @@ Fixed 2-hop path = predictable latency.
 Do NOT confuse with north-south traffic direction.
 
 ## Linked Lessons
-- [[L06]] — full lesson
-- [[L08]] — SDN and modern architectures
+- [[L06 - Network Topologies, Architectures & Traffic Flows]] — full lesson
+- [[L08 - Modern Networks]] — SDN and modern architectures
 - [[labs/k3s-lab]] — east-west traffic in k3s

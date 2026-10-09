@@ -23,22 +23,22 @@ target_date: TBD
 ### Routing & Addressing
 | ID | Title | Status |
 |----|-------|--------|
-| [GCP01](../lessons/gcp/GCP01.md) | Routes and Route Preferences | ✅ Complete |
-| [GCP02](../lessons/gcp/GCP02.md) | IPv6 in Google Cloud | ✅ Complete |
-| [GCP03](../lessons/gcp/GCP03.md) | BYOIP — Bring Your Own IP | ✅ Complete |
-| [GCP04](../lessons/gcp/GCP04.md) | Cloud DNS | ✅ Complete |
+| [GCP01](../lessons/gcp/GCP01%20-%20Routes%20and%20Route%20Preferences.md) | Routes and Route Preferences | ✅ Complete |
+| [GCP02](../lessons/gcp/GCP02%20-%20IPv6%20in%20Google%20Cloud.md) | IPv6 in Google Cloud | ✅ Complete |
+| [GCP03](../lessons/gcp/GCP03%20-%20BYOIP%20-%20Bring%20Your%20Own%20IP.md) | BYOIP — Bring Your Own IP | ✅ Complete |
+| [GCP04](../lessons/gcp/GCP04%20-%20Cloud%20DNS.md) | Cloud DNS | ✅ Complete |
 | [gcp-geolocation-lab](../labs/gcp-geolocation-lab.md) | Lab: Traffic Steering (Geolocation) | ✅ Complete |
-| [GCP06](../lessons/gcp/GCP06.md) | Module Debrief: Routing & Addressing | ✅ Complete |
+| [GCP06](../lessons/gcp/GCP06%20-%20Module%20Debrief%20-%20Routing%20%26%20Addressing.md) | Module Debrief: Routing & Addressing | ✅ Complete |
 
 ### Private Connection Options
 | ID | Title | Status |
 |----|-------|--------|
-| [GCP07](../lessons/gcp/GCP07.md) | Private Connection Options — Overview | ✅ Complete |
-| [GCP08](../lessons/gcp/GCP08.md) | Private Google Access | ✅ Complete |
-| [GCP09](../lessons/gcp/GCP09.md) | Private Service Connect | ✅ Complete |
-| [GCP10](../lessons/gcp/GCP10.md) | Private Services Access | ✅ Complete |
-| [GCP11](../lessons/gcp/GCP11.md) | Cloud NAT | ✅ Complete |
-| [GCP12](../lessons/gcp/GCP12.md) | Module Debrief: Private Connection Options | ✅ Complete |
+| [GCP07](../lessons/gcp/GCP07%20-%20Private%20Connection%20Options%20-%20Overview.md) | Private Connection Options — Overview | ✅ Complete |
+| [GCP08](../lessons/gcp/GCP08%20-%20Private%20Google%20Access.md) | Private Google Access | ✅ Complete |
+| [GCP09](../lessons/gcp/GCP09%20-%20Private%20Service%20Connect.md) | Private Service Connect | ✅ Complete |
+| [GCP10](../lessons/gcp/GCP10%20-%20Private%20Services%20Access.md) | Private Services Access | ✅ Complete |
+| [GCP11](../lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | ✅ Complete |
+| [GCP12](../lessons/gcp/GCP12%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | ✅ Complete |
 | [GQ01](../quizzes/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ## Key Exam Facts (collected from sessions)

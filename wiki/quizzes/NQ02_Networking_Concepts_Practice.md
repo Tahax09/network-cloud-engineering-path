@@ -404,11 +404,11 @@ Second pass over Module 1 content. Harder scenarios, different angles than NQ01.
 
 | Questions | Lesson |
 |-----------|--------|
-| Q1–Q3 | [[L01]] — OSI Model, PDUs, encapsulation/decapsulation |
-| Q4–Q7 | [[L02]] — Networking Appliances (hub, NGFW, reverse proxy, TTL) |
-| Q8–Q11 | [[L03]] — Cloud Technologies (hypervisor, NIST, PaaS, NACLs) |
-| Q12–Q15 | [[L04]] — Ports, Protocols, Services (DNS, SFTP, ICMP, IPsec modes) |
-| Q16–Q20 | [[L05]] — Network Media (cable length, 2.4 GHz channels, SMF, plenum, 802.11ac) |
-| Q21–Q23 | [[L06]] — Topologies (spine-leaf, mesh formula, SDN APIs) |
-| Q24–Q26 | [[L07]] — IP Addressing (subnetting, PAT, /28 hosts) |
-| Q27–Q40 | [[L08]] — Modern Networks (VXLAN, Ansible, Zero Trust, ULA, SASE, Terraform) |
+| Q1–Q3 | [[L01 - The OSI Model]] — OSI Model, PDUs, encapsulation/decapsulation |
+| Q4–Q7 | [[L02 - Networking Appliances & Applications]] — Networking Appliances (hub, NGFW, reverse proxy, TTL) |
+| Q8–Q11 | [[L03 - Network Virtualization & Cloud Technologies]] — Cloud Technologies (hypervisor, NIST, PaaS, NACLs) |
+| Q12–Q15 | [[L04 - Ports, Protocols & Services]] — Ports, Protocols, Services (DNS, SFTP, ICMP, IPsec modes) |
+| Q16–Q20 | [[L05 - Network Transmission - Media, Standards & Connectors]] — Network Media (cable length, 2.4 GHz channels, SMF, plenum, 802.11ac) |
+| Q21–Q23 | [[L06 - Network Topologies, Architectures & Traffic Flows]] — Topologies (spine-leaf, mesh formula, SDN APIs) |
+| Q24–Q26 | [[L07 - IP Addressing]] — IP Addressing (subnetting, PAT, /28 hosts) |
+| Q27–Q40 | [[L08 - Modern Networks]] — Modern Networks (VXLAN, Ansible, Zero Trust, ULA, SASE, Terraform) |

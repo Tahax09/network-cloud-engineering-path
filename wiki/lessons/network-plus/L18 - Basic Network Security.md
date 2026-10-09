@@ -1,0 +1,429 @@
+---
+id: L18
+aliases: [L18]
+title: Basic Network Security
+course: CompTIA Network+ N10-009
+cert_track: network-plus
+objective: "4.1 — Network Security: Explain the Importance of Basic Network Security Concepts"
+date: 2026-10-03
+status: Complete
+quiz_attempted: No
+weak_areas: []
+tags: [cryptography, symmetric, asymmetric, hashing, pki, certificates, iam, mfa, sso, ldap, saml, radius, tacacs, least-privilege, rbac, geofencing, honeypot, cia-triad, risk, cve, pci-dss, gdpr, data-sovereignty, segmentation, iot, scada, byod]
+---
+
+# L18 — Basic Network Security
+
+## Summary
+First lesson of Domain 4. A wide, terminology-heavy objective covering six areas: **logical security** (encryption, PKI, IAM, authentication protocols), **physical security**, **deception technologies** (honeypots/honeynets), **security terminology** (CIA triad, threat → vulnerability → exploit → risk), **audits and regulatory compliance** (PCI DSS, GDPR, data locality/sovereignty), and **network segmentation** (IoT, SCADA/ICS, guest, BYOD). The exam mostly tests recognition: match a scenario to the right term, protocol, or port.
+
+---
+
+## Core Concepts
+
+### Cryptography Vocabulary
+
+| Term | Meaning |
+|------|---------|
+| **Plaintext** | Original readable message |
+| **Ciphertext** | Output of running plaintext through an encryption algorithm |
+| **Key** | Value that controls the cipher. Algorithms are public; the key is the secret |
+| **Cryptanalysis** | Analyzing or breaking cryptographic systems |
+| **Key space** | Number of possible keys. Longer key → bigger key space → harder to brute-force |
+| **Initialization vector (IV)** | Random starting value so the same plaintext never encrypts to the same ciphertext twice |
+
+**Why the IV matters:** Without an IV, encrypting the same packet header twice produces identical ciphertext, and an attacker can spot the pattern. WEP failed partly because its 24-bit IV repeated quickly.
+
+---
+
+### Symmetric vs Asymmetric vs Hashing
+
+| | Symmetric | Asymmetric | Hashing |
+|-|-----------|-----------|---------|
+| **Keys** | One shared secret key | Public/private key pair | None (one-way function) |
+| **Speed** | Fast, good for bulk data | Slow | Fast |
+| **Example** | AES | RSA, ECC (Diffie-Hellman for key exchange) | SHA-256 |
+| **Provides** | Confidentiality | Confidentiality *or* authentication/non-repudiation | Integrity |
+| **Weakness** | Key distribution: how do both sides get the key? | Too slow for bulk data | Cannot be reversed (that is the point) |
+| **Non-repudiation?** | **No.** Anyone holding the key could have sent it | **Yes**, when signing with the private key | Only when combined with a private-key signature |
+
+**How the two modes of asymmetric encryption work:**
+- **Encrypt with the receiver's public key** → only the receiver's private key can decrypt → **confidentiality**
+- **Encrypt (sign) with the sender's private key** → anyone with the public key can verify → proves origin → **authentication + non-repudiation**
+
+**Hybrid model (how TLS really works):** Asymmetric crypto is used once, to agree on or exchange a symmetric session key. All bulk traffic then uses fast symmetric AES. Every HTTPS connection you make does this.
+
+**Digital signature** = hash the message, then encrypt the hash with the sender's private key. The receiver recomputes the hash and compares. That gives integrity (via the hash) plus non-repudiation (via the private key).
+
+**Data in transit vs at rest:**
+- In transit: TLS, HTTPS, IPsec, SSH
+- At rest: BitLocker, LUKS, encrypted volumes, AWS EBS/S3 encryption (KMS)
+
+---
+
+### PKI — Public Key Infrastructure
+
+**PKI** = the tools, entities, and standards for creating, storing, distributing, and revoking digital certificates.
+
+**A certificate binds an identity to a public key**, signed by a CA that both parties trust.
+
+| Component | Role |
+|-----------|------|
+| **Certificate Authority (CA)** | Trusted third party that issues and signs certificates (e.g., DigiCert, Let's Encrypt) |
+| **Registration Authority (RA)** | Verifies identity and processes requests on behalf of the CA, which offloads work from the CA |
+| **Root CA** | Top of the trust chain. Its certificate is pre-installed in OS/browser trust stores |
+| **Subordinate (intermediate) CA** | Issues end-entity certificates. The root signs the subordinate, and the subordinate signs your certificate |
+| **Certificate repository** | Database of issued certificates (e.g., Exchange Global Address List, LDAP directory) |
+| **Internal CA** | Your own CA (AD CS, step-ca, cert-manager). Trusted only inside your org |
+
+**Chain of trust:** Your browser trusts the root → the root signed the intermediate → the intermediate signed `example.com`. If any link is missing (for example, a server that doesn't send its intermediate), you get a validation error.
+
+**Self-signed certificates:** The certificate signs itself, so there is no third-party trust. They're fine internally, but trust has to be established manually by importing the certificate into the trust store. Browsers show warnings for them.
+
+> **Transcript correction:** The lecture says SSH servers use self-signed *certificates*. SSH normally uses **host keys** with trust-on-first-use (TOFU), which is the "do you trust this fingerprint?" prompt, not X.509 certificates. **Certificate pinning** is a related but different idea: an application hardcodes which certificate or public key it will accept, even if another CA-signed certificate is presented.
+
+---
+
+### Identity and Access Management (IAM)
+
+**Authentication (AuthN)** = proving *who you are*. This starts with **identity proofing** (showing ID, verifying documents) at account creation.
+**Authorization (AuthZ)** = *what you're allowed to do*, based on the privileges tied to your user ID.
+
+With a username and password: the **password authenticates** you, and the **user ID is what authorization attaches to**. These are two separate steps.
+
+#### Authentication Factors
+
+| Factor | Type | Examples |
+|--------|------|----------|
+| Something you **know** | Type 1 | Password, PIN, security question |
+| Something you **have** | Type 2 | Smart card, YubiKey, TOTP authenticator app, phone |
+| Something you **are** | Type 3 | Fingerprint, face, retina |
+| Something you **do** | Behavioral | Typing cadence, gait |
+| Somewhere you **are** | Location/context | GPS, source IP geolocation |
+
+**MFA = at least two *different* factor types.** Password + PIN is **not** MFA, because both are something you know. This is a classic exam trap.
+
+#### Single Sign-On (SSO)
+You authenticate once with a central authority and reuse that session across many resources. Implementations: **Kerberos** (Active Directory), SSH keys + agents, and **identity federation** (SAML, OIDC).
+
+#### Time-Based Authentication
+Logins are allowed only within a time window (e.g., business hours). This is a form of context-based authentication. A 3 AM admin login gets denied and flagged.
+
+---
+
+### Authentication Protocols (AAA)
+
+| Protocol | Port(s) | Transport | Primary Use | Key Feature |
+|----------|---------|-----------|-------------|-------------|
+| **LDAP** | **389** | TCP | Directory lookups and authentication (AD, OpenLDAP) | Centralized directory |
+| **LDAPS** | **636** | TCP | LDAP over TLS | Encrypted directory traffic |
+| **SAML** | 443 (HTTPS) | TCP | Web SSO / federation | XML-based assertions between an IdP and an SP |
+| **RADIUS** | **1812** (auth), **1813** (accounting); legacy 1645/1646 | **UDP** | Network access: VPN, Wi-Fi 802.1X, remote access | Combines authentication + authorization; encrypts **only the password** |
+| **TACACS+** | **49** | **TCP** | Device administration (routers/switches) | Separates AuthN/AuthZ/accounting; **encrypts the whole payload**; **per-command authorization** |
+
+> **Transcript correction:** The lecture says TACACS uses "TCP or UDP 49." **TACACS+ (the version used today) is TCP 49 only.** The original, obsolete TACACS could use UDP. The lecture also groups 1645/1812/1813 together without explaining them: 1812 = authentication, 1813 = accounting, and 1645/1646 are the pre-standard legacy ports.
+
+**SAML flow (SP-initiated):**
+```
+User → Service Provider (app) → SAML AuthnRequest → Identity Provider (Okta / Entra ID / Google)
+                                                          │ checks credentials (+ MFA)
+User ← Service Provider ← SAML Response (signed XML assertion: who you are, your attributes/groups)
+```
+The SP never sees the password. It trusts the IdP's signature, which is PKI applied to identity.
+
+**RADIUS vs TACACS+ (heavily tested):**
+| | RADIUS | TACACS+ |
+|-|--------|---------|
+| Origin | Open standard | Cisco |
+| Transport | UDP | TCP |
+| Encryption | Password only | Entire packet body |
+| AAA | AuthN + AuthZ combined | AuthN, AuthZ, accounting separated |
+| Granularity | Coarse | Per-user, **per-command** |
+| Typical use | End-user network access (VPN, 802.1X Wi-Fi) | Admins logging into network gear |
+
+**Mnemonic:** RADIUS = **R**emote users. TACACS+ = **T**ech admins configuring gear.
+
+---
+
+### Authorization Models
+
+**Least privilege:** Grant only the minimum access needed for the job. This limits blast radius when an account is compromised and prevents accidental damage. The risk: if you scope access too narrowly, users can't do their jobs, so access requirements need careful design.
+
+**Role-Based Access Control (RBAC):** Privileges attach to a *role* (Accounting, NetOps), and users are assigned to roles. Someone outside Accounting doesn't get the accounting system. Access is managed per role instead of per user.
+
+**Geofencing:** A virtual geographic boundary. Apps or resources are available only when the device is physically on-site (GPS/Wi-Fi based).
+**Context-aware (location-based) authorization:** A related but separate idea: access is decided by source IP geolocation, like streaming services blocking access from other countries.
+
+---
+
+### Physical Security
+
+Physical access defeats most logical controls: console access → password recovery → full device takeover.
+
+| Control | Function |
+|---------|----------|
+| **Door locks** (keyed or badge/key card) | Restrict access to MDF/IDF and wiring closets. Badge systems also **log** who entered |
+| **Device cable locks** | Prevent theft of laptops and monitors |
+| **Cameras** | Do **not** prevent access, but provide **audit/evidence** of who was near equipment (detective, not preventive) |
+
+---
+
+### Deception Technologies
+
+Deception tools are traps the defender sets for attackers.
+
+| Tool | Description |
+|------|-------------|
+| **Honeypot** | A single decoy system (server or network device) that looks like an attractive, vulnerable target. Detects attackers, records their techniques, and their IPs can be blocked |
+| **Honeynet** | A whole fake network or data center of honeypots, often virtual or in the cloud, with no legitimate servers |
+| **Honeyfile** | A decoy file (e.g., `passwords.xlsx`) that alerts when someone opens it |
+
+**Key insight:** No legitimate user has any reason to touch a honeypot, so **any interaction is suspicious by definition**. That makes it a very low-false-positive detection signal.
+
+---
+
+### Security Terminology
+
+#### CIA Triad
+| Pillar | Goal | Controls |
+|--------|------|----------|
+| **Confidentiality** | Keep data secret | Access controls, authorization, encryption |
+| **Integrity** | Data not altered by unauthorized parties | Permissions (read but not write), **hashing** |
+| **Availability** | Service is up when needed | Redundancy, failover, backups, DDoS protection (see [[L15 - Disaster Recovery]]) |
+
+#### The Risk Chain
+```
+Threat actor ──exploits──▶ Vulnerability ──results in──▶ Risk ──can damage──▶ Asset ──▶ Exposure / Loss
+                                 ▲                                                         ▲
+                                 └──────────────── Controls mitigate ──────────────────────┘
+```
+
+| Term | Definition |
+|------|-----------|
+| **Threat** | Potential source of harm. **Insider**: disgruntled employee, accident, **shadow IT**. **Outsider**: nation-state, unskilled attacker, hacktivist, organized crime |
+| **Vulnerability** | A flaw in code, configuration (e.g., default passwords, insecure defaults), implementation (correct algorithm with a poorly stored key), or procedure |
+| **Exploit** | Code or a sequence of steps that takes advantage of a vulnerability (crash, data leak, RCE, shell) |
+| **Risk** | Potential for loss. **NIST**: likelihood × impact of a threat exercising a vulnerability. **ISO**: potential that a threat exploits a vulnerability of an asset and causes harm |
+| **CVE** | Common Vulnerabilities and Exposures: a public catalog of known vulnerabilities with IDs (CVE-YYYY-NNNNN), scored with CVSS |
+| **Shadow IT** | Technology used without IT/security knowledge, so it's unmanaged and unaudited. You can't secure what you don't know exists |
+
+**Secure by default?** Usually no. The first hardening step on any new device is to change default credentials and settings.
+
+---
+
+### Audits and Regulatory Compliance
+
+**Audit** = an evaluation of processes, systems, or controls against a policy goal or a regulatory requirement.
+
+| Regulation | Scope | Legal status |
+|-----------|-------|-------------|
+| **HIPAA** | US healthcare: protected health information | Law |
+| **GLBA** (Gramm-Leach-Bliley) | US financial institutions: customer financial data | Law |
+| **SOX** (Sarbanes-Oxley) | US public companies: financial reporting integrity | Law |
+| **PCI DSS** | Anyone who stores, processes, or transmits **cardholder data** | **Not a law.** An industry standard enforced by card brands and banks through contracts |
+| **GDPR** | Personal data of **EU residents**, wherever the company is located | EU law, applies extraterritorially |
+
+> **Transcript correction:** PCI DSS = **Payment Card Industry *Data* Security Standard** (the lecture says "Digital").
+
+**GDPR rights:** access, be informed (consent mechanism), **portability**, **be forgotten** (erasure), object, restrict processing, be notified of breaches, rectification. GDPR is **opt-in**: consent must be explicit, never assumed by default.
+
+**Data location concepts:**
+| Term | Meaning |
+|------|---------|
+| **Data locality** | Where data is physically stored, usually placed near processing for performance |
+| **Data localization** | Laws requiring data to stay within a specific country |
+| **Data sovereignty** | Data is subject to the laws of the country where it's stored. The data owner must know and meet those requirements |
+| **Data residency** | The physical location of storage and processing. This drives sovereignty and localization obligations |
+
+---
+
+### Network Segmentation
+
+**Goal:** Isolate systems so a compromise in one segment can't easily spread to others. This limits blast radius.
+
+- **Physical segmentation:** Separate hardware, up to an **air gap** (no physical connection at all)
+- **Logical segmentation:** **VLANs**, VRFs, and subnets on shared hardware, enforced with firewalls, ACLs, and IPS
+
+**Segments that the exam expects you to isolate:**
+
+| Segment | Why isolate |
+|---------|-------------|
+| **IoT** (cameras, sensors, smart TVs, coffee machines) | Products rushed to market, weak security, rarely patched |
+| **OT / ICS / SCADA** | Controls physical processes and critical infrastructure (valves, PLCs, power). Compromise means physical consequences |
+| **Guest network** | Untrusted users, often PSK-based instead of certificate-based. Should get internet access only |
+| **BYOD** | Personal devices that IT can't fully scan or control. Restrict them unless they're enrolled in MDM |
+
+**IT vs OT:** IT = information systems (data). OT = operational technology (control systems, production equipment). **IIoT** = network-connected industrial equipment. **SCADA** = supervisory control and data acquisition, a type of ICS spread across large geographic areas.
+
+**Stuxnet (2010):** A worm that crossed an **air gap** (via USB) to sabotage Iranian uranium-enrichment centrifuges through Siemens PLCs. The lesson: an air gap reduces risk but does not eliminate it.
+
+---
+
+## Key Terms
+
+| Term | Definition |
+|------|-----------|
+| Plaintext / Ciphertext | Readable input / encrypted output |
+| Key space | Total number of possible keys; determines brute-force difficulty |
+| Initialization vector | Random value ensuring identical plaintext produces different ciphertext |
+| Symmetric encryption | Same key encrypts and decrypts (AES); fast; no non-repudiation |
+| Asymmetric encryption | Public/private key pair (RSA, ECC); slow; used for key exchange and signatures |
+| Hashing | One-way function used for integrity verification (SHA-256) |
+| Digital signature | Hash encrypted with the sender's private key; gives integrity + non-repudiation |
+| Non-repudiation | Sender cannot deny sending; requires private-key signing |
+| PKI | Framework for issuing, storing, and revoking certificates |
+| CA / RA | Issues and signs certificates / verifies identity on the CA's behalf |
+| Root / subordinate CA | Top of trust chain / intermediate that issues end-entity certificates |
+| Self-signed certificate | Certificate signed by its own key; trust must be manually established |
+| Certificate pinning | Application accepts only a specific certificate or public key |
+| Authentication vs authorization | Who you are vs what you can do |
+| MFA | Two or more *different* factor types |
+| SSO | Authenticate once, access many resources (Kerberos, SAML, OIDC) |
+| LDAP / LDAPS | Directory protocol: TCP 389 / TCP 636 (TLS) |
+| SAML | XML-based web SSO; IdP issues signed assertions to the SP |
+| RADIUS | UDP 1812/1813; network access AAA; encrypts the password only |
+| TACACS+ | TCP 49; Cisco device-admin AAA; full encryption; per-command authorization |
+| Least privilege | Minimum access needed for the job |
+| RBAC | Permissions assigned to roles, users assigned to roles |
+| Geofencing | Virtual geographic boundary controlling access |
+| Honeypot / honeynet / honeyfile | Decoy system / decoy network / decoy file |
+| CIA triad | Confidentiality, integrity, availability |
+| Threat / vulnerability / exploit / risk | Source of harm / flaw / method of abuse / potential loss |
+| CVE | Public ID catalog of known vulnerabilities |
+| Shadow IT | Unmanaged technology unknown to IT/security |
+| PCI DSS | Card industry data security standard (contractual, not law) |
+| GDPR | EU personal data regulation; opt-in consent; right to be forgotten |
+| Data sovereignty | Data is subject to the laws of the country where it's stored |
+| Air gap | Physical isolation with no network connection |
+| SCADA / ICS / OT | Industrial control systems for physical infrastructure |
+| BYOD | Personal devices on the corporate network; segment them |
+
+---
+
+## Real-World Connections
+
+**k3s lab:**
+- **PKI in your cluster:** k3s runs its own **internal CA**. Look in `/var/lib/rancher/k3s/server/tls/` and you'll find `server-ca.crt` and `client-ca.crt`. Every kubelet, the API server, and your kubeconfig client certificate are signed by it. Your `~/.kube/config` holds a base64 client certificate and key, which is certificate-based authentication. Because the CA is internal, nothing outside your cluster trusts it, exactly as the lesson describes.
+- **RBAC:** Kubernetes RBAC is this lesson's RBAC model: `Role`/`ClusterRole` (privileges) + `RoleBinding` (assign them to a user or ServiceAccount). Kubeshark and the Elastic operators run with ServiceAccounts. Check them with `kubectl auth can-i --list --as=system:serviceaccount:<ns>:<sa>` to audit least privilege.
+- **Segmentation:** NetworkPolicies are logical segmentation inside the cluster. A default-deny policy for the `elastic` namespace with only Kibana → Elasticsearch:9200 allowed is micro-segmentation (see [[L08 - Modern Networks]]).
+
+**AWS/GCP:**
+- AWS **ACM** = managed public CA; **AWS Private CA** = managed internal CA.
+- **IAM Identity Center** = SSO using SAML/OIDC federation. AWS IAM policies are least privilege in JSON.
+- **KMS** = key management for data at rest (envelope encryption: a symmetric data key wrapped by a master key, the same hybrid pattern as TLS).
+- Data residency: choosing `eu-central-1` for GDPR data is a sovereignty decision. **AWS Organizations SCPs** can deny resource creation outside approved regions.
+- Segmentation = VPCs, subnets, and Security Groups. GCP has VPC Service Controls for perimeter isolation.
+
+**Enterprise:** A typical setup: Entra ID/Okta as the SAML IdP for SaaS SSO, AD over LDAPS for on-prem apps, RADIUS (NPS/ISE) for 802.1X Wi-Fi and VPN, and TACACS+ (ISE) for switch/router admin logins with per-command authorization and full command accounting.
+
+**Telecom/5G:** 5G uses its own PKI and AKA (Authentication and Key Agreement) with the SIM as "something you have." V2X sidelink uses the **IEEE 1609.2 / ETSI ITS PKI** with pseudonym certificates. Vehicles sign every Basic Safety Message for integrity and authenticity while rotating certificates to preserve privacy. It's the same chain-of-trust model as web PKI, at vehicular scale.
+
+---
+
+## Troubleshooting Scenario
+
+**Scenario:** After a security audit, network engineers must log in to core switches with individual accounts, and auditors want a record of every command each engineer runs. The current setup is RADIUS against the corporate directory. Auditors also say the auth traffic between switches and the server exposes too much in a packet capture.
+
+**Analysis:**
+- RADIUS combines authentication and authorization and has no per-command authorization or accounting, so it can't answer "who ran `no shutdown` on Gi1/0/1?"
+- RADIUS encrypts only the password field. Username, attributes, and accounting data are visible on the wire.
+
+**Fix:** Migrate device administration to **TACACS+ (TCP 49)**:
+- Per-command authorization (e.g., NetOps-Junior cannot run `reload` or `conf t` on core switches)
+- Command accounting logs every command per user, which meets the audit requirement
+- The full payload is encrypted
+- Keep RADIUS for end-user 802.1X and VPN access, where it fits best
+- Configure a local fallback account and out-of-band console access ([[L17 - Network Access and Management]]) in case the AAA server is unreachable
+
+**Verify:**
+```
+show tacacs                  ! server reachability and stats (Cisco)
+debug tacacs authentication
+show aaa sessions
+```
+
+---
+
+## Hands-On Ideas
+
+1. **Symmetric vs asymmetric vs hash with openssl:**
+   ```bash
+   echo "secret" > msg.txt
+   # Symmetric (AES-256, salted, PBKDF2)
+   openssl enc -aes-256-cbc -pbkdf2 -salt -in msg.txt -out msg.enc
+   openssl enc -d -aes-256-cbc -pbkdf2 -in msg.enc
+   # Asymmetric keypair + sign/verify (non-repudiation)
+   openssl genpkey -algorithm RSA -out priv.pem -pkeyopt rsa_keygen_bits:2048
+   openssl pkey -in priv.pem -pubout -out pub.pem
+   openssl dgst -sha256 -sign priv.pem -out msg.sig msg.txt
+   openssl dgst -sha256 -verify pub.pem -signature msg.sig msg.txt
+   # Hash (integrity)
+   sha256sum msg.txt
+   ```
+   Encrypt the same file twice with `openssl enc` and compare the outputs. They differ because of the random salt/IV.
+2. **Walk a real chain of trust:** `openssl s_client -connect github.com:443 -showcerts </dev/null` and identify the leaf, intermediate, and root.
+3. **Inspect the k3s internal CA:** `sudo openssl x509 -in /var/lib/rancher/k3s/server/tls/server-ca.crt -noout -subject -issuer -dates`. Subject = issuer means it's a self-signed root.
+4. **Audit RBAC least privilege:** `kubectl get clusterrolebindings -o wide | grep -v system:` then look for anything bound to `cluster-admin` that shouldn't be.
+5. **Cheap honeypot:** Run `nc -lkv 2222` (or deploy Cowrie in a pod) on an unused port and ship the logs to Elasticsearch. Any connection is a signal worth alerting on in Kibana.
+6. **Segmentation test:** Apply a default-deny NetworkPolicy to a test namespace, confirm `curl` between pods fails, then allow one specific flow.
+
+---
+
+## Quiz
+
+1. A user signs in with a password and then enters a 6-digit PIN. Is this MFA?
+   - A) Yes, two credentials were used  B) No, both are something you know  C) Yes, the PIN is something you have  D) Only if the PIN is time-based
+
+2. Which encryption approach provides **non-repudiation**?
+   - A) AES with a pre-shared key  B) Hashing a file with SHA-256  C) Signing with the sender's private key  D) Encrypting with the receiver's public key
+
+3. A network team wants per-command authorization and full payload encryption for admins logging in to Cisco switches. Which protocol and port?
+   - A) RADIUS, UDP 1812  B) TACACS+, TCP 49  C) LDAP, TCP 389  D) SAML, TCP 443
+
+4. Which port does secure LDAP use?
+   - A) 389  B) 443  C) 636  D) 1813
+
+5. A server set up to look vulnerable, with no production role, alerts the SOC whenever anyone connects. What is it?
+   - A) Jump box  B) Honeypot  C) Bastion host  D) SIEM
+
+6. An online retailer in the US sells to customers in Germany. Which regulation definitely applies to their customer data?
+   - A) HIPAA  B) SOX  C) GDPR  D) GLBA
+
+7. Which statement about PCI DSS is correct?
+   - A) It is US federal law  B) It applies only to banks  C) It is an industry standard enforced contractually by card brands  D) It covers healthcare data
+
+8. An attacker uses a published proof-of-concept script against an unpatched VPN appliance. In risk terminology, the script is the:
+   - A) Threat  B) Vulnerability  C) Exploit  D) Risk
+
+9. A factory's PLCs sit on the same VLAN as office workstations. What's the best recommendation?
+   - A) Enable a guest network  B) Segment OT/SCADA onto an isolated network with strict firewall rules  C) Move PLCs to split-tunnel VPN  D) Install cable locks
+
+10. Security cameras in the MDF are best described as which kind of control?
+    - A) Preventive  B) Detective/audit  C) Corrective  D) Deterrent only, with no audit value
+
+11. Why is an IV used in encryption?
+    - A) To make the key longer  B) So identical plaintext doesn't produce identical ciphertext  C) To sign the message  D) To compress data before encryption
+
+12. Marketing staff start using an unapproved cloud file-sharing app that IT doesn't know about. What is this?
+    - A) BYOD  B) Shadow IT  C) Honeyfile  D) Data sovereignty
+
+**Answers:** 1-B, 2-C, 3-B, 4-C, 5-B, 6-C, 7-C, 8-C, 9-B, 10-B, 11-B, 12-B
+
+---
+
+## Weak Areas to Revisit
+*(none flagged yet)*
+
+---
+
+## Linked Pages
+- [[L04 - Ports, Protocols & Services]] — Ports and Protocols (LDAP 389, LDAPS 636, HTTPS 443)
+- [[L08 - Modern Networks]] — Zero Trust, micro-segmentation, SASE
+- [[L10 - Switching Technologies]] — VLANs as the main logical segmentation tool
+- [[L11 - Wireless Devices and Technologies]] — WPA2/WPA3-Enterprise uses RADIUS for 802.1X; AES in Wi-Fi
+- [[L12 - Physical Installations]] — MDF/IDF physical locations that need physical security
+- [[L15 - Disaster Recovery]] — Availability (redundancy, DR) as the third CIA pillar
+- [[L16 - IP Services]] — DNSSEC and DoH/DoT as applied cryptography
+- [[L17 - Network Access and Management]] — IPsec/TLS VPNs (crypto in transit), out-of-band management, jump box
+- [[concepts/ports-and-protocols]] — Updated with RADIUS and TACACS+
+- [[certs/network-plus]] — Domain 4.1 objective

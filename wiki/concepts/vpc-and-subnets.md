@@ -97,6 +97,6 @@ All cloud firewall rules (SG, ACL, NGFW) are built on:
 | Ingress Controller | Internet Gateway + ALB |
 
 ## Linked Lessons
-- [[L03]] — full lesson on cloud networking
+- [[L03 - Network Virtualization & Cloud Technologies]] — full lesson on cloud networking
 - [[concepts/cloud-fundamentals]] — service models and deployment types
 - [[labs/k3s-lab]] — k3s as private cloud

@@ -1,0 +1,391 @@
+---
+id: L25
+aliases: [L25]
+title: Troubleshooting Tools
+course: CompTIA Network+ N10-009
+cert_track: network-plus
+objective: "5.5 — Network Troubleshooting: Given a Scenario, Use the Appropriate Tool or Protocol to Solve Networking Issues"
+date: 2026-10-08
+status: Complete
+quiz_attempted: No
+weak_areas: []
+tags: [protocol-analyzer, wireshark, ping, traceroute, tracert, nslookup, dig, tcpdump, tshark, netstat, ss, ip, ifconfig, ipconfig, arp, nmap, cdp, lldp, iperf, speed-test, toner, cable-tester, tap, wifi-analyzer, tdr, otdr, visual-fault-locator, show-commands]
+---
+
+# L25 — Troubleshooting Tools
+
+## Summary
+This is the last objective of Domain 5 and of the whole Network+ course. It's a toolbox: **software tools** (protocol analyzers, CLI utilities, Nmap, CDP/LLDP, speed testers), **hardware tools** (toner, cable tester, TAP, Wi-Fi analyzer, fault locators), and **Cisco device `show` commands**. Exam questions are almost always **"which tool would you use to…"**, so learn each tool's **one-line purpose** and its **closest distractor**. Every earlier troubleshooting lesson ([[L22 - Troubleshooting Cabling and Physical Issues]]–[[L24 - Troubleshooting Network Performance Issues]]) used these tools; this lesson names them.
+
+---
+
+## Core Concepts
+
+### Software Tools
+
+#### Protocol Analyzer (Wireshark)
+- **Captures and decodes** traffic: every header field per layer, follows TCP streams, reassembles files.
+- **Decrypts TLS** if you supply keys (session key log `SSLKEYLOGFILE`, or the server's RSA private key for non-forward-secret ciphers).
+- **Statistics:** top talkers (Conversations / Endpoints), protocol hierarchy, I/O graphs, used to build a **baseline** ([[L14 - Network Monitoring]]) as well as to troubleshoot.
+
+**Analyzer vs capture tool:** tcpdump/tshark *capture* (and print); Wireshark *captures and analyzes*. On the exam, "decode / analyze protocol details" → **protocol analyzer**.
+
+#### ping — Layer 3 Reachability
+- Sends **ICMP Echo Request**, expects **Echo Reply**. Tests **IP connectivity only**, not whether a service (port) is up.
+- Reports **round-trip time** and **packet loss**.
+- **Pinging by hostname also tests DNS.** If it fails by name but works by IP → DNS ([[L21 - Network Troubleshooting Methodology]]).
+- A failure doesn't always mean "down": ICMP may be **blocked by a firewall** or the host may not reply.
+
+| Option | Windows | Linux/macOS |
+|--------|---------|-------------|
+| Default count | **4 packets** then stops | **Continuous** until Ctrl-C |
+| Count | `-n 10` | `-c 10` |
+| Continuous | `-t` | (default) |
+| Packet size | `-l 1472` | `-s 1472` |
+| Don't fragment | `-f` | `-M do` |
+| TTL | `-i 64` | `-t 64` |
+
+#### traceroute / tracert — Hop-by-Hop Path
+**How it works:** it sends probes with increasing **TTL**. Each router decrements TTL; when TTL hits 0, that router returns **ICMP Time Exceeded**, revealing itself.
+```
+TTL=1 → router 1 replies "Time Exceeded"   (hop 1)
+TTL=2 → router 2 replies "Time Exceeded"   (hop 2)
+TTL=3 → destination replies                 (done)
+3 probes per hop → 3 RTT values per line; default max 30 hops
+```
+- `* * *` = that hop **doesn't respond** (filtered or rate-limited). It's *not necessarily* a failure if later hops answer.
+- Use it to find **where** latency jumps or where the path stops.
+
+| | Windows `tracert` | Linux `traceroute` |
+|-|------------------|-------------------|
+| Probe type | **ICMP Echo** | **UDP** (high ports 33434+) by default; `-I` = ICMP, `-T` = TCP |
+| Final hop reply | Echo Reply | ICMP Port Unreachable |
+
+Related: **`pathping`** (Windows) and **`mtr`** (Linux) combine traceroute + per-hop loss stats over time.
+
+> **Transcript clarification:** The lecture says traceroute "also sends ICMP." That's true for Windows `tracert`; **Linux `traceroute` uses UDP by default**. All of them rely on **ICMP Time Exceeded** replies.
+
+#### nslookup / dig — DNS Queries
+Query DNS directly instead of letting resolution happen in the background ([[L16 - IP Services]]).
+```
+nslookup www.google.com                 # uses your configured resolver
+nslookup www.google.com 8.8.8.8         # ask a specific server
+dig www.google.com                      # detailed: flags, TTL, answering server
+dig @8.8.8.8 www.google.com A +short    # specific server, A record, terse
+dig example.com MX / NS / TXT / AAAA    # other record types
+dig +trace example.com                  # walk root → TLD → authoritative
+dig -x 8.8.8.8                          # reverse (PTR)
+```
+**Different servers can return different answers** (geo-DNS / load balancing, stale caches, split-horizon DNS). Querying a second resolver isolates resolver problems from authoritative-record problems.
+
+`dig` is the Linux/macOS standard; `nslookup` exists everywhere (including Windows).
+
+#### tcpdump / tshark — Packet Capture
+- Command-line raw capture: **real-time view** or write to `.pcap` for Wireshark.
+- High-traffic links generate **huge volume** and the capture host can **drop packets**, so **always choose an interface and filter**.
+```
+sudo tcpdump -i eth0 -nn -c 100 icmp                 # interface, no name/port resolution, 100 pkts, ICMP only
+sudo tcpdump -i eth0 -nn host 10.0.0.5 and port 53   # BPF filter
+sudo tcpdump -i eth0 -w capture.pcap                 # save for Wireshark
+tshark -i eth0 -Y "http.request" -T fields -e http.host
+```
+
+#### ip / ifconfig / ipconfig — Interface Configuration
+| OS | Command | Shows |
+|----|---------|-------|
+| Linux (modern) | `ip addr` (`ip a`), `ip -s link` (stats), `ip route`, `ip neigh` | IP/mask, MAC, state, RX/TX counters, routes, ARP |
+| Linux (legacy) / macOS | `ifconfig` | IP, mask, broadcast, MAC, counters |
+| Windows | `ipconfig`, `ipconfig /all` (MAC, DHCP server, DNS, lease), `/release`, `/renew`, `/flushdns` | |
+
+These can **temporarily** change settings (`ip addr add …`, `ifconfig eth0 …`), which are lost on reboot unless saved in netplan/NetworkManager.
+
+> **Transcript note:** The captions' "ipadd" = `ip addr`; "IP stats address" = `ip -s addr` / `ip -s link`.
+
+#### netstat / ss — Connections and Listening Ports
+```
+netstat -an          # all sockets, numeric (Windows/Linux)
+netstat -tulpn       # Linux: TCP+UDP, listening, with PID/program, numeric
+netstat -r           # routing table
+ss -tulpn            # modern Linux replacement for netstat
+```
+Use it to answer: "Is the service actually **listening**?", "On which IP (0.0.0.0 vs 127.0.0.1)?", "Who is connected?", "Lots of `TIME_WAIT` / `SYN_RECV`?" (the latter suggests a SYN flood).
+
+> **Transcript correction:** The lecture reads its example as "DHCP server on port 53." **Port 53 is DNS** (e.g., `dnsmasq`/`systemd-resolved` listening). DHCP uses UDP 67/68.
+
+#### arp — IP-to-MAC Cache
+`arp -a` (Windows/Linux/macOS), `ip neigh` (Linux). It shows **only local-subnet** devices (and the gateway). Remote hosts are never in your ARP cache, because you ARP for the **gateway** instead ([[L23 - Network Service Troubleshooting]] on-net/off-net). Useful for spotting **ARP poisoning** (gateway MAC changed, two IPs with the same MAC, [[L19 - Network Attacks]]).
+
+#### Nmap — Network Mapper
+**Discovers hosts and open ports** across a network; verifies services and whether a **firewall** allows access.
+```
+nmap -sn 192.168.1.0/24          # host discovery (ping sweep), no port scan
+nmap 192.168.1.10                # default: top 1,000 TCP ports
+nmap -sS -p 22,80,443 host       # SYN scan, specific ports
+nmap -sV host                    # probe services for actual version
+nmap -sU -p 53,161 host          # UDP scan
+nmap -O host                     # OS fingerprinting
+```
+**Port states:** `open` (service answering), `closed` (host reachable, nothing listening, RST), **`filtered`** (no response, so a firewall is **dropping**, [[L20 - Network Defense Techniques]] drop vs reject).
+
+The service name in default output is a **guess based on the port number**. Use `-sV` to actually identify it.
+
+> Only scan networks you own or have written permission to test.
+
+#### CDP / LLDP — Neighbor Discovery (Layer 2)
+| | CDP | LLDP |
+|-|-----|------|
+| Vendor | **Cisco-proprietary** (on by default on Cisco) | **Vendor-neutral** IEEE 802.1AB (Linux `lldpd`, most switches, IP phones via LLDP-MED) |
+| Shows | Neighbor device ID, local/remote port, platform, IP, native VLAN | Same idea |
+| Command | `show cdp neighbors [detail]` | `show lldp neighbors [detail]` |
+
+Answers "**what is plugged into this port?**" without walking to the closet. **Security trade-off:** it leaks topology/IOS version, so disable it on untrusted/edge ports (hardening, [[L20 - Network Defense Techniques]]).
+
+#### Speed Testers / iperf
+- **iperf3:** server/client pair you control (`iperf3 -s` / `iperf3 -c <server>`). Measures **throughput**; in UDP mode (`-u -b 50M`) also **jitter and packet loss** ([[L24 - Troubleshooting Network Performance Issues]]).
+- **Internet speed tests** (Speedtest, fast.com): upload/download, ping, latency under load. Good for a **basic baseline**, but performance **to your critical business apps** matters more than speed to a random server.
+- FTP/large file copy: crude throughput check.
+
+---
+
+### Hardware Tools
+
+| Tool | Purpose | Key detail |
+|------|---------|-----------|
+| **Toner probe** (tone generator + probe, "fox and hound") | **Find/trace a cable**: which wall jack goes to which patch-panel port | Connect the **tone generator** at the jack, then sweep the **probe** (the pointy "hound") over the cables in the closet until you hear the tone |
+| **Cable tester** | **Verify copper wiring**: wire map **opens, shorts, crossed/split pairs**, and on better models length and resistance | High resistance means bad termination and signal loss ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| **Cable certifier** | Certifies a run meets its **category spec** (Cat6/6a): NEXT, attenuation, return loss | Beyond a tester. Used after installs |
+| **TAP** (test access point) | **Passive inline copy** of all traffic to a monitoring port, including errored frames | Inline hardware vs switch **SPAN/port mirroring** ([[L14 - Network Monitoring]]) |
+| **Wi-Fi analyzer** | Signal strength (RSSI), channel usage/overlap, noise, **management frames** | Surveys, heat maps, interference hunting ([[L24 - Troubleshooting Network Performance Issues]]). Runs on a laptop NIC, an AP, or a controller |
+| **TDR** (time-domain reflectometer) | **Distance to a fault** (open, short, kink) on **copper** | Sends a pulse, times the reflection |
+| **OTDR** (optical TDR) | Distance to faults, splices, and bends on **fiber**; loss per segment | Fiber equivalent of a TDR |
+| **Visual fault locator (VFL)** | Shines **visible red laser** into fiber; light **glows at breaks/tight bends** | Short-range fiber fault finding; also checks continuity/polarity |
+| **Optical light meter / power meter** | Measures fiber Rx power (dBm) | Pairs with DOM ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| **Multimeter** | Voltage, continuity, PoE presence | Electrical basics |
+| **Loopback adapter** | Tests a port by looping TX back to RX | NIC/port self-test |
+
+> **Transcript corrections:**
+> - **Toner:** the lecture reverses the parts. The **tone generator** (fox) connects to the cable; the **probe** (hound, the pointy part) is what you sweep in the closet.
+> - **TAPs are not legacy.** The lecture calls physical taps "for older Ethernet." Passive **fiber and copper TAPs are standard today** (10/40/100G) because, unlike SPAN, they don't drop packets under load and they pass errored frames. SPAN is cheaper and more common, but TAPs are preferred for security monitoring and forensics.
+
+---
+
+### Cisco Device Commands
+
+| Command | What it shows | Use it to… |
+|---------|--------------|-----------|
+| `show mac address-table` | **MAC → port (+VLAN)** mappings | Find **which port** a device is on (then cross-reference an ARP table for its IP) |
+| `show ip route` | Connected (`C`), static (`S`), learned (`O`/`D`/`R`/`B`) routes, gateway of last resort | Missing default route, routes not learned ([[L23 - Network Service Troubleshooting]]) |
+| `show interfaces [int]` | Status (up/down, err-disabled), MAC, IP/mask, speed/duplex, **counters**: CRC, runts, giants, collisions, drops | Layer 1/2 problems ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| `show ip interface brief` | One-line status + IP per interface | Quick admin-down / missing IP check |
+| `show running-config` | **Current active config (RAM)** | What's configured now |
+| `show startup-config` | Config loaded at **boot (NVRAM)** | If it differs from running, **unsaved changes will be lost on reload** (`copy run start`) |
+| `show vlan [brief]` | VLANs and **which access ports** belong to each | Wrong VLAN assignment ([[L23 - Network Service Troubleshooting]]) |
+| `show interfaces trunk` | Trunk ports, allowed/active VLANs, native VLAN | VLAN isolated across switches |
+| `show ip arp` | **IP → MAC** mappings learned by the device | Map an IP to a MAC (then to a port with the MAC table) |
+| `show power inline` | Per-port PoE draw/class, **total budget used/remaining** | PoE budget issues ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| `show cdp neighbors` / `show lldp neighbors` | Directly connected devices | Topology discovery |
+| `show spanning-tree` | Root bridge, port roles/states | STP issues ([[L23 - Network Service Troubleshooting]]) |
+| `show logging` | Syslog buffer | Flapping, err-disable, violations |
+
+**Locate a device from its IP (classic workflow):**
+```
+Router/L3 switch:  show ip arp 10.1.20.55          → MAC 00aa.bb11.2233
+Switch:            show mac address-table address 00aa.bb11.2233   → Gi1/0/17
+Switch:            show cdp neighbors Gi1/0/17     → (if it's another switch, repeat there)
+```
+
+---
+
+## "Which Tool?" Cheat Sheet
+
+| Task | Tool |
+|------|------|
+| Is the host reachable at Layer 3? | **ping** |
+| Where along the path does it fail/slow down? | **traceroute / tracert** (pathping/mtr for loss per hop) |
+| Does the name resolve? Which IP? From which server? | **nslookup / dig** |
+| Capture packets on a Linux server CLI | **tcpdump** (or tshark) |
+| Decode and analyze protocol details, follow streams | **Protocol analyzer (Wireshark)** |
+| Is the service listening on the server? | **netstat / ss** |
+| Which ports are open on a remote host / through a firewall? | **Nmap** |
+| What's my IP, mask, gateway, DHCP server? | **ipconfig /all** / **ip addr** |
+| What's the MAC of a local IP? | **arp -a** / `show ip arp` |
+| What device is on the other end of this switch port? | **CDP/LLDP** |
+| Measure throughput, jitter, loss between two points | **iperf** |
+| Which wall jack goes to which patch-panel port? | **Toner probe** |
+| Is the copper cable wired correctly? | **Cable tester** |
+| How far down the copper cable is the break? | **TDR** |
+| How far down the fiber is the break / splice loss? | **OTDR** |
+| Find a fiber break or tight bend visually | **Visual fault locator** |
+| Copy all traffic on a link passively without drops | **TAP** |
+| Channel overlap, RSSI, interference | **Wi-Fi analyzer** |
+| Which switch port is this MAC on? | `show mac address-table` |
+| Port errors / duplex / CRC | `show interfaces` |
+| Which VLAN is this port in? | `show vlan` |
+| Is the PoE budget exhausted? | `show power inline` |
+| Unsaved config changes? | Compare `show running-config` vs `show startup-config` |
+
+---
+
+## Key Terms
+
+| Term | Definition |
+|------|-----------|
+| Protocol analyzer | Captures and decodes traffic per protocol (Wireshark) |
+| ping | ICMP echo test of Layer 3 reachability + RTT/loss |
+| traceroute / tracert | TTL-incrementing probes revealing each router hop |
+| ICMP Time Exceeded | Reply sent when TTL reaches 0; basis of traceroute |
+| pathping / mtr | Traceroute + per-hop loss statistics |
+| nslookup / dig | Direct DNS query tools |
+| tcpdump / tshark | CLI packet capture |
+| BPF filter | Capture filter syntax (`host`, `port`, `icmp`…) |
+| ip / ifconfig / ipconfig | Interface configuration tools (Linux modern / legacy / Windows) |
+| netstat / ss | Socket, connection, and listening-port listing |
+| arp -a | Shows the local IP→MAC cache |
+| Nmap | Host discovery and port scanning; open/closed/filtered |
+| CDP / LLDP | Cisco / vendor-neutral Layer 2 neighbor discovery |
+| iperf | Client/server throughput, jitter, and loss tester |
+| Toner probe (fox & hound) | Tone generator + probe to trace cables |
+| Cable tester / certifier | Wire map faults / category compliance |
+| TAP | Passive hardware copy of link traffic |
+| SPAN / port mirroring | Switch-based traffic copy |
+| Wi-Fi analyzer | RSSI, channel, noise, management frame visibility |
+| TDR / OTDR | Distance-to-fault for copper / fiber |
+| Visual fault locator | Red laser to reveal fiber breaks/bends |
+| running-config vs startup-config | Active (RAM) vs boot (NVRAM) configuration |
+
+---
+
+## Real-World Connections
+
+**k3s lab: the same tools, one namespace deeper**
+| Classic tool | In your cluster |
+|-------------|----------------|
+| ping/traceroute from a host | `kubectl debug node/<node> -it --image=nicolaka/netshoot` or `kubectl run tmp --rm -it --image=nicolaka/netshoot` (has ping, dig, tcpdump, iperf3, nmap, mtr, ss) |
+| tcpdump on a pod's traffic | On the node: find the pod's veth (`ip link` / `crictl inspect`), `tcpdump -i vethXXXX`; or **Kubeshark**, which is a cluster-wide protocol analyzer |
+| Wireshark | Kubeshark exports PCAP; open it in Wireshark |
+| dig | `kubectl exec <pod> -- dig elasticsearch-es-http.elastic.svc.cluster.local` (tests CoreDNS) |
+| netstat/ss | `kubectl exec <pod> -- ss -tlnp`: is Elasticsearch listening on 0.0.0.0:9200 or only localhost? |
+| nmap | `nmap -p 30000-32767 <node-ip>` shows exposed NodePorts (a hardening check) |
+| show mac address-table | `bridge fdb show br cni0` (Linux bridge MAC table) |
+| show ip route | `ip route` on the node: per-node pod CIDR routes via `flannel.1` |
+| LLDP | `sudo apt install lldpd && lldpcli show neighbors` to see which switch port each node is plugged into |
+
+**AWS/GCP:**
+- **VPC Reachability Analyzer** = a config-based traceroute (no packets sent).
+- **VPC Traffic Mirroring** = a cloud TAP/SPAN, mirroring ENI traffic to a monitoring instance.
+- **VPC Flow Logs** = NetFlow-style metadata, not full packets ([[L14 - Network Monitoring]]).
+- `traceroute` inside AWS shows few hops, since the VPC fabric hides the underlay. Don't expect enterprise-style hop lists.
+- Security Groups often block ICMP, so ping fails while TCP 443 works. Test with `nc -zv host 443` or `curl` instead.
+
+**Enterprise:** Network teams standardize on Wireshark + a TAP/packet broker for forensics, Fluke/NetAlly testers for cabling, Ekahau for Wi-Fi surveys, and `show` commands collected automatically (Ansible/NetBox) for config drift (running vs startup).
+
+---
+
+## Troubleshooting Scenario
+
+**Scenario:** A user at desk 4B reports they can't reach the internal web app `intranet.corp.local`. Coworkers can. You're remote and have CLI access to the access switch and the user's PC via a support tool.
+
+**Tool-driven walk-through ([[L21 - Network Troubleshooting Methodology]]):**
+| Step | Tool / command | Result → conclusion |
+|------|---------------|---------------------|
+| 1 | `ipconfig /all` on PC | IP `10.20.30.44/24`, gateway `10.20.30.1`, DHCP server `10.0.0.5` — but users at 4B should be in **10.10.x.x** |
+| 2 | `arp -a` on the switch's SVI / `show ip arp 10.20.30.44` | MAC `3c52.8211.aa01` |
+| 3 | `show mac address-table address 3c52.8211.aa01` | Port **Gi1/0/22**, **VLAN 30** |
+| 4 | `show vlan brief` | Gi1/0/22 is in VLAN 30 (Guest), expected VLAN 10 (Staff) |
+| 5 | `show running-config interface Gi1/0/22` vs a neighbor port | `switchport access vlan 30`, changed during last week's patching |
+| Fix | `switchport access vlan 10` (via change management) | |
+| Verify | `ipconfig /renew` → 10.10.x.x; `nslookup intranet.corp.local` resolves; `ping` + browser OK | |
+| Preventive | Port descriptions + periodic config compliance check | |
+| Document | Ticket + note that the patch-panel map was out of date (use a **toner** to re-verify the 4B jacks) | |
+
+---
+
+## Hands-On Ideas
+
+1. **Run the full toolbox on your Ubuntu node** and save the outputs as your baseline:
+   ```bash
+   ip -s link; ip a; ip route; ip neigh
+   ss -tulpn
+   ping -c 20 <gateway>; mtr -rwc 50 1.1.1.1
+   dig +trace github.com
+   sudo tcpdump -i eth0 -nn -c 50 'udp port 53'
+   ```
+2. **traceroute protocol comparison:** `traceroute 1.1.1.1` (UDP) vs `sudo traceroute -I 1.1.1.1` (ICMP) vs `sudo traceroute -T -p 443 1.1.1.1` (TCP). Note which hops appear in each. Firewalls treat them differently.
+3. **Nmap your own lab:** `nmap -sV <node-ip>`. Is every open port justified? Compare with `ss -tulpn` on the node (outside view vs inside view).
+4. **Wireshark TLS decryption:** `SSLKEYLOGFILE=~/keys.log curl https://example.com` while capturing, then load the key log in Wireshark (Preferences → TLS) and watch the HTTP/2 decrypt.
+5. **LLDP:** install `lldpd` on each node to see your switch port mapping (if your switch supports LLDP).
+6. **netshoot pod:** `kubectl run netshoot --rm -it --image=nicolaka/netshoot -- bash` and repeat exercise 1 from inside the pod network.
+
+---
+
+## Quiz
+
+1. Which tool would you use to see the exact HTTP headers exchanged and follow a TCP conversation?
+   - A) Nmap  B) Toner probe  C) netstat  D) Protocol analyzer
+
+2. A user can ping `10.1.1.20` but not `fileserver.corp.local`. Which tool should you use next?
+   - A) nslookup/dig  B) traceroute  C) Cable tester  D) arp
+
+3. How does traceroute identify each hop?
+   - A) DNS reverse lookups  B) ARP requests  C) Incrementing TTL and collecting ICMP Time Exceeded replies  D) CDP announcements
+
+4. A traceroute shows `* * *` at hop 4, but hops 5–9 respond normally. What does this mean?
+   - A) The path is broken at hop 4  B) Hop 4 doesn't respond to/filters probes; the path is fine  C) DNS failed  D) A duplex mismatch
+
+5. You need to confirm that a web server process is actually listening on TCP 443 on the server itself. Which tool?
+   - A) netstat/ss  B) ping  C) Toner  D) OTDR
+
+6. An admin scans a server and sees port 3389 as "filtered." What does that indicate?
+   - A) Service running  B) Nothing listening, host replied RST  C) A firewall is dropping probes  D) Wrong VLAN
+
+7. Which Layer 2 discovery protocol is vendor-neutral?
+   - A) CDP  B) LLDP  C) STP  D) VTP
+
+8. A technician must find which patch-panel port connects to wall jack 214. Which tool?
+   - A) Toner probe  B) TDR  C) Wi-Fi analyzer  D) Loopback adapter
+
+9. Which tool measures the distance to a break in a fiber run?
+   - A) TDR  B) OTDR  C) Cable tester  D) Multimeter
+
+10. Which tool provides a passive copy of all traffic on a link, including errored frames, without dropping under load?
+    - A) SPAN  B) Toner  C) iperf  D) TAP
+
+11. Which Cisco command shows which switch port a given MAC address is connected to?
+    - A) `show ip route`  B) `show vlan`  C) `show mac address-table`  D) `show power inline`
+
+12. A switch reloads after a power cut, and last week's VLAN changes are gone. What happened, and which commands would have shown it?
+    - A) The changes were never saved; compare `show running-config` and `show startup-config`  B) STP reset; `show spanning-tree`  C) PoE budget; `show power inline`  D) ARP flush; `show ip arp`
+
+13. You need to measure throughput, jitter, and packet loss between two branch servers. Which tool?
+    - A) ping  B) iperf  C) nslookup  D) Cable tester
+
+14. Which tool identifies channel overlap and RSSI across an office?
+    - A) Wi-Fi analyzer  B) Protocol analyzer  C) TDR  D) Nmap
+
+15. On Linux, `ping` runs continuously by default. What is the Windows default?
+    - A) Continuous  B) 4 packets  C) 10 packets  D) 1 packet
+
+16. Which command shows the IP-to-MAC mappings a Cisco router has learned?
+    - A) `show mac address-table`  B) `show ip arp`  C) `show interfaces`  D) `show cdp neighbors`
+
+**Answers:** 1-D, 2-A, 3-C, 4-B, 5-A, 6-C, 7-B, 8-A, 9-B, 10-D, 11-C, 12-A, 13-B, 14-A, 15-B, 16-B
+
+---
+
+## Weak Areas to Revisit
+*(none flagged yet)*
+
+---
+
+## Linked Pages
+- [[L01 - The OSI Model]] — OSI layers (match tools to layers)
+- [[L04 - Ports, Protocols & Services]] — Ports (Nmap results, netstat output)
+- [[L14 - Network Monitoring]] — Packet capture, SPAN, NetFlow, baselines
+- [[L16 - IP Services]] — DNS records and resolution (nslookup/dig)
+- [[L19 - Network Attacks]] — ARP poisoning (arp -a), scanning
+- [[L20 - Network Defense Techniques]] — Drop vs reject (Nmap filtered vs closed), CDP hardening
+- [[L21 - Network Troubleshooting Methodology]] — Troubleshooting methodology
+- [[L22 - Troubleshooting Cabling and Physical Issues]] — `show interfaces` counters, cable faults, PoE
+- [[L23 - Network Service Troubleshooting]] — `show ip route`, `show vlan`, STP
+- [[L24 - Troubleshooting Network Performance Issues]] — iperf, Wi-Fi analyzers, performance metrics
+- [[certs/network-plus]] — Domain 5.5 objective

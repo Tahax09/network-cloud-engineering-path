@@ -284,7 +284,7 @@ Module 2 graded quiz. Covers L09 (Routing Technologies) plus switching, wireless
 
 | Questions | Content |
 |-----------|---------|
-| Q4, Q13, Q14, Q20, Q21, Q22, Q23, Q25, Q26 | [[L09]] — Routing Technologies (NAT/PAT, BGP, EIGRP AD, static routes, FHRP, OSPF) |
+| Q4, Q13, Q14, Q20, Q21, Q22, Q23, Q25, Q26 | [[L09 - Routing Technologies]] — Routing Technologies (NAT/PAT, BGP, EIGRP AD, static routes, FHRP, OSPF) |
 | Q2, Q6, Q7, Q11, Q15, Q17, Q19 | Switching Technologies (VLANs, STP, SVI, jumbo frames, LACP) — L10 (pending) |
 | Q3, Q5, Q10, Q16, Q18, Q24 | Wireless Technologies (ESS, antennas, site survey, channels, WPA3) — L11 (pending) |
 | Q1, Q8, Q9 | Physical Installations (MDF/IDF, environmental monitoring, UPS) — L12 (pending) |

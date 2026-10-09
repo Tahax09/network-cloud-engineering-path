@@ -433,11 +433,11 @@ Module 1 graded quiz covering all content from L01–L08.
 
 | Questions | Lesson |
 |-----------|--------|
-| Q1–Q4 | [[L01]] — OSI Model, PDUs, encapsulation |
-| Q5–Q11 | [[L02]] — Networking Appliances (switch, AP, IPS, QoS, CDN) |
-| Q12–Q18 | [[L03]] — Cloud Technologies (deployment models, NSG, NFV, VPN, IPSec) |
-| Q19–Q22 | [[L04]] — Ports, Protocols, Services (SSH 22, SMTP 587, ICMP) |
-| Q23–Q28 | [[L05]] — Network Media (802.11, fiber types, SFP) |
-| Q29–Q31 | [[L06]] — Topologies (mesh, three-tier, traffic flow) |
-| Q32–Q33 | [[L07]] — IP Addressing (subnetting, RFC 1918) |
-| Q34–Q43 | [[L08]] — Modern Networks (SDN, VXLAN, Zero Trust, CASB, SSE, IPv6) |
+| Q1–Q4 | [[L01 - The OSI Model]] — OSI Model, PDUs, encapsulation |
+| Q5–Q11 | [[L02 - Networking Appliances & Applications]] — Networking Appliances (switch, AP, IPS, QoS, CDN) |
+| Q12–Q18 | [[L03 - Network Virtualization & Cloud Technologies]] — Cloud Technologies (deployment models, NSG, NFV, VPN, IPSec) |
+| Q19–Q22 | [[L04 - Ports, Protocols & Services]] — Ports, Protocols, Services (SSH 22, SMTP 587, ICMP) |
+| Q23–Q28 | [[L05 - Network Transmission - Media, Standards & Connectors]] — Network Media (802.11, fiber types, SFP) |
+| Q29–Q31 | [[L06 - Network Topologies, Architectures & Traffic Flows]] — Topologies (mesh, three-tier, traffic flow) |
+| Q32–Q33 | [[L07 - IP Addressing]] — IP Addressing (subnetting, RFC 1918) |
+| Q34–Q43 | [[L08 - Modern Networks]] — Modern Networks (SDN, VXLAN, Zero Trust, CASB, SSE, IPv6) |

@@ -67,4 +67,4 @@ Both SMF and MMF: 125 μm outer cladding. Core size differs.
 **Plenum space** = HVAC airspace (above dropped ceilings, below raised floors). Requires **CMP-rated** cable. Non-CMP in plenum space = fire code violation.
 
 ## Linked Lessons
-- [[L05]] — full lesson
+- [[L05 - Network Transmission - Media, Standards & Connectors]] — full lesson

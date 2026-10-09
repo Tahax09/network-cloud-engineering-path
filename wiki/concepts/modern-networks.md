@@ -73,6 +73,6 @@ Problem solved: eliminates traffic hairpinning through HQ for cloud apps.
 - Ansible = standard tool for node provisioning
 
 ## Linked Lessons
-- [[L08]] — full lesson
-- [[L06]] — topology and SDN context
+- [[L08 - Modern Networks]] — full lesson
+- [[L06 - Network Topologies, Architectures & Traffic Flows]] — topology and SDN context
 - [[labs/k3s-lab]] — VXLAN, iptables as SDN

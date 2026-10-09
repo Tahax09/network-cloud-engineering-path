@@ -38,7 +38,7 @@ gcloud compute routers update ROUTER --region=REGION --advertisement-mode=CUSTOM
 ```
 
 ## Linked Lessons
-- [[GCP07]] — Overview of private connection options
-- [[GCP08]] — Private Google Access (cloud + on-prem)
-- [[GCP01]] — Routing / next hops · [[GCP04]] — Cloud DNS private zones
-- [[L09]] — NAT/PAT, BGP · [[L20]] — Hardening / attack surface
+- [[GCP07 - Private Connection Options - Overview]] — Overview of private connection options
+- [[GCP08 - Private Google Access]] — Private Google Access (cloud + on-prem)
+- [[GCP01 - Routes and Route Preferences]] — Routing / next hops · [[GCP04 - Cloud DNS]] — Cloud DNS private zones
+- [[L09 - Routing Technologies]] — NAT/PAT, BGP · [[L20 - Network Defense Techniques]] — Hardening / attack surface

@@ -309,8 +309,8 @@ source: Coursera graded quiz — Module 3
 
 | Questions | Topic | Lesson |
 |-----------|-------|--------|
-| 1, 2, 5, 9, 10, 22 | Documentation, Lifecycle, Change/Config Mgmt | [[L13]] |
-| 6, 15, 21, 23, 26 | Network Monitoring (SNMP, Flow, Port Mirroring, Syslog) | [[L14]] (pending) |
-| 4, 11, 18, 24, 25 | Disaster Recovery (Active-Passive, MTBF, RPO/RTO, Sites, Tabletop) | [[L15]] (pending) |
-| 3, 8, 13, 14, 19, 20, 17 | IP Services (DNS records, PTP, SLAAC, DHCP, DoH/DoT) | [[L16]] (pending) |
-| 7, 12, 16 | Network Access and Management (TLS VPN, Split-Tunnel, Jump Box) | [[L17]] (pending) |
+| 1, 2, 5, 9, 10, 22 | Documentation, Lifecycle, Change/Config Mgmt | [[L13 - Organizational Processes and Procedures]] |
+| 6, 15, 21, 23, 26 | Network Monitoring (SNMP, Flow, Port Mirroring, Syslog) | [[L14 - Network Monitoring]] (pending) |
+| 4, 11, 18, 24, 25 | Disaster Recovery (Active-Passive, MTBF, RPO/RTO, Sites, Tabletop) | [[L15 - Disaster Recovery]] (pending) |
+| 3, 8, 13, 14, 19, 20, 17 | IP Services (DNS records, PTP, SLAAC, DHCP, DoH/DoT) | [[L16 - IP Services]] (pending) |
+| 7, 12, 16 | Network Access and Management (TLS VPN, Split-Tunnel, Jump Box) | [[L17 - Network Access and Management]] (pending) |

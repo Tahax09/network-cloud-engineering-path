@@ -142,12 +142,12 @@ source: Coursera graded quiz — Module 4
 | 2 | **B — DNS Poisoning** | Key phrase: "direct traffic to the **IP address** of their server." DNS maps name → IP. ARP spoofing maps IP → **MAC** (wrong layer) |
 | 3 | **A — Dictionary** | "Words … from a **list**" = dictionary (wordlist). Brute force tries *every* combination; rainbow table = precomputed hash lookups; pass-the-hash reuses a stolen hash without cracking it |
 | 4 | **A — 802.1x** | Port stays unauthorized (EAPOL only) until authentication succeeds. 802.1**q** = VLAN tagging — classic letter-swap distractor |
-| 5 | **C — Patch/Update** | Vulnerability with a fix available → apply the patch (via change management, [[L13]]). Replace is for **end-of-support** devices (NQ04 Q5); isolate/segment are compensating controls when no patch exists |
+| 5 | **C — Patch/Update** | Vulnerability with a fix available → apply the patch (via change management, [[L13 - Organizational Processes and Procedures]]). Replace is for **end-of-support** devices (NQ04 Q5); isolate/segment are compensating controls when no patch exists |
 | 6 | **C — Trusted** | Corporate resources = known, managed traffic = trusted zone. Untrusted = internet/unknown |
 | 7 | **B — MAC Flooding** | Overflow CAM table → switch fails open, floods like a hub |
 | 8 | **B — Rogue DHCP server** | Hands out wrong IP/subnet/gateway → addressing problems. DNS poisoning breaks *name resolution*, not addressing |
 | 9 | **B — VLAN Hopping** | Specifically **double tagging** via the native VLAN |
-| 10 | **D — Honeypot** | Decoy to attract and study attackers. Bastion host = jump box (a hardened *legitimate* entry point, [[L17]]) |
+| 10 | **D — Honeypot** | Decoy to attract and study attackers. Bastion host = jump box (a hardened *legitimate* entry point, [[L17 - Network Access and Management]]) |
 | 11 | **A — Hard Drive encryption** | At rest = stored data (BitLocker, LUKS). VPN and TLS protect data **in transit** |
 | 12 | **A — SAML** | Security Assertion **Markup Language** = XML; IdP → SP assertions. OAuth is authorization (JSON/tokens), not XML |
 | 13 | **D — GDPR** | EU personal data regulation. PCI DSS = cardholder data |
@@ -197,7 +197,7 @@ source: Coursera graded quiz — Module 4
 
 | Questions | Topic | Lesson |
 |-----------|-------|--------|
-| 11, 12, 13, 15, 17, 18 | Crypto, PKI, SAML/RADIUS, GDPR, OT segmentation | [[L18]] |
-| 2, 3, 7, 8, 9, 10, 14 | DNS poisoning, MAC flooding, rogue DHCP, VLAN hopping, honeypot, tailgating, password attacks | [[L18]], [[L19]] |
-| 1, 4, 6, 16, 19 | Hardening, 802.1X, zones, port security, content filtering | [[L20]] |
-| 5 | Vulnerability response / patching | [[L13]], [[L18]] |
+| 11, 12, 13, 15, 17, 18 | Crypto, PKI, SAML/RADIUS, GDPR, OT segmentation | [[L18 - Basic Network Security]] |
+| 2, 3, 7, 8, 9, 10, 14 | DNS poisoning, MAC flooding, rogue DHCP, VLAN hopping, honeypot, tailgating, password attacks | [[L18 - Basic Network Security]], [[L19 - Network Attacks]] |
+| 1, 4, 6, 16, 19 | Hardening, 802.1X, zones, port security, content filtering | [[L20 - Network Defense Techniques]] |
+| 5 | Vulnerability response / patching | [[L13 - Organizational Processes and Procedures]], [[L18 - Basic Network Security]] |

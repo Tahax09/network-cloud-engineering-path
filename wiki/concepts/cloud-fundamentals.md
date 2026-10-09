@@ -74,5 +74,5 @@
 | Site-to-Site VPN | AWS VPN + Virtual Private Gateway |
 
 ## Linked Lessons
-- [[L03]] — full lesson
+- [[L03 - Network Virtualization & Cloud Technologies]] — full lesson
 - [[concepts/vpc-and-subnets]] — VPC design detail

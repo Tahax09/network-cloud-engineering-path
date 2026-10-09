@@ -77,5 +77,5 @@
 - Tunnel mode hides original IPs; transport mode does not
 
 ## Linked Lessons
-- [[L04]] — full lesson
-- [[L02]] — firewalls filter by port
+- [[L04 - Ports, Protocols & Services]] — full lesson
+- [[L02 - Networking Appliances & Applications]] — firewalls filter by port

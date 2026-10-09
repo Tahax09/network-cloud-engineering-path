@@ -155,26 +155,26 @@ source: Coursera graded quiz — Module 5
 
 | # | Answer | Reasoning |
 |---|--------|-----------|
-| 1 | **D — Reverse the fibers** | "Try **first**" = quickest, most common cause on a fresh fiber patch: TX/RX polarity. Re-terminating and inspecting runs take far longer; check those after the 10-second fix fails ([[L22]]) |
-| 2 | **C — Bottlenecking** | Fast on one side of the IPS, slow on the other → the IPS's inspection throughput is the narrowest point ([[L24]]: firewalls/IPS often inspect far below interface speed) |
-| 3 | **C — Not enough IP addresses in the DHCP scope** | Worked for early users, fails for later ones = **pool exhaustion** → APIPA ([[L23]]) |
-| 4 | **D — TX/RX is reversed** | Both patch cords swapped for known-good ones, device known-good → remaining variable is the cross-connect/panel polarity. Each patch-panel hop can flip A/B ([[L22]]) |
-| 5 | **A — Rear** | Intake from the **cold aisle** (front), exhaust into the **hot aisle** (rear). All racks in a row face the same way ([[L12]]) |
-| 6 | **C — Missing default route** | Inter-VLAN (local) works, internet fails at the **router** level after a change → gateway of last resort lost ([[L23]]) |
-| 7 | **C — Toner** | Tone generator on the jack, probe in the closet ([[L25]]). Cable tester verifies wiring, it doesn't *find* the cable; VFL is for fiber |
-| 8 | **A — PoE power budget exceeded** | Only PoE devices affected, intermittent reboots under load → total draw exceeds the switch's PoE budget ([[L22]]) |
-| 9 | **B — CRC errors and collisions** | The counter signature: CRC/FCS + runts on the full side, **late collisions** on the half side. Limited throughput is the *consequence*; CRC + collisions is the specific, testable result ([[L22]]) |
-| 10 | **A — nmap** | Port scanner. tracert = path; dig/nslookup = DNS (and the name already resolves) ([[L25]]) |
+| 1 | **D — Reverse the fibers** | "Try **first**" = quickest, most common cause on a fresh fiber patch: TX/RX polarity. Re-terminating and inspecting runs take far longer; check those after the 10-second fix fails ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| 2 | **C — Bottlenecking** | Fast on one side of the IPS, slow on the other → the IPS's inspection throughput is the narrowest point ([[L24 - Troubleshooting Network Performance Issues]]: firewalls/IPS often inspect far below interface speed) |
+| 3 | **C — Not enough IP addresses in the DHCP scope** | Worked for early users, fails for later ones = **pool exhaustion** → APIPA ([[L23 - Network Service Troubleshooting]]) |
+| 4 | **D — TX/RX is reversed** | Both patch cords swapped for known-good ones, device known-good → remaining variable is the cross-connect/panel polarity. Each patch-panel hop can flip A/B ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| 5 | **A — Rear** | Intake from the **cold aisle** (front), exhaust into the **hot aisle** (rear). All racks in a row face the same way ([[L12 - Physical Installations]]) |
+| 6 | **C — Missing default route** | Inter-VLAN (local) works, internet fails at the **router** level after a change → gateway of last resort lost ([[L23 - Network Service Troubleshooting]]) |
+| 7 | **C — Toner** | Tone generator on the jack, probe in the closet ([[L25 - Troubleshooting Tools]]). Cable tester verifies wiring, it doesn't *find* the cable; VFL is for fiber |
+| 8 | **A — PoE power budget exceeded** | Only PoE devices affected, intermittent reboots under load → total draw exceeds the switch's PoE budget ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| 9 | **B — CRC errors and collisions** | The counter signature: CRC/FCS + runts on the full side, **late collisions** on the half side. Limited throughput is the *consequence*; CRC + collisions is the specific, testable result ([[L22 - Troubleshooting Cabling and Physical Issues]]) |
+| 10 | **A — nmap** | Port scanner. tracert = path; dig/nslookup = DNS (and the name already resolves) ([[L25 - Troubleshooting Tools]]) |
 | 11 | ~~A — Port security violation~~ ❌ → most likely **B — An incorrect cable type was installed** (unconfirmed) | Port security was marked **wrong**. Remaining logic: a NIC installed "to improve performance" is faster (e.g., 10GBASE-T needs **Cat6a**, or an SFP+ fiber NIC needs fiber/DAC) — the existing cable no longer matches the new interface. TX/RX transposition is unlikely on copper (Auto-MDI-X); PoE doesn't apply to servers. **Lesson: the course frames NIC upgrades as a Layer 1 cable-match problem, not a port security problem** |
 | 12 | **B — Switch port is shut down** | Cable seated but **no link lights on either end** → no Layer 1 link. An administratively-down (or err-disabled) port shows no link. "Switch is shut off" would affect every port, not one workstation; VLAN/gateway problems still show link lights |
 | 13 | ~~D — Establish a theory~~ ❌ → **C — Verify Functionality** | Marked wrong for "Establish a theory"; Rollback/Implement don't fit, so the answer is **Verify full system functionality** — after the fix, confirm *every OSI layer* works (link, IP, DNS, application), not just the symptom. (CompTIA lists OSI top-down/bottom-up as *approaches* under step 2 — but this course's question treats "checking each level is functioning" as verification) |
 | 14 | **A — Document findings and lessons learned** ✅ | Coursera's explanation: "Once you have implemented a solution **and verified functionality**, you should document" — confirms verify was simply omitted from the options |
-| 15 | **D — Identify the problem** | Checking logs / "what has changed" = step 1 sub-tasks ([[L21]]) |
+| 15 | **D — Identify the problem** | Checking logs / "what has changed" = step 1 sub-tasks ([[L21 - Network Troubleshooting Methodology]]) |
 | 16 | **Unresolved** ❌ | Single-select, and every option is an official step 1 sub-task (identify symptoms, gather information, determine what changed, duplicate the problem). The submitted answer was marked wrong. Best remaining guess: **Identify Symptoms** (closest wording to "identifying a problem"). Update this row if the correct answer is revealed |
-| 17 | **C — Jitter** | *Inconsistency* in delay = jitter. Consistent delay = latency ([[L24]]) |
-| 18 | **C — tracert** | Shows the hop-by-hop path and where it stops ([[L25]]) |
-| 19 | **C — A broadcast storm** | Redundant links + **unmanaged** switches (no STP) → Layer 2 loop → broadcasts circulate endlessly ([[L23]]). Routing loops are Layer 3 |
-| 20 | **E — 20 MHz** | 2.4 GHz has only 3 non-overlapping 20 MHz channels (1/6/11). 40 MHz bonding consumes two-thirds of the band; 80/160 MHz don't exist in 2.4 GHz ([[L11]]) |
+| 17 | **C — Jitter** | *Inconsistency* in delay = jitter. Consistent delay = latency ([[L24 - Troubleshooting Network Performance Issues]]) |
+| 18 | **C — tracert** | Shows the hop-by-hop path and where it stops ([[L25 - Troubleshooting Tools]]) |
+| 19 | **C — A broadcast storm** | Redundant links + **unmanaged** switches (no STP) → Layer 2 loop → broadcasts circulate endlessly ([[L23 - Network Service Troubleshooting]]). Routing loops are Layer 3 |
+| 20 | **E — 20 MHz** | 2.4 GHz has only 3 non-overlapping 20 MHz channels (1/6/11). 40 MHz bonding consumes two-thirds of the band; 80/160 MHz don't exist in 2.4 GHz ([[L11 - Wireless Devices and Technologies]]) |
 
 ---
 
@@ -200,8 +200,8 @@ source: Coursera graded quiz — Module 5
 
 ## Gaps Found
 
-- **Q5 (hot aisle/cold aisle)** comes from objective 2.4 — physical installations ([[L12]]), not Domain 5.
-- **Q20 (channel width)** is Domain 2 wireless ([[L11]]): 2.4 GHz supports only 20/40 MHz; 5 GHz supports 20/40/80/160; 6 GHz up to 320 MHz (Wi-Fi 7). Wider channel = more throughput per client but fewer non-overlapping channels → more co-channel interference in dense deployments.
+- **Q5 (hot aisle/cold aisle)** comes from objective 2.4 — physical installations ([[L12 - Physical Installations]]), not Domain 5.
+- **Q20 (channel width)** is Domain 2 wireless ([[L11 - Wireless Devices and Technologies]]): 2.4 GHz supports only 20/40 MHz; 5 GHz supports 20/40/80/160; 6 GHz up to 320 MHz (Wi-Fi 7). Wider channel = more throughput per client but fewer non-overlapping channels → more co-channel interference in dense deployments.
 - **Q14/Q16** are flawed/ambiguous as written — know the official 7-step order cold so you can pick the "least wrong" answer.
 - **Missed (Q11, Q13)** — see Weak Areas on [[certs/network-plus]].
 
@@ -211,10 +211,10 @@ source: Coursera graded quiz — Module 5
 
 | Questions | Topic | Lesson |
 |-----------|-------|--------|
-| 13, 14, 15, 16 | Troubleshooting methodology | [[L21]] |
-| 1, 4, 8, 9, 11, 12 | Cabling, fiber polarity, PoE, duplex, port status | [[L22]] |
-| 3, 6, 19 | DHCP exhaustion, default route, broadcast storm/STP | [[L23]] |
-| 2, 17 | Bottleneck, jitter | [[L24]] |
-| 7, 10, 18 | Toner, nmap, tracert | [[L25]] |
-| 5 | Hot/cold aisle | [[L12]] |
-| 20 | 2.4 GHz channel width | [[L11]] |
+| 13, 14, 15, 16 | Troubleshooting methodology | [[L21 - Network Troubleshooting Methodology]] |
+| 1, 4, 8, 9, 11, 12 | Cabling, fiber polarity, PoE, duplex, port status | [[L22 - Troubleshooting Cabling and Physical Issues]] |
+| 3, 6, 19 | DHCP exhaustion, default route, broadcast storm/STP | [[L23 - Network Service Troubleshooting]] |
+| 2, 17 | Bottleneck, jitter | [[L24 - Troubleshooting Network Performance Issues]] |
+| 7, 10, 18 | Toner, nmap, tracert | [[L25 - Troubleshooting Tools]] |
+| 5 | Hot/cold aisle | [[L12 - Physical Installations]] |
+| 20 | 2.4 GHz channel width | [[L11 - Wireless Devices and Technologies]] |

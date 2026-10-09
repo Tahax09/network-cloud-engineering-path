@@ -28,9 +28,9 @@ lessons_completed: 3
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
-| 1.0 | OSI Model | [[L01]] | ✅ Complete |
-| 1.2 | Networking Appliances & Applications | [[L02]] | ✅ Complete |
-| 1.0 | Network Virtualization & Cloud | [[L03]] | ✅ Complete |
+| 1.0 | OSI Model | [[L01 - The OSI Model]] | ✅ Complete |
+| 1.2 | Networking Appliances & Applications | [[L02 - Networking Appliances & Applications]] | ✅ Complete |
+| 1.0 | Network Virtualization & Cloud | [[L03 - Network Virtualization & Cloud Technologies]] | ✅ Complete |
 | 1.x | IP Addressing & Subnetting | — | Pending |
 | 1.x | Routing Protocols | — | Pending |
 | 1.x | Switching & VLANs | — | Pending |
@@ -40,38 +40,38 @@ lessons_completed: 3
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
-| 2.0 | Routing Technologies | [[L09]] | ✅ Complete |
-| 2.2 | Switching Technologies | [[L10]] | ✅ Complete |
-| 2.3 | Wireless Devices and Technologies | [[L11]] | ✅ Complete |
-| 2.4 | Physical Installations | [[L12]] | ✅ Complete |
+| 2.0 | Routing Technologies | [[L09 - Routing Technologies]] | ✅ Complete |
+| 2.2 | Switching Technologies | [[L10 - Switching Technologies]] | ✅ Complete |
+| 2.3 | Wireless Devices and Technologies | [[L11 - Wireless Devices and Technologies]] | ✅ Complete |
+| 2.4 | Physical Installations | [[L12 - Physical Installations]] | ✅ Complete |
 
 ### Domain 3 — Network Operations (19%)
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
-| 3.1 | Organizational Processes and Procedures | [[L13]] | ✅ Complete |
-| 3.2 | Network Monitoring | [[L14]] | ✅ Complete |
-| 3.3 | Disaster Recovery | [[L15]] | ✅ Complete |
-| 3.4 | IP Services | [[L16]] | ✅ Complete |
-| 3.5 | Network Access and Management | [[L17]] | ✅ Complete |
+| 3.1 | Organizational Processes and Procedures | [[L13 - Organizational Processes and Procedures]] | ✅ Complete |
+| 3.2 | Network Monitoring | [[L14 - Network Monitoring]] | ✅ Complete |
+| 3.3 | Disaster Recovery | [[L15 - Disaster Recovery]] | ✅ Complete |
+| 3.4 | IP Services | [[L16 - IP Services]] | ✅ Complete |
+| 3.5 | Network Access and Management | [[L17 - Network Access and Management]] | ✅ Complete |
 
 ### Domain 4 — Network Security (14%)
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
-| 4.1 | Basic Network Security Concepts | [[L18]] | ✅ Complete |
-| 4.2 | Network Attacks | [[L19]] | ✅ Complete |
-| 4.3 | Network Defense Techniques | [[L20]] | ✅ Complete |
+| 4.1 | Basic Network Security Concepts | [[L18 - Basic Network Security]] | ✅ Complete |
+| 4.2 | Network Attacks | [[L19 - Network Attacks]] | ✅ Complete |
+| 4.3 | Network Defense Techniques | [[L20 - Network Defense Techniques]] | ✅ Complete |
 
 ### Domain 5 — Network Troubleshooting (24%)
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
-| 5.1 | Troubleshooting Methodology | [[L21]] | ✅ Complete |
-| 5.2 | Cabling and Physical Interface Issues | [[L22]] | ✅ Complete |
-| 5.3 | Network Service Issues | [[L23]] | ✅ Complete |
-| 5.4 | Network Performance Issues | [[L24]] | ✅ Complete |
-| 5.5 | Troubleshooting Tools | [[L25]] | ✅ Complete |
+| 5.1 | Troubleshooting Methodology | [[L21 - Network Troubleshooting Methodology]] | ✅ Complete |
+| 5.2 | Cabling and Physical Interface Issues | [[L22 - Troubleshooting Cabling and Physical Issues]] | ✅ Complete |
+| 5.3 | Network Service Issues | [[L23 - Network Service Troubleshooting]] | ✅ Complete |
+| 5.4 | Network Performance Issues | [[L24 - Troubleshooting Network Performance Issues]] | ✅ Complete |
+| 5.5 | Troubleshooting Tools | [[L25 - Troubleshooting Tools]] | ✅ Complete |
 
 ## Key Exam Traps (collected from sessions)
 

@@ -42,9 +42,9 @@ source: Coursera graded quiz — Networking in Google Cloud: Routing and Address
 
 | # | Answer | Reasoning |
 |---|--------|-----------|
-| 1 | **D — Private Service Connect** | Keywords: *services you created* (you're the **producer**), *endpoints with internal IPs* (PSC endpoints → service attachment), *overlapping ranges* (PSC exchanges no routes, so overlap is fine). PGA = Google APIs only; PSA = peering, which **can't** overlap; Cloud NAT = outbound internet ([[GCP09]]) |
-| 2 | **B — Enable it on all desired subnets** | PGA is a **per-subnet** setting. There's no VPC-level switch, and Cloud Router isn't involved (it's only needed for *on-prem* custom route advertisement) ([[GCP08]]) |
-| 3 | **D — VPC Network Peering** | PSA = automated peering (`servicenetworking-googleapis-com`) over an allocated range ([[GCP10]]) |
+| 1 | **D — Private Service Connect** | Keywords: *services you created* (you're the **producer**), *endpoints with internal IPs* (PSC endpoints → service attachment), *overlapping ranges* (PSC exchanges no routes, so overlap is fine). PGA = Google APIs only; PSA = peering, which **can't** overlap; Cloud NAT = outbound internet ([[GCP09 - Private Service Connect]]) |
+| 2 | **B — Enable it on all desired subnets** | PGA is a **per-subnet** setting. There's no VPC-level switch, and Cloud Router isn't involved (it's only needed for *on-prem* custom route advertisement) ([[GCP08 - Private Google Access]]) |
+| 3 | **D — VPC Network Peering** | PSA = automated peering (`servicenetworking-googleapis-com`) over an allocated range ([[GCP10 - Private Services Access]]) |
 
 > ⚠️ The pasted copy had **A: Private Google Access** (Q1) and **A: Enable it on the VPC network** (Q2) marked. Both are incorrect, so change them before submitting.
 
@@ -65,6 +65,6 @@ source: Coursera graded quiz — Networking in Google Cloud: Routing and Address
 
 | Question | Lesson |
 |----------|--------|
-| 1 | [[GCP09]] |
-| 2 | [[GCP08]] |
-| 3 | [[GCP10]] |
+| 1 | [[GCP09 - Private Service Connect]] |
+| 2 | [[GCP08 - Private Google Access]] |
+| 3 | [[GCP10 - Private Services Access]] |

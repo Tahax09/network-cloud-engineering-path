@@ -53,6 +53,6 @@ Use cases: block domains, split-horizon DNS.
 | Inbound server policy | Route 53 Resolver inbound endpoint |
 
 ## Linked Lessons
-- [[GCP04]] — full lesson
-- [[GCP05]] — geolocation lab
-- [[L04]] — DNS port 53
+- [[GCP04 - Cloud DNS]] — full lesson
+- [[gcp-geolocation-lab]] — geolocation lab
+- [[L04 - Ports, Protocols & Services]] — DNS port 53

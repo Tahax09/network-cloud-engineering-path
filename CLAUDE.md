@@ -16,8 +16,8 @@ Networking + Cloud/
     ├── log.md                       ← append-only activity log
     ├── overview.md                  ← learning goals, roadmap, current status
     ├── lessons/                     ← lessons organized by course
-    │   ├── network-plus/            ← L01–Lxx (CompTIA Network+)
-    │   └── gcp/                     ← GCP01–GCPxx (Google Cloud Networking)
+    │   ├── network-plus/            ← "Lxx - Title.md" (CompTIA Network+)
+    │   └── gcp/                     ← "GCPxx - Title.md" (Google Cloud Networking)
     ├── concepts/                    ← technology and concept reference pages
     ├── certs/                       ← per-certification tracking and progress
     └── labs/                        ← hands-on projects and exercises
@@ -25,7 +25,8 @@ Networking + Cloud/
 
 ## Page Formats
 
-### Lesson pages (`wiki/lessons/Lxx.md`)
+### Lesson pages (`wiki/lessons/<track>/Lxx - Title.md`)
+File name = `<ID> - <Title>.md` (ID first so files sort in course order; `:` and `/` in titles become ` -`). Frontmatter keeps `id` plus `aliases: [<ID>]`. Link with the full file name: `[[L09 - Routing Technologies]]`.
 ```yaml
 ---
 id: L01
@@ -56,7 +57,7 @@ Lab goal, topology/setup, commands used, observations, concepts demonstrated, an
 ### Ingest a new lesson
 1. Drop transcript into `raw/transcripts/` named `Lxx_Topic.txt`
 2. Say: `ingest L04 — [lesson title]`
-3. LLM reads → creates `wiki/lessons/L04.md` → updates `wiki/index.md` → updates relevant concept pages → updates cert tracking page → appends to `wiki/log.md`
+3. LLM reads → creates `wiki/lessons/network-plus/L04 - <Title>.md` → updates `wiki/index.md` → updates relevant concept pages → updates cert tracking page → appends to `wiki/log.md`
 
 ### Query
 Ask anything. LLM reads `index.md` first, then relevant pages. Good synthesis gets filed as a new concept or lab page.
