@@ -1,1 +1,9 @@
 .claude/
+.DS_Store
+node_modules/
+package.json
+package-lock.json
+.claude-flow/
+.repowise/
+.swarm/
+ruvector.db

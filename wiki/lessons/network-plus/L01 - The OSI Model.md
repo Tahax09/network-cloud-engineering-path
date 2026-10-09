@@ -4,7 +4,7 @@ aliases: [L01]
 title: The OSI Model
 course: CompTIA Network+
 cert_track: network-plus
-objective: "1.0 — Networking Concepts"
+objective: "1.1 — Explain Concepts Related to the OSI Reference Model"
 date: 2025-05-28
 status: Complete
 quiz_attempted: Yes

@@ -28,19 +28,20 @@ lessons_completed: 3
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
-| 1.0 | OSI Model | [[L01 - The OSI Model]] | ✅ Complete |
+| 1.1 | OSI Reference Model | [[L01 - The OSI Model]] | ✅ Complete |
 | 1.2 | Networking Appliances & Applications | [[L02 - Networking Appliances & Applications]] | ✅ Complete |
-| 1.0 | Network Virtualization & Cloud | [[L03 - Network Virtualization & Cloud Technologies]] | ✅ Complete |
-| 1.x | IP Addressing & Subnetting | — | Pending |
-| 1.x | Routing Protocols | — | Pending |
-| 1.x | Switching & VLANs | — | Pending |
-| 1.x | Wireless Networking | — | Pending |
+| 1.3 | Cloud Concepts & Connectivity | [[L03 - Network Virtualization & Cloud Technologies]] | ✅ Complete |
+| 1.4 | Ports, Protocols & Services | [[L04 - Ports, Protocols & Services]] | ✅ Complete |
+| 1.5 | Transmission Media & Transceivers | [[L05 - Network Transmission - Media, Standards & Connectors]] | ✅ Complete |
+| 1.6 | Topologies, Architectures & Traffic Flows | [[L06 - Network Topologies, Architectures & Traffic Flows]] | ✅ Complete |
+| 1.7 | IPv4 Addressing | [[L07 - IP Addressing]] | ✅ Complete |
+| 1.8 | Modern Network Environments | [[L08 - Modern Networks]] | ✅ Complete |
 
 ### Domain 2 — Network Implementation (20%)
 
 | Objective | Topic | Lesson | Status |
 |-----------|-------|--------|--------|
-| 2.0 | Routing Technologies | [[L09 - Routing Technologies]] | ✅ Complete |
+| 2.1 | Routing Technologies | [[L09 - Routing Technologies]] | ✅ Complete |
 | 2.2 | Switching Technologies | [[L10 - Switching Technologies]] | ✅ Complete |
 | 2.3 | Wireless Devices and Technologies | [[L11 - Wireless Devices and Technologies]] | ✅ Complete |
 | 2.4 | Physical Installations | [[L12 - Physical Installations]] | ✅ Complete |

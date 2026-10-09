@@ -4,7 +4,7 @@ aliases: [L03]
 title: Network Virtualization & Cloud Technologies
 course: CompTIA Network+
 cert_track: network-plus
-objective: "1.0 — Networking Concepts"
+objective: "1.3 — Summarize Cloud Concepts and Connectivity Options"
 date: 2025-05-28
 status: Complete
 quiz_attempted: No

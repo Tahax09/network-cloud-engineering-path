@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] maintenance | README rebuild, LICENSE, repo metadata
+Rebuilt README.md (generated tables linking every lesson, quiz, concept and lab; layout; lesson format; certification roadmap incl. KCNA → CKA → AZ-500 → KCSA → CKS, PCA). Added LICENSE (CC BY-NC-SA 4.0 for original wiki content; raw/ third-party material excluded). Corrected objective numbers L01 → 1.1, L03 → 1.3, L09 → 2.1 and replaced stale "Pending" Domain 1 rows on the Network+ cert page. Untracked raw/transcripts/.DS_Store and extended .gitignore. Updated GitHub repo description and topics.
+
 ## [2026-10-09] refactor | Quizzes split into per-course folders
 Moved quizzes into wiki/quizzes/network-plus/ (NQ01–NQ06, PE01, WD01), wiki/quizzes/gcp/ (GQ01), wiki/quizzes/interview/ (IQ01). Split quiz tables in index.md and README.md by course. Updated CLAUDE.md structure (one subfolder per course, never mix).
 

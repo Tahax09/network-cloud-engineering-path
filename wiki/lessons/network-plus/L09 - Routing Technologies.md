@@ -4,7 +4,7 @@ aliases: [L09]
 title: Routing Technologies
 course: CompTIA Network+
 cert_track: network-plus
-objective: "2.0 — Network Implementation: Routing Technologies"
+objective: "2.1 — Explain Characteristics of Routing Technologies"
 date: 2026-06-14
 status: Complete
 quiz_attempted: No

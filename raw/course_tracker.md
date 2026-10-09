@@ -4,15 +4,15 @@
 
 | ID | Title | Objective | Date | Status | Quiz |
 |----|-------|-----------|------|--------|------|
-| L01 | The OSI Model | 1.0 | 2025-05-28 | Complete | Attempted |
+| L01 | The OSI Model | 1.1 | 2025-05-28 | Complete | Attempted |
 | L02 | Networking Appliances & Applications | 1.2 | 2025-05-28 | Complete | Attempted |
-| L03 | Network Virtualization & Cloud Technologies | 1.0 | 2025-05-28 | Complete | Pending |
+| L03 | Network Virtualization & Cloud Technologies | 1.3 | 2025-05-28 | Complete | Pending |
 | L04 | Ports, Protocols & Services | 1.4 | 2025-05-28 | Complete | Pending |
 | L05 | Network Transmission: Media, Standards & Connectors | 1.5 | 2025-05-28 | Complete | Pending |
 | L06 | Network Topologies, Architectures & Traffic Flows | 1.6 | 2025-05-28 | Complete | Pending |
 | L07 | IP Addressing | 1.7 | 2025-05-28 | Complete | Pending |
 | L08 | Modern Networks | 1.8 | 2025-05-28 | Complete | Pending |
-| L09 | Routing Technologies | 2.0 | 2026-06-14 | Complete | Pending |
+| L09 | Routing Technologies | 2.1 | 2026-06-14 | Complete | Pending |
 | L10 | Switching Technologies | 2.2 | 2026-06-14 | Complete | Pending |
 | L11 | Wireless Devices and Technologies | 2.3 | 2026-06-15 | Complete | Pending |
 | L12 | Physical Installations | 2.4 | 2026-06-15 | Complete | Pending |

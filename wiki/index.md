@@ -4,15 +4,15 @@
 
 | ID | Title | Objective | Date | Status |
 |----|-------|-----------|------|--------|
-| [L01](lessons/network-plus/L01%20-%20The%20OSI%20Model.md) | The OSI Model | 1.0 | 2025-05-28 | Complete |
+| [L01](lessons/network-plus/L01%20-%20The%20OSI%20Model.md) | The OSI Model | 1.1 | 2025-05-28 | Complete |
 | [L02](lessons/network-plus/L02%20-%20Networking%20Appliances%20%26%20Applications.md) | Networking Appliances & Applications | 1.2 | 2025-05-28 | Complete |
-| [L03](lessons/network-plus/L03%20-%20Network%20Virtualization%20%26%20Cloud%20Technologies.md) | Network Virtualization & Cloud Technologies | 1.0 | 2025-05-28 | Complete |
+| [L03](lessons/network-plus/L03%20-%20Network%20Virtualization%20%26%20Cloud%20Technologies.md) | Network Virtualization & Cloud Technologies | 1.3 | 2025-05-28 | Complete |
 | [L04](lessons/network-plus/L04%20-%20Ports%2C%20Protocols%20%26%20Services.md) | Ports, Protocols & Services | 1.4 | 2025-05-28 | Complete |
 | [L05](lessons/network-plus/L05%20-%20Network%20Transmission%20-%20Media%2C%20Standards%20%26%20Connectors.md) | Network Transmission: Media, Standards & Connectors | 1.5 | 2025-05-28 | Complete |
 | [L06](lessons/network-plus/L06%20-%20Network%20Topologies%2C%20Architectures%20%26%20Traffic%20Flows.md) | Network Topologies, Architectures & Traffic Flows | 1.6 | 2025-05-28 | Complete |
 | [L07](lessons/network-plus/L07%20-%20IP%20Addressing.md) | IP Addressing | 1.7 | 2025-05-28 | Complete |
 | [L08](lessons/network-plus/L08%20-%20Modern%20Networks.md) | Modern Networks | 1.8 | 2025-05-28 | Complete |
-| [L09](lessons/network-plus/L09%20-%20Routing%20Technologies.md) | Routing Technologies | 2.0 | 2026-06-14 | Complete |
+| [L09](lessons/network-plus/L09%20-%20Routing%20Technologies.md) | Routing Technologies | 2.1 | 2026-06-14 | Complete |
 | [L10](lessons/network-plus/L10%20-%20Switching%20Technologies.md) | Switching Technologies | 2.2 | 2026-06-14 | Complete |
 | [L11](lessons/network-plus/L11%20-%20Wireless%20Devices%20and%20Technologies.md) | Wireless Devices and Technologies | 2.3 | 2026-06-15 | Complete |
 | [L12](lessons/network-plus/L12%20-%20Physical%20Installations.md) | Physical Installations | 2.4 | 2026-06-15 | Complete |
