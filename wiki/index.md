@@ -74,18 +74,30 @@
 
 ## Quizzes
 
+### CompTIA Network+ N10-009 — `quizzes/network-plus/`
+
 | ID | Title | Covers | Date | Status |
 |----|-------|--------|------|--------|
-| [NQ01](quizzes/NQ01_Networking_Concepts.md) | Networking Concepts (Coursera graded) | L01–L08 | 2026-06-14 | Reviewed |
-| [NQ02](quizzes/NQ02_Networking_Concepts_Practice.md) | Networking Concepts (Practice) | L01–L08 | 2026-06-14 | Practice |
-| [NQ03](quizzes/NQ03_Network_Implementation.md) | Network Implementation (Coursera graded) | L09 + L10–L12 | 2026-06-14 | Reviewed |
-| [NQ04](quizzes/NQ04_Network_Operations.md) | Network Operations (Coursera graded) | L13–L17 | 2026-06-16 | Reviewed |
-| [NQ05](quizzes/NQ05_Network_Security.md) | Network Security (Coursera graded) | L18–L20 | 2026-10-08 | Reviewed |
-| [NQ06](quizzes/NQ06_Network_Troubleshooting.md) | Network Troubleshooting (Coursera graded) | L21–L25 | 2026-10-08 | 17/20 |
-| [PE01](quizzes/PE01_Practice_Exam_1.md) | Practice Exam 1 — 90 Q, domain-weighted, original | L01–L25 | 2026-10-08 | Not attempted |
-| [WD01](quizzes/WD01_Methodology_Drill.md) | Weak-Area Drill — Troubleshooting Methodology | L21–L22 | 2026-10-08 | Not attempted |
-| [GQ01](quizzes/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 | 2026-10-09 | Reviewed |
-| [IQ01](quizzes/IQ01_CCNA_Interview_Questions.md) | CCNA-level interview questions — self-test (Q1–Q80) | L01–L25 | 2026-10-09 | In progress |
+| [NQ01](quizzes/network-plus/NQ01_Networking_Concepts.md) | Networking Concepts (Coursera graded) | L01–L08 | 2026-06-14 | Reviewed |
+| [NQ02](quizzes/network-plus/NQ02_Networking_Concepts_Practice.md) | Networking Concepts (Practice) | L01–L08 | 2026-06-14 | Practice |
+| [NQ03](quizzes/network-plus/NQ03_Network_Implementation.md) | Network Implementation (Coursera graded) | L09 + L10–L12 | 2026-06-14 | Reviewed |
+| [NQ04](quizzes/network-plus/NQ04_Network_Operations.md) | Network Operations (Coursera graded) | L13–L17 | 2026-06-16 | Reviewed |
+| [NQ05](quizzes/network-plus/NQ05_Network_Security.md) | Network Security (Coursera graded) | L18–L20 | 2026-10-08 | Reviewed |
+| [NQ06](quizzes/network-plus/NQ06_Network_Troubleshooting.md) | Network Troubleshooting (Coursera graded) | L21–L25 | 2026-10-08 | 17/20 |
+| [PE01](quizzes/network-plus/PE01_Practice_Exam_1.md) | Practice Exam 1 — 90 Q, domain-weighted, original | L01–L25 | 2026-10-08 | Not attempted |
+| [WD01](quizzes/network-plus/WD01_Methodology_Drill.md) | Weak-Area Drill — Troubleshooting Methodology | L21–L22 | 2026-10-08 | Not attempted |
+
+### Google Cloud Networking — `quizzes/gcp/`
+
+| ID | Title | Covers | Date | Status |
+|----|-------|--------|------|--------|
+| [GQ01](quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 | 2026-10-09 | Reviewed |
+
+### Interview Prep — `quizzes/interview/`
+
+| ID | Title | Covers | Date | Status |
+|----|-------|--------|------|--------|
+| [IQ01](quizzes/interview/IQ01_CCNA_Interview_Questions.md) | CCNA-level interview questions — self-test (Q1–Q80) | L01–L25 | 2026-10-09 | In progress |
 
 ## Labs
 

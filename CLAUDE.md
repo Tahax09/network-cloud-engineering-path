@@ -20,6 +20,10 @@ Networking + Cloud/
     │   └── gcp/                     ← "GCPxx - Title.md" (Google Cloud Networking)
     ├── concepts/                    ← technology and concept reference pages
     ├── certs/                       ← per-certification tracking and progress
+    ├── quizzes/                     ← one subfolder per course — never mix
+    │   ├── network-plus/            ← NQxx graded, PExx practice exams, WDxx drills
+    │   ├── gcp/                     ← GQxx (Google Cloud Networking)
+    │   └── interview/               ← IQxx interview prep
     └── labs/                        ← hands-on projects and exercises
 ```
 

@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-09] refactor | Quizzes split into per-course folders
+Moved quizzes into wiki/quizzes/network-plus/ (NQ01–NQ06, PE01, WD01), wiki/quizzes/gcp/ (GQ01), wiki/quizzes/interview/ (IQ01). Split quiz tables in index.md and README.md by course. Updated CLAUDE.md structure (one subfolder per course, never mix).
+
 ## [2026-10-09] create | IQ01 — CCNA-level interview questions self-test (Q1–Q80)
 Filed a third-party "Top 100 CCNA Interview Questions (2026)" list as a self-test: questions paraphrased, answers condensed and written fresh, each linked to its wiki lesson. Corrected source errors (ARP always used — gateway for remote hosts; DHCP client ARP probe happens after ACK; PPPoE overhead 8 bytes; TACACS+ is RFC 8907; Diffie-Hellman is key exchange not encryption; missing Wi-Fi 7). Listed CCNA-depth gaps not yet in wiki (OSPF internals, EIGRP DUAL, GRE/DMVPN, PPPoE, FTP modes, FlexConnect). Q81–Q100 pending — source paste truncated.
 

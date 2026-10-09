@@ -88,6 +88,8 @@ Networking + Cloud/
 
 ## Quizzes
 
+### CompTIA Network+
+
 | ID | Title | Covers |
 |----|-------|--------|
 | NQ01 | Networking Concepts (Coursera graded) | L01–L08 |
@@ -98,7 +100,17 @@ Networking + Cloud/
 | NQ06 | Network Troubleshooting (Coursera graded) | L21–L25 |
 | PE01 | Practice Exam 1 (90 Q, timed, N10-009 domain weights) | L01–L25 |
 | WD01 | Weak-Area Drill — Troubleshooting Methodology | L21–L22 |
+
+### Google Cloud Networking
+
+| ID | Title | Covers |
+|----|-------|--------|
 | GQ01 | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 |
+
+### Interview Prep
+
+| ID | Title | Covers |
+|----|-------|--------|
 | IQ01 | CCNA-level interview questions — self-test | L01–L25 |
 
 ---

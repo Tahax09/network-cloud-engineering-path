@@ -39,7 +39,7 @@ target_date: TBD
 | [GCP10](../lessons/gcp/GCP10%20-%20Private%20Services%20Access.md) | Private Services Access | ✅ Complete |
 | [GCP11](../lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | ✅ Complete |
 | [GCP12](../lessons/gcp/GCP12%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | ✅ Complete |
-| [GQ01](../quizzes/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
+| [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ## Key Exam Facts (collected from sessions)
 
