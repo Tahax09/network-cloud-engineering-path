@@ -7,6 +7,17 @@ target_date: TBD
 
 # Google Cloud Networking Specialization
 
+**Program:** *Networking in Google Cloud* (Coursera, offered via Re:Coded) — 6 courses.
+
+| # | Course | Status | Wiki lessons |
+|---|--------|--------|--------------|
+| 1 | Networking in Google Cloud: Fundamentals | ✅ Complete (Coursera) | Transcripts pending — to be ingested |
+| 2 | Networking in Google Cloud: Routing and Addressing | 🔄 In progress | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP12 (Private Connection Options module), GQ01 |
+| 3 | Networking in Google Cloud: Network Architecture | Not started | — |
+| 4 | Networking in Google Cloud: Network Security | Not started | — |
+| 5 | Networking in Google Cloud: Load Balancing | Not started | — |
+| 6 | Networking in Google Cloud: Hybrid and Multicloud | Not started | — |
+
 ## Modules Completed
 
 ### Routing & Addressing
