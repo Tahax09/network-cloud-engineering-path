@@ -99,6 +99,7 @@ Networking + Cloud/
 | PE01 | Practice Exam 1 (90 Q, timed, N10-009 domain weights) | L01–L25 |
 | WD01 | Weak-Area Drill — Troubleshooting Methodology | L21–L22 |
 | GQ01 | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 |
+| IQ01 | CCNA-level interview questions — self-test | L01–L25 |
 
 ---
 

@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-09] create | IQ01 — CCNA-level interview questions self-test (Q1–Q80)
+Filed a third-party "Top 100 CCNA Interview Questions (2026)" list as a self-test: questions paraphrased, answers condensed and written fresh, each linked to its wiki lesson. Corrected source errors (ARP always used — gateway for remote hosts; DHCP client ARP probe happens after ACK; PPPoE overhead 8 bytes; TACACS+ is RFC 8907; Diffie-Hellman is key exchange not encryption; missing Wi-Fi 7). Listed CCNA-depth gaps not yet in wiki (OSPF internals, EIGRP DUAL, GRE/DMVPN, PPPoE, FTP modes, FlexConnect). Q81–Q100 pending — source paste truncated.
+
 ## [2026-10-09] refactor | Lesson files renamed to "ID - Title.md"
 Renamed all 25 Network+ and 11 GCP lesson files from bare IDs (L01.md, GCP08.md) to "<ID> - <Title>.md" (e.g. "L01 - The OSI Model.md", "GCP08 - Private Google Access.md"). Added aliases: [ID] to each lesson's frontmatter. Rewrote all wikilinks and markdown links across the wiki (log history left as-is). Fixed pre-existing broken [[NQ04]] links and [[GCP05]] → [[gcp-geolocation-lab]]. Updated CLAUDE.md naming convention.
 

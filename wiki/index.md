@@ -85,6 +85,7 @@
 | [PE01](quizzes/PE01_Practice_Exam_1.md) | Practice Exam 1 — 90 Q, domain-weighted, original | L01–L25 | 2026-10-08 | Not attempted |
 | [WD01](quizzes/WD01_Methodology_Drill.md) | Weak-Area Drill — Troubleshooting Methodology | L21–L22 | 2026-10-08 | Not attempted |
 | [GQ01](quizzes/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 | 2026-10-09 | Reviewed |
+| [IQ01](quizzes/IQ01_CCNA_Interview_Questions.md) | CCNA-level interview questions — self-test (Q1–Q80) | L01–L25 | 2026-10-09 | In progress |
 
 ## Labs
 
