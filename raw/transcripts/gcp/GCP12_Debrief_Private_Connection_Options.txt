@@ -1,0 +1,15 @@
+In this module, you learned
+about several ways to connect privately from
+internal IP addresses to Google Cloud APIs, Google Services, and
+other resources. You can use Private
+Google Access to connect to Google
+APIs and Services. In addition to Google
+APIs and services, Private Service Connect lets you connect to other
+configured resources. Private Services Access
+simplifies creating a VPC network period connection between consumer and
+producer VPC networks. However, Private Services Access only works for some Google
+products and services. We then discussed using
+Cloud NAT to provide public Internet access for resources without
+public IP addresses. We finished the module
+with a lab exercise to implement Private Google
+Access with Cloud NAT, followed by a short quiz.

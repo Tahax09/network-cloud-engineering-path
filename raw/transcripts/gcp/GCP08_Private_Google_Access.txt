@@ -1,0 +1,105 @@
+Next, let's discuss how to use private Google
+access to connect to Google APIs and services
+over an internal connection. Joe, Cymbol
+Corporation's network engineer faces a challenge. Cymbol runs a
+recommendation engine on Google Cloud VMs that analyzes customer data to provide tailored
+product suggestions. This data is highly sensitive, and they need to protect it from potential Internet
+based attacks and comply with strict data
+privacy regulations. They also run a large
+fleet of internal systems, for example,
+inventory management and point of sale systems. These need regular updates, but don't require
+direct Internet access for their core functionality. Challenge. The
+challenge is providing the recommendation engine
+access to Google Cloud APIs, such as BigQuery for data
+analysis and Cloud storage for model storage would
+traditionally require public IPs
+or a NAT setup. Using public IPs means exposing
+the VMs to the Internet, increasing the attack surface. Using complex NAT
+setups involves adding management overhead
+and potential bottlenecks. Joe wonders if there's a way for Google Cloud VMs and
+fleet of VMs to securely connect to Google
+Cloud API without exposing IPs or
+creating complex NAT. Private Google access enables securely connecting VMs without external IP addresses to essential Google
+APIs and services. You enable the
+private Google access feature on a subnet by subnet basis by
+editing the subnet in Google Cloud console or
+the Google Cloud CLI. If you disable private
+Google access for a subnet, VMs with internal
+IP addresses can only send traffic
+within the VPC network. Later in this module, you
+will learn about Cloud NAT, which can allow
+these BMs to send traffic outside of
+the VPC network. Private Google access
+has no effect on instances that have
+external IP addresses. For a list of services that are supported by private
+Google access, see private access options for services in the Google
+Cloud documentation. In the sample topology, the VPC network has two subnets, subnet A and subnet B. The network has
+been configured to meet the domain name system or DNS routing and firewall
+network requirements for Google Cloud
+APIs and services. Private Google access has
+been enabled on subnet A, but not on subnet B. VM A1 can access Google
+APIs and services, including Cloud storage, because its network interface
+is located in subnet A, which has private
+Google access enabled. Private Google access applies to the instance because it only
+has an internal IP address. VM B1 can't access
+Google APIs and services because it only has
+an internal IP address and private Google access is
+disabled for subnet B. VM A2 and VM B2 can both access
+Google APIs and services, including Cloud storage, because each of them
+has its own IP address. Private Google access has no effect on whether
+these instances can access Google APIs and services because both have
+external IP addresses. Cymbol Bank is expanding and wants to use internal
+IP addresses to access Cloud SQL and Cloud TPU from their Tokyo
+on premises network. This example shows how this
+access can be achieved. In the example, the on
+premises network is connected to a VPC network through
+a Cloud VPN tunnel. Traffic from on premises
+host to Google API is traveled through the
+tunnel to the VPC network. After traffic reaches
+the VPC network, it's sent through
+a route that uses the default Internet
+gateway as its next hub. This next hub allows traffic
+to leave the VPC network and be delivered to
+restricted.googleapis.com. 199.36.153.4/30. The on-premises DNS
+configuration maps [inaudible].googleapis.com to
+restricted.googleapis.com, which resolves to the
+199.36.153.4/30 address range. In this example,
+Cloud router uses a custom route advertisement
+for this IP address range. This route sends traffic
+through the Cloud VPN tunnel. The traffic that
+goes to Google APIs is routed through the
+tunnel to the VPC network. A custom static route was
+added to the VPC network. This route directs traffic
+with the destination 199.36.153.4/30 to the
+default Internet gateway as the next hub. Google then directs traffic to the appropriate API or service. In this example, network
+administrators at Cymbol Bank created
+a Cloud DNS managed private zone for.googleapis.com
+that maps to the 199.36. 153.4/30 address range. The network
+administrators authorize the BPC network
+to use that zone. Requests to the googleapis.com
+domain are sent to the IP addresses that are used by
+restricted.googleapis.com. Only the supported APIs are accessible to this
+configuration, which might cause other
+services to be unreachable. Cloud DNS doesn't support
+partial overrides. If you require
+partial overrides, use BIND a software that
+interacts with DNS. Private Google access
+has a few caveats. Because private Google access is enabled on a per subnet basis, you must use a VPC network. Legacy networks are not supported because they
+don't support subnets. Enable the Google Cloud
+APIs that you want to use. You enable these desired APIs on the APIs and services page
+in the Google Cloud console. Your VPC network must have appropriate routes and
+egress firewalls defined. This network must also have appropriate routes
+for the destination IP ranges that are used by
+Google APIs and services. If you use the
+private.googleapis.com or the restricted.googleapis.com
+domain names, you must create DNS records
+to direct traffic to the IP addresses that are
+associated with those domains. For more information, see
+network configuration on the configure private
+Google access page of the Google Cloud
+documentation. These domain names only
+offer IPv4 connectivity. If you want to use IPv6 to connect to Google
+APIs and services, your VM must be configured with the /96 IPv6 address range. The software on the
+VM must send packets whose sources match one of those IPv6 addresses
+from that range. You must send the packets to the IPv6 addresses or
+the default domains.

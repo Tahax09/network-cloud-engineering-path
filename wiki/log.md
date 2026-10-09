@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-09] ingest | GCP07–GCP12 — Private Connection Options module + GQ01 quiz
+Ingested six GCP transcripts. GCP07 overview (option map, PSC vs PSA). GCP08 Private Google Access (per-subnet, external-IP rule, on-prem via VPN + DNS + Cloud Router custom advertisement + default-internet-gateway route, private vs restricted VIPs, no partial overrides, IPv6 /96). GCP09 Private Service Connect (endpoints/backends, service attachments, PSC NAT subnet, overlapping IPs, consumer-initiated, PSC interface + network attachment transitive, service connection policies, caveats). GCP10 Private Services Access (peering + allocated range, Service Networking API, one range per producer, disable ≠ delete, on-prem custom route export). GCP11 Cloud NAT (distributed outbound-only, Cloud Router control plane, manual vs auto IPs, PGA interplay, public vs private/inter-VPC NAT, port exhaustion). GCP12 module debrief. New concept page gcp-private-access. GQ01 graded quiz (3 Q) saved with answer key. Corrected transcript: PSC needs no route import/export (peering concept), regional endpoints = in-transit residency, PSC consumer chooses its own endpoint IP, region not zone. Raw transcripts stored in raw/transcripts/gcp/.
+
 ## [2026-10-08] create | PE01 practice exam + WD01 weak-area drill
 Generated PE01 — 90 original questions across all N10-009 objectives, weighted to official domain split (23/20/19/14/24 → 21/18/17/13/21 Q), 90-minute format, command-output exhibits, answer key with objective + lesson links, per-domain score sheet. Generated WD01 — 12-question drill targeting NQ06 misses (verify vs establish theory, step 1 sub-tasks, NIC upgrade cable type). Corrected cert page domain weights (Domain 4 = 14%, Domain 5 = 24%; were 16%/22%).
 

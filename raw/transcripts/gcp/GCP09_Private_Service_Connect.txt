@@ -1,0 +1,251 @@
+Next, let's discuss
+Private Service Connect, which lets you use internal
+IP addresses to consume, produce, and make
+services available. Neuer is a network
+engineer at Cymbal. A large financial
+institution offers a real-time transaction
+processing API for its partners. This API handles sensitive
+financial data and needs to be highly secure
+with restricted access, easily accessible to authorized partners over the Internet, and scalable to handle
+fluctuating traffic loads. The challenges. Security.
+Exposing the API directly to the public
+Internet poses security risks. Control. Traditional methods,
+IP allowlisting or VPNs, can be cumbersome for managing access and don't
+always scale well. Flexibility. The API should
+be consumable by partners who might be in different
+Cloud environments or have their own
+on-premises infrastructure. Private Service Connect
+provides a secure, scalable, and flexible way to expose services to specific
+partners or networks. It's ideal for scenarios
+involving sensitive APIs or the need for custom IP
+addressing. Private endpoint. The financial
+institution creates a Private Service
+Connect endpoint attached to their API
+within their VPC. This endpoint gets a private IP address within their network. Service publishing. The service (transaction
+processing API) is ‘published’, making it discoverable by
+authorized consumers. Controlled access. Partners create PSC
+consumer endpoints in their respective VPCs. These endpoints are assigned private IP addresses from a range the financial
+institution specifies, facilitating fine grain control. Secure, scalable consumption. Authorized partners can
+now consume the API using the private IP address
+of the published service. Traffic flows through
+Google's network. Load balancing is handled on
+the service producer's side. As with Private Google Access, you can use Private
+Service Connect to access Google APIs and services with a global
+internal IP address. Private Service
+Connect also lets you access third-party
+services and services provided
+within the organization with an internal IP address. To access resources with
+Private Service Connect, use a Private Service Connect
+endpoint or a back-end. Organizations can choose
+the internal IP address to associate with each endpoint. Private Service
+Connect has lined rate performance and scales
+to enterprise size networks. In other words, Private
+Service Connect is fast and grows with
+your organization. Look at the example
+shown on the right. VM 1 in the consumer
+network uses a Private Service Connect
+endpoint to connect to services that run in the
+producer network on VM 2. The Private Service
+Connect endpoint has an internal IP
+address, 10.0.20.10. VM 1 uses the internal address to access services on VM 2. Next, let's talk
+about other things you can do with Private
+Service Connect. The consumer contacts a
+producer service or VM by using the Private
+Service Connect endpoint in their VPC network. This endpoint has an
+internal IP address and maps to the service attachment in the producer VPC network. A service attachment refers
+to services from a producer. In this example, the
+service attachment receives requests redirected from the Private Service
+Connect endpoint and sends it to a
+forwarding rule. The forwarding rule sends the request to the
+appropriate VM or service. You can see this flow in the example with the
+red-dotted line. Refer to the documentation
+for more details. Using a load balancer provides
+some additional features. Private Service
+Connect back-ends let Google Cloud load
+balancers send traffic through Private Service
+Connect to reach published services
+or Google APIs. You can assign DNS names to
+these internal IP addresses, or even Google APIs and services with meaningful
+names for your organization. For example, if you
+have a service with the name spanner.example.com, you can map spanner.cymbal.com or some other name that makes sense for your organization. These names and IP addresses are internal to
+your VPC network. On-premises networks
+use Cloud VPN tunnels or VLAN attachments
+to connect to it. Also, you can control which
+traffic goes to which endpoint and demonstrate that the traffic stays
+within Google Cloud. You can configure
+the load balancer to log all requests
+to Cloud logging. With Private Service Connect and an application
+load balancer, you can use a URL map to choose which services are
+available to consumers. You could also use
+it to evaluate the request and route it to
+the correct VM or service. For added security between
+clients and the load balancer, you can use customer-managed
+transport layer security, or TLS, certificates. You can also enable
+data residency in transit by connecting to regional endpoints
+for Google APIs from workloads in
+that same region. In other words, you can
+be certain that data at rest is stored in the
+region you configure. This example shows
+an on-premises network that is
+connected to a subnet of a Google Cloud VPC network
+in the us-central-1 region. The requests that a
+VM or service in an on-premises network
+make to Cloud logging, Pub/Sub, or Cloud KMS are not routed on
+the public Internet. They remain within the Google
+Cloud backbone network. Requests to other
+Google Cloud services are routed over the
+public Internet. The internal application
+load balancer in the consumer network and the desired Google
+services are both located in the
+us-central-1 zone. You can see that after the
+request from the on-premises network is sent
+through the Cloud Interconnect connection
+to the load balancer, it remains in the
+us-central-1 zone. If desired, access through the load balancer can be
+sent to Cloud logging. With Private Service
+Connect and consumer HTTPS service controls that use a global external
+application load balancer, consumers connect to an
+external IP address. Private Service Connect uses a network endpoint group to route the request to
+the service producer. Let's look at a more
+detailed example of Private Service
+Connect that uses a global external
+application load balancer. This topology shows a Private
+Service Connect endpoint based on a global external
+application load balancer. This topology lets
+service consumers with Internet access connect
+to the load balancer. The load balancer then
+directs the request to the appropriate network endpoint group and a consumer network. Each of these endpoints is associated with a
+service attachment. A forwarding rule then
+routes the request to the appropriate VM
+instance or service. Private Service Connect lets
+you configure access to specific Google and
+third-party services using internal IP addresses. Except for the global external application load
+balancer use case, connections use
+internal IP addresses. Traffic stays on the
+Google backbone network. Connections are thus more secure and much faster than over
+the public Internet. Services that use Private
+Service Connect interact like services on a
+private network. Configuration is simple. Private Service
+Connect works with the internal IP
+address range that you provide and sets
+up the routing tables. Private Service
+Connect is highly scalable and supports
+thousands of consumers. Consumers use consumer
+VPC networks to access VMs and services
+from producer VPC networks. Consumers can control
+the internal IP address that is used to connect
+to a managed service. They don't need to reserve
+internal IP address ranges for back-end services that are
+consumed in their VPC network. Instead, consumers choose
+an IP address from their own subnet to connect
+to the producer services. For security purposes, all
+communications between the consumer VPC network and
+service producer VPC network must be initiated
+by the consumer. Service producers can't
+initiate this communication. This unidirectional connectivity drastically simplifies
+firewall configuration, but also reduces risk from rogue traffic originating from
+the service producer. Service producers make VMs and services available
+to consumers. Producers can choose to
+deploy a multi-tenant model, where your VPC network
+contains services that are used by
+multiple consumer VPCs. The consumer networks can have
+overlapping subnet ranges. Service producers can
+scale services to as many VM instances as required without asking consumers
+for more IP addresses. Service producers don't need to change firewall rules based on the subnet ranges in
+the consumer VPC networks. You can simply create
+firewall rules for the network
+address translation, or NAT, IP address range
+configured for your service. A Private Service Connect
+interface is a special type of network interface that
+refers to a network attachment. A Private Service Connect
+interface enables services in a producer VPC network
+to securely reach resources and destinations
+within a consumer VPC network. Producer and consumer
+networks can be in different projects
+and organizations. If the service consumer
+accepts the connection, Google Cloud allocates the
+interface and IP address from a subnet in the
+consumer VPC network that's specified by the
+network attachment. The VM of the Private Service
+Connect interface has a second standard
+network interface that connects to the
+producer's VPC network. A connection between a Private
+Service Connect interface and a network attachment is similar to the
+connection between a Private Service
+Connect endpoint and a service attachment, but it has two key differences. A Private Service
+Connect interface lets a producer network initiate connections to a
+consumer network, managed service egress,
+while an endpoint lets a consumer network
+initiate connections to a producer network,
+managed service ingress. A Private Service Connect interface connection
+is transitive. This means that a producer
+network can communicate with other networks that are connected to the
+consumer network. A common use case is when
+a managed service needs to securely access data within
+a customer's VPC network. Private Service
+Connect interface lets the service securely
+access the data, whether the data resides
+in the Cloud, on-premises, via VPN or Cloud Interconnect, or with a third-party service. This maintains privacy and isolation for
+sensitive information. There are many
+different types of Private Service
+Connect interface, so producers will provide documentation on how to use
+it with their services. For example, some
+producers will use an API, where others might
+develop a user interface. A consumer network
+administrator and a consumer service administrator
+are working together to get an easier way to configure
+Private Service Connect or the producer network to be able to initiate a connection
+to the consumer network. Satisfy both of these needs using service
+connection policies. A service connection policy is a regional Google
+Cloud resource. It lets a network administrator specify which producer services can be deployed and connected through service
+connectivity automation. If a service connection policy exists for a managed service, a consumer service administrator
+can deploy that service. Service connection policies
+have the following fields. Service class. This specifies the type of managed service
+that the policy is for. Each producer that supports service connection policies has its own globally
+unique service class. VPC network, specifies the VPC network that the
+policy is scoped for. Subnets, specifies
+the subnets that IP addresses for Private
+Service Connect endpoints are allocated from. Connection limit, specifies
+the maximum number of Private Service Connect
+connections that a producer can create in the policy's VPC
+network and region. Deploying an instance of a
+managed service by using service connection policies
+involves the following steps. A consumer network
+administrator creates a service connection policy
+for their VPC network. This policy lets Google
+automatically deploy Private Service
+Connect endpoints on behalf of a consumer
+service administrator. Consumer network administrators have more control over who can create and use Private
+Service Connect endpoints. The service connection policy
+references a service class, a globally unique resource that identifies a specific
+producer service. A single-service connection
+policy is scoped to a single-service class and a single-consumer VPC network, which delegates the ability to configure connectivity
+within that scope. A consumer service
+administrator deploys a managed service using the service
+administrative API or UI. Google producer of service
+attachments can be found using the UI or
+a described command. Self-hosted and
+third-party service attachment URLs may be shared programmatically
+or through email depending on
+the implementation. The producer receives
+the consumer's connectivity configuration and passes this information
+to a service connection. Private Service Connect service
+connectivity automation creates an endpoint in
+the consumer VPC network. This endpoint connects to a service attachment in
+the producer VPC network. Private Service Connect
+has a few caveats. You can't create a Private
+Service Connect endpoint in the same VPC network as the published service
+that you are accessing. The endpoint can only
+be used to access a published service in
+another VPC network. The address counts toward the project quota for global
+internal IP addresses. Private Service Connect
+endpoints are not accessible from
+peered VPC networks. Instead, create a Private
+Service Connect endpoint in the peered VPC network. You can then configure workloads to refer to that endpoint. Connections from
+on-premises environments to non-Google services must
+use Cloud VPN tunnels. These on-premises
+environments must be in the same region as the Private
+Service Connect endpoint. For information about accessing Private Service
+Connect endpoints from on-premises
+environments that are connected using Cloud VPN, see access the endpoint from on-premises hosts in the
+Google Cloud documentation.

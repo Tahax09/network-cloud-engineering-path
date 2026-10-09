@@ -40,7 +40,13 @@
 | GCP04 | Cloud DNS | Routing & Addressing | 2025-05-28 | Complete | Pending |
 | — | Lab moved to wiki/labs/gcp-geolocation-lab.md | — | — | — | — |
 | GCP06 | Module Debrief: Routing & Addressing | Routing & Addressing | 2025-05-28 | Complete | — |
-| GCP07 | — | — | — | Pending | — |
+| GCP07 | Private Connection Options — Overview | Private Connection Options | 2026-10-09 | Complete | Pending |
+| GCP08 | Private Google Access | Private Connection Options | 2026-10-09 | Complete | Pending |
+| GCP09 | Private Service Connect | Private Connection Options | 2026-10-09 | Complete | Pending |
+| GCP10 | Private Services Access | Private Connection Options | 2026-10-09 | Complete | Pending |
+| GCP11 | Cloud NAT | Private Connection Options | 2026-10-09 | Complete | Pending |
+| GCP12 | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete | — |
+| GCP13 | — | — | — | Pending | — |
 
 ## AWS Cloud Practitioner
 

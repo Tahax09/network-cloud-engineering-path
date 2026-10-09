@@ -1,0 +1,103 @@
+Next, let's discuss how to
+use private services access to provide access to
+producer services. Consider a scenario. Mark is Cymbal Corporation's
+network architect. Within Cymbal, a data science
+team has developed a proprietary machine
+learning API deployed within a private VPC
+subnet on Google Cloud. These systems need access to
+essential Google Cloud services like Cloud SQL or
+Gemini Enterprise Agent Platform. Challenge: Ensuring connectivity to
+essential Google services while keeping the API inaccessible
+from the public Internet. PSA is the solution. Let us see how. Like with private service connect, private services access
+lets consumers use internal IPv4 addresses to
+consume producer services. You allocate an internal IPv4 range
+within your own VPC for PSA. The connection between consumer and
+producer uses VPC Network Peering. Private services access automates much
+of the VPC Network Peering configuration. With Private Service Connect, you
+had to import and export routes between the consumer and
+producer VPC networks. Because the connection between
+the consumer and producer is made using VPC
+Network Peering, you don't need to import
+and export routes. Subnet routes that don't use
+privately used public IP addresses are always exchanged between
+peered VPC networks. Private services access is available
+only for supported producer services, like Apigee, Cloud SQL,
+and Cloud TPU. For a complete list of
+supported producer services, see Private services access Supported
+services in the Google Cloud documentation. To offer private connectivity, the service producer must complete
+a one-time onboarding process. To complete the onboarding process,
+contact your Google representative. For more information, see
+Onboarding process on the Enabling private
+services access page of the Google Cloud
+documentation. After the onboarding
+process is complete, you can configure
+private services access. To use private services access, both service consumers
+and producers must activate the service
+networking API in their projects. The consumer and producer VPC
+networks require some configuration as well. Service producers must
+allocate an IPv4 address range in the VPC network that
+contains the service. This address range is used for each
+connection from a service consumer. Consumers must also allocate
+an IPv4 address range in their VPC network for
+each producer VPC network. For example, to use services from
+three different producer VPC networks, the consumer must allocate
+three IPv4 address ranges, one for each producer
+VPC network. After the service producer has
+completed the initial configuration, consumers can create a private connection
+to the producer VPC network. You can use the Google
+Cloud console or the Google Cloud CLI to
+create this connection. Consumers and producers can
+use the Google Cloud console to edit their VPC network to
+configure private services access. If a service producer
+offers multiple services, you only need one
+private connection. For example, if a consumer
+uses Cloud SQL and Cloud TPU, only one private
+connection is created. Google Cloud uses
+VPC Network Peering to implement the connection
+between the consumer and producer VPC networks. Consumers can disable the
+private services access connection between their VPC network and
+the producer VPC network. Consumers can also edit their VPC
+network settings to disable access. Disabling the private services
+access connection does not delete the VPC Network
+Peering to the producer VPC network. You can edit the VPC network to
+delete the peering connection. Likewise, disabling the private
+services access connection does not release the
+IPv4 address. Consumers must edit the VPC network
+to release the IPv4 address. This example shows a sample
+private services access topology. The customer VPC network allocated
+the 10.240.0.0/16 address range for Google services and established a
+private connection that uses the allocated range. Google then creates a
+project for the customer. With that project, each Google service
+creates a subnet from the allocated block to provision new resources
+in a given region. In the example, you can
+see a Cloud SQL instance. The Cloud SQL instance is
+assigned an IP of 10.240.0.2, which is within the
+10.240.0.0/16 range. In the customer VPC network, requests with the destination
+of 10.240.0.2 are routed over the private connection
+to the producer VPC network. The request is then sent to the correct
+resource in the producer VPC network. If the service supports
+cross-region communication, VM instances in the
+customer network can access service
+resources in any region. Some services might not support
+cross-region communication. For more information, see the
+documentation of the relevant service. Private services access
+has a few caveats. For private services access to
+an on-premises network to work, you must export custom
+routes from the on-premises network to
+the producer VPC network. Not all Google services
+are supported. For a complete list of
+supported Google services, see Private services
+access supported services in the Google Cloud
+documentation. The same quota and limits that
+apply to VPC Network Peering also apply to private
+services access. Private services access uses VPC Network
+Peering  to implement connections and thus has the same restrictions
+as VPC Network Peering. This table outlines three Google
+Cloud networking features. Private Google Access simplifies
+how VMs without public IPs connect to essential
+Google services. Private Service Connect allows
+you to expose your own services or Google produced or
+third party services securely to external consumers,
+even outside of Google Cloud. And Private Services Access
+enables private access to services provided by Google or third
+parties within your VPC.

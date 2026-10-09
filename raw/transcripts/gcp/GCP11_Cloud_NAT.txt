@@ -1,0 +1,110 @@
+Next, you will learn how to use Cloud NAT to provide access to the public Internet
+for resources without an external IP address. Let's start with a
+simple use case. Janet is a network engineer
+at Cymbal Corporation. Cymbal has several
+non-production environments, development, testing, and
+staging, on Google Cloud. These environments host
+various VMs that need occasional outbound Internet
+access for tasks such as downloading software
+updates and dependencies, and accessing external
+testing tools or resources. Cymbal needs a streamlined, cost-effective way to handle outbound traffic without burning through their limited
+pool of public IPs. The solution, Janet
+decides to use Cloud NAT. This managed service
+provides a pool of highly available IP
+addresses that Janet can dynamically assign to
+their servers on demand. Cloud NAT translates the
+private IP addresses of Cymbal servers to a public IP address for
+outbound communication, seamlessly masking
+the internal network from the outside world. Cloud NAT is the Google managed network address
+translation service. It lets you provision your
+application instances without public IP addresses, and it also lets them access the Internet in a controlled
+and efficient manner. With Cloud NAT, your
+private instances can access the
+Internet for updates, patching, configuration
+management and more. Cloud NAT, as shown
+on the right, offers several
+advantages when compared to other NAT offerings,
+as shown on the left. As a fully managed
+software-defined service, Cloud NAT differs from
+traditional NAT proxy solutions. There are no NAT
+middle proxies in the path from the instance
+to the destination. Instead, each instance is
+a located NAT IP address, along with a slice of the
+associated port range. This allocated IP
+address and port range are used by the instance
+to perform NAT. This design is free
+of checkpoints and is highly reliable,
+performant, and scalable. Cloud NAT lets you configure multiple NAT IP addresses
+per NAT gateway. You can scale based on
+the size of your network without having to add or
+manage another NAT gateway. NAT IP allocation has two
+modes: manual and auto. The manual mode provides full control when
+specifying IP addresses. If you want to allow
+NAT addresses on the receiving side,
+use the manual mode. The auto mode enables the
+NAT IP addresses to be allocated and scaled
+automatically based on the number
+of instances. For a full overview of
+Cloud NAT features, see Cloud NAT overview in the
+Google Cloud documentation. In this diagram,
+Cloud NAT enables two private instances to access and update server
+on the Internet, which is referred
+to as outbound NAT. However, Cloud NAT does
+not implement inbound NAT. In other words, hosts outside your VPC network can't directly access any of the
+private instances behind the Cloud NAT gateway. Your VPC networks remain
+isolated and secure. With Cloud NAT, VMs without external IP addresses can access destinations
+on the Internet. For example, you might
+have VMs that only need Internet access to
+download updates or complete provisioning. Cloud NAT allows
+you to configure these VMs with an
+internal IP address. Thus, your organization needs fewer external IP addresses. Cloud NAT can be configured
+to automatically scale the number of NAT IP
+addresses that it uses. Cloud NAT supports VMs that belong to managed
+instance groups, including those with
+auto scaling enabled. Cloud NAT is not dependent on a single physical
+gateway device. Cloud NAT is a distributed, software-defined,
+managed service. You configure a NAT
+gateway on a Cloud Router, which provides the
+control plane for NAT. Cloud Router contains the NAT
+configuration parameters. Google Cloud runs and
+maintains processes on the physical machines that
+run your Google Cloud VMs. With Private Google Access, Cloud NAT never performs
+NAT for traffic sent to the selected external
+IP addresses of Google APIs and services. Google Cloud routes this
+traffic internally. When you configure
+a Cloud NAT gateway to apply to a subnet range, Google Cloud
+automatically enables Private Google Access
+for that range. Thus, any VMs in that
+subnet range use Private Google
+Access to connect to Google APIs and services. If the gateway provides
+NAT for a subnet range, Private Google
+Access is in effect for that range and can't
+be disabled manually. There are two types of Cloud NAT available in Google Cloud. First up, we have public NAT. Think of this as your
+gateway to the Internet. It enables the resources inside your virtual
+private cloud, those without public
+IP addresses, to securely access the online
+world. Here's how it works. When a resource needs to
+connect to the Internet, public NAT dynamically
+assigns it a public IP address
+from a shared pool. This way, your resource can
+browse, download updates, and do all the things
+it needs to online, while its internal IP address
+remains safely tucked away. Now, let's explore private NAT. This type of NAT you'll use for secure communication
+between different networks. One important subtype of
+private NAT is inter-VPC NAT. This comes in handy
+when you have multiple virtual private clouds that need to talk to each other. It acts like a translator, making sure communication flows smoothly between these
+different networks, all through a central hub like the Network
+Connectivity Center. With both public and private NAT options at your disposal, you have the
+flexibility to securely connect your resources
+in Google Cloud, whether they need to
+access the Internet or communicate with other
+private networks. Before we wrap up this module, let us take a look at a sample Gemini prompt related
+to private service access. Here's an example of
+an operational prompt. How can I use private
+service access to connect my VMs to
+third-party services? You'll be provided with a
+well-structured response that outlines the prerequisites, steps, and detailed
+commands that can help you configure
+private service access. The output structure makes
+it easy to follow and minimizes the risk of errors
+during implementation.

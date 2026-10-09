@@ -1,0 +1,46 @@
+Private connection
+options. In this module, we'll discuss some
+general methods of accessing Google and
+other services privately by using internal IP addresses then we will cover
+each of the methods, private Google access, private service connect, private services access, and Cloud NAT or network
+address translation. After that, you
+will try what you learned in a Cloud
+NAT lab exercise. Private access uses internal
+IP addresses therefore, consumers connect to supported APIs and services with
+an internal connection. Unless a consumer connects to Google Cloud by using
+an external connection, private access
+communication does not go through the
+public Internet. Access is quicker
+and more secure. Choose a private access
+option based on your needs. All Google Cloud APIs and services support private access. You can also set up
+private access to APIs and services
+that you publish. You can access these API and
+services from Google Cloud, other Public Clouds,
+or on-premises. Google APIs and services have public URLs and are accessible
+on the public Internet. Google provides several
+private access options. Each option allows
+VM instances with internal IP addresses to reach
+certain APIs and services. You could configure
+one or all of these options because they operate independently
+of each other. Private Google Access
+for on-premises hosts let's your
+on-premises hosts connect Google APIs and services through the default Internet
+gateway of the VPC network. Your on-premises hosts don't
+need external IP addresses. Instead, they use
+internal IP addresses. Private service connect
+lets you connect to a Google or third-party
+managed BPC network through a service attachment. As with private Google access, the connection is internal. Serverless VPC access connects serverless products to your
+VPC network to access Google, third party, or
+your own services with internal IP addresses. For example, Cloud Run, App Engine standard, and Cloud functions
+environments send packets to the internal IPV for
+address of the resource. Serverless VPC access is
+not covered in this module. For more information,
+refer to connect from serverless Google services to VPC networks in the Google
+Cloud documentation. Private Services access is a
+private connection between your VPC network and a
+service producer VPC network. This connection
+is implemented as a VPC network
+peering connection. The service producer network is created exclusively for you, and it's not shared
+with other customers. For more information, see
+private access options for services in the Google
+Cloud documentation.

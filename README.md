@@ -22,7 +22,7 @@ Networking + Cloud/
     ├── log.md                       ← activity log
     ├── lessons/
     │   ├── network-plus/            ← L01–L25 (CompTIA Network+ N10-009)
-    │   └── gcp/                     ← GCP01–GCP06 (Google Cloud Networking)
+    │   └── gcp/                     ← GCP01–GCP12 (Google Cloud Networking)
     ├── concepts/                    ← technology reference pages
     ├── certs/                       ← per-certification progress tracking
     ├── quizzes/                     ← practice and graded quiz files
@@ -73,6 +73,17 @@ Networking + Cloud/
 | GCP04 | Cloud DNS |
 | GCP06 | Module Debrief |
 
+### Google Cloud Networking Specialization — Private Connection Options Module
+
+| ID | Topic |
+|----|-------|
+| GCP07 | Private Connection Options — Overview |
+| GCP08 | Private Google Access |
+| GCP09 | Private Service Connect |
+| GCP10 | Private Services Access |
+| GCP11 | Cloud NAT |
+| GCP12 | Module Debrief: Private Connection Options |
+
 ---
 
 ## Quizzes
@@ -87,6 +98,7 @@ Networking + Cloud/
 | NQ06 | Network Troubleshooting (Coursera graded) | L21–L25 |
 | PE01 | Practice Exam 1 (90 Q, timed, N10-009 domain weights) | L01–L25 |
 | WD01 | Weak-Area Drill — Troubleshooting Methodology | L21–L22 |
+| GQ01 | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 |
 
 ---
 

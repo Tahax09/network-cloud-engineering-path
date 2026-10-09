@@ -39,6 +39,12 @@
 | [GCP03](lessons/gcp/GCP03.md) | BYOIP — Bring Your Own IP | Routing & Addressing | 2025-05-28 | Complete |
 | [GCP04](lessons/gcp/GCP04.md) | Cloud DNS | Routing & Addressing | 2025-05-28 | Complete |
 | [GCP06](lessons/gcp/GCP06.md) | Module Debrief: Routing & Addressing | Routing & Addressing | 2025-05-28 | Complete |
+| [GCP07](lessons/gcp/GCP07.md) | Private Connection Options — Overview | Private Connection Options | 2026-10-09 | Complete |
+| [GCP08](lessons/gcp/GCP08.md) | Private Google Access | Private Connection Options | 2026-10-09 | Complete |
+| [GCP09](lessons/gcp/GCP09.md) | Private Service Connect | Private Connection Options | 2026-10-09 | Complete |
+| [GCP10](lessons/gcp/GCP10.md) | Private Services Access | Private Connection Options | 2026-10-09 | Complete |
+| [GCP11](lessons/gcp/GCP11.md) | Cloud NAT | Private Connection Options | 2026-10-09 | Complete |
+| [GCP12](lessons/gcp/GCP12.md) | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete |
 
 ## Concepts
 
@@ -55,6 +61,7 @@
 | [modern-networks](concepts/modern-networks.md) | SDN, VXLAN, Zero Trust, SASE, IaC tools, IPv6 | L08 |
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
+| [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP12 |
 
 ## Certifications
 
@@ -77,6 +84,7 @@
 | [NQ06](quizzes/NQ06_Network_Troubleshooting.md) | Network Troubleshooting (Coursera graded) | L21–L25 | 2026-10-08 | 17/20 |
 | [PE01](quizzes/PE01_Practice_Exam_1.md) | Practice Exam 1 — 90 Q, domain-weighted, original | L01–L25 | 2026-10-08 | Not attempted |
 | [WD01](quizzes/WD01_Methodology_Drill.md) | Weak-Area Drill — Troubleshooting Methodology | L21–L22 | 2026-10-08 | Not attempted |
+| [GQ01](quizzes/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 | 2026-10-09 | Reviewed |
 
 ## Labs
 
