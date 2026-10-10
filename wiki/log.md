@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] quiz | WQ01 — Introduction to Wireshark Quiz (5 questions)
+Saved Coursera quiz with answer key (1-A editcap/rawshark/mergecap, 2-C profile = custom settings, 3-C capture driver = live capture, 4-A macOS/Windows/Linux, 5-D all). Flagged gap: installation video (OS support, Npcap, bundled CLI tools) not ingested. Added key facts to course page.
+
 ## [2026-10-10] ingest | WS04 — Wireshark 101: Packet Capture - Best Practices (end of Lesson 1)
 Ingested best-practices recap: no capture filter at start (assumptions miss HTTPS/DNS/ICMP), start on the client with apps closed (dependency mapping), ring buffer for long-term, confirm the problem occurred in time and place, invest in a TAP, capture client + server simultaneously. Added NTP sync / mergecap / editcap time-shift for multi-point captures, PCAP data-sensitivity handling, checklist, k3s Kibana↔ES dual-capture example. Set module "Lesson 1 - Packet Capture" on WS02–WS04. Caption note: "Fireshark" = Wireshark.
 

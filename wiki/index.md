@@ -105,6 +105,12 @@
 |----|-------|--------|------|--------|
 | [GQ01](quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 | 2026-10-09 | Reviewed |
 
+### Wireshark 101 — `quizzes/wireshark/`
+
+| ID | Title | Covers | Date | Status |
+|----|-------|--------|------|--------|
+| [WQ01](quizzes/wireshark/WQ01_Introduction_to_Wireshark.md) | Introduction to Wireshark Quiz (Coursera) | WS00–WS04 | 2026-10-10 | Reviewed |
+
 ### Interview Prep — `quizzes/interview/`
 
 | ID | Title | Covers | Date | Status |

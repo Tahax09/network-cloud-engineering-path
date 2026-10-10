@@ -168,6 +168,12 @@ Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 |----|------|--------|
 | [GQ01](wiki/quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 |
 
+### Wireshark 101
+
+| ID | Quiz | Covers |
+|----|------|--------|
+| [WQ01](wiki/quizzes/wireshark/WQ01_Introduction_to_Wireshark.md) | Introduction to Wireshark Quiz (Coursera) | WS00–WS04 |
+
 ### Interview Prep
 
 | ID | Quiz | Covers |

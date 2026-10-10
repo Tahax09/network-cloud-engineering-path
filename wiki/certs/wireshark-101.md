@@ -32,6 +32,11 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | [[WS00 - Introduction]] | Introduction (why packet analysis, course files, profiles) | ✅ Complete |
 | [[WS01 - Pre-Lesson - Your First Lab]] | Pre-Lesson: Your First Lab (slow network: client vs network vs server) | ✅ Complete |
 
+## Quizzes
+| ID | Title | Status |
+|----|-------|--------|
+| [[WQ01_Introduction_to_Wireshark]] | Introduction to Wireshark Quiz | ✅ Reviewed |
+
 ## Key Facts (collected from sessions)
 | Topic | Key Fact |
 |-------|---------|
@@ -45,6 +50,9 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Capture points | Endpoint (quick, adds load) → SPAN (on-wire, can oversubscribe) → TAP (sees all, costs $) → cloud mirroring; server install = last resort, CLI only |
 | SPAN oversubscription | 3 × 1G full-duplex = 6 Gbps into 1G monitor → drops → `Previous segment not captured` |
 | Capture best practices | No capture filter first · client first, apps closed · ring buffer · confirm problem happened there · own a TAP · client + server simultaneously (NTP-synced) |
+| Bundled CLI tools | tshark, dumpcap, capinfos, editcap, mergecap, rawshark, text2pcap, reordercap |
+| Capture driver | Npcap (Windows) / libpcap-BPF (macOS, Linux): required for live capture only |
+| Supported OS | Windows, macOS, Linux (no official iOS/Android) |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
 ## Weak Areas to Revisit
