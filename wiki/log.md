@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS10 — Wireshark 101: The Statistics View (end of Module 2)
+Ingested lesson on Statistics → Conversations (per-layer pairs, A→B/B→A, Rel Start, Duration, timeline) and Statistics → Endpoints (unique MAC/IP/port, GeoIP preview), plus unticking unused protocols. Verified on Pre-Lab with tshark -z: 1 TCP / 1 IPv4 / 2 Ethernet conversations; client sends to next-hop MAC f2:b0:cd… but receives from f2:fb:fa… (asymmetric path / FHRP); all MACs f2: = locally administered → likely anonymized trace. Protocol hierarchy: 78 HTTP frames, 51 truncated. Added other Statistics menus and CLI equivalents. Caption note: "FIDI" = FDDI. Module 2 "The Wireshark Interface" complete.
+
 ## [2026-10-10] ingest | WS09 — Wireshark 101: Saving Filter Buttons
 Ingested lesson on filter buttons: Bad TCP = tcp.analysis.flags (verified 4 hits on Pre-Lab: keep-alives/ACKs, frames 119–122), add via + on filter bar, edit/remove via Filter Button Preferences, saved in profile dfilter_buttons. Inspected instructor profiles: grouped labels (A//B), field references ${tcp.stream}, ~50 security signature buttons. Tested all 81 instructor buttons with tshark 4.6: 6 fail on 4.x syntax (unquoted strings, single regex backslash, space-separated set) — fixes verified and documented. Flagged mislabeled Cybersec "SYNs and SYNACKs" button. Corrected own table entry (tls.handshake.type in {1, 2}).
 

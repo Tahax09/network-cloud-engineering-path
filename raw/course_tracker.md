@@ -62,6 +62,7 @@
 | WS07 | Coloring Traffic | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 | WS08 | Creating Profiles | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 | WS09 | Saving Filter Buttons | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
+| WS10 | The Statistics View | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 
 ## AWS Cloud Practitioner
 

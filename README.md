@@ -147,6 +147,7 @@ Lab-heavy protocol analysis course, running in parallel with Google Cloud. Cours
 | [WS07](wiki/lessons/wireshark/WS07%20-%20Coloring%20Traffic.md) | Coloring Traffic | Pre-Lab-SlowNetwork.pcapng | TCP SYN coloring rule, drag-to-filter, rule priority, instructor's Cybersec rules |
 | [WS08](wiki/lessons/wireshark/WS08%20-%20Creating%20Profiles.md) | Creating Profiles | Pre-Lab-SlowNetwork.pcapng | Profile = settings bundle; Copy-from coloring rules; Frame metadata fields |
 | [WS09](wiki/lessons/wireshark/WS09%20-%20Saving%20Filter%20Buttons.md) | Saving Filter Buttons | Pre-Lab-SlowNetwork.pcapng | Bad TCP button, grouped buttons, field references, signature buttons, 4.x syntax fixes |
+| [WS10](wiki/lessons/wireshark/WS10%20-%20The%20Statistics%20View.md) | The Statistics View | Pre-Lab-SlowNetwork.pcapng | Conversations & Endpoints per layer, asymmetric next-hop MACs, tshark -z |
 
 Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 

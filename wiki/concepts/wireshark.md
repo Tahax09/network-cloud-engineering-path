@@ -5,6 +5,7 @@
 **Role:** It's the ground truth for troubleshooting ("is it the client, the network, or the server?") and for security investigation (what did the attacker send, and where did data go?). Packet captures settle disputes that logs and dashboards can't.
 
 ## Core Workflow
+0. **Statistics first** (Capture File Properties, Conversations, Endpoints, Protocol Hierarchy), then packets.
 1. **Capture** at the right place: client side for user experience, server side for server behavior, or both. Use a capture filter (BPF) only if volume forces it.
 2. **Orient:** total packets/duration (status bar, `capinfos`), conversations (Statistics → Conversations), protocol mix (Statistics → Protocol Hierarchy).
 3. **Time it:** handshake RTT, request → response gaps, retransmissions.
@@ -72,6 +73,8 @@ export PATH="/Applications/Wireshark.app/Contents/MacOS:$PATH"   # macOS
 capinfos -c -u -l file.pcapng                         # packet count, duration, snaplen
 tshark -r file.pcapng -q -z conv,tcp                  # TCP conversations
 tshark -r file.pcapng -q -z io,phs                    # protocol hierarchy
+tshark -r file.pcapng -q -z endpoints,ip              # endpoints (also eth, tcp, udp)
+tshark -r file.pcapng -q -z conv,eth -z conv,ip       # conversations per layer
 tshark -r file.pcapng -Y 'frame.time_delta > 1' -T fields -e frame.number -e frame.time_delta -e _ws.col.Info
 tshark -r file.pcapng -Y 'tcp.analysis.flags' -T fields -e frame.number -e _ws.expert.message
 sudo tcpdump -i eth0 -s 0 -w out.pcap 'tcp port 443'   # capture full packets (-s 0)
@@ -131,5 +134,6 @@ Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen
 - [[WS07 - Coloring Traffic]] — Coloring rules, priority, drag-to-filter
 - [[WS08 - Creating Profiles]] — Profiles, Copy from, Frame metadata
 - [[WS09 - Saving Filter Buttons]] — Filter buttons, grouping, signatures, 4.x syntax
+- [[WS10 - The Statistics View]] — Conversations, Endpoints, protocol hierarchy
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]

@@ -13,7 +13,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 ## Lab Files (`raw/assets/wireshark-101/`)
 | File | Used in |
 |------|---------|
-| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]], [[WS07 - Coloring Traffic]], [[WS08 - Creating Profiles]], [[WS09 - Saving Filter Buttons]] |
+| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]], [[WS07 - Coloring Traffic]], [[WS08 - Creating Profiles]], [[WS09 - Saving Filter Buttons]], [[WS10 - The Statistics View]] |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -43,6 +43,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | [[WS07 - Coloring Traffic]] | Coloring Traffic (SYN rule, priority) | ✅ Complete |
 | [[WS08 - Creating Profiles]] | Creating Profiles ("Wireshark 101" profile, Copy from, Frame metadata) | ✅ Complete |
 | [[WS09 - Saving Filter Buttons]] | Saving Filter Buttons (Bad TCP, grouping, signatures) | ✅ Complete |
+| [[WS10 - The Statistics View]] | The Statistics View (Conversations, Endpoints) — end of module | ✅ Complete |
 
 ## Quizzes
 | ID | Title | Module | Status |
@@ -78,6 +79,8 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Filter buttons | + at right of filter bar → label + filter; right-click → Filter Button Preferences to edit/remove; `A//B` labels make dropdowns; `${tcp.stream}` = selected packet's value |
 | Bad TCP button | `tcp.analysis.flags` (includes keep-alives/window updates; narrow version excludes them) |
 | 4.x filter syntax | Double-quote strings, double regex backslashes, comma-separate sets |
+| Statistics first | Conversations (pairs per layer, A→B/B→A, Rel Start, Duration) + Endpoints (unique addrs, GeoIP later) before reading packets |
+| Pre-Lab stats | 1 TCP, 1 IP, 2 Ethernet conversations — different next-hop MACs out vs in (asymmetric path); f2: MACs = anonymized |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
 ## Weak Areas to Revisit
