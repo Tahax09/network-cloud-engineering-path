@@ -6,7 +6,7 @@ covers: WS00–WS04 (+ installation video not yet ingested)
 date: 2026-10-10
 status: Reviewed
 questions: 5
-source: Coursera quiz — Wireshark 101, Lesson 1
+source: Coursera quiz — Wireshark 101, Module 1 (Introduction to Wireshark)
 ---
 
 # WQ01 — Introduction to Wireshark Quiz

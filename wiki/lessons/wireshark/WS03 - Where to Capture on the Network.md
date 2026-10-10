@@ -4,7 +4,7 @@ aliases: [WS03]
 title: Where to Capture on the Network
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
-module: Lesson 1 - Packet Capture
+module: Module 1 - Introduction to Wireshark
 date: 2026-10-10
 status: Complete
 quiz_attempted: No

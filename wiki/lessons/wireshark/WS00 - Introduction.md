@@ -4,7 +4,7 @@ aliases: [WS00]
 title: Introduction
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
-module: Introduction
+module: Module 1 - Introduction to Wireshark
 date: 2026-10-10
 status: Complete
 quiz_attempted: No

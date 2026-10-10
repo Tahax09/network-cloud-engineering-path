@@ -4,7 +4,7 @@ aliases: [WS04]
 title: Packet Capture - Best Practices
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
-module: Lesson 1 - Packet Capture
+module: Module 1 - Introduction to Wireshark
 date: 2026-10-10
 status: Complete
 quiz_attempted: No
@@ -15,7 +15,7 @@ tags: [wireshark, best-practices, capture-filter, display-filter, client-side-ca
 # WS04 — Packet Capture: Best Practices
 
 ## Summary
-This lesson wraps up **Lesson 1 (packet capture)** with six rules. **The quality of the capture determines the quality of the analysis; if you never captured it, you can't analyze it.**
+This lesson wraps up **Module 1, *Introduction to Wireshark*** (followed by [[WQ01_Introduction_to_Wireshark]]), with six rules. **The quality of the capture determines the quality of the analysis; if you never captured it, you can't analyze it.**
 1. **No capture filter at the start.** Filtering assumes you already know the problem.
 2. **Start on the client**, with every unrelated app closed.
 3. **Use a ring buffer** for long or intermittent captures.

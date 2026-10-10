@@ -14,11 +14,6 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | File | Used in |
 |------|---------|
 | Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]] |
-| [[WS02 - Your First Packet Capture]] | Your First Packet Capture (interfaces, save, ring buffer) | ✅ Complete |
-| [[WS03 - Where to Capture on the Network]] | Where to Capture (endpoint, SPAN, TAP, cloud) | ✅ Complete |
-| [[WS04 - Packet Capture - Best Practices]] | Packet Capture Best Practices (end of Lesson 1) | ✅ Complete |
-| [[WS05 - The Default Interface]] | The Default Interface (Lesson 2 starts) | ✅ Complete |
-| [[WS06 - Configuring Columns]] | Configuring Columns (Delta, UTC, TTL) | ✅ Complete |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -29,15 +24,27 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Profiles/Chris-TCPPlain.zip, Chris-Security.zip | Instructor's Wireshark configuration profiles (import via Edit → Configuration Profiles) |
 
 ## Lessons
+
+### Module 1 - Introduction to Wireshark
 | ID | Title | Status |
 |----|-------|--------|
 | [[WS00 - Introduction]] | Introduction (why packet analysis, course files, profiles) | ✅ Complete |
 | [[WS01 - Pre-Lesson - Your First Lab]] | Pre-Lesson: Your First Lab (slow network: client vs network vs server) | ✅ Complete |
+| [[WS02 - Your First Packet Capture]] | Your First Packet Capture (interfaces, save, ring buffer) | ✅ Complete |
+| [[WS03 - Where to Capture on the Network]] | Where to Capture (endpoint, SPAN, TAP, cloud) | ✅ Complete |
+| [[WS04 - Packet Capture - Best Practices]] | Packet Capture Best Practices | ✅ Complete |
+| [[WQ01_Introduction_to_Wireshark]] | Module quiz | ✅ Reviewed |
 
-## Quizzes
+### Module 2 *(module title not yet confirmed)*
 | ID | Title | Status |
 |----|-------|--------|
-| [[WQ01_Introduction_to_Wireshark]] | Introduction to Wireshark Quiz | ✅ Reviewed |
+| [[WS05 - The Default Interface]] | The Default Interface (panes, profile, coloring) | ✅ Complete |
+| [[WS06 - Configuring Columns]] | Configuring Columns (Delta, UTC, TTL) | ✅ Complete |
+
+## Quizzes
+| ID | Title | Module | Status |
+|----|-------|--------|--------|
+| [[WQ01_Introduction_to_Wireshark]] | Introduction to Wireshark Quiz | Module 1 | ✅ Reviewed |
 
 ## Key Facts (collected from sessions)
 | Topic | Key Fact |

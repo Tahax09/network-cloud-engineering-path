@@ -4,7 +4,7 @@ aliases: [WS01]
 title: Pre-Lesson - Your First Lab
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
-module: Pre-Lesson
+module: Module 1 - Introduction to Wireshark
 date: 2026-10-10
 status: Complete
 quiz_attempted: No

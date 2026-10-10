@@ -4,7 +4,7 @@ aliases: [WS06]
 title: Configuring Columns
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
-module: Lesson 2 - Customizing Wireshark
+module: Module 2
 date: 2026-10-10
 status: Complete
 quiz_attempted: No
