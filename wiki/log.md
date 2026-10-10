@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS09 — Wireshark 101: Saving Filter Buttons
+Ingested lesson on filter buttons: Bad TCP = tcp.analysis.flags (verified 4 hits on Pre-Lab: keep-alives/ACKs, frames 119–122), add via + on filter bar, edit/remove via Filter Button Preferences, saved in profile dfilter_buttons. Inspected instructor profiles: grouped labels (A//B), field references ${tcp.stream}, ~50 security signature buttons. Tested all 81 instructor buttons with tshark 4.6: 6 fail on 4.x syntax (unquoted strings, single regex backslash, space-separated set) — fixes verified and documented. Flagged mislabeled Cybersec "SYNs and SYNACKs" button. Corrected own table entry (tls.handshake.type in {1, 2}).
+
 ## [2026-10-10] ingest | WS08 — Wireshark 101: Creating Profiles
 Ingested lesson on configuration profiles: profile = collection of columns, coloring rules, filter buttons, fonts, layout, prefs; create "Wireshark 101" via status bar → New; new profile starts stock; Coloring Rules → Copy from → Default (remove duplicates); re-add Delta via Preferences or by dragging Frame → "Time delta from previous displayed frame"; Frame section is metadata (epoch = 1970-01-01 UTC). Instructor's profiles: TCP Plain (daily, filter buttons), TCP Advanced, DNS, Cybersec. Added profile storage paths, Copy/Export/Import, auto-switch filter, tshark -C; verified frame.* field names and tshark -C with tshark -G. Added Profiles section to wireshark concept page.
 

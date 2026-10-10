@@ -58,8 +58,13 @@ Suggested set: TCP Plain (daily) · TCP Advanced (seq/ack/bytes in flight) · DN
 | `tcp.flags.syn==1 && tcp.flags.ack==0` | Client connection attempts only |
 | `frame.time_delta_displayed > 1` | Gaps over 1 s between displayed packets |
 | `http.request` / `http.response.code == 304` | HTTP requests / Not Modified responses |
-| `tcp.analysis.flags` | Anything TCP expert analysis flagged (retransmissions, dup ACKs, zero window…) |
+| `tcp.analysis.flags` | Anything TCP expert analysis flagged (retransmissions, dup ACKs, zero window, keep-alives…) — the "Bad TCP" button |
+| `tcp.analysis.flags && !tcp.analysis.window_update && !tcp.analysis.keep_alive && !tcp.analysis.keep_alive_ack` | Only real TCP problems (matches default Bad TCP coloring) |
+| `tcp.stream == ${tcp.stream}` | Selected packet's conversation (field reference, 4.0+) |
 | `tcp.flags.reset==1` | Resets |
+
+**Filter buttons:** + at the right of the filter bar; right-click → Filter Button Preferences; `Group//Name` labels create dropdowns; stored in the profile's `dfilter_buttons`.
+**4.x syntax:** strings in double quotes (`frame contains "jndi"`), doubled regex backslashes (`matches "\\.com$"`), comma-separated sets (`in {1, 2}`).
 
 ## tshark / capinfos Cheatsheet
 ```bash
@@ -125,5 +130,6 @@ Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen
 - [[WS06 - Configuring Columns]] — Delta, UTC, TTL columns
 - [[WS07 - Coloring Traffic]] — Coloring rules, priority, drag-to-filter
 - [[WS08 - Creating Profiles]] — Profiles, Copy from, Frame metadata
+- [[WS09 - Saving Filter Buttons]] — Filter buttons, grouping, signatures, 4.x syntax
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]

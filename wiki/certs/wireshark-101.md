@@ -13,7 +13,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 ## Lab Files (`raw/assets/wireshark-101/`)
 | File | Used in |
 |------|---------|
-| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]], [[WS07 - Coloring Traffic]], [[WS08 - Creating Profiles]] |
+| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]], [[WS07 - Coloring Traffic]], [[WS08 - Creating Profiles]], [[WS09 - Saving Filter Buttons]] |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -21,7 +21,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Lab 5-AnotherSlowApp.pcapng | — |
 | Lab 6-TCPResets.pcapng | — |
 | Lab 7-TCPIssues.pcapng | — |
-| Profiles/Chris-TCPPlain.zip, Chris-Security.zip | Instructor's profiles "TCP Plain" and "Cybersec" (import via Edit → Configuration Profiles). ⚠️ Cybersec country rule uses `NK` — fix to `KP` |
+| Profiles/Chris-TCPPlain.zip, Chris-Security.zip | Instructor's profiles "TCP Plain" and "Cybersec" (import via Edit → Configuration Profiles). ⚠️ Fix after import: Cybersec country rule `NK` → `KP`; 6 filter buttons with pre-4.x syntax (see [[WS09 - Saving Filter Buttons]]) |
 
 ## Lessons
 
@@ -42,6 +42,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | [[WS06 - Configuring Columns]] | Configuring Columns (Delta, UTC, TTL) | ✅ Complete |
 | [[WS07 - Coloring Traffic]] | Coloring Traffic (SYN rule, priority) | ✅ Complete |
 | [[WS08 - Creating Profiles]] | Creating Profiles ("Wireshark 101" profile, Copy from, Frame metadata) | ✅ Complete |
+| [[WS09 - Saving Filter Buttons]] | Saving Filter Buttons (Bad TCP, grouping, signatures) | ✅ Complete |
 
 ## Quizzes
 | ID | Title | Module | Status |
@@ -74,6 +75,9 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Build filters without memorizing | Drag a Packet Details field to the filter bar; status bar shows the field name |
 | Profile | Bundle of columns, coloring rules, filter buttons, layout, fonts, prefs; new profiles start stock — use Coloring Rules → Copy from, or Configuration Profiles → Copy |
 | Course profile | "Wireshark 101" used for the rest of the course |
+| Filter buttons | + at right of filter bar → label + filter; right-click → Filter Button Preferences to edit/remove; `A//B` labels make dropdowns; `${tcp.stream}` = selected packet's value |
+| Bad TCP button | `tcp.analysis.flags` (includes keep-alives/window updates; narrow version excludes them) |
+| 4.x filter syntax | Double-quote strings, double regex backslashes, comma-separate sets |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
 ## Weak Areas to Revisit
