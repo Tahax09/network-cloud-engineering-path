@@ -67,6 +67,15 @@ sudo tcpdump -i eth0 -s 0 -w out.pcap 'tcp port 443'   # capture full packets (-
 
 Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen segment` while the hosts show few retransmissions.
 
+## Capture Best Practices
+1. **No capture filter at the start**: capture broadly, filter on display (a capture filter permanently drops HTTPS/DNS/ICMP you didn't anticipate).
+2. **Start on the client**, with unrelated apps closed; the client capture maps dependencies (DNS, auth, cloud vs DC).
+3. **Ring buffer** for long or intermittent problems.
+4. **Confirm the problem happened** during the capture *and* on that capture point's path; record the timestamp.
+5. **Own a TAP.**
+6. **Capture client + server simultaneously** (NTP-synced; `mergecap` to combine, `editcap -t` to shift offsets).
+7. Treat PCAPs as **sensitive data** (credentials, PII); truncate with `editcap -s` before sharing.
+
 ## Capture Gotchas
 - **Snaplen / slicing** ("Packet size limited during capture"): headers only. Timing analysis still works, but payloads, reassembly and `http.time` are lost.
 - **Capture point matters:** client-side and server-side captures show different gaps.
@@ -84,5 +93,6 @@ Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen
 - [[WS01 - Pre-Lesson - Your First Lab]] — Client vs network vs server timing
 - [[WS02 - Your First Packet Capture]] — Interfaces, saving, pcapng vs pcap, ring buffers
 - [[WS03 - Where to Capture on the Network]] — Endpoint vs SPAN vs TAP vs cloud
+- [[WS04 - Packet Capture - Best Practices]] — Capture rules, multi-point capture
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]

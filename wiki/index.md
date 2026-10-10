@@ -54,6 +54,7 @@
 | [WS01](lessons/wireshark/WS01%20-%20Pre-Lesson%20-%20Your%20First%20Lab.md) | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
 | [WS02](lessons/wireshark/WS02%20-%20Your%20First%20Packet%20Capture.md) | Your First Packet Capture | — (live capture) | 2026-10-10 | Complete |
 | [WS03](lessons/wireshark/WS03%20-%20Where%20to%20Capture%20on%20the%20Network.md) | Where to Capture on the Network | — (concepts) | 2026-10-10 | Complete |
+| [WS04](lessons/wireshark/WS04%20-%20Packet%20Capture%20-%20Best%20Practices.md) | Packet Capture - Best Practices | — (concepts) | 2026-10-10 | Complete |
 
 ## Concepts
 
@@ -71,7 +72,7 @@
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP12 |
-| [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS03 |
+| [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS04 |
 
 ## Certifications
 

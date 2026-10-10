@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS04 — Wireshark 101: Packet Capture - Best Practices (end of Lesson 1)
+Ingested best-practices recap: no capture filter at start (assumptions miss HTTPS/DNS/ICMP), start on the client with apps closed (dependency mapping), ring buffer for long-term, confirm the problem occurred in time and place, invest in a TAP, capture client + server simultaneously. Added NTP sync / mergecap / editcap time-shift for multi-point captures, PCAP data-sensitivity handling, checklist, k3s Kibana↔ES dual-capture example. Set module "Lesson 1 - Packet Capture" on WS02–WS04. Caption note: "Fireshark" = Wireshark.
+
 ## [2026-10-10] ingest | WS03 — Wireshark 101: Where to Capture on the Network
 Ingested lesson on capture points: endpoint (quick, adds load), SPAN/port mirroring (on-wire view; oversubscription example 3 × 1G full-duplex = 6 Gbps into 1G → drops → "Previous segment not captured"), TAP (passive, sees all, cost; "make the network analyzable" with TAPs at key links), servers/cloud (provider virtual TAP or capture VM; server install = last resort, CLI only). Added: NIC offload artifacts, SPAN caveats (errored frames, priority), aggregating-TAP oversubscription nuance, AWS/GCP/Azure mirroring, Kubernetes capture points (kubectl debug netshoot, cni0/veth, VXLAN 8472, Kubeshark). Caption note: "Rubo" = Aruba. Added Where to Capture section to wireshark concept page.
 

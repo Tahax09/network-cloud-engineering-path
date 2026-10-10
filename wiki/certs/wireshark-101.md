@@ -16,6 +16,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]] |
 | [[WS02 - Your First Packet Capture]] | Your First Packet Capture (interfaces, save, ring buffer) | ✅ Complete |
 | [[WS03 - Where to Capture on the Network]] | Where to Capture (endpoint, SPAN, TAP, cloud) | ✅ Complete |
+| [[WS04 - Packet Capture - Best Practices]] | Packet Capture Best Practices (end of Lesson 1) | ✅ Complete |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -43,6 +44,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Ring buffer | N files × size (e.g., 20 × 500 MB = 10 GB cap) for intermittent problems |
 | Capture points | Endpoint (quick, adds load) → SPAN (on-wire, can oversubscribe) → TAP (sees all, costs $) → cloud mirroring; server install = last resort, CLI only |
 | SPAN oversubscription | 3 × 1G full-duplex = 6 Gbps into 1G monitor → drops → `Previous segment not captured` |
+| Capture best practices | No capture filter first · client first, apps closed · ring buffer · confirm problem happened there · own a TAP · client + server simultaneously (NTP-synced) |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
 ## Weak Areas to Revisit
