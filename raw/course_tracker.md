@@ -57,6 +57,7 @@
 | WS02 | Your First Packet Capture | — (live capture) | 2026-10-10 | Complete | Pending |
 | WS03 | Where to Capture on the Network | — (concepts) | 2026-10-10 | Complete | Pending |
 | WS04 | Packet Capture - Best Practices | — (concepts) | 2026-10-10 | Complete | Pending |
+| WS05 | The Default Interface | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 
 ## AWS Cloud Practitioner
 

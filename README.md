@@ -142,6 +142,7 @@ Lab-heavy protocol analysis course, running in parallel with Google Cloud. Cours
 | [WS02](wiki/lessons/wireshark/WS02%20-%20Your%20First%20Packet%20Capture.md) | Your First Packet Capture | — (live capture) | Interfaces, save as pcapng, Capture Options, ring buffers |
 | [WS03](wiki/lessons/wireshark/WS03%20-%20Where%20to%20Capture%20on%20the%20Network.md) | Where to Capture on the Network | — (concepts) | Endpoint vs SPAN vs TAP vs cloud mirroring, SPAN oversubscription |
 | [WS04](wiki/lessons/wireshark/WS04%20-%20Packet%20Capture%20-%20Best%20Practices.md) | Packet Capture - Best Practices | — (concepts) | No capture filter first, client first, ring buffer, capture the problem, TAP, multi-point |
+| [WS05](wiki/lessons/wireshark/WS05%20-%20The%20Default%20Interface.md) | The Default Interface | Pre-Lab-SlowNetwork.pcapng | Packet List / Details / Bytes panes, profile in status bar, coloring rules |
 
 Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 

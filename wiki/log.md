@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS05 — Wireshark 101: The Default Interface (Lesson 2 starts)
+Ingested lesson on the 4.x default layout: Packet List / Packet Details / Packet Bytes panes, profile indicator in status bar, coloring rules toggle. Added official pane names, status bar areas, default coloring-rule table (read from Wireshark 4.6 colorfilters), and verified coloring on Pre-Lab file with tshark --color (122 HTTP, 1 TCP RST — HTTP rule outranks TCP SYN/FIN, so handshakes are green). Noted default layout_type 2 and that only the Default profile exists locally (course profiles not yet imported). Added Interface section to wireshark concept page.
+
 ## [2026-10-10] quiz | WQ01 — Introduction to Wireshark Quiz (5 questions)
 Saved Coursera quiz with answer key (1-A editcap/rawshark/mergecap, 2-C profile = custom settings, 3-C capture driver = live capture, 4-A macOS/Windows/Linux, 5-D all). Flagged gap: installation video (OS support, Npcap, bundled CLI tools) not ingested. Added key facts to course page.
 

@@ -11,6 +11,16 @@
 4. **Filter:** narrow down with display filters.
 5. **Prove it:** cite frame numbers and deltas in the ticket.
 
+## Interface (4.x default)
+| Pane | Shows |
+|------|-------|
+| Packet List (top) | One row per frame: No., Time, Source, Destination, Protocol, Length, Info |
+| Packet Details (bottom-left) | Header tree of selected packet (Frame → Ethernet → IP → TCP/UDP → app) |
+| Packet Bytes (bottom-right) | Hex + ASCII |
+| Status bar | Expert info dot · Packets/Displayed · **active profile** |
+
+**Coloring rules:** View → Coloring Rules; evaluated top-down, first match wins (on port-80 traffic the HTTP rule beats TCP SYN/FIN). Toggle with View → Colorize Packet List. Check which rule matched: `tshark --color -T fields -e frame.coloring_rule.name`.
+
 ## Time Display Formats (View → Time Display Format)
 | Format | Use |
 |--------|-----|
@@ -94,5 +104,6 @@ Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen
 - [[WS02 - Your First Packet Capture]] — Interfaces, saving, pcapng vs pcap, ring buffers
 - [[WS03 - Where to Capture on the Network]] — Endpoint vs SPAN vs TAP vs cloud
 - [[WS04 - Packet Capture - Best Practices]] — Capture rules, multi-point capture
+- [[WS05 - The Default Interface]] — Panes, status bar, coloring rules
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]
