@@ -52,7 +52,8 @@
 
 | ID | Title | Lab file | Date | Status | Quiz |
 |----|-------|----------|------|--------|------|
-| WS00 | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
+| WS00 | Introduction | — | 2026-10-10 | Complete | Pending |
+| WS01 | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 
 ## AWS Cloud Practitioner
 

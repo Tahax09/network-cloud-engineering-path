@@ -1,6 +1,6 @@
 ---
-id: WS00
-aliases: [WS00]
+id: WS01
+aliases: [WS01]
 title: Pre-Lesson - Your First Lab
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
@@ -13,7 +13,7 @@ lab_file: raw/assets/wireshark-101/Pre-Lab-SlowNetwork.pcapng
 tags: [wireshark, packet-analysis, tcp-handshake, rtt, server-response-time, time-display-format, http, slow-application, client-network-server]
 ---
 
-# WS00 — Pre-Lesson: Your First Lab ("Slow Network")
+# WS01 — Pre-Lesson: Your First Lab ("Slow Network")
 
 ## Summary
 This is the course kickoff: Wireshark is for **everyone** (NetOps, help desk, SecOps/SOC, threat hunters, developers), and the course is **lab-heavy, not slide-heavy**. The first lab answers the most common question in network troubleshooting: *"The network is slow. Is it the client, the network, or the server?"* Reading the timing of just six packets shows the network was fine (≈105 ms round trip) and the **application server took 20.6 seconds** to start responding. Upgrading WAN circuits or replacing copper with fiber would have changed nothing.

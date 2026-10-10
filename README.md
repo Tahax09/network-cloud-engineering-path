@@ -137,7 +137,8 @@ Lab-heavy protocol analysis course, running in parallel with Google Cloud. Cours
 
 | ID | Lesson | Lab file | Key topics |
 |----|--------|----------|-----------|
-| [WS00](wiki/lessons/wireshark/WS00%20-%20Pre-Lesson%20-%20Your%20First%20Lab.md) | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | Client vs network vs server: 105 ms RTT, 20.6 s server think time |
+| [WS00](wiki/lessons/wireshark/WS00%20-%20Introduction.md) | Introduction | — | Why packet analysis, course files, instructor profiles |
+| [WS01](wiki/lessons/wireshark/WS01%20-%20Pre-Lesson%20-%20Your%20First%20Lab.md) | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | Client vs network vs server: 105 ms RTT, 20.6 s server think time |
 
 Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 

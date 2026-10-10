@@ -58,6 +58,7 @@ sudo tcpdump -i eth0 -s 0 -w out.pcap 'tcp port 443'   # capture full packets (-
 | GCP | Packet Mirroring (packets), VPC Flow Logs |
 
 ## Linked Lessons
-- [[WS00 - Pre-Lesson - Your First Lab]] — Client vs network vs server timing
+- [[WS00 - Introduction]] — Why packet analysis, configuration profiles
+- [[WS01 - Pre-Lesson - Your First Lab]] — Client vs network vs server timing
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]

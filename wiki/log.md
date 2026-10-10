@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS00 — Wireshark 101: Introduction (Pre-Lesson renumbered to WS01)
+Ingested course introduction (instructor Chris Greer, packet analysis use cases, "packets don't lie", course files from Packet Pioneer GitHub, configuration profiles). Converted Introduction.rtf → TXT and de-duplicated (export contained the transcript twice). Renumbered Pre-Lesson from WS00 to WS01 so IDs follow course order; updated all references (log history unchanged).
+
 ## [2026-10-10] ingest | WS00 — Wireshark 101: Pre-Lesson - Your First Lab (new course)
 Started new track "Wireshark 101: Packet Analysis Essentials". Created lessons/wireshark/, quizzes/wireshark/, raw/transcripts/wireshark/, raw/assets/wireshark-101/ (8 course PCAPs + instructor profiles). WS00 covers client vs network vs server diagnosis on Pre-Lab-SlowNetwork.pcapng: client 172.16.0.13 → server 10.0.0.100:80, handshake RTT 105.6 ms, server ACK of GET at 1 RTT, 20.586 s server think time before 200 OK (frames 6→7). Verified with tshark and extended: 13 serialized follow-up GETs (7× 304 Not Modified, ~1 RTT each, page done ≈24 s), TCP keep-alives every ~45 s, server RST at 156.5 s, 96-byte snaplen (no http.time). Transcript converted from RTF to TXT and de-duplicated (export contained it twice). New concept page wireshark.md and course page certs/wireshark-101.md.
 

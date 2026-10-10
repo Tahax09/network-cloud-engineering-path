@@ -13,7 +13,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 ## Lab Files (`raw/assets/wireshark-101/`)
 | File | Used in |
 |------|---------|
-| Pre-Lab-SlowNetwork.pcapng | [[WS00 - Pre-Lesson - Your First Lab]] |
+| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]] |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -26,7 +26,8 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 ## Lessons
 | ID | Title | Status |
 |----|-------|--------|
-| [[WS00 - Pre-Lesson - Your First Lab]] | Pre-Lesson: Your First Lab (slow network: client vs network vs server) | ✅ Complete |
+| [[WS00 - Introduction]] | Introduction (why packet analysis, course files, profiles) | ✅ Complete |
+| [[WS01 - Pre-Lesson - Your First Lab]] | Pre-Lesson: Your First Lab (slow network: client vs network vs server) | ✅ Complete |
 
 ## Key Facts (collected from sessions)
 | Topic | Key Fact |
@@ -34,6 +35,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Client vs server | Client sends the first SYN; server listens on the well-known port |
 | Network RTT | SYN → SYN/ACK gap in a client-side capture |
 | Server think time | Server ACK of request → first response data |
+| Course files | 7 numbered lab PCAPs + Pre-Lab + 2 instructor profiles (Packet Pioneer GitHub, Wireshark 101) |
 | Spotting gaps | Time Display Format → Seconds Since Previous Displayed Packet |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
