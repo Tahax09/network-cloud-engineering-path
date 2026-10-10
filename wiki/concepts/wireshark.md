@@ -11,6 +11,11 @@
 4. **Filter:** narrow down with display filters.
 5. **Prove it:** cite frame numbers and deltas in the ticket.
 
+## Profiles
+Settings bundle per task (columns, coloring rules, filter buttons, layout, prefs). Create: status bar → right-click Profile → New, or Edit → Configuration Profiles (New / **Copy** / Import / Export zip / auto-switch filter). New profiles start stock — bring rules over with View → Coloring Rules → **Copy from**. Stored in `~/.config/wireshark/profiles/<Name>/`. CLI: `tshark -C "<Name>"`.
+
+Suggested set: TCP Plain (daily) · TCP Advanced (seq/ack/bytes in flight) · DNS · Cybersec · course/lab profiles.
+
 ## Interface (4.x default)
 | Pane | Shows |
 |------|-------|
@@ -119,5 +124,6 @@ Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen
 - [[WS05 - The Default Interface]] — Panes, status bar, coloring rules
 - [[WS06 - Configuring Columns]] — Delta, UTC, TTL columns
 - [[WS07 - Coloring Traffic]] — Coloring rules, priority, drag-to-filter
+- [[WS08 - Creating Profiles]] — Profiles, Copy from, Frame metadata
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]

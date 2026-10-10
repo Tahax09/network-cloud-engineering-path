@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS08 — Wireshark 101: Creating Profiles
+Ingested lesson on configuration profiles: profile = collection of columns, coloring rules, filter buttons, fonts, layout, prefs; create "Wireshark 101" via status bar → New; new profile starts stock; Coloring Rules → Copy from → Default (remove duplicates); re-add Delta via Preferences or by dragging Frame → "Time delta from previous displayed frame"; Frame section is metadata (epoch = 1970-01-01 UTC). Instructor's profiles: TCP Plain (daily, filter buttons), TCP Advanced, DNS, Cybersec. Added profile storage paths, Copy/Export/Import, auto-switch filter, tshark -C; verified frame.* field names and tshark -C with tshark -G. Added Profiles section to wireshark concept page.
+
 ## [2026-10-10] ingest | WS07 — Wireshark 101: Coloring Traffic
 Ingested lesson on building a TCP SYN coloring rule: find tcp.flags.syn in Packet Details, drag to filter bar (first display filter), View → Coloring Rules → + with bright green, place below Bad TCP (first match wins; retransmitted SYNs stay red). Verified: filter matches frames 1–2 on Pre-Lab; with a temp colorfilters placing the rule below Bad TCP, tshark --color reports frames 1–2 = TCP SYNs (above HTTP). Inspected instructor profiles TCP Plain and Cybersec (GeoIP, DNS count, PE header, NOP options, SYN+window 0, Trickbot JA3) and flagged bug: country code NK should be KP. Caption notes: "SIN/SYNX" = SYN / SYN-ACK.
 
