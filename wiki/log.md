@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS02 — Wireshark 101: Your First Packet Capture
+Ingested lesson on choosing an interface (sparklines, extcap), live capture/stop, temp file vs Save As, pcapng vs pcap/legacy formats, Capture Options (input/output/options), and ring buffers (20 × 500 MB = 10 GB cap) for intermittent problems. Added dumpcap/tcpdump ring-buffer equivalents, macOS ChmodBPF/access_bpf note (verified local interfaces with dumpcap -D), SSH remote capture to the k3s node. Caption notes: pcapng = PCAP Next Generation; "500-byte" = 500 MB. Transcript converted from RTF to TXT (Coursera UI preamble left in raw copy). Added Capturing section to wireshark concept page.
+
 ## [2026-10-10] ingest | WS00 — Wireshark 101: Introduction (Pre-Lesson renumbered to WS01)
 Ingested course introduction (instructor Chris Greer, packet analysis use cases, "packets don't lie", course files from Packet Pioneer GitHub, configuration profiles). Converted Introduction.rtf → TXT and de-duplicated (export contained the transcript twice). Renumbered Pre-Lesson from WS00 to WS01 so IDs follow course order; updated all references (log history unchanged).
 

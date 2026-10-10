@@ -52,6 +52,7 @@
 |----|-------|----------|------|--------|
 | [WS00](lessons/wireshark/WS00%20-%20Introduction.md) | Introduction | — | 2026-10-10 | Complete |
 | [WS01](lessons/wireshark/WS01%20-%20Pre-Lesson%20-%20Your%20First%20Lab.md) | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
+| [WS02](lessons/wireshark/WS02%20-%20Your%20First%20Packet%20Capture.md) | Your First Packet Capture | — (live capture) | 2026-10-10 | Complete |
 
 ## Concepts
 
@@ -69,7 +70,7 @@
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP12 |
-| [wireshark](concepts/wireshark.md) | Capture workflow, time formats, RTT vs server time, display filters, tshark | WS00–WS01 |
+| [wireshark](concepts/wireshark.md) | Capture workflow, ring buffers, time formats, RTT vs server time, display filters, tshark | WS00–WS02 |
 
 ## Certifications
 

@@ -14,6 +14,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | File | Used in |
 |------|---------|
 | Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]] |
+| [[WS02 - Your First Packet Capture]] | Your First Packet Capture (interfaces, save, ring buffer) | ✅ Complete |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -37,6 +38,8 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Server think time | Server ACK of request → first response data |
 | Course files | 7 numbered lab PCAPs + Pre-Lab + 2 instructor profiles (Packet Pioneer GitHub, Wireshark 101) |
 | Spotting gaps | Time Display Format → Seconds Since Previous Displayed Packet |
+| Unsaved capture | Lives in a temp file; lost on close unless you Save As |
+| Ring buffer | N files × size (e.g., 20 × 500 MB = 10 GB cap) for intermittent problems |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
 ## Weak Areas to Revisit

@@ -45,6 +45,17 @@ tshark -r file.pcapng -Y 'tcp.analysis.flags' -T fields -e frame.number -e _ws.e
 sudo tcpdump -i eth0 -s 0 -w out.pcap 'tcp port 443'   # capture full packets (-s 0)
 ```
 
+## Capturing
+| Task | GUI | CLI |
+|------|-----|-----|
+| List interfaces | Welcome screen (sparklines) | `dumpcap -D` |
+| Quick live capture | Double-click active interface → red stop → File → Save As | `tshark -i en0 -c 50` |
+| Long-running / intermittent | Capture Options → Output → new file every N MB/min + ring buffer of N files | `dumpcap -i en0 -w f.pcapng -b filesize:500000 -b files:20` (kB) · Linux `tcpdump -C 500 -W 20` |
+| Remote capture | Extcap: SSH remote capture, Cisco remote, UDP listener | `ssh host 'tcpdump -U -w - -i eth0' \| wireshark -k -i -` |
+| Save format | pcapng (default) or pcap for legacy tools | `editcap -F pcap in.pcapng out.pcap` |
+
+**macOS permission:** capture without sudo via the ChmodBPF helper (`/dev/bpf*` owned by group `access_bpf`).
+
 ## Capture Gotchas
 - **Snaplen / slicing** ("Packet size limited during capture"): headers only. Timing analysis still works, but payloads, reassembly and `http.time` are lost.
 - **Capture point matters:** client-side and server-side captures show different gaps.
@@ -60,5 +71,6 @@ sudo tcpdump -i eth0 -s 0 -w out.pcap 'tcp port 443'   # capture full packets (-
 ## Linked Lessons
 - [[WS00 - Introduction]] — Why packet analysis, configuration profiles
 - [[WS01 - Pre-Lesson - Your First Lab]] — Client vs network vs server timing
+- [[WS02 - Your First Packet Capture]] — Interfaces, saving, pcapng vs pcap, ring buffers
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]
