@@ -4,7 +4,7 @@ aliases: [WS05]
 title: The Default Interface
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
-module: Module 2
+module: Module 2 - The Wireshark Interface
 date: 2026-10-10
 status: Complete
 quiz_attempted: No
@@ -16,7 +16,7 @@ tags: [wireshark, gui, layout, packet-list, packet-details, packet-bytes, status
 # WS05 — The Default Interface
 
 ## Summary
-**Module 2** starts here (after the *Introduction to Wireshark* module and its quiz). The goal is to **customize Wireshark so analysis is faster**. First you need to know the stock layout. The **status bar (bottom right)** shows the active **profile**, `Default`. Every change you make is saved to whichever profile is active. Wireshark 4.0+ has **three panes**: **Packet List** (top), **Packet Details** (bottom left, the protocol headers of the selected packet), and **Packet Bytes** (bottom right, hex + ASCII). **Coloring rules** are on by default and toggle with one toolbar button.
+**Module 2, *The Wireshark Interface***, starts here (after the *Introduction to Wireshark* module and its quiz). The goal is to **customize Wireshark so analysis is faster**. First you need to know the stock layout. The **status bar (bottom right)** shows the active **profile**, `Default`. Every change you make is saved to whichever profile is active. Wireshark 4.0+ has **three panes**: **Packet List** (top), **Packet Details** (bottom left, the protocol headers of the selected packet), and **Packet Bytes** (bottom right, hex + ASCII). **Coloring rules** are on by default and toggle with one toolbar button.
 
 **Lab file:** `Pre-Lab-SlowNetwork.pcapng` (from [[WS01 - Pre-Lesson - Your First Lab]]).
 

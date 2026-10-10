@@ -35,7 +35,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | [[WS04 - Packet Capture - Best Practices]] | Packet Capture Best Practices | ✅ Complete |
 | [[WQ01_Introduction_to_Wireshark]] | Module quiz | ✅ Reviewed |
 
-### Module 2 *(module title not yet confirmed)*
+### Module 2 - The Wireshark Interface
 | ID | Title | Status |
 |----|-------|--------|
 | [[WS05 - The Default Interface]] | The Default Interface (panes, profile, coloring) | ✅ Complete |

@@ -3,7 +3,7 @@
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
 ## [2026-10-10] update | Wireshark 101 module structure
-Per course structure: WS00–WS04 + WQ01 belong to Module 1 "Introduction to Wireshark"; WS05–WS06 start Module 2 (title not yet confirmed). Updated module frontmatter, WS04/WS05 summaries, and rebuilt the course page Lessons section grouped by module. Fixed a bug where WS02–WS06 rows had been inserted into the Lab Files table instead of the Lessons table.
+Per course structure: WS00–WS04 + WQ01 belong to Module 1 "Introduction to Wireshark"; WS05–WS06 belong to Module 2 "The Wireshark Interface". Updated module frontmatter, WS04/WS05 summaries, and rebuilt the course page Lessons section grouped by module. Fixed a bug where WS02–WS06 rows had been inserted into the Lab Files table instead of the Lessons table.
 
 ## [2026-10-10] ingest | WS06 — Wireshark 101: Configuring Columns
 Ingested lesson on adding/removing columns (Preferences → Columns, drag-and-drop, Apply as Column; macOS Preferences under the Wireshark menu), Delta time displayed column + sorting, Time of Day vs UTC Time of Day, and TTL column. Verified on Pre-Lab file: top deltas = keep-alives 44.99/44.96 s, RST 42.13 s, 200 OK 20.59 s; TTL client 128 (capture on client) vs server 111 (≈17 hops from a Windows default 128). Added initial-TTL table, delta vs delta-displayed distinction, TTL-based injection/loop detection, k3s same-node vs cross-node TTL. Added Essential Columns section to wireshark concept page.
