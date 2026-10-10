@@ -19,7 +19,7 @@
 | Packet Bytes (bottom-right) | Hex + ASCII |
 | Status bar | Expert info dot · Packets/Displayed · **active profile** |
 
-**Coloring rules:** View → Coloring Rules; evaluated top-down, first match wins (on port-80 traffic the HTTP rule beats TCP SYN/FIN). Toggle with View → Colorize Packet List. Check which rule matched: `tshark --color -T fields -e frame.coloring_rule.name`.
+**Coloring rules:** View → Coloring Rules; a rule = display filter + color, evaluated top-down, first match wins (on port-80 traffic the HTTP rule beats TCP SYN/FIN). Add custom rules (e.g., `tcp.flags.syn == 1` bright green) **just below Bad TCP** so errors keep priority. Temporary: right-click → Colorize Conversation. Toggle with View → Colorize Packet List. Check which rule matched: `tshark --color -T fields -e frame.coloring_rule.name`.
 
 ## Time Display Formats (View → Time Display Format)
 | Format | Use |
@@ -49,7 +49,8 @@
 ## Useful Display Filters (growing list)
 | Filter | Shows |
 |--------|-------|
-| `tcp.flags.syn==1 && tcp.flags.ack==0` | Connection attempts (SYNs) |
+| `tcp.flags.syn == 1` | SYN and SYN/ACK (both handshake sides) |
+| `tcp.flags.syn==1 && tcp.flags.ack==0` | Client connection attempts only |
 | `frame.time_delta_displayed > 1` | Gaps over 1 s between displayed packets |
 | `http.request` / `http.response.code == 304` | HTTP requests / Not Modified responses |
 | `tcp.analysis.flags` | Anything TCP expert analysis flagged (retransmissions, dup ACKs, zero window…) |
@@ -117,5 +118,6 @@ Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen
 - [[WS04 - Packet Capture - Best Practices]] — Capture rules, multi-point capture
 - [[WS05 - The Default Interface]] — Panes, status bar, coloring rules
 - [[WS06 - Configuring Columns]] — Delta, UTC, TTL columns
+- [[WS07 - Coloring Traffic]] — Coloring rules, priority, drag-to-filter
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]

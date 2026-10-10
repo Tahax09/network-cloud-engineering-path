@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS07 — Wireshark 101: Coloring Traffic
+Ingested lesson on building a TCP SYN coloring rule: find tcp.flags.syn in Packet Details, drag to filter bar (first display filter), View → Coloring Rules → + with bright green, place below Bad TCP (first match wins; retransmitted SYNs stay red). Verified: filter matches frames 1–2 on Pre-Lab; with a temp colorfilters placing the rule below Bad TCP, tshark --color reports frames 1–2 = TCP SYNs (above HTTP). Inspected instructor profiles TCP Plain and Cybersec (GeoIP, DNS count, PE header, NOP options, SYN+window 0, Trickbot JA3) and flagged bug: country code NK should be KP. Caption notes: "SIN/SYNX" = SYN / SYN-ACK.
+
 ## [2026-10-10] update | Wireshark 101 module structure
 Per course structure: WS00–WS04 + WQ01 belong to Module 1 "Introduction to Wireshark"; WS05–WS06 belong to Module 2 "The Wireshark Interface". Updated module frontmatter, WS04/WS05 summaries, and rebuilt the course page Lessons section grouped by module. Fixed a bug where WS02–WS06 rows had been inserted into the Lab Files table instead of the Lessons table.
 

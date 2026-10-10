@@ -13,7 +13,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 ## Lab Files (`raw/assets/wireshark-101/`)
 | File | Used in |
 |------|---------|
-| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]] |
+| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]], [[WS07 - Coloring Traffic]] |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -21,7 +21,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Lab 5-AnotherSlowApp.pcapng | — |
 | Lab 6-TCPResets.pcapng | — |
 | Lab 7-TCPIssues.pcapng | — |
-| Profiles/Chris-TCPPlain.zip, Chris-Security.zip | Instructor's Wireshark configuration profiles (import via Edit → Configuration Profiles) |
+| Profiles/Chris-TCPPlain.zip, Chris-Security.zip | Instructor's profiles "TCP Plain" and "Cybersec" (import via Edit → Configuration Profiles). ⚠️ Cybersec country rule uses `NK` — fix to `KP` |
 
 ## Lessons
 
@@ -40,6 +40,7 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 |----|-------|--------|
 | [[WS05 - The Default Interface]] | The Default Interface (panes, profile, coloring) | ✅ Complete |
 | [[WS06 - Configuring Columns]] | Configuring Columns (Delta, UTC, TTL) | ✅ Complete |
+| [[WS07 - Coloring Traffic]] | Coloring Traffic (SYN rule, priority) | ✅ Complete |
 
 ## Quizzes
 | ID | Title | Module | Status |
@@ -68,6 +69,8 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Delta column | Delta time *displayed*, sort to find worst gaps — check Info (keep-alives ≠ problem) |
 | Time of Day vs UTC | Time of Day = viewer's local TZ; use UTC when collaborating |
 | TTL | Hops away = initial (64/128/255) − observed; unchanged initial TTL = captured at that host |
+| Coloring rule | Display filter + color; top-down, first match wins; put new SYN rule just below Bad TCP so retransmitted SYNs stay red |
+| Build filters without memorizing | Drag a Packet Details field to the filter bar; status bar shows the field name |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
 ## Weak Areas to Revisit
