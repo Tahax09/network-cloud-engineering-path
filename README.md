@@ -12,6 +12,7 @@ An Obsidian knowledge base for self-study in **networking, cloud, and infrastruc
 - [How a Lesson Page Works](#how-a-lesson-page-works)
 - [CompTIA Network+ N10-009](#comptia-network-n10-009)
 - [Google Cloud Networking](#google-cloud-networking)
+- [Wireshark 101](#wireshark-101-packet-analysis-essentials)
 - [Quizzes & Practice Exams](#quizzes--practice-exams)
 - [Concept Reference](#concept-reference)
 - [Labs](#labs)
@@ -28,21 +29,25 @@ An Obsidian knowledge base for self-study in **networking, cloud, and infrastruc
 ├── CLAUDE.md                     # Wiki schema, page formats, ingest workflow
 ├── raw/                          # Source material, never edited
 │   ├── course_tracker.md         # Lesson tracking table
+│   ├── assets/wireshark-101/     # Course PCAPs + Wireshark profiles
 │   └── transcripts/
 │       ├── network-plus/         # Lxx_Topic.txt
-│       └── gcp/                  # GCPxx_Topic.txt
+│       ├── gcp/                  # GCPxx_Topic.txt
+│       └── wireshark/            # WSxx_Topic.txt
 └── wiki/
     ├── index.md                  # Full catalog of every page
     ├── overview.md               # Goals, roadmap, current status
     ├── log.md                    # Append-only activity log
     ├── lessons/
     │   ├── network-plus/         # "Lxx - Title.md"
-    │   └── gcp/                  # "GCPxx - Title.md"
+    │   ├── gcp/                  # "GCPxx - Title.md"
+    │   └── wireshark/            # "WSxx - Title.md"
     ├── concepts/                 # Cross-lesson reference pages
     ├── certs/                    # Per-certification progress, exam traps, weak areas
     ├── quizzes/                  # One folder per course
     │   ├── network-plus/         # NQ graded · PE practice exams · WD drills
     │   ├── gcp/                  # GQ graded
+    │   ├── wireshark/            # WQ quizzes
     │   └── interview/            # IQ interview prep
     └── labs/                     # Hands-on lab notes
 ```
@@ -126,6 +131,18 @@ The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md]
 
 ---
 
+## Wireshark 101: Packet Analysis Essentials
+
+Lab-heavy protocol analysis course, running in parallel with Google Cloud. Course PCAPs and instructor profiles live in `raw/assets/wireshark-101/`.
+
+| ID | Lesson | Lab file | Key topics |
+|----|--------|----------|-----------|
+| [WS00](wiki/lessons/wireshark/WS00%20-%20Pre-Lesson%20-%20Your%20First%20Lab.md) | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | Client vs network vs server: 105 ms RTT, 20.6 s server think time |
+
+Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
+
+---
+
 ## Quizzes & Practice Exams
 
 ### CompTIA Network+
@@ -173,6 +190,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [gcp-routing](wiki/concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, BYOIP |
 | [gcp-dns](wiki/concepts/gcp-dns.md) | Cloud DNS zones and policies |
 | [gcp-private-access](wiki/concepts/gcp-private-access.md) | PGA, PSC, PSA, Cloud NAT + AWS mapping |
+| [wireshark](wiki/concepts/wireshark.md) | Capture workflow, time formats, RTT vs server time, filters, tshark |
 
 ---
 
@@ -189,7 +207,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 
 ```
 Now      CompTIA Network+ N10-009 ── course complete, exam prep (PE01)
-Parallel Wireshark course  +  Networking in Google Cloud (courses 2–6)
+Parallel Wireshark 101 (in progress)  +  Networking in Google Cloud (courses 2–6)
 Next     KCNA ─▶ CKA ─▶ AZ-500 ─▶ KCSA ─▶ CKS      (PCA anywhere after CKA)
 Planned  AWS Cloud Practitioner ─▶ AWS Solutions Architect – Associate
 ```
@@ -198,6 +216,7 @@ Planned  AWS Cloud Practitioner ─▶ AWS Solutions Architect – Associate
 |---------------|--------|
 | CompTIA Network+ N10-009 | Course complete, exam prep |
 | Google Cloud Networking (6-course program) | Course 2 in progress |
+| Wireshark 101: Packet Analysis Essentials (course) | In progress |
 | Kubernetes and Cloud Native Associate (KCNA) | Next |
 | Certified Kubernetes Administrator (CKA) | Planned |
 | Microsoft Azure Security Engineer (AZ-500) | Planned |

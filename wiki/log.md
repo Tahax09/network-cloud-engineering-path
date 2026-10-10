@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS00 — Wireshark 101: Pre-Lesson - Your First Lab (new course)
+Started new track "Wireshark 101: Packet Analysis Essentials". Created lessons/wireshark/, quizzes/wireshark/, raw/transcripts/wireshark/, raw/assets/wireshark-101/ (8 course PCAPs + instructor profiles). WS00 covers client vs network vs server diagnosis on Pre-Lab-SlowNetwork.pcapng: client 172.16.0.13 → server 10.0.0.100:80, handshake RTT 105.6 ms, server ACK of GET at 1 RTT, 20.586 s server think time before 200 OK (frames 6→7). Verified with tshark and extended: 13 serialized follow-up GETs (7× 304 Not Modified, ~1 RTT each, page done ≈24 s), TCP keep-alives every ~45 s, server RST at 156.5 s, 96-byte snaplen (no http.time). Transcript converted from RTF to TXT and de-duplicated (export contained it twice). New concept page wireshark.md and course page certs/wireshark-101.md.
+
 ## [2026-10-10] maintenance | README rebuild, LICENSE, repo metadata
 Rebuilt README.md (generated tables linking every lesson, quiz, concept and lab; layout; lesson format; certification roadmap incl. KCNA → CKA → AZ-500 → KCSA → CKS, PCA). Added LICENSE (CC BY-NC-SA 4.0 for original wiki content; raw/ third-party material excluded). Corrected objective numbers L01 → 1.1, L03 → 1.3, L09 → 2.1 and replaced stale "Pending" Domain 1 rows on the Network+ cert page. Untracked raw/transcripts/.DS_Store and extended .gitignore. Updated GitHub repo description and topics.
 

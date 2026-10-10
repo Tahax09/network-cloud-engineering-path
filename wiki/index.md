@@ -46,6 +46,12 @@
 | [GCP11](lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | Private Connection Options | 2026-10-09 | Complete |
 | [GCP12](lessons/gcp/GCP12%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete |
 
+## Lessons — Wireshark 101: Packet Analysis Essentials
+
+| ID | Title | Lab file | Date | Status |
+|----|-------|----------|------|--------|
+| [WS00](lessons/wireshark/WS00%20-%20Pre-Lesson%20-%20Your%20First%20Lab.md) | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
+
 ## Concepts
 
 | Page | Topics | Linked Lessons |
@@ -62,6 +68,7 @@
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP12 |
+| [wireshark](concepts/wireshark.md) | Capture workflow, time formats, RTT vs server time, display filters, tshark | WS00 |
 
 ## Certifications
 
@@ -71,6 +78,7 @@
 | [aws-ccp](certs/aws-ccp.md) | AWS Cloud Practitioner | Not Started |
 | [aws-saa](certs/aws-saa.md) | AWS Solutions Architect – Associate | Not Started |
 | [gcp-networking](certs/gcp-networking.md) | Google Cloud Networking Specialization | In Progress |
+| [wireshark-101](certs/wireshark-101.md) | Wireshark 101: Packet Analysis Essentials (course) | In Progress |
 
 ## Quizzes
 

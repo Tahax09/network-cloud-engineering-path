@@ -17,12 +17,14 @@ Networking + Cloud/
     ├── overview.md                  ← learning goals, roadmap, current status
     ├── lessons/                     ← lessons organized by course
     │   ├── network-plus/            ← "Lxx - Title.md" (CompTIA Network+)
-    │   └── gcp/                     ← "GCPxx - Title.md" (Google Cloud Networking)
+    │   ├── gcp/                     ← "GCPxx - Title.md" (Google Cloud Networking)
+    │   └── wireshark/               ← "WSxx - Title.md" (Wireshark 101; lab PCAPs in raw/assets/wireshark-101/)
     ├── concepts/                    ← technology and concept reference pages
     ├── certs/                       ← per-certification tracking and progress
     ├── quizzes/                     ← one subfolder per course — never mix
     │   ├── network-plus/            ← NQxx graded, PExx practice exams, WDxx drills
     │   ├── gcp/                     ← GQxx (Google Cloud Networking)
+    │   ├── wireshark/               ← WQxx (Wireshark 101)
     │   └── interview/               ← IQxx interview prep
     └── labs/                        ← hands-on projects and exercises
 ```
@@ -93,6 +95,7 @@ Say: "lint the wiki". LLM checks: contradictions between pages, orphan pages, mi
 | AWS Cloud Practitioner | `aws-ccp` | Not Started | TBD |
 | AWS Solutions Architect – Associate | `aws-saa` | Not Started | TBD |
 | Google Cloud Networking Specialization | `gcp-networking` | Not Started | TBD |
+| Wireshark 101 (course) | `wireshark` | In Progress | — |
 | Kubernetes / Docker / Linux / DevOps | `k8s-devops` | Ongoing (lab) | TBD |
 
 ## Teaching Structure (per session)

@@ -15,7 +15,9 @@ Become a cloud/network infrastructure engineer. Build deep, practical understand
 **CompTIA Network+ N10-009** — All 5 domains complete (L01–L25). Next: Domain 5 graded quiz, full review, practice exams, schedule exam.
 **Google Cloud Networking** — *Routing and Addressing* course complete: Routing & Addressing module (GCP01–GCP06) + Private Connection Options module (GCP07–GCP12, GQ01).
 
-Lessons completed: L01–L25 (Network+), GCP01–GCP12 (GCP)
+**Wireshark 101** — started; WS00 Pre-Lesson complete.
+
+Lessons completed: L01–L25 (Network+), GCP01–GCP12 (GCP), WS00 (Wireshark)
 
 ## Roadmap
 

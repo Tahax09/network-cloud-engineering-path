@@ -48,6 +48,12 @@
 | GCP12 | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete | — |
 | GCP13 | — | — | — | Pending | — |
 
+## Wireshark 101: Packet Analysis Essentials
+
+| ID | Title | Lab file | Date | Status | Quiz |
+|----|-------|----------|------|--------|------|
+| WS00 | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
+
 ## AWS Cloud Practitioner
 
 | ID | Title | Domain | Date | Status |
