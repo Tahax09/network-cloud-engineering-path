@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS03 — Wireshark 101: Where to Capture on the Network
+Ingested lesson on capture points: endpoint (quick, adds load), SPAN/port mirroring (on-wire view; oversubscription example 3 × 1G full-duplex = 6 Gbps into 1G → drops → "Previous segment not captured"), TAP (passive, sees all, cost; "make the network analyzable" with TAPs at key links), servers/cloud (provider virtual TAP or capture VM; server install = last resort, CLI only). Added: NIC offload artifacts, SPAN caveats (errored frames, priority), aggregating-TAP oversubscription nuance, AWS/GCP/Azure mirroring, Kubernetes capture points (kubectl debug netshoot, cni0/veth, VXLAN 8472, Kubeshark). Caption note: "Rubo" = Aruba. Added Where to Capture section to wireshark concept page.
+
 ## [2026-10-10] ingest | WS02 — Wireshark 101: Your First Packet Capture
 Ingested lesson on choosing an interface (sparklines, extcap), live capture/stop, temp file vs Save As, pcapng vs pcap/legacy formats, Capture Options (input/output/options), and ring buffers (20 × 500 MB = 10 GB cap) for intermittent problems. Added dumpcap/tcpdump ring-buffer equivalents, macOS ChmodBPF/access_bpf note (verified local interfaces with dumpcap -D), SSH remote capture to the k3s node. Caption notes: pcapng = PCAP Next Generation; "500-byte" = 500 MB. Transcript converted from RTF to TXT (Coursera UI preamble left in raw copy). Added Capturing section to wireshark concept page.
 

@@ -55,6 +55,7 @@
 | WS00 | Introduction | — | 2026-10-10 | Complete | Pending |
 | WS01 | Pre-Lesson - Your First Lab | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 | WS02 | Your First Packet Capture | — (live capture) | 2026-10-10 | Complete | Pending |
+| WS03 | Where to Capture on the Network | — (concepts) | 2026-10-10 | Complete | Pending |
 
 ## AWS Cloud Practitioner
 

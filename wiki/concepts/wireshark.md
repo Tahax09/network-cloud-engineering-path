@@ -56,6 +56,17 @@ sudo tcpdump -i eth0 -s 0 -w out.pcap 'tcp port 443'   # capture full packets (-
 
 **macOS permission:** capture without sudo via the ChmodBPF helper (`/dev/bpf*` owned by group `access_bpf`).
 
+## Where to Capture
+| Point | Pros | Cons |
+|-------|------|------|
+| Endpoint | Quick, free, host's exact view | Adds load; offload artifacts (giant segments, bad checksums) |
+| SPAN / mirror port | Real on-wire view, no hardware | **Oversubscription** drops packets; errored frames not mirrored |
+| TAP | Passive, sees every frame incl. errors | Costs money; aggregating TAPs can oversubscribe |
+| Cloud mirroring (AWS Traffic Mirroring, GCP Packet Mirroring, Azure vTAP) | No agent on the workload | VXLAN-encapsulated copies; provider limits/cost |
+| On a production server | Always available | Last resort; CLI + capture filter + ring buffer only |
+
+Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen segment` while the hosts show few retransmissions.
+
 ## Capture Gotchas
 - **Snaplen / slicing** ("Packet size limited during capture"): headers only. Timing analysis still works, but payloads, reassembly and `http.time` are lost.
 - **Capture point matters:** client-side and server-side captures show different gaps.
@@ -72,5 +83,6 @@ sudo tcpdump -i eth0 -s 0 -w out.pcap 'tcp port 443'   # capture full packets (-
 - [[WS00 - Introduction]] — Why packet analysis, configuration profiles
 - [[WS01 - Pre-Lesson - Your First Lab]] — Client vs network vs server timing
 - [[WS02 - Your First Packet Capture]] — Interfaces, saving, pcapng vs pcap, ring buffers
+- [[WS03 - Where to Capture on the Network]] — Endpoint vs SPAN vs TAP vs cloud
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]
