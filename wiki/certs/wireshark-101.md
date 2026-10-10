@@ -13,11 +13,12 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 ## Lab Files (`raw/assets/wireshark-101/`)
 | File | Used in |
 |------|---------|
-| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]] |
+| Pre-Lab-SlowNetwork.pcapng | [[WS01 - Pre-Lesson - Your First Lab]], [[WS05 - The Default Interface]], [[WS06 - Configuring Columns]] |
 | [[WS02 - Your First Packet Capture]] | Your First Packet Capture (interfaces, save, ring buffer) | ✅ Complete |
 | [[WS03 - Where to Capture on the Network]] | Where to Capture (endpoint, SPAN, TAP, cloud) | ✅ Complete |
 | [[WS04 - Packet Capture - Best Practices]] | Packet Capture Best Practices (end of Lesson 1) | ✅ Complete |
 | [[WS05 - The Default Interface]] | The Default Interface (Lesson 2 starts) | ✅ Complete |
+| [[WS06 - Configuring Columns]] | Configuring Columns (Delta, UTC, TTL) | ✅ Complete |
 | Lab 1-IntrotoWireshark.pcapng | — |
 | Lab 2-DisplayFilters.pcapng | — |
 | Lab 3-TCP Retrans.pcapng | — |
@@ -56,6 +57,10 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | Supported OS | Windows, macOS, Linux (no official iOS/Android) |
 | Default layout (4.x) | Packet List top · Packet Details bottom-left · Packet Bytes bottom-right; profile shown bottom-right of status bar |
 | Coloring rules | Top-down, first match wins; toggle with Colorize Packet List; Bad TCP = black/red, RST = dark red |
+| Add a column | Preferences → Columns (+) · drag field to header · right-click → Apply as Column; macOS Preferences under Wireshark menu |
+| Delta column | Delta time *displayed*, sort to find worst gaps — check Info (keep-alives ≠ problem) |
+| Time of Day vs UTC | Time of Day = viewer's local TZ; use UTC when collaborating |
+| TTL | Hops away = initial (64/128/255) − observed; unchanged initial TTL = captured at that host |
 | Snaplen | "Packet size limited during capture" = sliced capture; timing works, payload doesn't |
 
 ## Weak Areas to Revisit

@@ -143,6 +143,7 @@ Lab-heavy protocol analysis course, running in parallel with Google Cloud. Cours
 | [WS03](wiki/lessons/wireshark/WS03%20-%20Where%20to%20Capture%20on%20the%20Network.md) | Where to Capture on the Network | — (concepts) | Endpoint vs SPAN vs TAP vs cloud mirroring, SPAN oversubscription |
 | [WS04](wiki/lessons/wireshark/WS04%20-%20Packet%20Capture%20-%20Best%20Practices.md) | Packet Capture - Best Practices | — (concepts) | No capture filter first, client first, ring buffer, capture the problem, TAP, multi-point |
 | [WS05](wiki/lessons/wireshark/WS05%20-%20The%20Default%20Interface.md) | The Default Interface | Pre-Lab-SlowNetwork.pcapng | Packet List / Details / Bytes panes, profile in status bar, coloring rules |
+| [WS06](wiki/lessons/wireshark/WS06%20-%20Configuring%20Columns.md) | Configuring Columns | Pre-Lab-SlowNetwork.pcapng | Delta time column, UTC vs local time, TTL column, 3 ways to add columns |
 
 Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 

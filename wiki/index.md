@@ -56,6 +56,7 @@
 | [WS03](lessons/wireshark/WS03%20-%20Where%20to%20Capture%20on%20the%20Network.md) | Where to Capture on the Network | — (concepts) | 2026-10-10 | Complete |
 | [WS04](lessons/wireshark/WS04%20-%20Packet%20Capture%20-%20Best%20Practices.md) | Packet Capture - Best Practices | — (concepts) | 2026-10-10 | Complete |
 | [WS05](lessons/wireshark/WS05%20-%20The%20Default%20Interface.md) | The Default Interface | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
+| [WS06](lessons/wireshark/WS06%20-%20Configuring%20Columns.md) | Configuring Columns | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
 
 ## Concepts
 
@@ -73,7 +74,7 @@
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP12 |
-| [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS05 |
+| [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS06 |
 
 ## Certifications
 
@@ -110,7 +111,7 @@
 
 | ID | Title | Covers | Date | Status |
 |----|-------|--------|------|--------|
-| [WQ01](quizzes/wireshark/WQ01_Introduction_to_Wireshark.md) | Introduction to Wireshark Quiz (Coursera) | WS00–WS05 | 2026-10-10 | Reviewed |
+| [WQ01](quizzes/wireshark/WQ01_Introduction_to_Wireshark.md) | Introduction to Wireshark Quiz (Coursera) | WS00–WS06 | 2026-10-10 | Reviewed |
 
 ### Interview Prep — `quizzes/interview/`
 

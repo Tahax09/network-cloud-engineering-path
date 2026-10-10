@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-10] ingest | WS06 — Wireshark 101: Configuring Columns
+Ingested lesson on adding/removing columns (Preferences → Columns, drag-and-drop, Apply as Column; macOS Preferences under the Wireshark menu), Delta time displayed column + sorting, Time of Day vs UTC Time of Day, and TTL column. Verified on Pre-Lab file: top deltas = keep-alives 44.99/44.96 s, RST 42.13 s, 200 OK 20.59 s; TTL client 128 (capture on client) vs server 111 (≈17 hops from a Windows default 128). Added initial-TTL table, delta vs delta-displayed distinction, TTL-based injection/loop detection, k3s same-node vs cross-node TTL. Added Essential Columns section to wireshark concept page.
+
 ## [2026-10-10] ingest | WS05 — Wireshark 101: The Default Interface (Lesson 2 starts)
 Ingested lesson on the 4.x default layout: Packet List / Packet Details / Packet Bytes panes, profile indicator in status bar, coloring rules toggle. Added official pane names, status bar areas, default coloring-rule table (read from Wireshark 4.6 colorfilters), and verified coloring on Pre-Lab file with tshark --color (122 HTTP, 1 TCP RST — HTTP rule outranks TCP SYN/FIN, so handshakes are green). Noted default layout_type 2 and that only the Default profile exists locally (course profiles not yet imported). Added Interface section to wireshark concept page.
 

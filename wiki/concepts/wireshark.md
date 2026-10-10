@@ -26,7 +26,18 @@
 |--------|-----|
 | Seconds since first captured packet | Default "stopwatch" view |
 | Seconds since previous displayed packet | **Spot gaps.** Sort by it to find delays |
-| Absolute time of day / UTC | Correlate with logs and SIEM |
+| Time of Day | Wall clock in the **viewer's** timezone |
+| UTC Time of Day | Same for every viewer: use for collaboration, logs, SIEM |
+
+## Essential Columns
+| Column | Add via | Why |
+|--------|---------|-----|
+| Delta (time delta displayed) | Preferences → Columns → + → *Delta time displayed* | Sort to find gaps (then check Info) |
+| TTL (`ip.ttl`) | Drag field / Apply as Column | Hop distance, capture position, injected packets |
+| `tcp.stream` | Apply as Column | Group packets by conversation |
+| `tcp.len` | Apply as Column | Payload size per segment |
+
+**Initial TTLs:** Linux/macOS 64 · Windows 128 · network devices 255. Hops = initial − observed.
 
 ## Reading Timing
 | Measurement | Where | Means |
@@ -105,5 +116,6 @@ Capture-loss signature: many `TCP Previous segment not captured` / `ACKed unseen
 - [[WS03 - Where to Capture on the Network]] — Endpoint vs SPAN vs TAP vs cloud
 - [[WS04 - Packet Capture - Best Practices]] — Capture rules, multi-point capture
 - [[WS05 - The Default Interface]] — Panes, status bar, coloring rules
+- [[WS06 - Configuring Columns]] — Delta, UTC, TTL columns
 - [[L14 - Network Monitoring]] · [[L25 - Troubleshooting Tools]] · [[L24 - Troubleshooting Network Performance Issues]]
 - Course page: [[wireshark-101]]
