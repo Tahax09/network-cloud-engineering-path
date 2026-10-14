@@ -2,7 +2,7 @@
 id: GQ01
 title: Private Connection Options — Quiz 2 (Coursera graded)
 course: Google Cloud Networking Specialization
-covers: GCP07–GCP12
+covers: GCP07–GCP13
 date: 2026-10-09
 due: 2026-10-09
 status: Reviewed

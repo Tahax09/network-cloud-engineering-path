@@ -1,6 +1,6 @@
 ---
-id: GCP12
-aliases: [GCP12]
+id: GCP13
+aliases: [GCP13]
 title: "Module Debrief: Private Connection Options"
 course: Google Cloud Networking Specialization
 cert_track: gcp-networking
@@ -12,10 +12,10 @@ weak_areas: []
 tags: [gcp, private-google-access, private-service-connect, private-services-access, cloud-nat, reference]
 ---
 
-# GCP12 — Module Debrief: Private Connection Options
+# GCP13 — Module Debrief: Private Connection Options
 
 ## Purpose
-A quick reference for the second module of *Networking in Google Cloud: Routing and Addressing*. Full detail is in [[GCP07 - Private Connection Options - Overview]]–[[GCP11 - Cloud NAT]]. The module ended with a **lab: Private Google Access + Cloud NAT** (replica steps in [[GCP11 - Cloud NAT]] Hands-On) and a quiz.
+A quick reference for the second module of *Networking in Google Cloud: Routing and Addressing*. Full detail is in [[GCP07 - Private Connection Options - Overview]]–[[GCP11 - Cloud NAT]]. The module ended with the lab [[GCP12 - Lab - Implement Private Google Access and Cloud NAT]] and a quiz ([[GQ01_Private_Connection_Options]]).
 
 **Lecture recap:** PGA → Google APIs/services. PSC → Google APIs **plus other configured resources** (third-party, your own). PSA → simplifies creating a **VPC Network Peering** connection between consumer and producer, but **only for some Google products/services**. Cloud NAT → **public internet** access for resources without public IPs.
 

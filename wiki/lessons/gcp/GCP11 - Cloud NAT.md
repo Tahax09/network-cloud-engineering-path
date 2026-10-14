@@ -176,7 +176,8 @@ gcloud compute routers nats update ci-nat --router=ci-router --region=REGION \
 
 ## Linked Pages
 - [[GCP07 - Private Connection Options - Overview]] — Overview · [[GCP08 - Private Google Access]] — PGA (works alongside NAT) · [[GCP09 - Private Service Connect]] — PSC · [[GCP10 - Private Services Access]] — PSA
-- [[GCP12 - Module Debrief - Private Connection Options]] — Module debrief
+- [[GCP12 - Lab - Implement Private Google Access and Cloud NAT]] — Hands-on lab (PGA + Cloud NAT + IAP)
+- [[GCP13 - Module Debrief - Private Connection Options]] — Module debrief
 - [[L09 - Routing Technologies]] — NAT / PAT
 - [[concepts/gcp-private-access]]
 - [[certs/gcp-networking]]

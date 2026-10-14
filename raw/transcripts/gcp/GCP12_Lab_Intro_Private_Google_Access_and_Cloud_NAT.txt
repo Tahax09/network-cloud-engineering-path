@@ -1,0 +1,8 @@
+Next, you will apply what you learned by completing
+a lab exercise. In this lab, you will
+complete the following tasks. Configure a VM instance that doesn't have an
+external IP address, connect to a VM instance using an identity-aware
+proxy tunnel, enable private Google
+access on a subnet, configure a Cloud NAT gateway, and verify access to
+public IP addresses of Google APIs and services and other connections
+to the Internet.

@@ -38,6 +38,7 @@ gcloud compute routers update ROUTER --region=REGION --advertisement-mode=CUSTOM
 ```
 
 ## Linked Lessons
+- [[GCP12 - Lab - Implement Private Google Access and Cloud NAT]] — Lab: PGA + Cloud NAT + IAP + NAT logging
 - [[GCP07 - Private Connection Options - Overview]] — Overview of private connection options
 - [[GCP08 - Private Google Access]] — Private Google Access (cloud + on-prem)
 - [[GCP01 - Routes and Route Preferences]] — Routing / next hops · [[GCP04 - Cloud DNS]] — Cloud DNS private zones

@@ -44,7 +44,8 @@
 | [GCP09](lessons/gcp/GCP09%20-%20Private%20Service%20Connect.md) | Private Service Connect | Private Connection Options | 2026-10-09 | Complete |
 | [GCP10](lessons/gcp/GCP10%20-%20Private%20Services%20Access.md) | Private Services Access | Private Connection Options | 2026-10-09 | Complete |
 | [GCP11](lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | Private Connection Options | 2026-10-09 | Complete |
-| [GCP12](lessons/gcp/GCP12%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete |
+| [GCP12](labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Lab: Implement Private Google Access and Cloud NAT | Private Connection Options | 2026-10-14 | Complete |
+| [GCP13](lessons/gcp/GCP13%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -77,7 +78,7 @@
 | [modern-networks](concepts/modern-networks.md) | SDN, VXLAN, Zero Trust, SASE, IaC tools, IPv6 | L08 |
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
-| [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP12 |
+| [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP13 |
 | [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS10 |
 
 ## Certifications
@@ -109,7 +110,7 @@
 
 | ID | Title | Covers | Date | Status |
 |----|-------|--------|------|--------|
-| [GQ01](quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 | 2026-10-09 | Reviewed |
+| [GQ01](quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP13 | 2026-10-09 | Reviewed |
 
 ### Wireshark 101 — `quizzes/wireshark/`
 
@@ -129,3 +130,4 @@
 |------|-------------|--------|
 | [k3s-lab](labs/k3s-lab.md) | k3s observability stack — Kubeshark, ES, Kibana | Ongoing |
 | [gcp-geolocation-lab](labs/gcp-geolocation-lab.md) | GCP Cloud DNS geolocation routing policy — full 9-task lab | Complete |
+| [GCP12 lab](labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | GCP Private Google Access + Cloud NAT + IAP + NAT logging | Complete |

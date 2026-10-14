@@ -125,7 +125,8 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP09](wiki/lessons/gcp/GCP09%20-%20Private%20Service%20Connect.md) | Private Service Connect | Endpoints, service attachments, PSC interface |
 | [GCP10](wiki/lessons/gcp/GCP10%20-%20Private%20Services%20Access.md) | Private Services Access | Peering-based access to managed services (Cloud SQL) |
 | [GCP11](wiki/lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | Distributed outbound NAT, manual/auto IPs, private NAT |
-| [GCP12](wiki/lessons/gcp/GCP12%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief - Private Connection Options | Module quick reference + decision table |
+| [GCP12](wiki/labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Lab: Implement Private Google Access and Cloud NAT | Hands-on: no-external-IP VM, IAP SSH, PGA, Cloud NAT, NAT logging |
+| [GCP13](wiki/lessons/gcp/GCP13%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief - Private Connection Options | Module quick reference + decision table |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -172,7 +173,7 @@ Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 
 | ID | Quiz | Covers |
 |----|------|--------|
-| [GQ01](wiki/quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP12 |
+| [GQ01](wiki/quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP13 |
 
 ### Wireshark 101
 
@@ -216,6 +217,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 |-----|-------------|
 | [k3s-lab](wiki/labs/k3s-lab.md) | ARM64 Ubuntu k3s cluster with Kubeshark, Elasticsearch, and Kibana, used as the hands-on reference for every lesson |
 | [gcp-geolocation-lab](wiki/labs/gcp-geolocation-lab.md) | Cloud DNS geolocation routing policy for traffic steering |
+| [GCP12 lab](wiki/labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Private Google Access + Cloud NAT for a VM with no external IP, reached via IAP |
 
 ---
 

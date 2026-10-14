@@ -196,6 +196,7 @@ gcloud compute routers update tokyo-router --region=asia-northeast1 \
 ---
 
 ## Linked Pages
+- [[GCP12 - Lab - Implement Private Google Access and Cloud NAT]] — Hands-on lab (PGA + Cloud NAT + IAP)
 - [[GCP07 - Private Connection Options - Overview]] — Private connection options overview
 - [[GCP01 - Routes and Route Preferences]] — Routes, `default-internet-gateway` next hop, route priority
 - [[GCP02 - IPv6 in Google Cloud]] — IPv6 dual-stack subnets (/96 per VM)

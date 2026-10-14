@@ -12,7 +12,7 @@ target_date: TBD
 | # | Course | Status | Wiki lessons |
 |---|--------|--------|--------------|
 | 1 | Networking in Google Cloud: Fundamentals | ✅ Complete (Coursera) | Transcripts pending — to be ingested |
-| 2 | Networking in Google Cloud: Routing and Addressing | 🔄 In progress | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP12 (Private Connection Options module), GQ01 |
+| 2 | Networking in Google Cloud: Routing and Addressing | 🔄 In progress | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP13 (Private Connection Options module), GQ01 |
 | 3 | Networking in Google Cloud: Network Architecture | Not started | — |
 | 4 | Networking in Google Cloud: Network Security | Not started | — |
 | 5 | Networking in Google Cloud: Load Balancing | Not started | — |
@@ -38,7 +38,8 @@ target_date: TBD
 | [GCP09](../lessons/gcp/GCP09%20-%20Private%20Service%20Connect.md) | Private Service Connect | ✅ Complete |
 | [GCP10](../lessons/gcp/GCP10%20-%20Private%20Services%20Access.md) | Private Services Access | ✅ Complete |
 | [GCP11](../lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | ✅ Complete |
-| [GCP12](../lessons/gcp/GCP12%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | ✅ Complete |
+| [GCP12](../labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Lab: Implement Private Google Access and Cloud NAT | ✅ Complete |
+| [GCP13](../lessons/gcp/GCP13%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | ✅ Complete |
 | [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ## Key Exam Facts (collected from sessions)
@@ -76,6 +77,9 @@ target_date: TBD
 | Cloud NAT | Outbound only; configured on Cloud Router; distributed (no proxy); manual IPs for allowlists |
 | Cloud NAT + PGA | Google API traffic never NAT'd; PGA forced on for NAT'd ranges |
 | Private NAT | Inter-VPC NAT between NCC spokes with overlapping ranges |
+| IAP SSH | `gcloud compute ssh --tunnel-through-iap`; firewall allows TCP 22 only from 35.235.240.0/20; no bastion/external IP needed |
+| NAT propagation | Up to ~3 min after gateway is Running |
+| NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit
 *(none flagged yet)*

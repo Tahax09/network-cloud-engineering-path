@@ -45,8 +45,9 @@
 | GCP09 | Private Service Connect | Private Connection Options | 2026-10-09 | Complete | Pending |
 | GCP10 | Private Services Access | Private Connection Options | 2026-10-09 | Complete | Pending |
 | GCP11 | Cloud NAT | Private Connection Options | 2026-10-09 | Complete | Pending |
-| GCP12 | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete | — |
-| GCP13 | — | — | — | Pending | — |
+| GCP12 | Lab: Implement Private Google Access and Cloud NAT (wiki/labs/) | Private Connection Options | 2026-10-14 | Complete | — |
+| GCP13 | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete | — |
+| GCP14 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

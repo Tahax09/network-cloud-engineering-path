@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-14] lab | GCP12 — Lab: Implement Private Google Access and Cloud NAT
+Ingested lab intro transcript + lab instructions as wiki/labs/GCP12 (course order: lab precedes debrief, so Module Debrief renumbered GCP12 → GCP13 with all references updated). Lab page covers privatenet VPC/subnet, IAP-only SSH firewall (35.235.240.0/20), vm-internal with no external IP, staged tests (isolated → PGA → Cloud NAT), NAT logging to Cloud Logging, gcloud equivalents for every console step, expected-results matrix, lab check-in answers, Terraform-style troubleshooting scenario, k3s-on-GCE and AWS (SSM/S3 endpoint/NAT GW) mappings. Qwiklabs temporary credentials deliberately not stored.
+
 ## [2026-10-10] ingest | WS10 — Wireshark 101: The Statistics View (end of Module 2)
 Ingested lesson on Statistics → Conversations (per-layer pairs, A→B/B→A, Rel Start, Duration, timeline) and Statistics → Endpoints (unique MAC/IP/port, GeoIP preview), plus unticking unused protocols. Verified on Pre-Lab with tshark -z: 1 TCP / 1 IPv4 / 2 Ethernet conversations; client sends to next-hop MAC f2:b0:cd… but receives from f2:fb:fa… (asymmetric path / FHRP); all MACs f2: = locally administered → likely anonymized trace. Protocol hierarchy: 78 HTTP frames, 51 truncated. Added other Statistics menus and CLI equivalents. Caption note: "FIDI" = FDDI. Module 2 "The Wireshark Interface" complete.
 
