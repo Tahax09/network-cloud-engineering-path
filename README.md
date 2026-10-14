@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-36-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%203%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-10-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-48-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%203%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-11-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
