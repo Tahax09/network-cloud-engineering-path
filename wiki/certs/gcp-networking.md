@@ -46,6 +46,7 @@ target_date: TBD
 | ID | Title | Status |
 |----|-------|--------|
 | [GCP14](../lessons/gcp/GCP14%20-%20Network%20Architecture%20-%20Course%20Introduction.md) | Network Architecture - Course Introduction | ✅ Complete |
+| [GCP15](../lessons/gcp/GCP15%20-%20Cloud%20Network%20Architecture%20Overview.md) | Cloud Network Architecture Overview | ✅ Complete |
 
 ## Key Exam Facts (collected from sessions)
 
@@ -84,6 +85,9 @@ target_date: TBD
 | Private NAT | Inter-VPC NAT between NCC spokes with overlapping ranges |
 | IAP SSH | `gcloud compute ssh --tunnel-through-iap`; firewall allows TCP 22 only from 35.235.240.0/20; no bastion/external IP needed |
 | NAT propagation | Up to ~3 min after gateway is Running |
+| Network Service Tiers | Premium = Google backbone to PoP near user, global LB, higher cost; Standard = public internet, regional only, cheaper |
+| Cloud Router | BGP for Interconnect, Cloud VPN, Router appliance; control plane for Cloud NAT (policy-based routes are a separate VPC feature) |
+| Multi-region design | Mirror tiers per region with UNIQUE subnet ranges; LB to least-busy backend; per-tier firewall (prefer service-account rules) |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit

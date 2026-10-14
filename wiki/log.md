@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-14] ingest | GCP15 — Cloud Network Architecture Overview (Course 3, Module 1)
+Ingested overview: shared responsibility for virtual network, design process (assess → quantifiable metrics → select services), toolkit (VPC/subnets, firewall policies, Cloud VPN, Interconnect, HA VPN over Interconnect, Cloud Router BGP + NAT control plane, load balancers, Cloud CDN, Network Service Tiers Premium vs Standard), Cymbal Bank 3-VM → multi-region, tier-per-subnet, load-balanced redesign with unique ranges. Clarified: policy-based routes are a VPC feature, not Cloud Router. Added service-account firewall design note, AWS mapping (zonal vs regional subnets), k3s NetworkPolicy equivalent.
+
 ## [2026-10-14] ingest | GCP14 — Network Architecture: Course Introduction (Course 3 starts)
 Ingested intro to Course 3 of Networking in Google Cloud: Module 1 Introduction to Network Architecture (subnets, routes, firewalls, load balancing), Module 2 Network Topologies (strengths/weaknesses). Added course-position map, building-block review linking Course 2 lessons, topology preview (Shared VPC, hub-and-spoke/NCC, mesh, hybrid) flagged as to-be-confirmed, mesh-scaling scenario. Marked Course 2 complete on cert page. "Cloud network architecture overview.txt" not yet in Downloads — pending as GCP15.
 

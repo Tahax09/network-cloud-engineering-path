@@ -1,0 +1,63 @@
+Network architecture refers to the design
+of a virtual network in Google Cloud. It defines how virtual machines, containers,
+and other resources connect and communicate with each other within your cloud environment. While Google manages the underlying physical
+infrastructure, you are responsible for configuring the software, protocols, and Google Cloud
+managed services that make up your virtual network. This includes components like VPC networks,
+subnets, firewalls, Cloud Routers, Cloud VPNs, and access points for on-premises connections. The network design impacts the scalability,
+security, performance, and cost of your network. A well-designed network can support your business
+growth by providing the scalability, security, performance, and cost-efficiency you need. On the other hand, a poorly designed network
+can lead to a number of problems, such as outages, security breaches, and slow performance. These problems can disrupt your business operations
+and damage your reputation. Not all network designs are suitable for all
+situations. You select network components and protocols
+based on your organization’s needs and priorities. Tailoring your network architecture to your
+organization's specific needs is paramount. Start by thoroughly assessing your current
+and future requirements, considering factors like the number of users, applications, traffic
+volume, and security considerations. Once you have a clear understanding of your
+needs, define quantifiable metrics for scalability, security, performance, and cost efficiency. These metrics can serve as a benchmark for
+evaluating your design choices. Google Cloud offers a comprehensive suite
+of networking services and tools. Google Cloud offers a comprehensive suite
+of networking services and tools. Identify the ones that best suit your requirements
+and leverage them to craft a secure, scalable, and cost-effective network architecture. Google Cloud provides a powerful arsenal of
+networking services that enable you to build robust and optimized VPC networks. Each service plays a crucial role in achieving
+essential network characteristics like scalability, security, performance, and cost-efficiency. A VPC network enables secure resource grouping
+by segmenting your network into distinct subnets based on functionality, security considerations,
+or project boundaries. You have granular control over access lists
+and security policies within each VPC network. Cloud VPN establishes secure tunnels for encrypted
+data communication between your on-premises network and Google Cloud. Cloud Interconnect directly provides high-bandwidth,
+low-latency connections between your on-premises network and Google Cloud. If needed, you can deploy Cloud VPN over Cloud
+Interconnect to provide encrypted data communication. Cloud Router dynamically exchanges routes
+between Virtual Private Cloud Networks and on-premises networks. A Cloud Router also serves as the control
+plane for Cloud NAT. You have multiple configuration options, including
+policy-based routing and BGP peering. Cloud Router provides BGP services for the
+following Google Cloud products: Cloud Interconnect, Cloud VPN, and Router appliance. Load balancers play a vital role in cloud
+networks by intelligently distributing incoming traffic across multiple backend servers or
+instances. This optimization prevents overload on individual
+servers, enhancing performance, scalability, and ensuring high availability for your cloud-based
+applications. Firewall rules provide granular access control,
+which is critical in protecting your VPC network. Grouping firewall rules into firewall policies
+helps you protect your Google Cloud infrastructure more easily. The firewall provides more specific control
+over traffic entering or leaving individual virtual machine instances. Cloud CDN caches content using Google's global
+edge network, accelerating web applications. By selecting the most appropriate Network
+Service Tier, you can optimize network performance and cost based on your specific traffic requirements. Choose Standard Tier for general workloads
+when speed is not a primary concern. Choose Premium Tier for demanding applications
+that require higher throughput and lower latency. Let’s take a look at an example: Cymbal
+Bank acquired a small subsidiary with a banking application on three VMs in one subnet. One VM will host the web server, another VM
+will host the business logic, and another VM will host the database. This approach was fine but now Cymbal Bank
+wants to roll out this a banking application to a global audience, with clients in Asia,
+North America, and Europe. Cymbal Bank wants to avoid bottlenecks. As shown, this network design is better for
+the following reasons: There are more servers to spread out the processing. Here, we see two sets of VMs that run the
+web server, the business logic, and the database. While the regions are mirrored,
+the subnet IP ranges are unique. Probably, you would use more
+than two sets of VMs, but only two sets are shown here
+to simplify the example. A load balancer handles routing client requests
+to the least busy set of VMs. This way, you reduce the
+likelihood of a bottleneck. Each VM is in a separate subnet. This approach allows you to
+apply different security, such as firewall rules and IAM
+permissions, to each subnet. Therefore, to each VM. For example, using this approach,
+you can lock down the database to only accept messages
+from the business logic VM. Depending on the application,
+and on the clients that use it, there may be other design changes
+that would be appropriate. For now, it’s important to note
+that a good network design can help make an application
+run faster and more securely. In this course, you will learn some common
+network design approaches.

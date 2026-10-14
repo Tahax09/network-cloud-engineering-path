@@ -13,11 +13,11 @@ Become a cloud/network infrastructure engineer. Build deep, practical understand
 
 ## Current Focus
 **CompTIA Network+ N10-009** — All 5 domains complete (L01–L25). Next: Domain 5 graded quiz, full review, practice exams, schedule exam.
-**Google Cloud Networking** — Course 3 *Network Architecture* started (GCP14). Course 2 *Routing and Addressing* complete: Routing & Addressing module (GCP01–GCP06) + Private Connection Options module (GCP07–GCP13 incl. GCP12 lab, GQ01).
+**Google Cloud Networking** — Course 3 *Network Architecture* in progress (GCP14–GCP15). Course 2 *Routing and Addressing* complete: Routing & Addressing module (GCP01–GCP06) + Private Connection Options module (GCP07–GCP13 incl. GCP12 lab, GQ01).
 
 **Wireshark 101** — Module 1 *Introduction to Wireshark* complete (WS00–WS04 + WQ01); Modules 1–2 complete: *Introduction to Wireshark* (WS00–WS04 + WQ01) and *The Wireshark Interface* (WS05–WS10).
 
-Lessons completed: L01–L25 (Network+), GCP01–GCP14 (GCP), WS00–WS10 (Wireshark)
+Lessons completed: L01–L25 (Network+), GCP01–GCP15 (GCP), WS00–WS10 (Wireshark)
 
 ## Roadmap
 
