@@ -12,8 +12,8 @@ target_date: TBD
 | # | Course | Status | Wiki lessons |
 |---|--------|--------|--------------|
 | 1 | Networking in Google Cloud: Fundamentals | ✅ Complete (Coursera) | Transcripts pending — to be ingested |
-| 2 | Networking in Google Cloud: Routing and Addressing | 🔄 In progress | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP13 (Private Connection Options module), GQ01 |
-| 3 | Networking in Google Cloud: Network Architecture | Not started | — |
+| 2 | Networking in Google Cloud: Routing and Addressing | ✅ Complete | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP13 (Private Connection Options module), GQ01 |
+| 3 | Networking in Google Cloud: Network Architecture | 🔄 In progress | GCP14 → (Module 1: Introduction to Network Architecture · Module 2: Network Topologies) |
 | 4 | Networking in Google Cloud: Network Security | Not started | — |
 | 5 | Networking in Google Cloud: Load Balancing | Not started | — |
 | 6 | Networking in Google Cloud: Hybrid and Multicloud | Not started | — |
@@ -41,6 +41,11 @@ target_date: TBD
 | [GCP12](../labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Lab: Implement Private Google Access and Cloud NAT | ✅ Complete |
 | [GCP13](../lessons/gcp/GCP13%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | ✅ Complete |
 | [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
+
+### Course 3: Network Architecture
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP14](../lessons/gcp/GCP14%20-%20Network%20Architecture%20-%20Course%20Introduction.md) | Network Architecture - Course Introduction | ✅ Complete |
 
 ## Key Exam Facts (collected from sessions)
 

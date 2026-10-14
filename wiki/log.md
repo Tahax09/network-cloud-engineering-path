@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-14] ingest | GCP14 — Network Architecture: Course Introduction (Course 3 starts)
+Ingested intro to Course 3 of Networking in Google Cloud: Module 1 Introduction to Network Architecture (subnets, routes, firewalls, load balancing), Module 2 Network Topologies (strengths/weaknesses). Added course-position map, building-block review linking Course 2 lessons, topology preview (Shared VPC, hub-and-spoke/NCC, mesh, hybrid) flagged as to-be-confirmed, mesh-scaling scenario. Marked Course 2 complete on cert page. "Cloud network architecture overview.txt" not yet in Downloads — pending as GCP15.
+
 ## [2026-10-14] lab | GCP12 — Lab: Implement Private Google Access and Cloud NAT
 Ingested lab intro transcript + lab instructions as wiki/labs/GCP12 (course order: lab precedes debrief, so Module Debrief renumbered GCP12 → GCP13 with all references updated). Lab page covers privatenet VPC/subnet, IAP-only SSH firewall (35.235.240.0/20), vm-internal with no external IP, staged tests (isolated → PGA → Cloud NAT), NAT logging to Cloud Logging, gcloud equivalents for every console step, expected-results matrix, lab check-in answers, Terraform-style troubleshooting scenario, k3s-on-GCE and AWS (SSM/S3 endpoint/NAT GW) mappings. Qwiklabs temporary credentials deliberately not stored.
 

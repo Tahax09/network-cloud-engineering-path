@@ -1,0 +1,9 @@
+Welcome to the third course of
+the networking in Google Cloud series, network architecture. In this course, you will explore the
+fundamentals of designing efficient and scalable network architectures
+within Google Cloud. In the first module, introduction to
+network architecture, we'll start by introducing you to the core components and
+concepts of network architecture, including subnets, routes,
+firewalls, and load balancing. Then, in the second module,
+network topologies, we'll dive into various network
+topologies commonly used in Google Cloud, discussing their strengths and weaknesses.

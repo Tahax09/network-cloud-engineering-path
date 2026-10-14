@@ -47,7 +47,8 @@
 | GCP11 | Cloud NAT | Private Connection Options | 2026-10-09 | Complete | Pending |
 | GCP12 | Lab: Implement Private Google Access and Cloud NAT (wiki/labs/) | Private Connection Options | 2026-10-14 | Complete | — |
 | GCP13 | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete | — |
-| GCP14 | — | — | — | Pending | — |
+| GCP14 | Network Architecture - Course Introduction | Network Architecture (Course 3) | 2026-10-14 | Complete | — |
+| GCP15 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

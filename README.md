@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-36-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%202%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-10-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-36-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%203%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-10-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -109,7 +109,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 
 ## Google Cloud Networking
 
-*Networking in Google Cloud* is a six-course program: Fundamentals ✅ · **Routing and Addressing** (in progress) · Network Architecture · Network Security · Load Balancing · Hybrid and Multicloud.
+*Networking in Google Cloud* is a six-course program: Fundamentals ✅ · Routing and Addressing ✅ · **Network Architecture** (in progress) · Network Security · Load Balancing · Hybrid and Multicloud.
 
 ### Course 2: Routing and Addressing
 
@@ -127,6 +127,12 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP11](wiki/lessons/gcp/GCP11%20-%20Cloud%20NAT.md) | Cloud NAT | Distributed outbound NAT, manual/auto IPs, private NAT |
 | [GCP12](wiki/labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Lab: Implement Private Google Access and Cloud NAT | Hands-on: no-external-IP VM, IAP SSH, PGA, Cloud NAT, NAT logging |
 | [GCP13](wiki/lessons/gcp/GCP13%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief - Private Connection Options | Module quick reference + decision table |
+
+### Course 3: Network Architecture
+
+| ID | Lesson | Key topics |
+|----|--------|-----------|
+| [GCP14](wiki/lessons/gcp/GCP14%20-%20Network%20Architecture%20-%20Course%20Introduction.md) | Network Architecture - Course Introduction | Modules: Intro to Network Architecture (subnets, routes, firewalls, LB) · Network Topologies |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -233,7 +239,7 @@ Planned  AWS Cloud Practitioner ─▶ AWS Solutions Architect – Associate
 | Certification | Status |
 |---------------|--------|
 | CompTIA Network+ N10-009 | Course complete, exam prep |
-| Google Cloud Networking (6-course program) | Course 2 in progress |
+| Google Cloud Networking (6-course program) | Course 3 in progress |
 | Wireshark 101: Packet Analysis Essentials (course) | In progress |
 | Kubernetes and Cloud Native Associate (KCNA) | Next |
 | Certified Kubernetes Administrator (CKA) | Planned |
