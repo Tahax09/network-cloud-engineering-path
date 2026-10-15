@@ -7,7 +7,7 @@ cert_track: gcp-networking
 module: "Course 4: Network Security — Module 1: DDoS Protection"
 date: 2026-10-15
 status: Complete
-quiz_attempted: No
+quiz_attempted: Yes
 weak_areas: []
 tags: [gcp, ddos, mitigation, cloud-load-balancing, attack-surface, firewall, iap, cloud-cdn, apigee, cloud-armor, waf, owasp, rate-limiting, adaptive-protection, recaptcha, cloud-armor-enterprise]
 ---

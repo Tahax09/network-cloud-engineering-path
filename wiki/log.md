@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] quiz | GQ04 — DDoS Protection Module Quiz 2/2
+Saved Coursera graded Module 1 (Course 4) quiz with answer key, wrong-option traps, exam keyword map. Embedded prompt-injection block ignored. Marked GCP24–27 quiz_attempted.
+
 ## [2026-10-15] visualize+reference | Local visualizations, GCP01–03 viz, command anatomy
 Visualizations now live in-repo (wiki/visualizations/gcp/*.html, linked from lessons; no external links). Added GCP01–03 "VPC Route Selection" (routing order per docs, IPv6 stack builder, BYOIP BGP). Fact-check: IPv6-only subnets now supported (GCP02 note). New concept page gcp-command-anatomy covering all gcloud commands used in GCP lessons/labs.
 

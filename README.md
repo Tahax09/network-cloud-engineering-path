@@ -216,6 +216,7 @@ Step-by-step explanations of every course scenario (context → architecture dia
 |----|------|--------|
 | [GQ01](wiki/quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP13 |
 | [GQ03](wiki/quizzes/gcp/GQ03_Network_Topologies.md) | Network Topologies Quiz (Coursera graded) | GCP17–GCP22 |
+| [GQ04](wiki/quizzes/gcp/GQ04_DDoS_Protection.md) | DDoS Protection Module Quiz (Coursera graded) | GCP24–GCP28 |
 
 ### Wireshark 101
 

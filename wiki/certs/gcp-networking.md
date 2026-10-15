@@ -58,6 +58,8 @@ target_date: TBD
 | [GCP22](../lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | ✅ Complete |
 
 ### Course 4: Network Security
+*Module 1: DDoS Protection (GCP24–GCP28, quiz [GQ04](../quizzes/gcp/GQ04_DDoS_Protection.md) 2/2 ✅)*
+
 | ID | Title | Status |
 |----|-------|--------|
 | [GCP23](../lessons/gcp/GCP23%20-%20Network%20Security%20-%20Course%20Introduction.md) | Network Security - Course Introduction | ✅ Complete |

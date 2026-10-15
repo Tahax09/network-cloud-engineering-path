@@ -130,6 +130,7 @@
 |----|-------|--------|------|--------|
 | [GQ01](quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP13 | 2026-10-09 | Reviewed |
 | [GQ03](quizzes/gcp/GQ03_Network_Topologies.md) | Network Topologies Quiz (Coursera graded) | GCP17–GCP22 | 2026-10-15 | 2/2 |
+| [GQ04](quizzes/gcp/GQ04_DDoS_Protection.md) | DDoS Protection Module Quiz (Coursera graded) | GCP24–GCP28 | 2026-10-15 | 2/2 |
 
 ### Wireshark 101 — `quizzes/wireshark/`
 
