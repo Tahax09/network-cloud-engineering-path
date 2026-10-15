@@ -1,0 +1,60 @@
+>> Next, let's briefly discuss some
+key considerations to design network architecture. When designing a network architecture,
+there are a number of key considerations. These include scalability, security,
+performance and cost efficiency. Scalability refers to the ability of your
+network to accommodate increasing demands, whether it's adding more resources or
+handling growing traffic volume. Security refers to protecting your network
+from unauthorized access and attacks. Implementing robust security measures
+like firewalls, access controls, and encryption, are crucial to safeguarding
+your network from unauthorized access, data breaches, and cyberattacks. Compliance refers to observing guidelines,
+rules, and restrictions of your organization,
+industry, and pertinent government bodies. Performance refers to the speed and
+responsiveness of your network. Optimizing network performance
+translates to faster data transfer, improved application responsiveness,
+and a smooth user experience for your applications and services. Cost efficiency refers to the cost
+of designing, implementing, and operating your network. Striking a balance between
+achieving your network goals and staying within budget is essential. Google Cloud offers various cost
+optimization strategies and tools to help you build a cost
+effective network architecture. As a first step in your VPC network
+design, identify the decision makers and stakeholders that you must satisfy. Stakeholders might include application
+owners, security architects, solution architects, and
+operations managers. The stakeholders themselves might change
+depending on whether you are planning your VPC network for a project, a line of
+business, or the entire organization. Gather requirements. Engage with stakeholders to
+understand their specific needs regarding security performance,
+scalability, compliance, and budget. This also includes
+the operational expenditure. This work might involve
+conducting interviews, workshops, or
+reviewing existing documentation. You also must identify the people within
+your organization that can make decisions to improve your network design. For example, engineering managers and
+accounting personnel. With a clear understanding
+of the requirements, we can now begin to translate them
+into a tangible network design. The high level design outlines
+the overall structure of the network, including the major components and
+their relationships. The low level design provides
+a more granular view, specifying device configurations, IP addressing
+schemes, and security protocols. This phase also involves making critical
+decisions about cloud infrastructure, geographic locations, and
+connectivity options. Finally, build a BoM or
+bill of materials and calculate the cost. This comprehensive list includes all
+hardware, software, licenses, and services required to
+implement the network. It serves as the basis for calculating the
+total cost of the project, both in terms of upfront capital expenditures and
+ongoing operational expenditures. This detailed cost analysis allows
+stakeholders to make informed decisions about the network design and
+implementation. Let's now talk through best practices for
+understanding the overall project and environment. Clearly define the project's
+objectives and timeline to guide network
+design decisions. This helps determine resource allocation,
+architecture complexity, and implementation phases. Assess any existing on premises or cloud infrastructure that the VPC
+network needs to integrate with. This includes identifying existing vpcs,
+subnets, security configurations,
+and network policies. Lastly, let's talk through
+technical considerations and constraints you should consider. Research and
+understand any relevant security or data privacy regulations your
+organization needs to follow. This might influence aspects like data
+segregation, access control, and logging. Consider cost saving strategies
+like right sizing resources, utilizing committed use discounts, and
+exploring managed services where feasible. Plan for ongoing network management,
+monitoring, and incident response procedures. This might involve defining roles and
+responsibilities, automation practices, and logging configurations.

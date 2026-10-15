@@ -1,0 +1,9 @@
+Next, let's try out
+what you've learned. In this lab, you
+design and implement a classic hub-and-spoke
+network typology. Your preconfigured environment includes three VPC networks, a central hub, and two branches, Spoke 1 and Spoke 2. Create virtual machines on each network to
+test connectivity. Begin by verifying
+connectivity between the VMs within and across VPCs. Then use NCC to implement
+a hub-and-spoke. Retest connectivity
+to confirm that your hub-and-spoke architecture
+is fully functional.

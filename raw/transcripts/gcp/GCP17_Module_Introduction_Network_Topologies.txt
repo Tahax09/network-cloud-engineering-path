@@ -1,0 +1,9 @@
+Welcome to the Network
+Typologies module of the Networking and Google Cloud Network
+Architecture course. This module introduces you
+to network topologies. We'll start with the
+hub-and-spoke model, exploring its structure
+and applications. Additionally, we'll cover alternative
+topologies like mesh, mirrored, and gated. Through a hands-on lab,
+you'll explore how to implement a hub-and-spoke using Network
+Connectivity Center.

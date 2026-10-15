@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-49-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%203%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-11-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-52-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%203%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-11-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -134,6 +134,10 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 |----|--------|-----------|
 | [GCP14](wiki/lessons/gcp/GCP14%20-%20Network%20Architecture%20-%20Course%20Introduction.md) | Network Architecture - Course Introduction | Modules: Intro to Network Architecture (subnets, routes, firewalls, LB) · Network Topologies |
 | [GCP15](wiki/lessons/gcp/GCP15%20-%20Cloud%20Network%20Architecture%20Overview.md) | Cloud Network Architecture Overview | Design process & metrics, GCP networking toolkit, Premium vs Standard tier, multi-region 3-tier redesign |
+| [GCP16](wiki/lessons/gcp/GCP16%20-%20Getting%20Started%20with%20Network%20Architecture.md) | Getting Started with Network Architecture | Considerations, stakeholders → requirements → HLD → LLD → BoM, CapEx/OpEx |
+| [GCP17](wiki/lessons/gcp/GCP17%20-%20Module%20Introduction%20-%20Network%20Topologies.md) | Module Introduction - Network Topologies | Hub-and-spoke, mesh, mirrored, gated; NCC lab |
+| [GCP18](wiki/lessons/gcp/GCP18%20-%20Hub-and-Spoke%20Topology.md) | Hub-and-Spoke Topology | Peering vs VPN vs NCC, transitivity, VPC/hybrid spokes, router appliance |
+| [GCP19](wiki/labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | Two isolated VPCs → NCC mesh hub → ping works; Network Topology |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -213,6 +217,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [modern-networks](wiki/concepts/modern-networks.md) | SDN, VXLAN, Zero Trust, SASE, IaC, IPv6 |
 | [gcp-routing](wiki/concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, BYOIP |
 | [gcp-dns](wiki/concepts/gcp-dns.md) | Cloud DNS zones and policies |
+| [gcp-network-architecture](wiki/concepts/gcp-network-architecture.md) | Design process, service tiers, topologies, Network Connectivity Center |
 | [gcp-private-access](wiki/concepts/gcp-private-access.md) | PGA, PSC, PSA, Cloud NAT + AWS mapping |
 | [wireshark](wiki/concepts/wireshark.md) | Capture workflow, time formats, RTT vs server time, filters, tshark |
 
@@ -225,6 +230,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [k3s-lab](wiki/labs/k3s-lab.md) | ARM64 Ubuntu k3s cluster with Kubeshark, Elasticsearch, and Kibana, used as the hands-on reference for every lesson |
 | [gcp-geolocation-lab](wiki/labs/gcp-geolocation-lab.md) | Cloud DNS geolocation routing policy for traffic steering |
 | [GCP12 lab](wiki/labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Private Google Access + Cloud NAT for a VM with no external IP, reached via IAP |
+| [GCP19 lab](wiki/labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Hub-and-spoke with Network Connectivity Center: two isolated VPCs connected as VPC spokes |
 
 ---
 

@@ -49,7 +49,11 @@
 | GCP13 | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete | — |
 | GCP14 | Network Architecture - Course Introduction | Network Architecture (Course 3) | 2026-10-14 | Complete | — |
 | GCP15 | Cloud Network Architecture Overview | Network Architecture — Module 1 | 2026-10-14 | Complete | Pending |
-| GCP16 | — | — | — | Pending | — |
+| GCP16 | Getting Started with Network Architecture | Network Architecture — Module 1 | 2026-10-15 | Complete | Pending |
+| GCP17 | Module Introduction - Network Topologies | Network Architecture — Module 2 | 2026-10-15 | Complete | — |
+| GCP18 | Hub-and-Spoke Topology | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
+| GCP19 | Lab: Implement a Hub-and-Spoke Network Using NCC (wiki/labs/) | Network Architecture — Module 2 | 2026-10-15 | Complete | — |
+| GCP20 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

@@ -48,6 +48,10 @@
 | [GCP13](lessons/gcp/GCP13%20-%20Module%20Debrief%20-%20Private%20Connection%20Options.md) | Module Debrief: Private Connection Options | Private Connection Options | 2026-10-09 | Complete |
 | [GCP14](lessons/gcp/GCP14%20-%20Network%20Architecture%20-%20Course%20Introduction.md) | Network Architecture - Course Introduction | Network Architecture (Course 3) | 2026-10-14 | Complete |
 | [GCP15](lessons/gcp/GCP15%20-%20Cloud%20Network%20Architecture%20Overview.md) | Cloud Network Architecture Overview | Network Architecture (Course 3) | 2026-10-14 | Complete |
+| [GCP16](lessons/gcp/GCP16%20-%20Getting%20Started%20with%20Network%20Architecture.md) | Getting Started with Network Architecture | Network Architecture (Course 3) — Module 1 | 2026-10-15 | Complete |
+| [GCP17](lessons/gcp/GCP17%20-%20Module%20Introduction%20-%20Network%20Topologies.md) | Module Introduction - Network Topologies | Network Architecture (Course 3) — Module 2 | 2026-10-15 | Complete |
+| [GCP18](lessons/gcp/GCP18%20-%20Hub-and-Spoke%20Topology.md) | Hub-and-Spoke Topology | Network Architecture (Course 3) — Module 2 | 2026-10-15 | Complete |
+| [GCP19](labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | Network Architecture — Module 2 | 2026-10-15 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -80,6 +84,7 @@
 | [modern-networks](concepts/modern-networks.md) | SDN, VXLAN, Zero Trust, SASE, IaC tools, IPv6 | L08 |
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
+| [gcp-network-architecture](concepts/gcp-network-architecture.md) | Design process, toolkit, service tiers, topologies, NCC + AWS/Azure mapping | GCP14–GCP19 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP13 |
 | [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS10 |
 
@@ -133,3 +138,4 @@
 | [k3s-lab](labs/k3s-lab.md) | k3s observability stack — Kubeshark, ES, Kibana | Ongoing |
 | [gcp-geolocation-lab](labs/gcp-geolocation-lab.md) | GCP Cloud DNS geolocation routing policy — full 9-task lab | Complete |
 | [GCP12 lab](labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | GCP Private Google Access + Cloud NAT + IAP + NAT logging | Complete |
+| [GCP19 lab](labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | GCP hub-and-spoke with Network Connectivity Center (VPC spokes, mesh preset) | Complete |

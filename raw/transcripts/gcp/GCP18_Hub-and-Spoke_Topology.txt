@@ -1,0 +1,42 @@
+Let’s start with a use case scenario. Nur, a network engineer at Cymbal Corporation,
+is tasked with managing the company's expanding network infrastructure, which encompasses
+a growing number of remote offices and cloud-based applications. To ensure centralized control and efficient
+data management, Nur wants a simple network topology that can be centrally managed with
+simple network administration. Nur decides to use a hub-and-spoke topology. The hub-and-spoke topology is shaped like
+a star, with the central hub at the center and all the other devices connected to it
+like spokes on a wheel. Instead of managing each device individually,
+Nur can configure and monitor everything from the hub, saving Nur time and effort. This topology is a common approach for managing
+network traffic in Google Cloud environments. One Virtual Private Cloud (VPC) network (represented
+by the hub) acts as a transit point for the other VPC networks (represented by the spokes). Additionally, spoke devices can be diverse,
+including remote offices, cloud instances, and on-premises data centers. A hub-and-spoke topology features: A centralized
+point of control: Nur can easily configure, monitor, and troubleshoot the entire network
+from the central hub. This eliminates the need to log in to individual
+devices for management tasks. Simplified network administration. There is no need for complex routing configurations
+between individual devices. The hub automatically routes traffic between
+spokes based on predefined rules. Scalability: The hub-and-spoke topology can
+easily accommodate future network growth by adding more spokes. New devices can be quickly connected to the
+hub without impacting existing network configurations. Improved security: Centralized security policies
+can be enforced at the hub, enhancing overall network security. This simplifies security management and ensures
+consistent protection across all connected devices. A hub-and-spoke network topology is a versatile
+approach for managing network traffic, but there are different ways to implement it. Here are three common methods: VPC Network
+Peering allows direct connections between VPCs, enabling efficient communication with
+low latency. Cloud VPN creates a secure tunnel over the
+public internet to connect VPCs across regions or even to on-premises networks. While offering flexibility, Cloud VPN may
+introduce higher latency and require additional configuration compared to VPC peering. Network Connectivity Center (NCC) simplifies
+building and managing complex network topologies, including hub-and-spoke. It provides centralized configuration, automated
+provisioning, and integrated security features. However, Network Connectivity Center may come
+with additional costs compared to basic VPC peering or Cloud VPN setups. In this course, we will cover the NCC implementation. Network Connectivity Center simplifies network
+management by supporting two types of spokes. VPC spokes connect Virtual Private Clouds,
+while hybrid spokes connect on-premises networks, using HA VPN tunnels or Cloud Interconnect
+VLAN attachments with router appliance VMs. You can configure a router appliance instance
+by installing an image on a Compute Engine VM. You can use an image provided by a supported
+Network Connectivity Center partner. You can also use a custom image, such as an
+image that you created. You can then take advantage of logic specific
+to the router appliance instance to control connectivity between the spoke and the hub. Before you create the hub-and-spoke topology
+using Network Connectivity Center, here are additional considerations
+to keep in mind: Ensure that IP address spaces between the
+hub and spoke VPC networks don’t overlap. IPv6 addressing isn’t supported
+for hybrid spokes. Privately-used public IP addresses are
+supported by Network Connectivity Center. For more information, refer to
+the Considerations section of the Network Connectivity Center Overview
+in the Google Cloud documentation.

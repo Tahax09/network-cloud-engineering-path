@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] ingest | GCP16–GCP19 — Network Architecture: end of Module 1 + Module 2 start (hub-and-spoke, NCC lab)
+GCP16 Getting Started (considerations incl. compliance; stakeholders → requirements → HLD → LLD → BoM/CapEx/OpEx; best practices and constraints). GCP17 Module 2 intro (hub-and-spoke, mesh, mirrored, gated). GCP18 Hub-and-Spoke (features, peering vs Cloud VPN vs NCC, transitivity trap, VPC/hybrid spokes, router appliances, no overlap/no IPv6 hybrid/PUPI ok, mesh vs star presets). GCP19 lab page (wiki/labs) from lab intro + pasted instructions: two isolated VPCs, pre-built ICMP firewall, NCC mesh hub with VPC spokes, ping before/after, Network Topology; gcloud equivalents; noted intro says three VPCs but lab has two (hub is NCC, not a VPC). New concept page gcp-network-architecture. Qwiklabs credentials not stored. Module 1 quiz pending as GQ02.
+
 ## [2026-10-14] ingest | GCP15 — Cloud Network Architecture Overview (Course 3, Module 1)
 Ingested overview: shared responsibility for virtual network, design process (assess → quantifiable metrics → select services), toolkit (VPC/subnets, firewall policies, Cloud VPN, Interconnect, HA VPN over Interconnect, Cloud Router BGP + NAT control plane, load balancers, Cloud CDN, Network Service Tiers Premium vs Standard), Cymbal Bank 3-VM → multi-region, tier-per-subnet, load-balanced redesign with unique ranges. Clarified: policy-based routes are a VPC feature, not Cloud Router. Added service-account firewall design note, AWS mapping (zonal vs regional subnets), k3s NetworkPolicy equivalent.
 

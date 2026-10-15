@@ -43,10 +43,16 @@ target_date: TBD
 | [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ### Course 3: Network Architecture
+*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP19 →)*
+
 | ID | Title | Status |
 |----|-------|--------|
 | [GCP14](../lessons/gcp/GCP14%20-%20Network%20Architecture%20-%20Course%20Introduction.md) | Network Architecture - Course Introduction | ✅ Complete |
 | [GCP15](../lessons/gcp/GCP15%20-%20Cloud%20Network%20Architecture%20Overview.md) | Cloud Network Architecture Overview | ✅ Complete |
+| [GCP16](../lessons/gcp/GCP16%20-%20Getting%20Started%20with%20Network%20Architecture.md) | Getting Started with Network Architecture | ✅ Complete |
+| [GCP17](../lessons/gcp/GCP17%20-%20Module%20Introduction%20-%20Network%20Topologies.md) | Module Introduction - Network Topologies | ✅ Complete |
+| [GCP18](../lessons/gcp/GCP18%20-%20Hub-and-Spoke%20Topology.md) | Hub-and-Spoke Topology | ✅ Complete |
+| [GCP19](../labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | ✅ Complete |
 
 ## Key Exam Facts (collected from sessions)
 
@@ -88,6 +94,10 @@ target_date: TBD
 | Network Service Tiers | Premium = Google backbone to PoP near user, global LB, higher cost; Standard = public internet, regional only, cheaper |
 | Cloud Router | BGP for Interconnect, Cloud VPN, Router appliance; control plane for Cloud NAT (policy-based routes are a separate VPC feature) |
 | Multi-region design | Mirror tiers per region with UNIQUE subnet ranges; LB to least-busy backend; per-tier firewall (prefer service-account rules) |
+| Design process | Stakeholders → requirements → HLD → LLD (IP plan) → BoM (CapEx/OpEx) |
+| Hub-and-spoke methods | Peering = low latency but NOT transitive; HA VPN + BGP = transitive, encrypted, more latency; NCC = centralized, transitive, extra cost |
+| NCC spokes | VPC spokes (cross-project/org) + hybrid (HA VPN, Interconnect VLAN, router appliance VM); no IP overlap; no IPv6 on hybrid; PUPI ok |
+| NCC lab result | Two isolated VPCs → VPC spokes on mesh hub → subnet routes exchanged → ping works without firewall changes |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit
