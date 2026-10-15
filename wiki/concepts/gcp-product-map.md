@@ -13,6 +13,48 @@ A quick reference: each Google Cloud product, what it does, and its closest AWS 
 
 ---
 
+## Big picture: where each product sits
+A typical production web app on Google Cloud, following one request from the user to the data:
+```mermaid
+flowchart LR
+    U["Users"] --> DNS["Cloud DNS"]
+    U --> EDGE
+    subgraph EDGE["Google edge (POP / GFE)"]
+        ARMOR["Cloud Armor<br/>WAF + DDoS"] --> LB["Cloud Load Balancing<br/>global anycast IP"]
+        CDN["Cloud CDN"] --- LB
+    end
+    subgraph VPC["VPC network (global)"]
+        subgraph COMPUTE["Compute"]
+            GCE["Compute Engine<br/>(MIGs)"]
+            GKE["GKE"]
+            RUN["Cloud Run"]
+        end
+        subgraph DATA["Data"]
+            SQL["Cloud SQL / AlloyDB<br/>(via private services access)"]
+            MEM["Memorystore"]
+        end
+        NAT["Cloud NAT"]
+    end
+    LB --> GCE & GKE & RUN
+    GCE & GKE & RUN --> SQL & MEM
+    GCE & GKE & RUN -->|"Private Google Access / PSC"| APIS["Google APIs<br/>Cloud Storage · BigQuery · Pub/Sub"]
+    GCE & GKE --> NAT --> INET["Internet (egress)"]
+    subgraph OPS["Cross-cutting"]
+        IAM["IAM · KMS · Secret Manager"]
+        OBS["Cloud Logging / Monitoring"]
+        SCC["Security Command Center"]
+    end
+```
+| Layer | Products | AWS mental model |
+|-------|----------|------------------|
+| Edge | Cloud DNS, Cloud Armor, Cloud LB, Cloud CDN | Route 53, WAF/Shield, ALB, CloudFront |
+| Compute | Compute Engine, GKE, Cloud Run, Cloud Run functions | EC2, EKS, Fargate, Lambda |
+| Data | Cloud SQL, AlloyDB, Firestore, Memorystore, Cloud Storage | RDS, Aurora, DynamoDB, ElastiCache, S3 |
+| Private plumbing | Cloud NAT, PGA, PSC, PSA | NAT GW, VPC endpoints, PrivateLink |
+| Cross-cutting | IAM, KMS, Logging/Monitoring, SCC | IAM, KMS, CloudWatch, Security Hub |
+
+---
+
 ## Compute
 | Google Cloud | Used for | AWS | Azure |
 |--------------|----------|-----|-------|
@@ -27,6 +69,18 @@ A quick reference: each Google Cloud product, what it does, and its closest AWS 
 
 > **ECS?** GCP has no ECS-style proprietary orchestrator. Use **Cloud Run** for simple containers and **GKE** for Kubernetes.
 
+### Choosing compute (decision flow)
+```mermaid
+flowchart TD
+    Q1{"Need OS / VM control,<br/>licensed software, GPUs on VMs?"} -->|yes| GCE["Compute Engine"]
+    Q1 -->|no| Q2{"Containerized?"}
+    Q2 -->|no, just a function<br/>reacting to events| FN["Cloud Run functions"]
+    Q2 -->|yes| Q3{"Need Kubernetes APIs,<br/>operators, Helm, multi-service mesh?"}
+    Q3 -->|yes| GKE["GKE (Autopilot or Standard)"]
+    Q3 -->|no| RUN["Cloud Run"]
+```
+Control vs management: **Compute Engine** (you manage most) → **GKE Standard** → **GKE Autopilot** → **Cloud Run** → **Cloud Run functions** (Google manages most).
+
 ## Storage
 | Google Cloud | Used for | AWS | Azure |
 |--------------|----------|-----|-------|
@@ -38,6 +92,22 @@ A quick reference: each Google Cloud product, what it does, and its closest AWS 
 | **Parallelstore** | High-performance parallel file system for HPC/AI | FSx for Lustre | Managed Lustre |
 | **Backup and DR Service** | Centralized backup | AWS Backup | Azure Backup |
 
+
+### Choosing storage and databases
+```mermaid
+flowchart TD
+    S{"What kind of data?"} -->|"files/blobs, backups, data lake"| GCS["Cloud Storage"]
+    S -->|"disk for a VM"| PD["Persistent Disk / Hyperdisk"]
+    S -->|"shared POSIX file system"| FS["Filestore / NetApp Volumes"]
+    S -->|"relational"| R{"Global scale +<br/>strong consistency?"}
+    R -->|yes| SP["Spanner"]
+    R -->|"no, high-perf Postgres"| AL["AlloyDB"]
+    R -->|"no, standard MySQL/PG/SQL Server"| CS["Cloud SQL"]
+    S -->|"NoSQL documents (app/mobile)"| FSt["Firestore"]
+    S -->|"huge-throughput wide-column / time series"| BT["Bigtable"]
+    S -->|"cache / sessions"| MS["Memorystore"]
+    S -->|"analytics SQL over TB–PB"| BQ["BigQuery"]
+```
 ## Databases and analytics
 | Google Cloud | Used for | AWS | Azure |
 |--------------|----------|-----|-------|
@@ -57,6 +127,44 @@ A quick reference: each Google Cloud product, what it does, and its closest AWS 
 | **Datastream** | Change data capture (CDC) replication | DMS (CDC) | — |
 
 ## Networking ⭐ (this program)
+
+### Networking map: how the pieces connect
+```mermaid
+flowchart LR
+    subgraph ONPREM["On-premises / other cloud"]
+        DC["Data center"]
+    end
+    subgraph GCP["Google Cloud"]
+        CR["Cloud Router (BGP)"]
+        HUB(("NCC hub"))
+        subgraph VPCA["VPC A (global)"]
+            SA["Subnet us-central1"]
+            SB["Subnet europe-west1"]
+        end
+        subgraph VPCB["VPC B"]
+            SC["Subnet"]
+        end
+        PROD["Producer service<br/>(PSC service attachment)"]
+        GAPI["Google APIs"]
+    end
+    DC <-->|"HA VPN / Interconnect"| CR
+    CR --- VPCA
+    VPCA <-->|"VPC spoke"| HUB
+    VPCB <-->|"VPC spoke"| HUB
+    VPCA -->|"PSC endpoint"| PROD
+    VPCA -->|"Private Google Access"| GAPI
+    VPCA -->|"Cloud NAT"| NET["Internet"]
+    USERS["Users"] --> GLB["Cloud LB + Armor + CDN"] --> VPCA
+```
+| Need | Product |
+|------|---------|
+| Connect on-prem | **HA VPN** (fast, over the internet) or **Interconnect** (private, high bandwidth), with **Cloud Router** for BGP |
+| Connect VPCs | **Peering** (simple, non-transitive), **NCC** (hub-and-spoke transit), **Shared VPC** (one network, many projects) |
+| Reach a service privately | **PGA** (Google APIs), **PSC** (APIs or producer services), **PSA** (Google-managed services such as Cloud SQL) |
+| Outbound internet without public IPs | **Cloud NAT** |
+| Inbound from users | **Cloud Load Balancing**, **Cloud Armor**, **Cloud CDN**, **Cloud DNS** |
+| Visibility | **Network Intelligence Center**, **VPC Flow Logs**, **Packet Mirroring**, **Cloud IDS** |
+
 | Google Cloud | Used for | AWS | Lessons |
 |--------------|----------|-----|---------|
 | **VPC network** | **Global** private network; regional subnets; routes; firewall rules | VPC (regional) | [[GCP15 - Cloud Network Architecture Overview]] |
@@ -154,6 +262,24 @@ A quick reference: each Google Cloud product, what it does, and its closest AWS 
 | Firewall | VPC firewall rules / policies applied to **network tags or service accounts** | Security groups (per ENI) + NACLs (per subnet) |
 | Global LB | One **anycast IP** worldwide (Premium tier) | Regional ALB/NLB; Global Accelerator for anycast |
 | Backbone | Premium tier keeps traffic on Google's network to the closest edge | AWS global network (via Global Accelerator / CloudFront) |
+
+### Resource hierarchy: GCP vs AWS
+```mermaid
+flowchart TB
+    subgraph G["Google Cloud"]
+        ORG["Organization (domain)"] --> F1["Folder: Prod"] & F2["Folder: Dev"]
+        F1 --> P1["Project: web-prod"] & P2["Project: net-host (Shared VPC)"]
+        F2 --> P3["Project: web-dev"]
+        P1 --> R1["VMs, buckets, ..."]
+    end
+    subgraph A["AWS"]
+        AORG["Organization (management account)"] --> OU1["OU: Prod"] & OU2["OU: Dev"]
+        OU1 --> AC1["Account: web-prod"] & AC2["Account: network"]
+        OU2 --> AC3["Account: web-dev"]
+        AC1 --> AR1["EC2, S3, ..."]
+    end
+```
+IAM and Organization Policy **inherit downward** in GCP (org → folder → project → resource), much like SCPs flow down OUs in AWS.
 
 ## Linked Pages
 - [[gcp-network-architecture]] · [[gcp-private-access]]

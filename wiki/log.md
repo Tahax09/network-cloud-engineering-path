@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] update | gcp-product-map diagrams
+Added 5 Mermaid diagrams: request-path big picture (edge → compute → data → APIs), compute decision flow, storage/DB decision flow, networking connectivity map (+ need→product table), resource hierarchy GCP vs AWS.
+
 ## [2026-10-15] ingest | GCP28 — Lab: Configuring Traffic Blocklisting with Google Cloud Armor
 Lab page from intro transcript + pasted lab (credentials not stored): verify web-backend/web-rule, access-test VM, blocklist-access-test policy (default allow, P1000 deny-404 on VM external IP, target web-backend), policy logs. Added gcloud equivalents, 404-vs-403 rationale, fact-check on lab's VPC Flow Logs suggestion (proxy LB → backends see GFE IPs; use LB logs remoteIp / XFF). Module 1 map complete.
 
