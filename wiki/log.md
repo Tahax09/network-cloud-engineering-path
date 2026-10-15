@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] ingest | GCP28 — Lab: Configuring Traffic Blocklisting with Google Cloud Armor
+Lab page from intro transcript + pasted lab (credentials not stored): verify web-backend/web-rule, access-test VM, blocklist-access-test policy (default allow, P1000 deny-404 on VM external IP, target web-backend), policy logs. Added gcloud equivalents, 404-vs-403 rationale, fact-check on lab's VPC Flow Logs suggestion (proxy LB → backends see GFE IPs; use LB logs remoteIp / XFF). Module 1 map complete.
+
 ## [2026-10-15] query | Google Cloud product map
 Filed concept page gcp-product-map: compute, storage, DB/analytics, networking (with lesson links), security, ops, DevOps, integration, AI, hybrid/migration — each with AWS (and Azure) equivalents, plus GCP-vs-AWS conceptual differences table.
 

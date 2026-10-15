@@ -65,6 +65,7 @@ target_date: TBD
 | [GCP25](../lessons/gcp/GCP25%20-%20How%20DDoS%20Attacks%20Work.md) | How DDoS Attacks Work | ✅ Complete |
 | [GCP26](../lessons/gcp/GCP26%20-%20Google%20Cloud%20DDoS%20Mitigations.md) | Google Cloud DDoS Mitigations | ✅ Complete |
 | [GCP27](../lessons/gcp/GCP27%20-%20Types%20of%20Complementary%20Partner%20Products.md) | Types of Complementary Partner Products | ✅ Complete |
+| [GCP28](../labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Lab: Configuring Traffic Blocklisting with Google Cloud Armor | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |
@@ -139,6 +140,7 @@ target_date: TBD
 | Google scale | One data center ~1,300 Tbps bisection vs internet ~200 Tbps; Cloud Armor blocked 46M rps (2022) and 398M rps (Aug 2023) |
 | DDoS mitigations | LB (built-in L3/L4; L7 LBs also stop Slowloris) · small attack surface (tier subnets, firewall, no public IPs, IAP) · VPN/Interconnect · Cloud CDN · Apigee · Cloud Armor |
 | Cloud Armor | Edge WAF + DDoS; policy = ordered rules (condition, action, priority) on backend service; OWASP preconfigured rules, geo, rate-based ban, reCAPTCHA bots |
+| Cloud Armor rules (lab) | Default rule priority 2147483647 sets blocklist (allow) vs allowlist (deny); lower number first, first match wins; deny-403/404/502; attach to backend service; client IP in LB logs `httpRequest.remoteIp` (backends see GFE IPs) |
 | Partner security categories | Data protection (DLP, DCAP, encryption, HSM) · Infrastructure protection (NGFW, WAF, proxy, DDoS, container) · Scanning/logging/monitoring (vuln scan, SIEM) · Identity/user (SSO, IAM, MDM/MAM, CASB) · Config/vuln/risk/compliance |
 | Armor Standard vs Enterprise | Adaptive Protection, threat intel, named IP lists, advanced network DDoS = Enterprise; bill protection + DDoS response team = Enterprise Annual only |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |

@@ -26,7 +26,7 @@ tags: [gcp, ddos, module-intro, cloud-armor, mitigation, partner-products]
 | 1 | How DDoS attacks work: [[GCP25 - How DDoS Attacks Work]] |
 | 2 | Google Cloud DDoS mitigation techniques: [[GCP26 - Google Cloud DDoS Mitigations]] |
 | 3 | Complementary partner products: [[GCP27 - Types of Complementary Partner Products]] |
-| 4 | Lab: DDoS mitigation in action *(upcoming)* |
+| 4 | Lab: Cloud Armor blocklisting: [[GCP28 - Lab - Configuring Traffic Blocklisting with Google Cloud Armor]] |
 
 ### Why it matters
 DDoS targets the **A in CIA**: **availability** ([[L18 - Basic Network Security]]). An outage costs revenue, SLA credits and reputation.

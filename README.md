@@ -153,6 +153,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP25](wiki/lessons/gcp/GCP25%20-%20How%20DDoS%20Attacks%20Work.md) | How DDoS Attacks Work | Botnets, volumetric vs protocol vs L7, bisection bandwidth, 46M/398M rps records |
 | [GCP26](wiki/lessons/gcp/GCP26%20-%20Google%20Cloud%20DDoS%20Mitigations.md) | Google Cloud DDoS Mitigations | LB built-in defense, attack surface, CDN, Apigee, Cloud Armor (WAF, rate limits, Adaptive Protection), Standard vs Enterprise |
 | [GCP27](wiki/lessons/gcp/GCP27%20-%20Types%20of%20Complementary%20Partner%20Products.md) | Types of Complementary Partner Products | 5 partner categories (data, infrastructure, logging/monitoring, identity, compliance), NVA insertion pattern |
+| [GCP28](wiki/labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Lab: Configuring Traffic Blocklisting with Google Cloud Armor | Hands-on: verify global App LB, access-test VM, deny-404 blocklist rule, Cloud Armor logs |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -262,6 +263,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [gcp-geolocation-lab](wiki/labs/gcp-geolocation-lab.md) | Cloud DNS geolocation routing policy for traffic steering |
 | [GCP12 lab](wiki/labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Private Google Access + Cloud NAT for a VM with no external IP, reached via IAP |
 | [GCP19 lab](wiki/labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Hub-and-spoke with Network Connectivity Center: two isolated VPCs connected as VPC spokes |
+| [GCP28 lab](wiki/labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor blocklist of one client IP at Google's edge; verify with curl and policy logs |
 
 ---
 

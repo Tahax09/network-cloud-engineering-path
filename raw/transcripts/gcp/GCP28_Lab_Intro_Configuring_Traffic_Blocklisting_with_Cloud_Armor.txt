@@ -1,0 +1,6 @@
+Next, you'll see Cloud
+Armor in action. In this lab, you will
+perform the following tasks, configure an application
+load balancer for a simple web application, and use Google Cloud
+Armor to block list an IP address and restrict access to an application
+load balancer.

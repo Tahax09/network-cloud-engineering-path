@@ -60,6 +60,7 @@
 | [GCP25](lessons/gcp/GCP25%20-%20How%20DDoS%20Attacks%20Work.md) | How DDoS Attacks Work | Network Security — Module 1 | 2026-10-15 | Complete |
 | [GCP26](lessons/gcp/GCP26%20-%20Google%20Cloud%20DDoS%20Mitigations.md) | Google Cloud DDoS Mitigations | Network Security — Module 1 | 2026-10-15 | Complete |
 | [GCP27](lessons/gcp/GCP27%20-%20Types%20of%20Complementary%20Partner%20Products.md) | Types of Complementary Partner Products | Network Security — Module 1 | 2026-10-15 | Complete |
+| [GCP28](labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Lab: Configuring Traffic Blocklisting with Google Cloud Armor | Network Security — Module 1 | 2026-10-15 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -167,3 +168,4 @@
 | [gcp-geolocation-lab](labs/gcp-geolocation-lab.md) | GCP Cloud DNS geolocation routing policy — full 9-task lab | Complete |
 | [GCP12 lab](labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | GCP Private Google Access + Cloud NAT + IAP + NAT logging | Complete |
 | [GCP19 lab](labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | GCP hub-and-spoke with Network Connectivity Center (VPC spokes, mesh preset) | Complete |
+| [GCP28 lab](labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor IP blocklist (deny-404) on a global Application LB + policy logs | Complete |

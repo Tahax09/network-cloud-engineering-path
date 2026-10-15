@@ -61,7 +61,8 @@
 | GCP25 | How DDoS Attacks Work | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
 | GCP26 | Google Cloud DDoS Mitigations | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
 | GCP27 | Types of Complementary Partner Products | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
-| GCP28 | — | — | — | Pending | — |
+| GCP28 | Lab: Configuring Traffic Blocklisting with Google Cloud Armor (wiki/labs/) | Network Security — Module 1 | 2026-10-15 | Complete | — |
+| GCP29 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 
