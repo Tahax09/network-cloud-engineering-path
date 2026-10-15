@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] ingest | GCP23 — Network Security: Course Introduction (Course 4 starts)
+Ingested intro to Course 4 (DDoS protection; controlling access to VPC networks; advanced security monitoring and analysis). Added course-position map, preview of likely services per module (Cloud Armor, firewall policies/IAM/IAP/VPC-SC/NGFW, Cloud IDS/Packet Mirroring/Flow Logs/Firewall Insights) flagged as preview, links to security ideas already covered, Network+ Domain 4 and AZ-500/KCSA/CKS mapping. Marked Course 3 complete on cert page (GQ02 pending).
+
 ## [2026-10-15] resources | GCP course decks 05 (Private Connection Options) + 06 (Introduction to Network Architecture)
 Downloaded both official ILT PDFs to raw/assets/gcp-networking/ and extracted text (pypdf). Added from deck 06: Shared VPC / VPC Network Peering / centralized appliances (GCP15), landing zones + IAM + scaling detail and the Module 1 practice quiz (GCP16); flagged invalid overlapping subnet ranges on slide 17. From deck 05: official quiz explanations confirm GQ01; flagged slide-52 Gemini sample command as invalid (PSC/PSA confusion) in GCP11. Added Course Resources sections to index and cert page.
 

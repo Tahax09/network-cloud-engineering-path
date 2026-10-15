@@ -56,7 +56,8 @@
 | GCP20 | Other Topologies - Mesh, Mirrored, Gated | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP21 | Getting Topology Data | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP22 | Best Practices for Connectivity and Topologies | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
-| GCP23 | — | — | — | Pending | — |
+| GCP23 | Network Security - Course Introduction | Network Security (Course 4) | 2026-10-15 | Complete | — |
+| GCP24 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

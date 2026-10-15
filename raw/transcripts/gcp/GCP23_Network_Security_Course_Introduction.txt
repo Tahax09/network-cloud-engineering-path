@@ -1,0 +1,16 @@
+Welcome to the fourth course of the networking in
+Google Cloud series. Network security. In this course, you'll
+dive into the services for safeguarding your Google
+Cloud Network infrastructure. The first module, distributed
+denial-of-service, DDoS, protection covers how to fortify your network against
+distributed denial-of-service, DDoS, attacks, ensuring uninterrupted
+availability of your services. In the second module, controlling access
+to VPC networks, you'll learn network
+access control, enabling you to define
+permissions for who can access your
+resources and how. Finally, in the third module, advanced security monitoring
+and analysis will explore how to proactively detect and respond to
+potential threats, keeping your Google
+Cloud environment secure and resilient. By the end of this course, you'll have a comprehensive
+understanding of Google Cloud
+network security.

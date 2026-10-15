@@ -13,8 +13,8 @@ target_date: TBD
 |---|--------|--------|--------------|
 | 1 | Networking in Google Cloud: Fundamentals | ✅ Complete (Coursera) | Transcripts pending — to be ingested |
 | 2 | Networking in Google Cloud: Routing and Addressing | ✅ Complete | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP13 (Private Connection Options module), GQ01 |
-| 3 | Networking in Google Cloud: Network Architecture | 🔄 In progress | GCP14 → (Module 1: Introduction to Network Architecture · Module 2: Network Topologies) |
-| 4 | Networking in Google Cloud: Network Security | Not started | — |
+| 3 | Networking in Google Cloud: Network Architecture | ✅ Complete (GQ02 pending) | GCP14 → (Module 1: Introduction to Network Architecture · Module 2: Network Topologies) |
+| 4 | Networking in Google Cloud: Network Security | 🔄 In progress | GCP23 → (DDoS protection · Controlling access to VPC networks · Advanced security monitoring) |
 | 5 | Networking in Google Cloud: Load Balancing | Not started | — |
 | 6 | Networking in Google Cloud: Hybrid and Multicloud | Not started | — |
 
@@ -56,6 +56,11 @@ target_date: TBD
 | [GCP20](../lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | ✅ Complete |
 | [GCP21](../lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | ✅ Complete |
 | [GCP22](../lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | ✅ Complete |
+
+### Course 4: Network Security
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP23](../lessons/gcp/GCP23%20-%20Network%20Security%20-%20Course%20Introduction.md) | Network Security - Course Introduction | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |

@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-55-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%203%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-56-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -111,7 +111,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 
 ## Google Cloud Networking
 
-*Networking in Google Cloud* is a six-course program: Fundamentals ✅ · Routing and Addressing ✅ · **Network Architecture** (in progress) · Network Security · Load Balancing · Hybrid and Multicloud.
+*Networking in Google Cloud* is a six-course program: Fundamentals ✅ · Routing and Addressing ✅ · Network Architecture ✅ · **Network Security** (in progress) · Load Balancing · Hybrid and Multicloud.
 
 ### Course 2: Routing and Addressing
 
@@ -143,6 +143,12 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP20](wiki/lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | Full vs partial mesh, mirrored DR/dev-test, gated egress/ingress |
 | [GCP21](wiki/lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | Network Topology: entities/hierarchies, 6-week hourly snapshots, metrics, Charlie LB latency case |
 | [GCP22](wiki/lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | SLAs, centralized hybrid hub VPC + custom routes, APIs via Apigee/LB, capacity optimization, two authoritative DNS |
+
+### Course 4: Network Security
+
+| ID | Lesson | Key topics |
+|----|--------|-----------|
+| [GCP23](wiki/lessons/gcp/GCP23%20-%20Network%20Security%20-%20Course%20Introduction.md) | Network Security - Course Introduction | Modules: DDoS protection · Controlling access to VPC networks · Advanced security monitoring and analysis |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -266,7 +272,7 @@ Planned  AWS Cloud Practitioner ─▶ AWS Solutions Architect – Associate
 | Certification | Status |
 |---------------|--------|
 | CompTIA Network+ N10-009 | Course complete, exam prep |
-| Google Cloud Networking (6-course program) | Course 3 in progress |
+| Google Cloud Networking (6-course program) | Course 4 in progress |
 | Wireshark 101: Packet Analysis Essentials (course) | In progress |
 | Kubernetes and Cloud Native Associate (KCNA) | Next |
 | Certified Kubernetes Administrator (CKA) | Planned |

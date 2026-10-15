@@ -55,6 +55,7 @@
 | [GCP20](lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | Network Architecture — Module 2 | 2026-10-15 | Complete |
 | [GCP21](lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | Network Architecture — Module 2 | 2026-10-15 | Complete |
 | [GCP22](lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | Network Architecture — Module 2 | 2026-10-15 | Complete |
+| [GCP23](lessons/gcp/GCP23%20-%20Network%20Security%20-%20Course%20Introduction.md) | Network Security - Course Introduction | Network Security (Course 4) | 2026-10-15 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
