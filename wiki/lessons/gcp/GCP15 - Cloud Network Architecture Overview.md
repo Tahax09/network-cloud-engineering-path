@@ -65,6 +65,14 @@ There is **no universal design**: components and protocols are chosen per organi
 | Cost | Higher egress price | Lower egress price |
 | Use when | Global, latency-sensitive, demanding apps | General workloads where speed isn't the top priority, regional audiences |
 
+### Multi-VPC building blocks *(from the official course deck `raw/assets/gcp-networking/06 Introduction to Network Architecture_ILT.pdf`)*
+Slide 15 of the deck covers three components the video doesn't narrate:
+| Component | What it does | Notes |
+|-----------|-------------|-------|
+| **Shared VPC** | Share one VPC network **across projects** (host project + service projects). Simplifies network management, consolidates resources, centralizes network config and access control | Clients talk over **internal IPs**. Google's best practice is to prefer Shared VPC over many VPCs when it fits the hierarchy ([[GCP22 - Best Practices for Connectivity and Topologies]]) |
+| **VPC Network Peering** | Connect VPC networks **within a project or across organizations**, with **control over route exchange** | Internal IPs; **non-transitive** ([[GCP18 - Hub-and-Spoke Topology]]) |
+| **Centralized network appliances** | Run shared functions centrally: **IPS, WAFs, load balancers** | Extends Google's built-in protection. This is the NVA hub idea in [[GS03 - Architecture and Topology Scenarios]] Scenario 5 |
+
 ### Worked example: Cymbal Bank goes global
 **Before:** one subnet, three VMs: **web**, **business logic**, **database**. Fine for a small subsidiary, but a **bottleneck and single point of failure** for a global audience.
 
@@ -89,6 +97,8 @@ Region A (e.g., us-east1)                              Region B (e.g., europe-we
 > **Design note (beyond the lecture):** VPC firewall rules aren't attached to subnets; they're VPC-wide, with **targets** (all instances, network tags, or **service accounts**). The "lock the DB down to the logic tier" rule is best written as **target SA = `db-sa`, source SA = `logic-sa`, allow tcp:5432**, which keeps working if VMs move between subnets. Subnets still help for **CIDR-based** policy (on-prem ACLs, Cloud NAT mapping, Private Google Access per subnet).
 
 ---
+
+> ⚠️ **Slide error spotted** *(from the official course deck `raw/assets/gcp-networking/06 Introduction to Network Architecture_ILT.pdf`)*: the "Optimized network design" slide labels the subnets `10.128.0.0/20`, `10.128.0.5/20`, `10.128.0.10/20` (us-central1) and `10.128.1.0/20`, `10.128.5.0/20`, `10.128.5.10/20` (us-east1). Those aren't valid distinct /20s: `10.128.0.5/20` and `10.128.0.10/20` are **inside** `10.128.0.0/20`, and `10.128.1.0/20` also falls within it, so GCP would reject them as overlapping. A correct plan uses /20 boundaries 16 apart in the third octet, e.g. `10.128.0.0/20`, `10.128.16.0/20`, `10.128.32.0/20` (us-central1) and `10.128.48.0/20`, `10.128.64.0/20`, `10.128.80.0/20` (us-east1). The lesson's point, **mirrored layout with unique ranges**, still stands ([[L07 - IP Addressing]]).
 
 ## Key Terms
 

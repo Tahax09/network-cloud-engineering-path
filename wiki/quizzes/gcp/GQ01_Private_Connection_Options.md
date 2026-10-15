@@ -50,6 +50,10 @@ source: Coursera graded quiz — Networking in Google Cloud: Routing and Address
 
 ---
 
+> ✅ **Confirmed by the official course deck** (`raw/assets/gcp-networking/05 Private Connection Options_ILT.pdf`, slides 57–61): Q1 = **Private Service Connect** ("only PSC can provide access to non-Google APIs and services, even if the VPC networks have overlapping subnets"; PSA fails because it uses peering), Q2 = **per subnet** ("not enabled per VPC network… not enabled on Cloud Router"), Q3 = **VPC Network Peering**.
+
+---
+
 ## Exam Traps
 
 | Trap | Correct Thinking |

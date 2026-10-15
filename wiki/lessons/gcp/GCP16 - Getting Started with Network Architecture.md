@@ -55,6 +55,17 @@ This lesson is the **practical design workflow** behind [[GCP15 - Cloud Network 
 
 ---
 
+### Extra detail from the course deck *(from the official course deck `raw/assets/gcp-networking/06 Introduction to Network Architecture_ILT.pdf`)*
+- The deck's design step is more specific: **"Build a high level and a low level design, including network topology, landing zones, choosing regions and zones, IP address planning, connectivity."** A **landing zone** is the pre-built foundation (resource hierarchy, Shared VPC/host projects, IAM, policies) that workloads land in.
+- When assessing existing infrastructure, include **Cloud IAM** alongside VPCs, subnets, network policies and security configurations.
+- Technical constraints include planning for **scaling**, not only management, monitoring and incident response.
+
+### Course deck quiz (Module 1, practice)
+1. *Which practice is LEAST likely to improve network security in Google Cloud?* A) firewall rules · B) regularly review IAM · **C) assign public IPs to all VMs** · D) VPC Flow Logs → **C**: public IPs **enlarge** the attack surface ([[GCP12 - Lab - Implement Private Google Access and Cloud NAT]]).
+2. *Designing a global e-commerce network: which two considerations should you prioritize?* A) detailed project timeline · B) justify the need for a new network · **C) inform and guide design choices so the network aligns with organizational goals and constraints** · **D) high availability and disaster recovery** → **C and D**.
+
+*(The Coursera graded Module 1 quiz will be saved as GQ02 when provided.)*
+
 ## Key Terms
 | Term | Definition |
 |------|-----------|

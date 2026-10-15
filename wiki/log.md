@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] resources | GCP course decks 05 (Private Connection Options) + 06 (Introduction to Network Architecture)
+Downloaded both official ILT PDFs to raw/assets/gcp-networking/ and extracted text (pypdf). Added from deck 06: Shared VPC / VPC Network Peering / centralized appliances (GCP15), landing zones + IAM + scaling detail and the Module 1 practice quiz (GCP16); flagged invalid overlapping subnet ranges on slide 17. From deck 05: official quiz explanations confirm GQ01; flagged slide-52 Gemini sample command as invalid (PSC/PSA confusion) in GCP11. Added Course Resources sections to index and cert page.
+
 ## [2026-10-15] quiz | GQ03 — Network Topologies quiz (Course 3, Module 2) — 2/2
 Saved graded quiz (gated ingress and egress for strict isolation; hub-and-spoke for central management of isolated regional segments) with keyword cheat sheet. GQ02 reserved for the Module 1 quiz (not yet received). Also applied verified PSA doc facts to GCP10 (producer /29–/24 subnets from allocated range, subnet routes only, producer default route, not available to peered VPCs → NCC producer VPC spokes).
 

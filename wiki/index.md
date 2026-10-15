@@ -145,6 +145,14 @@
 | [GPL01](labs/practice/GPL01%20-%20Private%20Connectivity%20Practice%20Labs.md) | Practice labs: hardened VPC, PSC overlap, PSA hybrid, NAT load, PSC for APIs | GCP07–GCP13 |
 | [GPL02](labs/practice/GPL02%20-%20Architecture%20and%20Topology%20Practice%20Labs.md) | Practice labs: 3-tier SA firewall, NCC star, VPN hub, failover, gated egress, mirrored IaC | GCP14–GCP20 |
 
+## Course Resources
+
+| File | Course | Used in |
+|------|--------|---------|
+| [05 Private Connection Options_ILT.pdf](../raw/assets/gcp-networking/05%20Private%20Connection%20Options_ILT.pdf) | GCP Course 2, Module 2 | GCP07–GCP13, GQ01 |
+| [06 Introduction to Network Architecture_ILT.pdf](../raw/assets/gcp-networking/06%20Introduction%20to%20Network%20Architecture_ILT.pdf) | GCP Course 3, Module 1 | GCP14–GCP16 |
+| `raw/assets/wireshark-101/` | Wireshark 101 lab PCAPs + profiles | WS01–WS10 |
+
 ## Labs
 
 | Page | Description | Status |

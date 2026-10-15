@@ -57,6 +57,12 @@ target_date: TBD
 | [GCP21](../lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | ✅ Complete |
 | [GCP22](../lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | ✅ Complete |
 
+## Course Resources (official decks, `raw/assets/gcp-networking/`)
+| Deck | Covers | Notes |
+|------|--------|-------|
+| `05 Private Connection Options_ILT.pdf` (63 slides) | GCP07–GCP13 | Confirms GQ01 answers; slide 52 Gemini sample command is invalid (noted in GCP11) |
+| `06 Introduction to Network Architecture_ILT.pdf` (29 slides) | GCP14–GCP16 | Adds Shared VPC / VPC Peering / centralized appliances (GCP15); slide 17 subnet ranges invalid (noted in GCP15); Module 1 practice quiz (GCP16) |
+
 ## Scenario Walkthroughs & Practice
 - [[GS01 - Private Connectivity Scenarios]] — Private connectivity scenarios — 8 walkthroughs with diagrams
 - [[GS02 - Network Topologies Explained]] — Topologies explained — how, when, pros/cons, implementation

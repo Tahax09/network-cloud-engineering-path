@@ -69,6 +69,8 @@ External hosts **can't initiate** connections to VMs behind Cloud NAT. For inbou
 
 > **Transcript cleanup:** "each instance is **a located** NAT IP" = **allocated**. The closing "Gemini prompt" segment is a product demo (asking Gemini Cloud Assist how to configure PSA). It's not exam content, but it's a useful workflow.
 
+> ⚠️ **Check AI output.** In the official deck (`05 Private Connection Options_ILT.pdf`, slide 52), the sample Gemini answer to "How can I use private service access to connect my VMs to third-party services?" is **wrong**: it suggests `gcloud services attachments create … --service=…`, which **isn't a real command**, and *service attachments* belong to **Private Service Connect**, not PSA. The real PSA steps: enable the Service Networking API → `gcloud compute addresses create … --purpose=VPC_PEERING` → `gcloud services vpc-peerings connect …` ([[GCP10 - Private Services Access]]). Verify generated commands against the docs before running them.
+
 ---
 
 ## Key Terms
