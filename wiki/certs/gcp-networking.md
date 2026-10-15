@@ -43,7 +43,7 @@ target_date: TBD
 | [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ### Course 3: Network Architecture
-*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP22)*
+*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP22, quiz GQ03 2/2 ✅)*
 
 | ID | Title | Status |
 |----|-------|--------|
@@ -119,6 +119,7 @@ target_date: TBD
 | Hybrid DNS | Two authoritative systems: Cloud DNS (GCP) + existing on-prem DNS, forwarding zones + inbound server policy |
 | Expose apps | Through APIs via API gateway/LB; Apigee = security, rate limiting, quotas, analytics; LB + Apigee + CDN + Cloud Armor together |
 | Interconnect encryption | Not encrypted by default → MACsec or HA VPN over Interconnect (or TLS) |
+| Topology keywords | central mgmt → hub-and-spoke; all-to-all/HA → mesh; DR/dev-test copy → mirrored; strict security/isolate/specific APIs → gated |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit

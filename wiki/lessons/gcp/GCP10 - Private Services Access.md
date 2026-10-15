@@ -47,6 +47,12 @@ Your VPC (consumer)                              Google-created producer project
 | **One connection per producer** | Using Cloud SQL **and** Cloud TPU (same producer, `servicenetworking`) = **one** private connection |
 | **Disable ≠ delete** | Disabling the PSA connection **doesn't delete the peering** and **doesn't release the allocated range**. Both must be removed explicitly |
 
+### Per the docs *(verified against docs.cloud.google.com, 2026-10-15)*
+- The producer creates a **project and a VPC dedicated to you**, then a **subnet carved from your allocated range**. The producer **typically picks a /29 to /24** per subnet, and **you can't select or modify** that subnet's range. Size the allocated range for growth (e.g., /16 for many services/regions).
+- The private connection exchanges **subnet routes only**. The producer network **doesn't contain your custom static/dynamic routes** (e.g., to on-prem), which is why hybrid access needs **custom route export**.
+- The producer network has its **own default route to the internet**. Be careful when exporting a default route to it, because that changes how producer egress is routed.
+- Because it's VPC Network Peering, **a private connection isn't available to VPCs peered with yours** (non-transitive). Use **NCC producer VPC spokes** ([[GCP18 - Hub-and-Spoke Topology]]) to make the service reachable from other hub spokes.
+
 ### Caveats
 - **On-prem access needs custom route export.** Peering is non-transitive, so the producer VPC doesn't learn your on-prem routes by default. Enable **export custom routes** on the `servicenetworking-googleapis-com` peering, and have **Cloud Router advertise the allocated range** to on-prem.
 - **Not all services are supported.**

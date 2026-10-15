@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] quiz | GQ03 — Network Topologies quiz (Course 3, Module 2) — 2/2
+Saved graded quiz (gated ingress and egress for strict isolation; hub-and-spoke for central management of isolated regional segments) with keyword cheat sheet. GQ02 reserved for the Module 1 quiz (not yet received). Also applied verified PSA doc facts to GCP10 (producer /29–/24 subnets from allocated range, subnet routes only, producer default route, not available to peered VPCs → NCC producer VPC spokes).
+
 ## [2026-10-15] ingest | GCP22 — Best Practices for Connectivity and Topologies (end of Module 2)
 Ingested best practices (SLAs; centralized hybrid hub VPC + peering with custom routes; APIs via API gateway/LB/Apigee; LB application capacity optimization; two authoritative DNS systems; Gemini prompts). Cross-checked the Architecture Center "general best practices" page and added the full list (Shared VPC, common identity, IPv6 early, SA-based firewall/policies/geo/Threat Intelligence, multilayer security, MACsec/HA VPN over Interconnect, active/active HA VPN, Interconnect for high egress, Interconnect vs Direct/Carrier Peering). Flagged nuance: centralized peering hub gives spoke↔on-prem, not spoke↔spoke. Added hub-VPC and hybrid DNS Mermaid diagrams.
 
