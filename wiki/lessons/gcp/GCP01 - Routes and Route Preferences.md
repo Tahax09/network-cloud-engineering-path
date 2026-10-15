@@ -14,6 +14,8 @@ tags: [gcp, routes, cloud-router, bgp, static-routing, dynamic-routing, network-
 
 # GCP01 — Routes and Route Preferences
 
+> 🎛️ **Interactive visualization:** [VPC Route Selection](../../visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) (Route selection tab: step a packet through the routing order). Opens in your browser.
+
 ## Summary
 GCP routes work like physical routing tables but with important cloud-specific rules: subnet routes always win, network tags scope routes to specific VMs, and a route alone is not enough — firewall rules must also permit the traffic.
 

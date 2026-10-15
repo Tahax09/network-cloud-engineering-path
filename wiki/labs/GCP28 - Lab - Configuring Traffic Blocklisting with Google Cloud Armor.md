@@ -25,7 +25,7 @@ tags: [gcp, lab, cloud-armor, security-policy, blocklist, deny-list, application
 
 > Qwiklabs temporary credentials from the lab page are intentionally **not** stored here.
 
-> 🎛️ **Interactive visualization:** [Cloud Armor at the Edge](https://claude.ai/artifact/HUYW5ZyNyEmr5ZnnWx1Wvj). Step through the lab tasks: POP routing, stress-test overflow, blocklist propagation, policy logs. Source: `wiki/visualizations/gcp/GCP28 - Cloud Armor at the Edge.html`
+> 🎛️ **Interactive visualization:** [Cloud Armor at the Edge](../visualizations/gcp/GCP28%20-%20Cloud%20Armor%20at%20the%20Edge.html) (opens in your browser). Step through the lab tasks: POP routing, stress-test overflow, blocklist propagation, policy logs.
 
 ---
 

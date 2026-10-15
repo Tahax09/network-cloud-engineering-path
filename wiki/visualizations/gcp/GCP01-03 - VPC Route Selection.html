@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VPC Route Selection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: header + tabs; each tab = controls column beside a live diagram, with the elimination pipeline / result below */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb;
+  --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b; --dyn:#7a4fd0;
+  --band:#e0e8f3; --band2:#e2efe7;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+    --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c; --dyn:#ab88f3;
+    --band:#17243a; --band2:#14271f; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+  --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c; --dyn:#ab88f3;
+  --band:#17243a; --band2:#14271f; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:20px}
+header{display:grid;gap:6px;max-width:800px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}
+.lead{color:var(--muted);max-width:70ch}
+code{font-family:var(--f-mono);font-size:.9em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tabs .id{font:500 12px var(--f-mono);color:var(--accent);margin-right:6px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:12px;min-width:0}
+.field{display:grid;gap:4px}
+.k,.field label{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.help{font-size:13px;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:600 13px var(--f-body);color:var(--ink);background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;font-size:14px}
+.switch input{appearance:none;width:38px;height:21px;border-radius:11px;background:var(--line);position:relative;cursor:pointer;flex:none}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:var(--surface);transition:left .15s}
+.switch input:checked{background:var(--accent)}
+.switch input:checked::after{left:20px}
+.scroll{overflow-x:auto}
+table.rt{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono);font-variant-numeric:tabular-nums}
+.rt th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--sunken)}
+.rt td{padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+.rt tr.disabled td{opacity:.4}
+.rt tr.out td{text-decoration:line-through;text-decoration-color:var(--bad);opacity:.55}
+.rt tr.out td.why{text-decoration:none;opacity:1;color:var(--bad)}
+.rt tr.win td{background:var(--accent-soft);font-weight:500}
+.rt td.why{white-space:normal;min-width:180px;font-family:var(--f-body);font-size:12.5px;color:var(--muted)}
+.type{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;border:1px solid currentColor}
+.t-subnet{color:var(--ok)} .t-static{color:var(--accent)} .t-dynamic{color:var(--dyn)} .t-pbr{color:var(--warn)} .t-system{color:var(--muted)}
+.pipe{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+@media (max-width:900px){.pipe{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pipe li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface);display:grid;gap:2px;font-size:12.5px;min-height:74px}
+.pipe li .n{font:600 11px var(--f-mono);color:var(--muted)}
+.pipe li b{font-size:13px}
+.pipe li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.pipe li.done{border-color:var(--line)}
+.pipe li.done .n{color:var(--ok)}
+.pipe li.stop{border-color:var(--ok)}
+.pipe li.skip{opacity:.45}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14.5px}
+.verdict.drop{border-left-color:var(--bad)}
+svg{display:block;width:100%;height:auto}
+.mapbox{overflow-x:auto}
+.mapbox svg{min-width:640px}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+.node.hl{stroke:var(--accent);stroke-width:2.4;fill:var(--accent-soft)}
+.node.dead{stroke:var(--bad);stroke-dasharray:4 3}
+.nl{font:600 13.5px var(--f-body);fill:var(--ink)}
+.ns{font:400 11px var(--f-mono);fill:var(--muted)}
+.bandr{fill:var(--band)} .bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}
+.edge.hl{stroke:var(--accent);stroke-width:3}
+.pkt{fill:var(--accent)}
+.pkt.drop{fill:var(--bad)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.cards{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:8px;padding:12px;display:grid;gap:6px;align-content:start;background:var(--surface)}
+.card .big{font:600 20px/1.15 var(--f-mono)}
+.fact{border:1px solid var(--warn);border-radius:8px;padding:10px 12px;font-size:13.5px;background:var(--sunken)}
+.fact b{color:var(--warn)}
+.bits{display:flex;flex-wrap:wrap;gap:2px;font:500 11px var(--f-mono)}
+.bits span{padding:3px 4px;border-radius:3px;background:var(--sunken);border:1px solid var(--line)}
+.bits span.v{background:var(--accent-soft);border-color:var(--accent)}
+.bits span.s{background:color-mix(in srgb,var(--ok) 18%,var(--surface));border-color:var(--ok)}
+.bits span.i{background:color-mix(in srgb,var(--dyn) 18%,var(--surface));border-color:var(--dyn)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.note{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP01–GCP03 · Networking in Google Cloud: Routing and Addressing</div>
+    <h1>VPC Route Selection</h1>
+    <p class="lead">Three tools for the first module. Send a packet through a VPC route table and watch Google Cloud discard routes step by step. Then build an IPv6 subnet and see what each VM gets. Then move a BYOIP prefix and see where internet traffic goes.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-routes" aria-selected="true" aria-controls="p-routes"><span class="id">GCP01</span>Route selection</button>
+    <button role="tab" id="tab-v6" aria-selected="false" aria-controls="p-v6"><span class="id">GCP02</span>IPv6 subnets</button>
+    <button role="tab" id="tab-byoip" aria-selected="false" aria-controls="p-byoip"><span class="id">GCP03</span>BYOIP and BGP</button>
+  </div>
+
+  <!-- ============ ROUTES ============ -->
+  <section id="p-routes" role="tabpanel" aria-labelledby="tab-routes" style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Send a packet</h2>
+        <div class="field"><label for="r-src">Source VM</label>
+          <select id="r-src"><option value="10.10.1.10">vm-a · 10.10.1.10 (subnet-a)</option><option value="10.10.2.20">vm-b · 10.10.2.20 (subnet-b)</option></select></div>
+        <div class="field"><label for="r-dst">Destination</label>
+          <select id="r-dst">
+            <option value="10.10.2.20">10.10.2.20 · vm-b in the same VPC</option>
+            <option value="10.20.3.7" selected>10.20.3.7 · on-prem app server</option>
+            <option value="10.20.9.9">10.20.9.9 · other on-prem host</option>
+            <option value="172.16.5.9">172.16.5.9 · on-prem DC 2 (two tunnels)</option>
+            <option value="8.8.8.8">8.8.8.8 · internet</option>
+          </select></div>
+        <div class="btns"><button class="btn primary" id="r-next" type="button">Next step</button><button class="btn" id="r-run" type="button">Run all</button><button class="btn" id="r-reset" type="button">Start over</button></div>
+        <hr style="border:0;border-top:1px solid var(--line);width:100%;margin:2px 0">
+        <h2>Change the network</h2>
+        <label class="switch" for="o-force"><span>Forced tunneling: 0.0.0.0/0 to VPN, priority 900</span><input type="checkbox" id="o-force"></label>
+        <label class="switch" for="o-pbr"><span>Policy-based route: subnet-b TCP to firewall NVA</span><input type="checkbox" id="o-pbr"></label>
+        <label class="switch" for="o-down"><span>VPN tunnel-1 down</span><input type="checkbox" id="o-down"></label>
+        <label class="switch" for="o-dyn"><span>On-prem advertises 10.20.3.0/24 by BGP</span><input type="checkbox" id="o-dyn" checked></label>
+        <p class="help">Each change restarts the walk-through for the packet you've chosen.</p>
+      </div>
+      <div class="panel">
+        <h2 id="r-title">Route table for vpc-prod</h2>
+        <div class="scroll"><table class="rt" aria-label="Routes"><thead><tr><th>Destination</th><th>Type</th><th>Next hop</th><th>Priority</th><th>Why it's out</th></tr></thead><tbody id="rt"></tbody></table></div>
+        <div class="mapbox"><svg id="rmap" viewBox="0 0 760 250" aria-label="Diagram of next hops"></svg></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Routing order (Google Cloud docs)</h2>
+      <ol class="pipe" id="pipe"></ol>
+      <div class="verdict" id="verdict" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ============ IPv6 ============ -->
+  <section id="p-v6" role="tabpanel" aria-labelledby="tab-v6" hidden style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Build a subnet</h2>
+        <div class="field"><label for="v-stack">Stack type</label>
+          <select id="v-stack"><option value="v4">IPv4 only (single-stack)</option><option value="dual" selected>Dual-stack (IPv4 + IPv6)</option><option value="v6">IPv6 only (single-stack)</option></select></div>
+        <div class="field"><label for="v-access">IPv6 access type</label>
+          <select id="v-access"><option value="internal">Internal (ULA, fd20::/20)</option><option value="external" selected>External (GUA, internet-routable)</option></select></div>
+        <div class="field"><label for="v-mode">VPC mode</label>
+          <select id="v-mode"><option value="custom" selected>Custom mode</option><option value="auto">Auto mode</option></select></div>
+        <div class="fact"><b>Course vs current docs:</b> the lecture says IPv6-only subnets don't exist. Google Cloud docs now list three stack types: IPv4-only, dual-stack and IPv6-only. An IPv6-only VM reaches IPv4 destinations through DNS64 and NAT64. You can't convert a subnet between IPv6-only and the other two types.</div>
+      </div>
+      <div class="panel">
+        <h2 id="v-title">What you get</h2>
+        <div class="cards" id="v-cards"></div>
+        <div>
+          <span class="k">How an IPv6 range is carved up</span>
+          <div class="bits" id="v-bits" style="margin-top:6px"></div>
+          <p class="note" style="margin-top:6px" id="v-bitnote"></p>
+        </div>
+        <div class="verdict" id="v-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BYOIP ============ -->
+  <section id="p-byoip" role="tabpanel" aria-labelledby="tab-byoip" hidden style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Advertise your prefixes</h2>
+        <p class="help">Your company owns 203.0.112.0/20. You're moving part of it to Google Cloud with BYOIP. Internet routers pick the longest (most specific) prefix that contains the destination.</p>
+        <label class="switch" for="b-onprem"><span>On-prem advertises 203.0.112.0/20</span><input type="checkbox" id="b-onprem" checked></label>
+        <label class="switch" for="b-gcp"><span>Google advertises the BYOIP prefix</span><input type="checkbox" id="b-gcp" checked></label>
+        <div class="field"><label for="b-len">BYOIP prefix length: <span id="b-lenv">/23</span></label><input type="range" id="b-len" min="20" max="25" value="23"></div>
+        <div class="field"><label for="b-dst">Client sends traffic to</label>
+          <select id="b-dst"><option value="203.0.112.10">203.0.112.10 · web app (moved to GCP)</option><option value="203.0.113.200">203.0.113.200 · API (moved to GCP)</option><option value="203.0.120.5">203.0.120.5 · mail (still on-prem)</option></select></div>
+      </div>
+      <div class="panel">
+        <h2>Where the internet sends it</h2>
+        <div class="mapbox"><svg id="bmap" viewBox="0 0 760 270" aria-label="BGP path choice"></svg></div>
+        <div class="verdict" id="b-verdict" aria-live="polite"></div>
+        <p class="note">Smallest BYOIP prefix Google accepts: /24 for IPv4 (/48 for IPv6). Longer prefixes are filtered by most internet routers. Before Google can advertise your prefix, you have to prove you own it with an RPKI ROA.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* tabs */
+const tabs=[['tab-routes','p-routes'],['tab-v6','p-v6'],['tab-byoip','p-byoip']];
+tabs.forEach(([t,p])=>document.getElementById(t).addEventListener('click',()=>{
+  tabs.forEach(([t2,p2])=>{document.getElementById(t2).setAttribute('aria-selected',t2===t);document.getElementById(p2).hidden=t2!==t;});
+}));
+
+/* ---------- IP helpers ---------- */
+const toInt=ip=>ip.split('.').reduce((a,o)=>((a<<8)>>>0)+(+o),0)>>>0;
+function inCidr(ip,c){const[n,b]=c.split('/');const m=+b===0?0:(0xFFFFFFFF<<(32-+b))>>>0;return((toInt(ip)&m)>>>0)===((toInt(n)&m)>>>0);}
+const plen=c=>+c.split('/')[1];
+
+/* ---------- ROUTES ---------- */
+const HOPS={
+  local:{label:'Local delivery',sub:'inside vpc-prod',x:560,y:40},
+  tun1:{label:'vpn-tunnel-1',sub:'HA VPN to on-prem',x:560,y:95},
+  tun2:{label:'vpn-tunnel-2',sub:'HA VPN to on-prem',x:560,y:150},
+  nva:{label:'nva-fw (VM)',sub:'next-hop-instance',x:400,y:205},
+  ilb:{label:'fw-ilb',sub:'internal passthrough NLB',x:250,y:205},
+  igw:{label:'Internet gateway',sub:'default-internet-gateway',x:560,y:205}
+};
+function routes(){
+  const o=opt();
+  const r=[
+    {id:'pbr',dst:'0.0.0.0/0',type:'pbr',hop:'ilb',hopTxt:'fw-ilb 10.10.9.10',prio:10,src:'10.10.2.0/24',proto:'TCP',on:o.pbr,label:'policy-based'},
+    {id:'sa',dst:'10.10.1.0/24',type:'subnet',hop:'local',hopTxt:'vpc-prod (subnet-a)',prio:'—',on:true,label:'subnet'},
+    {id:'sb',dst:'10.10.2.0/24',type:'subnet',hop:'local',hopTxt:'vpc-prod (subnet-b)',prio:'—',on:true,label:'subnet'},
+    {id:'dyn3',dst:'10.20.3.0/24',type:'dynamic',hop:'tun1',hopTxt:'vpn-tunnel-1 (BGP)',prio:100,on:o.dyn,cat:2,label:'dynamic'},
+    {id:'st3',dst:'10.20.3.0/24',type:'static',hop:'nva',hopTxt:'nva-fw (instance)',prio:1000,on:true,cat:1,label:'custom static'},
+    {id:'st20',dst:'10.20.0.0/16',type:'static',hop:'tun1',hopTxt:'vpn-tunnel-1',prio:1000,on:true,cat:1,label:'custom static'},
+    {id:'d172a',dst:'172.16.0.0/12',type:'dynamic',hop:'tun1',hopTxt:'vpn-tunnel-1 (BGP)',prio:100,on:true,cat:2,label:'dynamic'},
+    {id:'d172b',dst:'172.16.0.0/12',type:'dynamic',hop:'tun2',hopTxt:'vpn-tunnel-2 (BGP)',prio:100,on:true,cat:2,label:'dynamic'},
+    {id:'force',dst:'0.0.0.0/0',type:'static',hop:'tun1',hopTxt:'vpn-tunnel-1',prio:900,on:o.force,cat:1,label:'custom static'},
+    {id:'def',dst:'0.0.0.0/0',type:'system',hop:'igw',hopTxt:'default-internet-gateway',prio:1000,on:true,cat:4,label:'default'}
+  ];
+  return r;
+}
+function opt(){return{force:$('o-force').checked,pbr:$('o-pbr').checked,down:$('o-down').checked,dyn:$('o-dyn').checked};}
+function $(id){return document.getElementById(id);}
+const STEPS=[
+  {n:'1',t:'Policy-based routes',d:'Match source, destination and protocol, in priority order'},
+  {n:'2',t:'Subnet routes',d:'Destination inside a subnet? Use it and stop'},
+  {n:'3',t:'Most specific',d:'Keep only the longest matching prefix'},
+  {n:'4',t:'Valid next hops',d:'Drop routes whose next hop is down'},
+  {n:'5',t:'Priority',d:'Keep only the lowest priority number'},
+  {n:'6',t:'Preference category',d:'Static to an instance or VPN, then dynamic, then load balancer, then internet gateway'},
+  {n:'7',t:'Send',d:'One route: send. Several: ECMP'}
+];
+let state=null;
+function plan(){
+  const src=$('r-src').value,dst=$('r-dst').value,o=opt();
+  const rs=routes();const out={};rs.forEach(r=>{if(!r.on)out[r.id]='Not configured';});
+  const live=()=>rs.filter(r=>!out[r.id]);
+  const log=[];let stopAt=null;let tcp=true;
+  // 1 policy-based
+  const pbrs=live().filter(r=>r.type==='pbr');
+  let s1;
+  if(!pbrs.length){s1={msg:'No policy-based routes in this VPC, so this step is skipped.',skip:true};}
+  else{
+    const m=pbrs.find(r=>inCidr(src,r.src)&&inCidr(dst,r.dst)&&tcp);
+    if(m){rs.forEach(r=>{if(r!==m&&!out[r.id])out[r.id]='Policy-based route matched first. Every other route is ignored';});s1={msg:`Policy-based route matches: source ${src} is in ${m.src}, protocol TCP. The packet goes to ${m.hopTxt}, and every other route is ignored, even the subnet routes.`};stopAt=0;}
+    else{pbrs.forEach(r=>out[r.id]=`Source ${src} isn't in ${r.src}`);s1={msg:`Policy-based route doesn't match: source ${src} isn't in ${pbrs[0].src}. Policy-based routes are set aside.`};}
+  }
+  log.push({...s1,snap:{...out}});
+  if(stopAt===null){
+    const sub=live().find(r=>r.type==='subnet'&&inCidr(dst,r.dst));
+    if(sub){rs.forEach(r=>{if(r!==sub&&!out[r.id])out[r.id]='A subnet route matched. Nothing can override it';});log.push({msg:`${dst} is inside ${sub.dst}, a subnet route. Google Cloud uses it and stops here. No custom route can override a subnet route, whatever its priority.`,snap:{...out}});stopAt=1;}
+    else{live().filter(r=>r.type==='subnet').forEach(r=>out[r.id]=`${dst} isn't in ${r.dst}`);log.push({msg:`${dst} isn't in any subnet, so subnet routes are set aside. Custom and default routes are next.`,snap:{...out}});}
+  }
+  if(stopAt===null){
+    live().forEach(r=>{if(!inCidr(dst,r.dst))out[r.id]=`${r.dst} doesn't contain ${dst}`;});
+    const L=Math.max(...live().map(r=>plen(r.dst)));
+    const cand=live();
+    cand.forEach(r=>{if(plen(r.dst)<L)out[r.id]=`/${plen(r.dst)} is less specific than /${L}`;});
+    log.push({msg:live().length?`Most specific matching destination: /${L} (${live()[0].dst}). Shorter prefixes are dropped, whatever their priority.`:`No route contains ${dst}.`,snap:{...out}});
+    if(!live().length)stopAt=2;
+  }
+  if(stopAt===null){
+    const bad=live().filter(r=>o.down&&r.hop==='tun1');
+    bad.forEach(r=>out[r.id]='vpn-tunnel-1 is down, so this next hop is invalid');
+    log.push({msg:bad.length?`vpn-tunnel-1 is down. Its routes are dropped: a dynamic route is dropped as soon as its tunnel fails, even before the BGP session times out.`:'Every remaining next hop is up.',snap:{...out}});
+    if(!live().length){stopAt=3;}
+  }
+  if(stopAt===null){
+    const P=Math.min(...live().map(r=>r.prio));
+    live().forEach(r=>{if(r.prio>P)out[r.id]=`Priority ${r.prio} loses to ${P}. Lower number wins`;});
+    log.push({msg:`Highest priority (lowest number) left: ${P}.`,snap:{...out}});
+  }
+  if(stopAt===null){
+    const C=Math.min(...live().map(r=>r.cat));
+    const names={1:'static to an instance or VPN',2:'dynamic',3:'internal load balancer',4:'internet gateway'};
+    live().forEach(r=>{if(r.cat>C)out[r.id]=`The ${names[r.cat]} category loses to ${names[C]}`;});
+    log.push({msg:`Most preferred category left: ${names[C]}. Google Cloud never uses ECMP across categories.`,snap:{...out}});
+  }
+  let verdict,winners=live();
+  if(stopAt===2||stopAt===3||!winners.length){verdict={drop:true,txt:`No usable route, so the packet to ${dst} is dropped.`};winners=[];}
+  else if(winners.length>1){verdict={txt:`ECMP: ${winners.length} routes are left with the same destination, priority and category. Flows are hashed across ${winners.map(w=>w.hopTxt).join(' and ')}.`};}
+  else verdict={txt:`The packet to ${dst} goes to ${winners[0].hopTxt} (${winners[0].label} route ${winners[0].dst}).`};
+  log.push({msg:verdict.txt,snap:{...out}});
+  return{log,stopAt,winners,verdict,rs};
+}
+function reset(){state={p:plan(),i:-1};render();}
+function render(){
+  const {p,i}=state;const rs=p.rs;
+  const snap=i<0?Object.fromEntries(rs.filter(r=>!r.on).map(r=>[r.id,'Not configured'])):p.log[Math.min(i,p.log.length-1)].snap;
+  const finished=i>=p.log.length-1;
+  $('rt').innerHTML=rs.map(r=>{
+    const isWin=finished&&p.winners.includes(r);
+    const cls=!r.on?'disabled':snap[r.id]?'out':isWin?'win':'';
+    const why=!r.on?'Turned off':snap[r.id]&&i>=0?snap[r.id]:isWin?'Selected':'';
+    const src=r.type==='pbr'?` <span class="help">(source ${r.src}, TCP)</span>`:'';
+    return `<tr class="${cls}"><td>${r.dst}${src}</td><td><span class="type t-${r.type}">${r.label}</span></td><td>${r.hopTxt}</td><td>${r.prio}</td><td class="why">${why}</td></tr>`;
+  }).join('');
+  // pipeline mapping: log index -> step index
+  const map=[];let k=0;
+  map.push(0);
+  if(p.stopAt!==0){map.push(1);if(p.stopAt!==1){map.push(2);if(p.stopAt!==2){map.push(3);if(p.stopAt!==3){map.push(4,5);}}}}
+  map.push(6);
+  const curStep=i<0?-1:map[Math.min(i,map.length-1)];
+  $('pipe').innerHTML=STEPS.map((s,j)=>{
+    const reached=map.includes(j);
+    let cls='';if(j===curStep)cls='cur';else if(i>=0&&j<curStep&&reached)cls='done';else if(finished&&!reached)cls='skip';
+    if(j===0&&p.log[0].skip&&i>=0&&cls!=='cur')cls='skip';
+    return `<li class="${cls}"><span class="n">STEP ${s.n}</span><b>${s.t}</b><span class="help">${s.d}</span></li>`;
+  }).join('');
+  const v=$('verdict');
+  v.className='verdict'+(finished&&p.verdict.drop?' drop':'');
+  v.textContent=i<0?`Packet from ${$('r-src').value} to ${$('r-dst').value}. Press Next step to filter the route table.`:p.log[i].msg;
+  $('r-next').disabled=finished;
+  drawMap(finished?p.winners:[],finished&&p.verdict.drop);
+}
+function drawMap(win,drop){
+  const svg=$('rmap');svg.innerHTML='';const o=opt();
+  el('rect',{x:0,y:0,width:200,height:250,rx:12,class:'bandr2'},svg);
+  el('text',{x:12,y:20,class:'bl'},svg,'vpc-prod');
+  const srcIp=$('r-src').value;
+  const vm=el('rect',{x:20,y:100,width:160,height:54,rx:8,class:'node hl'},svg);
+  el('text',{x:32,y:122,class:'nl'},svg,srcIp==='10.10.1.10'?'vm-a':'vm-b');
+  el('text',{x:32,y:140,class:'ns'},svg,srcIp);
+  const hops=new Set(win.map(w=>w.hop));
+  for(const [id,h] of Object.entries(HOPS)){
+    const hl=hops.has(id);
+    const path=el('path',{d:`M180 127 C 260 127, ${h.x-80} ${h.y+22}, ${h.x} ${h.y+22}`,class:'edge'+(hl?' hl':'')},svg);
+    h.path=path;
+    el('rect',{x:h.x,y:h.y,width:id==='local'||id==='tun1'||id==='tun2'||id==='igw'?190:140,height:44,rx:8,class:'node'+(hl?' hl':'')+(o.down&&id==='tun1'?' dead':'')},svg);
+    el('text',{x:h.x+10,y:h.y+19,class:'nl'},svg,h.label);
+    el('text',{x:h.x+10,y:h.y+35,class:'ns'},svg,o.down&&id==='tun1'?'DOWN':h.sub);
+  }
+  if(drop){el('text',{x:220,y:40,class:'nl',fill:'var(--bad)'},svg,'✕ Dropped: no route');}
+  if(!reduce)win.forEach((w,j)=>{
+    const c=el('circle',{r:5,class:'pkt'},svg);const path=HOPS[w.hop].path;const L=path.getTotalLength();let t0=null;
+    function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts+j*350;const u=((ts-t0)/1400)%1;if(u>=0){const pt=path.getPointAtLength(L*u);c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y);}requestAnimationFrame(f);}
+    requestAnimationFrame(f);
+  });
+}
+$('r-next').addEventListener('click',()=>{state.i++;render();});
+$('r-run').addEventListener('click',()=>{state.i=state.p.log.length-1;render();});
+$('r-reset').addEventListener('click',reset);
+['r-src','r-dst','o-force','o-pbr','o-down','o-dyn'].forEach(id=>$(id).addEventListener('change',reset));
+reset();
+
+/* ---------- IPv6 ---------- */
+function v6(){
+  const stack=$('v-stack').value,acc=$('v-access').value,mode=$('v-mode').value;
+  $('v-access').disabled=stack==='v4';
+  const cards=[];let verdict='',bits=[],note='';
+  if(mode==='auto'&&stack!=='v4'){
+    $('v-cards').innerHTML='';$('v-bits').innerHTML='';$('v-bitnote').textContent='';
+    $('v-verdict').className='verdict drop';
+    $('v-verdict').textContent='Not allowed. Auto mode VPCs (and legacy networks) don\'t support IPv6 subnets. Create a custom mode VPC, or convert this one to custom mode.';
+    return;
+  }
+  if(stack!=='v6')cards.push({k:'Subnet IPv4 range',v:'10.10.1.0/24',d:'Primary range. VMs get one internal IPv4 address each.'});
+  if(stack!=='v4'){
+    if(acc==='internal'){
+      cards.push({k:'VPC ULA range',v:'fd20:a1b:2c3::/48',d:'Google assigns a /48 from fd20::/20 to the VPC (or you choose one). It can\'t be reached from the internet.'});
+      cards.push({k:'Subnet IPv6 range',v:'fd20:a1b:2c3:0::/64',d:'Each subnet gets one /64 from the VPC\'s /48.'});
+    }else{
+      cards.push({k:'Subnet IPv6 range',v:'2600:1900:4000:7a::/64',d:'A /64 of Google-owned global unicast space (or from your BYOIP prefix). It can be reached from the internet if firewall rules allow it.'});
+    }
+    cards.push({k:'Each VM interface',v:(acc==='internal'?'fd20:a1b:2c3:0:0:1::/96':'2600:1900:4000:7a:0:1::/96'),d:'Each interface gets a /96. The VM learns its first address from DHCPv6.'});
+  }
+  if(stack==='v4')cards.push({k:'Each VM interface',v:'10.10.1.2',d:'IPv4 only.'});
+  $('v-cards').innerHTML=cards.map(c=>`<div class="card"><span class="k">${c.k}</span><span class="big">${c.v}</span><span class="help">${c.d}</span></div>`).join('');
+  if(stack==='v4'){
+    bits='';note='IPv4 only: no IPv6 is assigned. You can later change this subnet to dual-stack, but never to IPv6-only.';
+    verdict='IPv4-only (single-stack) is the default. Routes: the IPv4 subnet route, plus the 0.0.0.0/0 default route to the internet gateway.';
+  }else{
+    const seg=[['v','fd20 : a1b : 2c3','/48 VPC'],['s',': 0000','/64 subnet'],['i',': 0000 : 0001','/96 VM'],['',': xxxx : xxxx','32 bits of VM addresses']];
+    if(acc==='external'){seg[0]=['v','2600 : 1900 : 4000','Google GUA block'];seg[1]=['s',': 007a','/64 subnet'];}
+    bits=seg.map(s=>`<span class="${s[0]}" title="${s[2]}">${s[1]}</span>`).join('');
+    note=acc==='internal'?'Purple = the /48 for the whole VPC. Green = 16 bits picking the /64 subnet. Violet = 32 bits picking the VM\'s /96.':'Purple = Google\'s GUA block. Green = the subnet /64. Violet = the VM\'s /96.';
+    const route=acc==='external'?' Google Cloud adds a ::/0 default route to the internet gateway automatically.':' No IPv6 internet route is added. Traffic stays inside the VPC, peered VPCs and hybrid links.';
+    verdict=(stack==='dual'?'Dual-stack: each VM can have an IPv4-only, dual-stack or IPv6-only interface. The access type (internal or external) is set per subnet and applies to every VM in it.':'IPv6-only: VMs have no IPv4 address. To reach IPv4-only destinations, use DNS64 and NAT64 (Cloud DNS + Cloud NAT).')+route;
+  }
+  $('v-bits').innerHTML=bits;$('v-bitnote').textContent=note;
+  $('v-verdict').className='verdict';$('v-verdict').textContent=verdict;
+}
+['v-stack','v-access','v-mode'].forEach(id=>$(id).addEventListener('change',v6));v6();
+
+/* ---------- BYOIP ---------- */
+function byoip(){
+  const onp=$('b-onprem').checked,gcp=$('b-gcp').checked,L=+$('b-len').value,dst=$('b-dst').value;
+  $('b-lenv').textContent='/'+L;
+  const gPrefix=L===20?'203.0.112.0/20':L===21?'203.0.112.0/21':L===22?'203.0.112.0/22':L===23?'203.0.112.0/23':L===24?'203.0.112.0/24':'203.0.112.0/25';
+  const filtered=L>24;
+  const ads=[];
+  if(onp)ads.push({who:'onprem',p:'203.0.112.0/20'});
+  if(gcp&&!filtered)ads.push({who:'gcp',p:gPrefix});
+  const m=ads.filter(a=>inCidr(dst,a.p));
+  let winner=null,tie=false;
+  if(m.length){const best=Math.max(...m.map(a=>plen(a.p)));const top=m.filter(a=>plen(a.p)===best);if(top.length>1)tie=true;else winner=top[0].who;}
+  const svg=$('bmap');svg.innerHTML='';
+  el('rect',{x:20,y:105,width:150,height:60,rx:8,class:'node'},svg);
+  el('text',{x:32,y:130,class:'nl'},svg,'Internet client');
+  el('text',{x:32,y:148,class:'ns'},svg,'→ '+dst);
+  el('rect',{x:250,y:100,width:170,height:70,rx:8,class:'node'},svg);
+  el('text',{x:262,y:124,class:'nl'},svg,'Internet routers');
+  el('text',{x:262,y:142,class:'ns'},svg,'longest prefix wins');
+  el('text',{x:262,y:158,class:'ns'},svg,ads.length?ads.map(a=>a.p.split('/')[1]).map(x=>'/'+x).join(' vs '):'no prefixes');
+  const nodes={gcp:{y:30,label:'Google Cloud',sub:gcp?(filtered?gPrefix+' filtered (>/24)':gPrefix+' via BYOIP'):'not advertising'},onprem:{y:180,label:'On-prem data center',sub:onp?'203.0.112.0/20':'not advertising'}};
+  const hl=w=>!tie&&winner===w;
+  el('path',{d:'M170 135 L250 135',class:'edge'+(winner||tie?' hl':'')},svg);
+  for(const [k,n] of Object.entries(nodes)){
+    el('path',{d:`M420 135 C 480 135, 480 ${n.y+30}, 540 ${n.y+30}`,class:'edge'+(hl(k)||tie?' hl':'')},svg);
+    el('rect',{x:540,y:n.y,width:200,height:60,rx:8,class:'node'+(hl(k)?' hl':'')+(tie?' dead':'')},svg);
+    el('text',{x:552,y:n.y+25,class:'nl'},svg,n.label);
+    el('text',{x:552,y:n.y+43,class:'ns'},svg,n.sub);
+  }
+  const v=$('b-verdict');v.className='verdict'+(!m.length||tie?' drop':'');
+  if(!m.length)v.textContent=`No advertised prefix contains ${dst}, so it can't be reached from the internet.`;
+  else if(tie)v.textContent=`Both sides advertise /${L} for ${dst}. Equal-length prefixes leave the choice to BGP path attributes (AS path length and so on), so different ISPs may pick different sites. That's unpredictable: don't advertise equal-length overlapping prefixes from two places.`;
+  else if(winner==='gcp')v.textContent=`${gPrefix} is longer than /20, so traffic to ${dst} goes to Google Cloud. Clients use the same IP as before, and nothing changes for them.`;
+  else v.textContent=filtered&&gcp?`/${L} is longer than /24, so the internet filters it out, and traffic to ${dst} still goes on-prem through the /20.`:`Only the on-prem /20 contains ${dst}, so the traffic stays on-prem.`+(gcp&&inCidr(dst,'203.0.112.0/20')&&!inCidr(dst,gPrefix)?` ${dst} is outside ${gPrefix}. Widen the BYOIP prefix if this service moved too.`:'');
+}
+['b-onprem','b-gcp','b-len','b-dst'].forEach(id=>$(id).addEventListener('input',byoip));byoip();
+})();
+</script>
+</body>
+</html>

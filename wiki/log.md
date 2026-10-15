@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] visualize+reference | Local visualizations, GCP01–03 viz, command anatomy
+Visualizations now live in-repo (wiki/visualizations/gcp/*.html, linked from lessons; no external links). Added GCP01–03 "VPC Route Selection" (routing order per docs, IPv6 stack builder, BYOIP BGP). Fact-check: IPv6-only subnets now supported (GCP02 note). New concept page gcp-command-anatomy covering all gcloud commands used in GCP lessons/labs.
+
 ## [2026-10-15] visualize | GCP28 — Cloud Armor at the Edge (interactive)
 Published interactive artifact https://claude.ai/artifact/HUYW5ZyNyEmr5ZnnWx1Wvj (source wiki/visualizations/gcp/). New standing rule: every GCP lesson gets an interactive visualization; backfill GCP01–GCP27 pending.
 

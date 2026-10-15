@@ -14,13 +14,17 @@ tags: [gcp, ipv6, dual-stack, ula, gua, subnet]
 
 # GCP02 — IPv6 in Google Cloud
 
+> 🎛️ **Interactive visualization:** [VPC Route Selection](../../visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) (IPv6 subnets tab: stack types, /48 → /64 → /96). Opens in your browser.
+
 ## Summary
 GCP only supports dual-stack (IPv4+IPv6) subnets — there is no IPv6-only subnet. IPv6 access type (internal ULA vs external GUA) is set at the subnet level and inherited by all VMs in that subnet.
 
 ## The Subnet Stack Concept
 - **Single-stack (default):** IPv4 only
 - **Dual-stack:** IPv4 + IPv6
-- **IPv6-only: does not exist in GCP**
+- **IPv6-only: does not exist in GCP** (per lecture)
+
+> **Docs update (2026-10-15):** current Google Cloud docs list **three** stack types: IPv4-only, dual-stack, and **IPv6-only**. IPv6-only VMs reach IPv4 destinations through **DNS64 + NAT64**. You can't convert a subnet between IPv6-only and the other types. Per-VM interface range = **/96** (first address via DHCPv6), subnet = **/64**, internal VPC ULA = **/48** from `fd20::/20`. For the exam, know the lecture answer but expect the docs to win on newer questions.
 
 IPv6 is always additive to IPv4. Dual-stack subnets not supported on auto mode or legacy networks — must use custom mode.
 

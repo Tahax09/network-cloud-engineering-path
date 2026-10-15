@@ -251,6 +251,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [gcp-network-architecture](wiki/concepts/gcp-network-architecture.md) | Design process, service tiers, topologies, Network Connectivity Center |
 | [gcp-private-access](wiki/concepts/gcp-private-access.md) | PGA, PSC, PSA, Cloud NAT + AWS mapping |
 | [gcp-product-map](wiki/concepts/gcp-product-map.md) | Google Cloud products, their use, and AWS/Azure equivalents |
+| [gcp-command-anatomy](wiki/concepts/gcp-command-anatomy.md) | gcloud command anatomy: each part and flag explained, what it does and when to use it |
 | [wireshark](wiki/concepts/wireshark.md) | Capture workflow, time formats, RTT vs server time, filters, tshark |
 
 ---

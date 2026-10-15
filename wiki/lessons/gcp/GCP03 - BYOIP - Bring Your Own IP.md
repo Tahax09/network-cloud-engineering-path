@@ -14,6 +14,8 @@ tags: [gcp, byoip, bgp, ip-addressing, migration]
 
 # GCP03 — BYOIP (Bring Your Own IP)
 
+> 🎛️ **Interactive visualization:** [VPC Route Selection](../../visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) (BYOIP and BGP tab: longest prefix wins). Opens in your browser.
+
 ## Summary
 BYOIP lets enterprises use their existing public IP blocks on GCP without re-addressing. BGP longest-prefix-match (more specific route wins) governs how traffic is steered between on-prem and GCP when both advertise overlapping ranges.
 

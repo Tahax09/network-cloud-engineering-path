@@ -96,6 +96,7 @@
 | [gcp-network-architecture](concepts/gcp-network-architecture.md) | Design process, toolkit, service tiers, topologies, NCC + AWS/Azure mapping | GCP14–GCP22 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP13 |
 | [gcp-product-map](concepts/gcp-product-map.md) | Every major Google Cloud product: what it does + AWS/Azure equivalents; GCP vs AWS conceptual differences | Reference |
+| [gcp-command-anatomy](concepts/gcp-command-anatomy.md) | Every gcloud/CLI command from GCP lessons: parts, flags, what it does, when to use | Reference |
 | [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS10 |
 
 ## Certifications
@@ -173,4 +174,5 @@
 ## Interactive Visualizations
 | ID | Visualization | Shows |
 |----|---------------|-------|
-| GCP28 | [Cloud Armor at the Edge](https://claude.ai/artifact/HUYW5ZyNyEmr5ZnnWx1Wvj) | POP/GFE routing to closest backend with capacity, stress overflow, blocklist vs allowlist, propagation, policy logs |
+| GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GCP28 | [Cloud Armor at the Edge](visualizations/gcp/GCP28%20-%20Cloud%20Armor%20at%20the%20Edge.html) | POP/GFE routing to closest backend with capacity, stress overflow, blocklist vs allowlist, propagation, policy logs |
