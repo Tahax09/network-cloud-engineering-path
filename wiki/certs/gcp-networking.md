@@ -61,6 +61,8 @@ target_date: TBD
 | ID | Title | Status |
 |----|-------|--------|
 | [GCP23](../lessons/gcp/GCP23%20-%20Network%20Security%20-%20Course%20Introduction.md) | Network Security - Course Introduction | ✅ Complete |
+| [GCP24](../lessons/gcp/GCP24%20-%20Module%20Introduction%20-%20DDoS%20Protection.md) | Module Introduction - DDoS Protection | ✅ Complete |
+| [GCP25](../lessons/gcp/GCP25%20-%20How%20DDoS%20Attacks%20Work.md) | How DDoS Attacks Work | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |
@@ -131,6 +133,8 @@ target_date: TBD
 | Expose apps | Through APIs via API gateway/LB; Apigee = security, rate limiting, quotas, analytics; LB + Apigee + CDN + Cloud Armor together |
 | Interconnect encryption | Not encrypted by default → MACsec or HA VPN over Interconnect (or TLS) |
 | Topology keywords | central mgmt → hub-and-spoke; all-to-all/HA → mesh; DR/dev-test copy → mirrored; strict security/isolate/specific APIs → gated |
+| DDoS categories | Volumetric (bandwidth, Tbps) · protocol/state exhaustion (pps) · application L7 (rps) |
+| Google scale | One data center ~1,300 Tbps bisection vs internet ~200 Tbps; Cloud Armor blocked 46M rps (2022) and 398M rps (Aug 2023) |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit

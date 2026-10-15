@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] ingest | GCP24–GCP25 — DDoS Protection module intro + How DDoS attacks work
+GCP24: module map (attacks → Google mitigation → partner products → lab). GCP25: DDoS definition, botnets, attack categories (volumetric / protocol / L7) with defenses, Google bisection bandwidth (~1,300 Tbps DC vs ~200 Tbps internet), record L7 attacks (46M rps 2022, 398M rps Aug 2023). Fact-check note: Google's public figure for its largest 2017 attack is ~2.5 Tbps vs lecture's ~4 Tbps. Hands-on kept defensive (LB logging, Cloud Armor deny rule, PCAP review).
+
 ## [2026-10-15] ingest | GCP23 — Network Security: Course Introduction (Course 4 starts)
 Ingested intro to Course 4 (DDoS protection; controlling access to VPC networks; advanced security monitoring and analysis). Added course-position map, preview of likely services per module (Cloud Armor, firewall policies/IAM/IAP/VPC-SC/NGFW, Cloud IDS/Packet Mirroring/Flow Logs/Firewall Insights) flagged as preview, links to security ideas already covered, Network+ Domain 4 and AZ-500/KCSA/CKS mapping. Marked Course 3 complete on cert page (GQ02 pending).
 

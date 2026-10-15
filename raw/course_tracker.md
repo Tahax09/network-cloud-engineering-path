@@ -57,7 +57,9 @@
 | GCP21 | Getting Topology Data | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP22 | Best Practices for Connectivity and Topologies | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP23 | Network Security - Course Introduction | Network Security (Course 4) | 2026-10-15 | Complete | — |
-| GCP24 | — | — | — | Pending | — |
+| GCP24 | Module Introduction - DDoS Protection | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
+| GCP25 | How DDoS Attacks Work | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
+| GCP26 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

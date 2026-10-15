@@ -56,6 +56,8 @@
 | [GCP21](lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | Network Architecture — Module 2 | 2026-10-15 | Complete |
 | [GCP22](lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | Network Architecture — Module 2 | 2026-10-15 | Complete |
 | [GCP23](lessons/gcp/GCP23%20-%20Network%20Security%20-%20Course%20Introduction.md) | Network Security - Course Introduction | Network Security (Course 4) | 2026-10-15 | Complete |
+| [GCP24](lessons/gcp/GCP24%20-%20Module%20Introduction%20-%20DDoS%20Protection.md) | Module Introduction - DDoS Protection | Network Security — Module 1 | 2026-10-15 | Complete |
+| [GCP25](lessons/gcp/GCP25%20-%20How%20DDoS%20Attacks%20Work.md) | How DDoS Attacks Work | Network Security — Module 1 | 2026-10-15 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 

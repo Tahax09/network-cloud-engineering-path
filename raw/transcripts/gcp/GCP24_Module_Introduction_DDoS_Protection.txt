@@ -1,0 +1,10 @@
+Welcome to the distributed
+denial-of-service attacks, DDoS, protection module. Distributed denial-of-service
+attacks are a major concern today. They can have a huge and potentially fatal
+impact on businesses, if the business is not
+adequately prepared. We will start this module with a quick discussion of
+how DDoS attacks work, and then we will review some DDoS mitigation techniques that are provided
+by Google Cloud. Then we will finish
+up with a review of complimentary partner products
+and a lab where you will get a chance to see
+some DDoS mitigation in action. Let's get started.

@@ -1,0 +1,34 @@
+A distributed denial-of-service
+or DDoS attack is a malicious attempt to disrupt normal traffic
+of a targeted server, service, or network, by overwhelming the target or its surrounding
+infrastructure with a flood of Internet traffic
+from multiple sources. Essentially, it is an attempt
+to make an online service unavailable by overwhelming it with traffic from
+multiple sources. DDoS attacks can come
+from individuals, cyber criminal groups, or can even be state sponsored. In the diagram, attackers build networks of
+infected computers, known as botnets by spreading malicious software
+through emails, websites, and social media. Once infected, these
+machines can be controlled remotely without
+their owner's knowledge. They are then used
+like an army to launch an attack
+against any target. Some botnets are millions
+of machines strong. For context, a large attack in 2017 had a strength of around
+four terabit per second. For reference, the
+whole Internet has a bisection bandwidth of
+200 terabits per second. Now, when you compare this to a single Google data center, which has a bisection
+bandwidth of 1,300 terabits per second, you can see we have
+internal capacity many times that of any traffic
+load we can anticipate. This means that when
+there's an attack, we have time to isolate
+it and address it. Over the past few years, Google has observed that
+distributed denial-of-service, DDoS, attacks are increasing in frequency and growing
+in size exponentially. On August 2022, a Google
+Cloud Armor customer was targeted with a series
+of HTTPS DDoS attacks, which peaked at 46 million
+requests per second. This is the largest Layer
+7 DDos reported to date, at least 76% larger than the
+previously reported record. In August 2023, we stopped
+an even larger DDOS attack, 7.5 times larger, 398
+million requests per second. Cloud Armor blocked the attack, ensuring the customers
+service stayed online and continued
+serving their end users.
