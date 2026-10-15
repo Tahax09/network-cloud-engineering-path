@@ -368,7 +368,7 @@ flowchart LR
         R2["runner: 64 ports"]
         R3["... x50"]
     end
-    RUN --> NAT["Cloud NAT<br/>1 NAT IP = ~64k ports"]
+    RUN --> NAT["Cloud NAT<br/>1 NAT IP = 64,512 ports"]
     NAT --> NPM["registry.npmjs.org"]
     NAT --> DH["Docker Hub"]
     RUN -->|"PGA, not NAT"| AR["Artifact Registry ✔"]
@@ -394,7 +394,7 @@ gcloud logging read 'resource.type="nat_gateway" AND jsonPayload.allocation_stat
 # 2. Scale ports per VM with demand
 gcloud compute routers nats update ci-nat --router=ci-router --region=<r> \
   --enable-dynamic-port-allocation --min-ports-per-vm=64 --max-ports-per-vm=4096
-# 3. More capacity if needed (each IP adds ~64k ports)
+# 3. More capacity if needed (each IP adds 64,512 TCP ports)
 gcloud compute routers nats update ci-nat --router=ci-router --region=<r> \
   --nat-external-ip-pool=nat-ip-1,nat-ip-2
 ```

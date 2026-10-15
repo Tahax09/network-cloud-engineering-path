@@ -6,7 +6,7 @@
 
 | Option | Source → Destination | Mechanism | Key facts |
 |--------|---------------------|-----------|-----------|
-| **Private Google Access** | Internal-only VM → Google APIs | **Per-subnet** toggle; route to API ranges via `default-internet-gateway` (stays on Google network) | No effect on VMs with external IPs; Google APIs only |
+| **Private Google Access** | Internal-only VM → Google APIs | **Per-subnet** toggle; route to API ranges via `default-internet-gateway` (stays on Google network) | No effect on VMs with external IPs; Google APIs only. With private/restricted VIPs also route + allow `34.126.0.0/18` (direct connectivity) |
 | **PGA for on-prem** | On-prem → Google APIs | VPN/Interconnect + DNS to `private` (199.36.153.8/30) or `restricted` (199.36.153.4/30) + Cloud Router **custom advertisement** + VPC static route | `restricted` = VPC-SC-supported APIs only; Cloud DNS can't do partial overrides (use BIND) |
 | **Private Service Connect** | Consumer VPC → Google APIs or producer service | **Endpoint** (internal IP forwarding rule) → **service attachment** | No peering; overlapping IPs OK; consumer-initiated only |
 | **Private Services Access** | VPC → Google-managed producer VPC (dedicated to you) | **VPC Network Peering** + **allocated range** | Cloud SQL private IP, Memorystore, Filestore; peering is non-transitive |

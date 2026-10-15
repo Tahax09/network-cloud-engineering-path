@@ -29,8 +29,12 @@ VPC + regional subnets · firewall rules/policies (prefer service-account target
 
 ## Network Connectivity Center Facts
 - **VPC spokes** (same/other project or org) and **hybrid spokes** (HA VPN tunnels, Interconnect VLAN attachments, **router appliance** VMs with partner or custom images).
-- No overlapping IP ranges · IPv6 unsupported on hybrid spokes · privately used public IPs supported.
+- Spoke types (per docs): VPC · **producer VPC** · NCC Gateway · hybrid. Use cases: VPC↔VPC (cross-org ok), site-to-cloud, site-to-site WAN (data transfer feature).
+- No overlapping IP ranges · hybrid-spoke IPv6 = **Preview** (router appliance IPv4-only) · privately used public IPs supported · export filters per spoke; VPC spokes import all routes from their group.
 - NCC also hosts **inter-VPC (private) NAT** ([[GCP11 - Cloud NAT]]).
+
+## Observability: Network Topology
+Graph of entities (VMs → instance groups → zones → subnets → networks → regions; pods → workloads → namespaces → clusters; LBs; NAT) and traffic lines, with hourly throughput, packet loss, median RTT; **6 weeks** of hourly snapshots; only `nic0`; see [[GCP21 - Getting Topology Data]].
 
 ## CLI
 ```bash

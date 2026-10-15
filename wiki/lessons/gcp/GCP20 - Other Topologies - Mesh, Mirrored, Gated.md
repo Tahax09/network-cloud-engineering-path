@@ -68,6 +68,16 @@ Fine-grained control of data movement between your cloud and **external resource
 | **Gated ingress** | **Inbound** to cloud: external clients reach only **selected** cloud services *(the pattern shown in the lecture)* | Load balancers / API gateway (Apigee, API Gateway), Cloud Armor, PSC service attachments, NVAs at the edge |
 | **Gated ingress and egress** | **Both directions** between hybrid/multicloud environments | Combination: exposed APIs each way via gateways, strict firewall policy in between |
 
+**Precise definitions from Google's Architecture Center** *(verified against Google Cloud docs, 2026-10-15)*. The gated pattern "exposes select applications and services in a fine-grained manner, based on specific exposed APIs or endpoints between the different environments":
+| Pattern | Who initiates | What is exposed | What is blocked |
+|---------|---------------|-----------------|-----------------|
+| **Gated egress** | **Only Google Cloud workloads** | Selected APIs in the private/on-prem environment, via an API gateway, load balancer facade, or PSC endpoint (internal IPs) | Other private systems; **any** connection initiated from the private environment into GCP |
+| **Gated ingress** | **Only the private/other-cloud environment** | Selected APIs in Google Cloud, via an API gateway or (proxy/application) LB facade, optionally through a **transit VPC** with NVA inspection | Other GCP systems; any connection initiated from GCP toward the private environment |
+| **Gated egress and ingress** | Both sides, **to specific APIs/IPs only** | APIs on each side (gateways, PSC endpoints, LBs) | Everything else; networks **don't need to align** (overlap is tolerable) |
+- **Use cases for bidirectional gated:** mergers and acquisitions, partner integrations, org units running their own environments.
+- **vs meshed pattern:** meshed = broad network-level connectivity; gated = API/endpoint-specific only.
+- **Security building blocks in the docs:** **Cloud NGFW Enterprise with IPS** (deep packet inspection without routing changes), a centralized **NGFW NVA** for advanced L7 needs, and **Apigee / Apigee Adapter for Envoy + Cloud Service Mesh** for zero-trust, service-level policy. For internet-reachable APIs: OAuth 2.0 + TLS, rate limiting, threat protection, mTLS to backends, IP allow-lists.
+
 The point of gating: **expose APIs, not networks**. Even with VPN/Interconnect in place, only defined services cross the boundary. This is the cloud version of the **screened subnet** ([[L20 - Network Defense Techniques]]). Google's docs ("Gated patterns" in the hybrid and multicloud architecture guide) also describe related patterns such as **meshed** and **handover**.
 
 ---

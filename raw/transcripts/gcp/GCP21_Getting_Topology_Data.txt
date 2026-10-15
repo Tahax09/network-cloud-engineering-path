@@ -1,0 +1,87 @@
+So far, you have learned about
+various different topologies. If you're wondering if there's a way to
+visualize the topology of the network, the answer is yes. Network topology does exactly that. Let's learn about getting
+topology data in this section. Network topology is a visualization tool
+that shows the topology of the network infrastructure. It serves as a map illustrating
+the complex relationships between various components and how they interact. Network topology offers an infrastructure
+view showcasing elements like VPC networks, hybrid connectivity, and
+connections to Google managed services. It goes beyond static configurations by
+incorporating real-time operational data, revealing traffic paths, throughput, and the current state of connections
+between various workloads. By presenting this information in
+a graph format, where nodes and lines represent entities and
+connections, network topology simplifies the understanding of complex
+networking relationships. This visual representation aids in
+identifying bottlenecks, optimizing traffic flows, and troubleshooting
+network issues more effectively. Network topology actively
+gathers real-time telemetry and configuration data from
+Google's infrastructure to create a visual representation
+of your network resources. It captures various elements
+like configuration details, performance metrics, and
+logs to deduce the relationships between resources within a single
+project or across multiple projects. By consolidating this information, network
+topology generates a comprehensive graph that accurately depicts your
+entire network deployment. Network topology maintains a historical
+record spanning six weeks, offering valuable insights into past
+network configurations and interactions. This history is organized into
+hourly snapshots commencing at the beginning of each hour. Each snapshot captures
+the fundamental entities and their communication patterns
+within that specific hour. Even if resources like instances
+are created and deleted within an hour, they are still documented in
+the snapshot for that duration. This ensures a comprehensive historical
+representation of your network's evolution. At the lowest level of each
+hierarchy are base entities, which represent individual resources
+capable of direct network communication, such as VM instances or GKE pods. When dealing with complex networks
+containing numerous base entities, a flat view can be overwhelming. To address this,
+network topology aggregates base entities into higher level hierarchical entities
+that can be expanded or collapsed. Initially, the graph displays all base
+entities aggregated into their top level hierarchy. For example, VM instances are aggregated
+into instance groups, then into zones. Meanwhile, GKE pods
+are aggregated into workloads, then namespaces, and
+finally into clusters. Each entity, whether base or hierarchical,
+is represented as a circular node in the graph, and each base
+entity has its own unique hierarchy. For example, load balancers are organized differently
+than VM instances within the graph. To simplify the view, network topology
+aggregates related resources into hierarchical entities, with each resource
+type having its own distinct hierarchy. Network topology visually represents
+traffic between entities as lines, connecting entities if at least
+one side is sending traffic. It displays connections across various
+hierarchy levels as long as the base entities communicate. For instance, a connection between
+two regions is shown if at least one VM instance in each
+region is communicating. The tool supports various
+traffic protocols, such as TCP, UDP, ICMP,
+ICMPv6, ESP, and GRE. For specific paths visualizing
+traffic within and across VPC networks, between Google Cloud
+and the Internet, and to and from VPN gateways, interconnect
+connections and router appliances. In the GKE view, network topology
+shows traffic within a cluster, between pods on different nodes and
+between pods on the same node if intranode visibility is enabled, and
+between clusters and external IPs. Let's explore our use case. Charlie, a network administrator,
+is responsible for a network that includes several
+load balanced applications. Charlie's been alerted to a latency
+issue causing the organization's mobile application to intermittently
+slow down and timeout. Multiple users are experiencing
+this problem, and Charlie has confirmed that no recent
+application deployments have occurred. The issue is likely due to a change in the
+network environment rather than a problem with the application itself. Charlie needs to use the network topology
+tool to get a comprehensive visibility into the cloud network infrastructure. They do this because the graphical
+representation of the network topologies enables the engineers to quickly
+understand the connections between resources, identify potential bottlenecks,
+and to troubleshoot network
+issues efficiently. Beginning with the external clients in
+the Americas, Charlie selects the traffic metrics between that region and
+the shopping site, LB, Load Balancer. Network topology then displays charts in
+the Details pane, providing information, such as ingress and egress traffic
+between the selected entities, along with key metrics like queries
+per second and HTTP request latency. Upon reviewing the request latency chart,
+Charlie notices that the 50th, 95th, and 99th percentile values
+are all higher than expected. To gain a broader perspective on this
+latency issue, Charlie extends the time series charts to cover the past
+six weeks for further analysis. After expanding the timeframe, Charlie
+observes a significant jump in latency that occurred approximately two hours ago, coinciding with the initial
+reports of the issue. This confirms their suspicion that the
+increased latency is related to the load balancer. To investigate further, Charlie navigates to the load balancing
+page in the Google Cloud console. Their analysis reveals that
+one of the instances in the Load Balancer's backend service was
+taking longer than usual to respond. By removing this problematic instance from
+service, Charlie successfully resolved the latency issue and
+restored normal application performance.

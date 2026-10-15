@@ -98,7 +98,7 @@ gcloud network-connectivity spokes linked-vpn-tunnels create onprem-spoke \
 gcloud network-connectivity hubs list-spokes corp-hub
 gcloud compute routes list --filter="network~prod-vpc"
 ```
-**Design rules:** no overlapping ranges · firewall rules are still **per VPC** · IPv6 not on hybrid spokes · **Star preset** = center group (shared services) ↔ edge groups, edges isolated from each other.
+**Design rules:** no overlapping ranges · firewall rules are still **per VPC** · hybrid-spoke IPv6 is Preview only (router appliances IPv4-only) · **Star preset** = center group (shared services) ↔ edge groups, edges isolated from each other.
 
 ```mermaid
 flowchart LR
@@ -279,9 +279,9 @@ flowchart LR
 
 | Pattern | Controls | Example |
 |---------|----------|---------|
-| **Gated egress** | **Outbound** from cloud to approved external services only | Cloud workloads may call the on-prem ERP API and nothing else |
-| **Gated ingress** | **Inbound** to cloud: externals reach only selected cloud services | On-prem apps call one cloud API through an internal LB / API gateway |
-| **Gated ingress and egress** | **Both directions** | Bidirectional API exchange between two clouds |
+| **Gated egress** | **Only GCP workloads initiate**, to selected on-prem/other-cloud APIs via a gateway/LB/PSC endpoint. The private side can't initiate into GCP | Cloud workloads may call the on-prem ERP API and nothing else |
+| **Gated ingress** | **Only the private side initiates**, to selected GCP APIs via an API gateway/LB (optionally a transit VPC + NVA). GCP can't initiate back | On-prem apps call one cloud API through an internal LB / API gateway |
+| **Gated ingress and egress** | Both sides, **specific APIs/IPs only**; networks needn't align | M&A, partner integrations, org units in different clouds |
 
 ### When it's used
 - **Hybrid and multicloud** with **security/compliance** requirements (banks, health, PCI scope reduction, [[L18 - Basic Network Security]]).

@@ -141,6 +141,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP18](wiki/lessons/gcp/GCP18%20-%20Hub-and-Spoke%20Topology.md) | Hub-and-Spoke Topology | Peering vs VPN vs NCC, transitivity, VPC/hybrid spokes, router appliance |
 | [GCP19](wiki/labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | Two isolated VPCs → NCC mesh hub → ping works; Network Topology |
 | [GCP20](wiki/lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | Full vs partial mesh, mirrored DR/dev-test, gated egress/ingress |
+| [GCP21](wiki/lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | Network Topology: entities/hierarchies, 6-week hourly snapshots, metrics, Charlie LB latency case |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 

@@ -31,7 +31,7 @@ Dev/test/staging VMs need **occasional outbound** internet access (updates, depe
 | Scale by adding/upgrading appliances | Add NAT IPs to the **same gateway**; scales with the network |
 | You patch and maintain it | Fully managed |
 
-**Per-VM allocation:** each VM gets a **NAT IP + a port range** (default minimum **64 ports per VM**; adjustable, or use **dynamic port allocation**). Total connections are capped by ports: one NAT IP has ~64k ports, shared across VMs.
+**Per-VM allocation:** each VM gets a **NAT IP + a port range** (default minimum **64 ports per VM**; adjustable, or use **dynamic port allocation**). Total connections are capped by ports: **one NAT IP offers 64,512 TCP + 64,512 UDP source ports** (of 65,536; the first 1,024 aren't used), shared across VMs. **Static port allocation is the default for Public NAT; Private NAT uses dynamic allocation by default.** *(verified against Google Cloud docs, 2026-10-15)*
 
 **Control plane vs data plane:** **Cloud Router** holds the NAT configuration (control plane). Google runs the NAT processing on the physical hosts running your VMs (data plane). **Cloud Router isn't in the packet path**, and no BGP is required for NAT.
 

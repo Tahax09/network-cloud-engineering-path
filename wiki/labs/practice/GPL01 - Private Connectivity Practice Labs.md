@@ -54,6 +54,8 @@ DEF=$(gcloud compute routes list --filter="network:hard-vpc AND destRange=0.0.0.
 gcloud compute routes delete $DEF --quiet
 gcloud compute routes create google-private --network=hard-vpc \
   --destination-range=199.36.153.8/30 --next-hop-gateway=default-internet-gateway
+gcloud compute routes create google-direct --network=hard-vpc \
+  --destination-range=34.126.0.0/18 --next-hop-gateway=default-internet-gateway   # direct-connectivity APIs (per docs)
 gcloud dns managed-zones create googleapis --dns-name=googleapis.com. \
   --visibility=private --networks=hard-vpc --description="PGA private VIP"
 gcloud dns record-sets create private.googleapis.com. --zone=googleapis --type=A --ttl=300 \
@@ -213,7 +215,7 @@ gcloud compute forwarding-rules create pscapis --global --network=lab-vpc \
 1. PGA still needs a route to the Google API IPs. The default route provided it; now nothing does.
 2. An address from the PSC NAT subnet (`192.168.0.x`), because PSC SNATs consumer traffic.
 3. Forward: Cloud Router custom advertisement of `10.240.0.0/16`. Return: export custom routes on the PSA peering.
-4. Fewer VMs fit per NAT IP (ports are finite: ~64k per IP), so you may need more IPs.
+4. Fewer VMs fit per NAT IP (ports are finite: 64,512 per IP for each of TCP and UDP), so you may need more IPs.
 5. Your own internal IP (no special VIP ranges), on-prem reachability through your routing, and per-endpoint control and logging.
 </details>
 

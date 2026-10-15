@@ -43,7 +43,7 @@ target_date: TBD
 | [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ### Course 3: Network Architecture
-*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP20 →)*
+*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP21 →)*
 
 | ID | Title | Status |
 |----|-------|--------|
@@ -54,6 +54,7 @@ target_date: TBD
 | [GCP18](../lessons/gcp/GCP18%20-%20Hub-and-Spoke%20Topology.md) | Hub-and-Spoke Topology | ✅ Complete |
 | [GCP19](../labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | ✅ Complete |
 | [GCP20](../lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | ✅ Complete |
+| [GCP21](../lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | ✅ Complete |
 
 ## Scenario Walkthroughs & Practice
 - [[GS01 - Private Connectivity Scenarios]] — Private connectivity scenarios — 8 walkthroughs with diagrams
@@ -109,6 +110,10 @@ target_date: TBD
 | Mesh | Full = all↔all (GKE Enterprise microservices); partial = strategic links (cross-region failover); HA/scale/perf, but n(n−1)/2 links |
 | Mirrored | Replica env/region for DR, dev/test, performance — unique IPs if ever connected |
 | Gated | Gated egress (outbound from cloud), gated ingress (inbound to cloud), gated ingress+egress (both) — hybrid/multicloud control |
+| Network Topology | Graph of entities + traffic; 6 weeks history, hourly snapshots; throughput, packet loss, median RTT; only nic0; no Cloud SQL/Memorystore/Filestore |
+| PGA ranges (docs) | private 199.36.153.8/30 + IPv6 2600:2d00:0002:2000::/56; restricted 199.36.153.4/30 + 2600:2d00:0002:1000::/56; also route/allow 34.126.0.0/18 (direct connectivity) |
+| NCC spoke types (docs) | VPC, producer VPC, NCC Gateway, hybrid; hybrid IPv6 = Preview; router appliance IPv4-only |
+| NAT ports (docs) | 64,512 TCP + 64,512 UDP ports per NAT IP; Public NAT static by default, Private NAT dynamic by default |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit

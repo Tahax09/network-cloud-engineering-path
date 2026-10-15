@@ -75,11 +75,13 @@ Cloud VPN tunnel ──▶ VPC network
 | | private.googleapis.com | restricted.googleapis.com |
 |-|----------------------|--------------------------|
 | IPv4 range | **199.36.153.8/30** | **199.36.153.4/30** |
-| IPv6 range | 2600:2d00:0002:2000::/64 | 2600:2d00:0002:1000::/64 |
+| IPv6 range | 2600:2d00:0002:2000::/56 | 2600:2d00:0002:1000::/56 |
 | APIs reachable | **Most** Google APIs | **Only APIs supported by VPC Service Controls** |
 | Use when | General private access | You need **VPC-SC** data exfiltration protection |
 
 > **Transcript note:** The lecture only shows `restricted.googleapis.com`. It warns that "only the supported APIs are accessible to this configuration, which might cause other services to be unreachable." That's the trade-off: restricted = VPC-SC-supported APIs only. If an app needs an API outside that set, use `private.googleapis.com`.
+
+**Also route + allow `34.126.0.0/18` (IPv6 `2001:4860:8040::/42`)** *(verified against Google Cloud docs, 2026-10-15)*: some Google APIs offer **direct connectivity** from VMs that bypasses Google Front Ends. With `private.` or `restricted.googleapis.com`, your **routes and egress firewall** must include these ranges too (no DNS records needed for them). With **default domains**, the default route `0.0.0.0/0 → default-internet-gateway` plus the default allow-egress rule already cover everything.
 
 **Cloud DNS limitation:** A Cloud DNS private zone for `googleapis.com` **overrides the whole domain**. Cloud DNS doesn't support **partial overrides** (e.g., only `storage.googleapis.com`), so every googleapis.com name must be covered by your records (typically a wildcard CNAME `*.googleapis.com → restricted.googleapis.com`). If you need partial overrides, run **BIND** (or another DNS server that supports them).
 

@@ -58,9 +58,15 @@ spoke: on-prem DC ──── [ HUB ] ──── spoke: remote office
 | **Hybrid spoke: Interconnect VLAN attachments** | On-prem over Dedicated/Partner Interconnect | High bandwidth |
 | **Hybrid spoke: Router appliance** | A **Compute Engine VM** running a router image: an **NCC partner** image or a **custom** image | Peers BGP with Cloud Router; your own logic (SD-WAN, filtering) controls connectivity between spoke and hub |
 
+### NCC per the docs *(verified against Google Cloud docs, 2026-10-15)*
+- **Four spoke types:** **VPC spokes**, **producer VPC spokes** (make a service consumed over VPC peering, e.g. a PSA-style producer network, reachable from the *other* spokes on the hub), **NCC Gateway spokes**, and **hybrid spokes**.
+- **Use cases named:** VPC-to-VPC (same or **different organizations**), **site-to-cloud** (VPCs ↔ on-prem/other clouds via any hybrid spoke), router-appliance-managed connectivity, and **site-to-site** (Google's network as your **WAN** between external sites, requiring the **site-to-site data transfer** feature, region support, and ASN rules).
+- **Route control:** spokes **export** via **export filters** (VPC spokes: IPv4 and IPv6 subnet ranges). **VPC spokes import all routes from their spoke group**. **Hybrid spokes** use **import filters** and can re-advertise imported subnet routes.
+- **Any-to-any:** a hub with both VPC and hybrid spokes supports any-to-any connectivity across all of them.
+
 ### Considerations before building
 - **IP ranges must not overlap** between the hub and spoke VPCs (subnet routes are exchanged).
-- **IPv6 isn't supported for hybrid spokes.**
+- **IPv6 on hybrid spokes:** the lecture says it isn't supported. Current docs *(verified against Google Cloud docs, 2026-10-15)* list **IPv6 dynamic-route export for HA VPN / Interconnect hybrid spokes in Preview**. **Router appliance spokes are IPv4-only.** Treat production hybrid IPv6 as not yet GA.
 - **Privately used public IP (PUPI) ranges are supported** by NCC.
 - NCC hub **topology presets** (beyond the lecture): **Mesh** (all VPC spokes reach each other; what the lab uses) and **Star** (spokes in an *edge* group reach only the *center* group, e.g. shared services, not each other).
 
