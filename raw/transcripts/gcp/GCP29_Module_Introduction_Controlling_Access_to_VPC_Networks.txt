@@ -1,0 +1,8 @@
+>> Welcome to the controlling
+access to VPC networks module. In this module, we'll cover some ways to
+restrict access to your VPC networks. We'll begin with an overview of the IAM,
+identity access management, resource hierarchy, and
+policy constraints. We will then cover firewall rules and how they further control
+access to your VPC networks. You will then use what you
+learned in a lab exercise, controlling access to VPC networks,
+followed by a brief quiz. Let's begin with IAM roles.

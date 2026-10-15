@@ -447,6 +447,78 @@ gcloud logging read 'resource.type="gce_subnetwork" AND logName:"vpc_flows"' --l
 
 ---
 
+## 12. IAM: roles, bindings, deny policies
+→ [[GCP30 - IAM Roles]] · visualization: [IAM Access Explorer](../visualizations/gcp/GCP29-30%20-%20IAM%20Access%20Explorer.html)
+
+```bash
+gcloud iam roles describe roles/compute.networkAdmin
+gcloud iam roles describe roles/compute.networkAdmin --format="value(includedPermissions)" | tr ';' '\n' | grep firewalls
+```
+**When:** "what exactly does this role allow?" before you grant it. The grep shows Network Admin has only `firewalls.get/list`.
+
+```bash
+gcloud projects add-iam-policy-binding PROJECT_ID \
+    --member="group:net-eng@cymbal.com" --role="roles/compute.networkViewer" \
+    [--condition='expression=request.time < timestamp("2026-12-31T00:00:00Z"),title=temp']
+gcloud resource-manager folders add-iam-policy-binding FOLDER_ID --member=... --role=...
+gcloud organizations add-iam-policy-binding ORG_ID --member=... --role=...
+gcloud projects remove-iam-policy-binding PROJECT_ID --member=... --role=...
+```
+| Piece | Meaning |
+|-------|---------|
+| `projects` / `resource-manager folders` / `organizations` | **Where** in the hierarchy the binding goes. Everything below inherits it |
+| `add-iam-policy-binding` | Adds one role → member binding (read-modify-write of the policy, done for you) |
+| `--member` | `user:`, `group:`, `serviceAccount:`, `domain:`. Prefer **groups** |
+| `--role` | Predefined `roles/...` or custom `projects/P/roles/NAME` / `organizations/O/roles/NAME` |
+| `--condition` | IAM Condition: time-bound or resource-scoped grant |
+
+**When:** granting least-privilege access. Pick the **smallest scope** that covers the need.
+
+```bash
+gcloud projects get-iam-policy PROJECT_ID --flatten="bindings[].members" \
+    --format="table(bindings.role,bindings.members)"
+```
+**When:** auditing who has what *directly* on the project. Inherited grants are on the folder/org policies, so check those too (or use Policy Analyzer).
+
+```bash
+gcloud iam roles create customNetFirewall --project=PROJECT_ID \
+    --title="Firewall Editor + SSL Viewer" --stage=GA \
+    --permissions=compute.firewalls.create,compute.firewalls.delete,compute.firewalls.get,compute.firewalls.list,compute.firewalls.update,compute.networks.get,compute.networks.list,compute.networks.updatePolicy,compute.sslCertificates.get,compute.sslCertificates.list
+gcloud iam roles update customNetFirewall --project=PROJECT_ID --add-permissions=compute.firewalls.get
+```
+| Piece | Meaning |
+|-------|---------|
+| `--project` / `--organization` | Where the custom role is **defined** (org-level roles are reusable across projects) |
+| `--permissions` | Exact list. Some permissions can't be used in custom roles |
+| `--stage` | `ALPHA` / `BETA` / `GA` / `DEPRECATED`: a label for lifecycle |
+
+**When:** no predefined role fits (too much or too little).
+
+```bash
+gcloud iam policies create deny-fw-edits --kind=denypolicies \
+    --attachment-point="cloudresourcemanager.googleapis.com/projects/PROJECT_ID" \
+    --policy-file=deny.json
+# deny.json: {"rules":[{"denyRule":{"deniedPrincipals":["principalSet://goog/public:all"],
+#   "exceptionPrincipals":["principalSet://goog/group/sec-team@cymbal.com"],
+#   "deniedPermissions":["compute.googleapis.com/firewalls.create","compute.googleapis.com/firewalls.update"]}}]}
+```
+| Piece | Meaning |
+|-------|---------|
+| `--kind=denypolicies` | Deny policy (checked **before** allow policies) |
+| `--attachment-point` | Org, folder or project (URL-encoded resource name) |
+| `deniedPermissions` | Uses the `service.googleapis.com/resource.verb` format |
+| `exceptionPrincipals` | Who is exempt (e.g., the security team) |
+
+**When:** hard guardrails that inherited allow grants can't override ("nobody but security edits firewall rules").
+
+```bash
+gcloud policy-intelligence troubleshoot-policy iam RESOURCE_FULL_NAME \
+    --principal-email=USER --permission=compute.subnetworks.delete
+```
+**When:** "why can (or can't) this person do X?" Shows which binding or deny rule decided it.
+
+---
+
 ## Linked Pages
 - [[gcp-product-map]] · [[gcp-private-access]] · [[gcp-network-architecture]] · [[gcp-routing]] · [[gcp-dns]]
 - [[certs/gcp-networking]]

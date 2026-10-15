@@ -1,0 +1,83 @@
+Karen, a cloud network administrator, is tasked
+with ensuring that principles of least privilege are maintained when granting access
+to cloud network engineers. Sarah must be able to view
+VPC network firewall rules. Jamal is tasked with tracking user access
+to cloud networking resources. Kalani must be able to view
+VPC network configurations. How can Karen grant everyone
+the access that they need? To answer this question,
+let’s explore IAM first. In the diagram, you can see a
+sample IAM resource hierarchy. Let’s use the diagram to review
+how IAM works. Google Cloud resources are organized hierarchically
+as shown in this tree structure. The Organization node is the root node in
+this hierarchy. Folders are the children of the organization. Projects are the children of the folders. And the individual resources
+are the children of projects. Each resource has exactly one parent. IAM allows you to set policies
+at all of these levels, where a policy contains a set
+of roles and members. Let’s go through each of the levels
+from top to bottom, as resources inherit policies
+from their parent. The organization resource
+represents your company. IAM roles granted at this level are inherited
+by all resources under the organization. The folder resource could represent your department. IAM roles granted at this level are inherited
+by all resources that the folder contains. Projects represent a trust boundary
+within your company. Services within the same project
+have a default level of trust. The IAM policy hierarchy always follows the
+same path as the Google Cloud resource hierarchy. This means that, if you change the resource
+hierarchy, the policy hierarchy also changes. For example, moving a project into a different
+organization will update the project's IAM policy to inherit from the new
+organization's IAM policy. Another thing to point out is
+that child policies cannot restrict access granted
+at the parent level. For example, if someone grants you
+the editor role for Department X and someone grants you the viewer role
+at the bookshelf project level, then you still have the
+editor role for that project. Therefore, it is a best practice to follow
+the principle of least privilege. The principle applies to identities, roles,
+and resources. Always select the smallest scope that’s
+necessary to reduce your exposure to risk. NOTE: Deny policies take
+precedence over access policies. They provide more granular control. Deny policies were recently introduced so
+you can define deny rules that prevent certain principals from using certain permissions,
+regardless of the roles they're granted. Each project, folder, and organization can
+have up to 5 deny policies attached to it. In addition to the basic roles, IAM provides
+predefined roles that give granular access to specific Google Cloud resources and prevent
+unwanted access to other resources. These roles are collections of permissions. Most of the time, to do any meaningful operations,
+you need more than one permission. For example, in this slide, a group of users
+is granted the network viewer role on project_a. This provides the users of that
+group a lot of permissions. Some are illustrated on the right side. The permissions are classes
+and methods in the APIs. For example, compute.networks.list can be
+broken into the service, resource, and verb, meaning that this permission is used to list
+all of the VPC networks that project_a contains. Grouping these permissions into roles and
+having those roles represent abstract functions makes them easier to manage. Also, users can have multiple roles,
+providing flexibility. In addition to the predefined roles, IAM also provides the ability to
+create customized IAM roles. You can create a custom IAM role
+with one or more permissions, and then grant that custom role to
+users who are part of your organization. In essence, custom roles enable you to
+enforce the principle of least privilege, ensuring that the user and service
+accounts in your organization have only the permissions essential
+to performing their intended functions. For example, you might want a user to
+create, modify, and delete firewall rules but have read-only permissions
+to SSL certificates. In this case, the security administrator
+role provides too many permissions and the network administrator role
+does not provide enough. So, you can select the corresponding permissions
+for firewall rules and SSL certificates as shown on the left side
+along with any other permissions to create a new custom
+network administrator role. IAM provides a UI and an API for creating
+and managing custom roles. For more information on custom roles, refer
+to Custom roles in the Google Cloud documentation. Let’s focus on predefined roles that provide
+granular access to VPC networking resources. There is the network viewer role, that provides
+read-only access to all networking resources. For example, if you have software that
+inspects your network configuration, you could grant that software’s service
+account the network viewer role. Next, the network administrator role contains
+permissions to create, modify, and delete networking resources, except for firewall
+rules and SSL certificates. In other words, the network administrator
+role allows read-only access to firewall rules, SSL certificates, and instances to view their
+ephemeral IP addresses. The security administrator role
+contains permissions to create, modify, and delete firewall rules
+and SSL certificates. Now, there are other predefined roles for
+networking resources that relate to Shared VPC, which allow an organization to connect
+resources from multiple projects to a common VPC network. We will cover Shared VPC, along
+with those other predefined roles, in a later module of this course. For more information on these roles, see
+Compute Engine IAM roles and permissions in the Google Cloud documentation. Going back to the use case. Karen uses IAM to ensure the network engineers
+have just enough access to do their jobs. If a predefined role exists that
+provides just the access that a cloud network engineer needs,
+she adds the engineer to it. If no predefined role exists with
+sufficient permissions, Karen creates a custom role with just enough
+permissions for the network engineer job responsibilities and then
+adds the engineer to it.

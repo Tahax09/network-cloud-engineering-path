@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IAM Access Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: header + tabs; tab 1 = hierarchy tree beside grant controls + evaluation trace; tab 2 = role matrix; tab 3 = custom role builder; tab 4 = Karen scenario */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb;
+  --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+    --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c; --vio:#ab88f3; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+  --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c; --vio:#ab88f3; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:20px}
+header{display:grid;gap:6px;max-width:800px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}
+.lead{color:var(--muted);max-width:70ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:12px;min-width:0}
+.field{display:grid;gap:4px}
+.k,.field label{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:8px;align-items:end}
+@media (max-width:600px){.row3,.row2{grid-template-columns:1fr}}
+.help{font-size:13px;color:var(--muted)}
+.btn{font:600 13px var(--f-body);color:var(--ink);background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.x{padding:2px 8px;font-size:12px}
+svg{display:block;width:100%;height:auto}
+.treebox{overflow-x:auto}.treebox svg{min-width:560px}
+.tnode{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+.tnode.target{stroke:var(--accent);stroke-width:2.4}
+.tnode.path{fill:var(--accent-soft)}
+.tl{font:600 13px var(--f-body);fill:var(--ink)}
+.ts{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.tedge{stroke:var(--line);stroke-width:1.6;fill:none}
+.tedge.path{stroke:var(--accent);stroke-width:2.6}
+.chip-a{fill:color-mix(in srgb,var(--ok) 16%,var(--surface));stroke:var(--ok)}
+.chip-d{fill:color-mix(in srgb,var(--bad) 16%,var(--surface));stroke:var(--bad)}
+.chip-t{font:500 10.5px var(--f-mono);fill:var(--ink)}
+.flow{width:100%;max-width:100%;height:auto;stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-12}}
+@media (prefers-reduced-motion: reduce){.flow{animation:none}}
+.list{display:grid;gap:6px}
+.grant{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:7px;padding:6px 8px;font-size:13px}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font:500 11px var(--f-mono);border:1px solid currentColor;white-space:nowrap}
+.pill.allow{color:var(--ok)}.pill.deny{color:var(--bad)}.pill.inh{color:var(--accent)}
+.trace{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.trace li{border-left:3px solid var(--line);padding:6px 10px;background:var(--sunken);border-radius:0 6px 6px 0;font-size:13.5px}
+.trace li.ok{border-left-color:var(--ok)}.trace li.bad{border-left-color:var(--bad)}.trace li.info{border-left-color:var(--accent)}
+.verdict{font:700 22px/1.2 var(--f-display);display:flex;align-items:center;gap:10px}
+.verdict.ok{color:var(--ok)}.verdict.bad{color:var(--bad)}
+.scroll{overflow-x:auto}
+table.m{width:100%;border-collapse:collapse;font-size:13px}
+.m th,.m td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.m th{font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;background:var(--sunken);white-space:nowrap}
+.m td.c{text-align:center;font:600 13px var(--f-mono)}
+.y{color:var(--ok)}.r{color:var(--warn)}.n{color:var(--muted)}
+.m td code{white-space:nowrap}
+.permparts{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font:500 16px var(--f-mono)}
+.permparts span{padding:4px 8px;border-radius:5px;border:1px solid var(--line)}
+.permparts .s{background:var(--accent-soft);border-color:var(--accent)}
+.permparts .rr{background:color-mix(in srgb,var(--vio) 16%,var(--surface));border-color:var(--vio)}
+.permparts .v{background:color-mix(in srgb,var(--ok) 16%,var(--surface));border-color:var(--ok)}
+.cb{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px}
+@media (max-width:700px){.cb{grid-template-columns:1fr}}
+.cb label{display:flex;gap:8px;align-items:center;font:12.5px var(--f-mono);cursor:pointer;padding:3px 0}
+.cb input{accent-color:var(--accent)}
+.group-t{font:600 13px var(--f-body);margin-top:6px}
+.meter{display:grid;gap:4px}
+.bar{height:10px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.cmp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:700px){.cmp{grid-template-columns:1fr}}
+.cmp div{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:4px;font-size:13px}
+.cmp b{font:600 14px var(--f-body)}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.people{grid-template-columns:1fr}}
+.person{border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:8px;align-content:start;background:var(--surface)}
+.person .need{color:var(--muted);font-size:13.5px}
+.res{font-size:13px;border-radius:6px;padding:8px 10px;background:var(--sunken);border-left:3px solid var(--line)}
+.res.good{border-left-color:var(--ok)}.res.over{border-left-color:var(--warn)}.res.under{border-left-color:var(--bad)}
+.note{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP29–GCP30 · Network Security, Module 2: Controlling Access to VPC Networks</div>
+    <h1>IAM Access Explorer</h1>
+    <p class="lead">IAM decides who can change your network. Grant roles anywhere in Cymbal's resource hierarchy and watch them flow down, add a deny policy and watch it override them, then compare the networking roles and build a least-privilege custom role.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Inheritance and deny</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Networking roles</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Custom role builder</button>
+    <button role="tab" id="t4" aria-selected="false" aria-controls="p4">Karen's team</button>
+  </div>
+
+  <!-- TAB 1 -->
+  <section id="p1" role="tabpanel" style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Cymbal's resource hierarchy</h2>
+        <div class="treebox"><svg id="tree" viewBox="0 0 640 400" aria-label="Organization, folders, projects, resources"></svg></div>
+        <p class="help">Green chips are allow grants and red chips are deny policies. The highlighted path is every level whose policy applies to the selected resource.</p>
+      </div>
+      <div class="panel">
+        <h2>Policies</h2>
+        <div class="list" id="grants"></div>
+        <div class="row3">
+          <div class="field"><label for="g-role">Role</label><select id="g-role"></select></div>
+          <div class="field"><label for="g-at">On</label><select id="g-at"></select></div>
+          <div class="field"><label for="g-kind">Type</label><select id="g-kind"><option value="allow">Allow</option><option value="deny">Deny</option></select></div>
+          <button class="btn primary" id="g-add" type="button">Add</button>
+        </div>
+        <p class="help" id="g-help">All grants and denies here are for one engineer, Kalani. A deny policy denies a permission, so with Type set to Deny, the Role list picks the permission to deny.</p>
+        <div class="btns" style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="preset1" type="button">Lecture example</button>
+          <button class="btn" id="preset2" type="button">Deny guardrail</button>
+          <button class="btn" id="preset3" type="button">Least privilege</button>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="panel">
+        <h2>Can Kalani do this?</h2>
+        <div class="row2">
+          <div class="field"><label for="q-perm">Permission (API call)</label><select id="q-perm"></select></div>
+          <div class="field"><label for="q-res">On resource</label><select id="q-res"></select></div>
+        </div>
+        <div class="permparts" id="pp" aria-label="Permission anatomy"></div>
+        <p class="help">Each permission reads <b>service</b>.<b>resource</b>.<b>verb</b>. You can't grant one permission directly. You grant a role that contains it.</p>
+      </div>
+      <div class="panel">
+        <div class="verdict" id="verdict"></div>
+        <ol class="trace" id="trace"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2 -->
+  <section id="p2" role="tabpanel" hidden style="display:grid;gap:18px">
+    <div class="panel">
+      <h2>What each role can do with networking resources</h2>
+      <div class="scroll"><table class="m" id="matrix"></table></div>
+      <p class="note">✔ create, modify and delete · R read-only · — none. Based on the lecture and the Compute Engine IAM role reference, simplified to the networking resources in this course.</p>
+    </div>
+    <div class="cmp">
+      <div><b>Network Viewer</b><span>Read-only on everything in networking. Good for auditors, dashboards and config-scanning tools running as a service account.</span><code>roles/compute.networkViewer</code></div>
+      <div><b>Network Admin</b><span>Builds the network: VPCs, subnets, routes, NAT, VPN, load balancers. Firewall rules and SSL certificates are read-only.</span><code>roles/compute.networkAdmin</code></div>
+      <div><b>Security Admin</b><span>Manages firewall rules and SSL certificates. The split from Network Admin is deliberate: the team that builds the network isn't automatically the team that opens it.</span><code>roles/compute.securityAdmin</code></div>
+    </div>
+  </section>
+
+  <!-- TAB 3 -->
+  <section id="p3" role="tabpanel" hidden style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Pick only the permissions the job needs</h2>
+        <p class="help">The lecture's example: create, modify and delete firewall rules, but read-only SSL certificates. Security Admin gives too much, and Network Admin gives too little.</p>
+        <div id="cbs"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="cb-lecture" type="button">Load lecture example</button><button class="btn" id="cb-clear" type="button">Clear</button></div>
+      </div>
+      <div class="panel">
+        <h2>How it compares</h2>
+        <div id="fit"></div>
+        <span class="k">gcloud</span>
+        <pre class="cmd" id="cb-cmd"></pre>
+        <p class="note">A custom role doesn't pick up new permissions when Google changes an API, so you maintain it yourself. Prefer a predefined role whenever one fits.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 4 -->
+  <section id="p4" role="tabpanel" hidden style="display:grid;gap:18px">
+    <div class="panel">
+      <h2>Karen assigns least privilege</h2>
+      <p class="help">Choose a role for each engineer. The verdict shows whether it covers the need, gives too much, or falls short.</p>
+    </div>
+    <div class="people" id="people"></div>
+    <p class="note">The lecture gives the method (use a predefined role if one fits, otherwise build a custom role) but doesn't name a role per person. The "best fit" verdicts here follow the docs' role descriptions.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+
+/* tabs */
+['1','2','3','4'].forEach(n=>$('t'+n).addEventListener('click',()=>{['1','2','3','4'].forEach(m=>{$('t'+m).setAttribute('aria-selected',m===n);$('p'+m).hidden=m!==n;});}));
+
+/* ---------- data ---------- */
+const PERMS=[
+ 'compute.networks.list','compute.networks.create','compute.subnetworks.delete','compute.routes.create',
+ 'compute.firewalls.list','compute.firewalls.update','compute.sslCertificates.create','compute.sslCertificates.list',
+ 'compute.instances.delete','resourcemanager.projects.getIamPolicy'
+];
+const NET_READ=['compute.networks.list','compute.firewalls.list','compute.sslCertificates.list'];
+const ROLES={
+ 'roles/viewer':{name:'Viewer (basic)',perms:['compute.networks.list','compute.firewalls.list','compute.sslCertificates.list','resourcemanager.projects.getIamPolicy']},
+ 'roles/editor':{name:'Editor (basic)',perms:['compute.networks.list','compute.networks.create','compute.subnetworks.delete','compute.routes.create','compute.firewalls.list','compute.firewalls.update','compute.sslCertificates.create','compute.sslCertificates.list','compute.instances.delete']},
+ 'roles/compute.networkViewer':{name:'Network Viewer',perms:NET_READ},
+ 'roles/compute.networkAdmin':{name:'Network Admin',perms:['compute.networks.list','compute.networks.create','compute.subnetworks.delete','compute.routes.create','compute.firewalls.list','compute.sslCertificates.list']},
+ 'roles/compute.securityAdmin':{name:'Security Admin',perms:['compute.firewalls.list','compute.firewalls.update','compute.sslCertificates.create','compute.sslCertificates.list']},
+ 'roles/iam.securityReviewer':{name:'Security Reviewer',perms:['resourcemanager.projects.getIamPolicy']}
+};
+const NODES={
+ org:{label:'cymbal.com',sub:'Organization',x:250,y:20,parent:null},
+ fx:{label:'Department X',sub:'Folder',x:80,y:120,parent:'org'},
+ fy:{label:'Department Y',sub:'Folder',x:420,y:120,parent:'org'},
+ pb:{label:'bookshelf',sub:'Project',x:10,y:220,parent:'fx'},
+ pa:{label:'project_a',sub:'Project',x:180,y:220,parent:'fx'},
+ pc:{label:'payments',sub:'Project',x:420,y:220,parent:'fy'},
+ rv:{label:'vpc-shelf',sub:'VPC network',x:10,y:320,parent:'pb'},
+ ra:{label:'vpc-a',sub:'VPC network',x:180,y:320,parent:'pa'},
+ rc:{label:'vpc-pay',sub:'VPC network',x:420,y:320,parent:'pc'}
+};
+const W=140,H=48;
+let grants=[];
+function chain(id){const out=[];while(id){out.push(id);id=NODES[id].parent;}return out;}
+
+/* ---------- selects ---------- */
+function fill(sel,items){sel.innerHTML=items.map(([v,t])=>`<option value="${v}">${t}</option>`).join('');}
+function roleOpts(){
+  if($('g-kind').value==='deny'){fill($('g-role'),PERMS.map(p=>[p,'deny '+p]));}
+  else fill($('g-role'),Object.entries(ROLES).map(([k,r])=>[k,r.name]));
+}
+fill($('g-at'),Object.entries(NODES).map(([k,n])=>[k,`${n.label} (${n.sub})`]));
+fill($('q-perm'),PERMS.map(p=>[p,p]));
+fill($('q-res'),Object.entries(NODES).filter(([k,n])=>n.sub==='VPC network'||n.sub==='Project').map(([k,n])=>[k,`${n.label} (${n.sub})`]));
+$('q-res').value='rv';$('q-perm').value='compute.subnetworks.delete';
+$('g-kind').addEventListener('change',roleOpts);roleOpts();
+
+$('g-add').addEventListener('click',()=>{
+  const kind=$('g-kind').value,at=$('g-at').value,v=$('g-role').value;
+  grants.push(kind==='deny'?{kind,at,perm:v}:{kind,at,role:v});render();
+});
+function preset(n){
+  if(n===1)grants=[{kind:'allow',at:'fx',role:'roles/editor'},{kind:'allow',at:'pb',role:'roles/viewer'}];
+  if(n===2)grants=[{kind:'allow',at:'fx',role:'roles/editor'},{kind:'allow',at:'pb',role:'roles/viewer'},{kind:'deny',at:'org',perm:'compute.subnetworks.delete'}];
+  if(n===3)grants=[{kind:'allow',at:'pb',role:'roles/compute.networkViewer'}];
+  render();
+}
+$('preset1').addEventListener('click',()=>preset(1));
+$('preset2').addEventListener('click',()=>preset(2));
+$('preset3').addEventListener('click',()=>preset(3));
+['q-perm','q-res'].forEach(id=>$(id).addEventListener('change',render));
+
+/* ---------- evaluation ---------- */
+function evaluate(perm,res){
+  const path=chain(res);const steps=[];
+  const denies=grants.filter(g=>g.kind==='deny'&&path.includes(g.at)&&g.perm===perm);
+  const allDeny=grants.filter(g=>g.kind==='deny'&&path.includes(g.at));
+  steps.push({c:'info',t:`IAM collects policies from ${res===path[0]?NODES[res].label:''} and every ancestor: ${path.map(p=>NODES[p].label).join(' → ')}.`});
+  if(denies.length){
+    const d=denies[0];
+    steps.push({c:'bad',t:`Step 1, deny policies: the deny policy on ${NODES[d.at].label} denies ${perm}. Deny is checked first, so IAM stops here.`});
+    return{ok:false,steps,path};
+  }
+  steps.push({c:'ok',t:allDeny.length?`Step 1, deny policies: ${allDeny.length} on this path, but none denies ${perm}. On to allow policies.`:'Step 1, deny policies: none on this path. On to allow policies.'});
+  const allows=grants.filter(g=>g.kind==='allow'&&path.includes(g.at));
+  if(!allows.length){steps.push({c:'bad',t:'Step 2, allow policies: Kalani has no roles anywhere on this path. IAM denies by default.'});return{ok:false,steps,path};}
+  const hits=allows.filter(g=>ROLES[g.role].perms.includes(perm));
+  allows.forEach(g=>{
+    const has=ROLES[g.role].perms.includes(perm);
+    const inh=g.at!==res?' (inherited)':'';
+    steps.push({c:has?'ok':'info',t:`${ROLES[g.role].name} on ${NODES[g.at].label}${inh}: ${has?'contains':'doesn\'t contain'} ${perm}.`});
+  });
+  if(hits.length){
+    const lower=allows.filter(g=>!ROLES[g.role].perms.includes(perm));
+    if(lower.length&&hits.some(h=>path.indexOf(h.at)>path.indexOf(lower[0].at)))
+      steps.push({c:'info',t:`The narrower ${ROLES[lower[0].role].name} grant lower down doesn't remove the broader inherited grant. Effective access is the union of all of them.`});
+    return{ok:true,steps,path};
+  }
+  steps.push({c:'bad',t:`No granted role contains ${perm}, so IAM denies by default.`});
+  return{ok:false,steps,path};
+}
+
+/* ---------- render ---------- */
+function render(){
+  const perm=$('q-perm').value,res=$('q-res').value;
+  const r=evaluate(perm,res);
+  // tree
+  const svg=$('tree');svg.innerHTML='';
+  for(const [id,n] of Object.entries(NODES)){
+    if(!n.parent)continue;const p=NODES[n.parent];
+    const on=r.path.includes(id)&&r.path.includes(n.parent);
+    el('path',{d:`M${p.x+W/2} ${p.y+H} C ${p.x+W/2} ${p.y+H+30}, ${n.x+W/2} ${n.y-30}, ${n.x+W/2} ${n.y}`,class:'tedge'+(on?' path flow':'')},svg);
+  }
+  for(const [id,n] of Object.entries(NODES)){
+    const on=r.path.includes(id);
+    el('rect',{x:n.x,y:n.y,width:W,height:H,rx:8,class:'tnode'+(on?' path':'')+(id===res?' target':'')},svg);
+    el('text',{x:n.x+10,y:n.y+20,class:'tl'},svg,n.label);
+    el('text',{x:n.x+10,y:n.y+37,class:'ts'},svg,n.sub);
+    const gs=grants.filter(g=>g.at===id);
+    gs.forEach((g,i)=>{
+      const txt=g.kind==='deny'?'DENY '+g.perm.split('.').slice(1).join('.'):ROLES[g.role].name;
+      const w=Math.min(190,txt.length*6.4+14);const cx=n.x+W+6,cy=n.y+2+i*22;
+      el('rect',{x:cx,y:cy,width:w,height:18,rx:9,class:g.kind==='deny'?'chip-d':'chip-a'},svg);
+      el('text',{x:cx+7,y:cy+13,class:'chip-t'},svg,txt);
+    });
+  }
+  // grants list
+  $('grants').innerHTML=grants.length?grants.map((g,i)=>`<div class="grant"><span class="pill ${g.kind}">${g.kind}</span><span>${g.kind==='deny'?`<code>${g.perm}</code>`:`<b>${ROLES[g.role].name}</b> <code>${g.role}</code>`} on ${NODES[g.at].label}</span><button class="btn x" data-i="${i}" type="button" aria-label="Remove">Remove</button></div>`).join(''):'<p class="help">No policies yet. Kalani can\'t do anything until she has a role.</p>';
+  $('grants').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{grants.splice(+b.dataset.i,1);render();}));
+  // perm anatomy
+  const [s,rr,...v]=perm.split('.');
+  $('pp').innerHTML=`<span class="s" title="service">${s}</span>.<span class="rr" title="resource">${rr}</span>.<span class="v" title="verb">${v.join('.')}</span>`;
+  // verdict
+  $('verdict').className='verdict '+(r.ok?'ok':'bad');
+  $('verdict').textContent=r.ok?`✔ Allowed: ${perm} on ${NODES[res].label}`:`✕ Denied: ${perm} on ${NODES[res].label}`;
+  $('trace').innerHTML=r.steps.map(s=>`<li class="${s.c}">${s.t}</li>`).join('');
+}
+preset(1);
+
+/* ---------- TAB 2 matrix ---------- */
+const RES=['VPC networks / subnets','Routes','Cloud NAT / Cloud Router','VPN / Interconnect','Load balancers (forwarding rules, backend services)','Firewall rules','SSL certificates','VM instances','Static / ephemeral IPs'];
+const M={
+ 'Network Viewer':['R','R','R','R','R','R','R','R','R'],
+ 'Network Admin':['✔','✔','✔','✔','✔','R','R','R','✔'],
+ 'Security Admin':['R','R','R','R','R','✔','✔','R','R'],
+ 'Editor (basic)':['✔','✔','✔','✔','✔','✔','✔','✔','✔']
+};
+$('matrix').innerHTML=`<thead><tr><th>Resource</th>${Object.keys(M).map(k=>`<th>${k}</th>`).join('')}</tr></thead><tbody>${RES.map((r,i)=>`<tr><td>${r}</td>${Object.values(M).map(row=>{const v=row[i];return `<td class="c ${v==='✔'?'y':v==='R'?'r':'n'}">${v}</td>`;}).join('')}</tr>`).join('')}</tbody>`;
+
+/* ---------- TAB 3 builder ---------- */
+const GROUPS={
+ 'Firewall rules':['compute.firewalls.create','compute.firewalls.delete','compute.firewalls.get','compute.firewalls.list','compute.firewalls.update'],
+ 'Networks (needed to attach rules)':['compute.networks.get','compute.networks.list','compute.networks.updatePolicy'],
+ 'SSL certificates':['compute.sslCertificates.create','compute.sslCertificates.delete','compute.sslCertificates.get','compute.sslCertificates.list'],
+ 'Subnets and routes':['compute.subnetworks.create','compute.subnetworks.delete','compute.routes.create','compute.routes.delete']
+};
+const SECADMIN=new Set([...GROUPS['Firewall rules'],...GROUPS['SSL certificates'],'compute.networks.get','compute.networks.list','compute.networks.updatePolicy']);
+const NETADMIN=new Set([...GROUPS['Networks (needed to attach rules)'],...GROUPS['Subnets and routes'],'compute.firewalls.get','compute.firewalls.list','compute.sslCertificates.get','compute.sslCertificates.list']);
+const LECTURE=new Set([...GROUPS['Firewall rules'],...GROUPS['Networks (needed to attach rules)'],'compute.sslCertificates.get','compute.sslCertificates.list']);
+$('cbs').innerHTML=Object.entries(GROUPS).map(([g,ps])=>`<div class="group-t">${g}</div><div class="cb">${ps.map(p=>`<label><input type="checkbox" value="${p}" id="cb-${p.replace(/\./g,'-')}">${p}</label>`).join('')}</div>`).join('');
+const boxes=()=>[...document.querySelectorAll('#cbs input')];
+function builder(){
+  const sel=new Set(boxes().filter(b=>b.checked).map(b=>b.value));
+  function cmp(name,set){
+    const missing=[...sel].filter(p=>!set.has(p));const extra=[...set].filter(p=>!sel.has(p));
+    const cls=!sel.size?'':missing.length?'under':extra.length?'over':'good';
+    const txt=!sel.size?'Pick some permissions.':missing.length?`Too little: missing ${missing.length} (${missing.slice(0,2).join(', ')}${missing.length>2?'…':''})`:extra.length?`Too much: ${extra.length} extra permissions (${extra.slice(0,2).join(', ')}${extra.length>2?'…':''})`:'Exact fit';
+    return `<div class="res ${cls}"><b>${name}</b>: ${txt}</div>`;
+  }
+  $('fit').innerHTML=`<div class="meter"><span class="k">Custom role: ${sel.size} permissions</span><div class="bar"><i style="width:${Math.min(100,sel.size/16*100)}%"></i></div></div>`+cmp('Security Admin',SECADMIN)+cmp('Network Admin',NETADMIN)+(sel.size?`<div class="res good"><b>Custom role</b>: exactly the ${sel.size} permissions you picked</div>`:'');
+  $('cb-cmd').textContent=sel.size?`gcloud iam roles create customNetFirewall --project=PROJECT_ID \\\n    --title="Firewall Editor + SSL Viewer" --stage=GA \\\n    --permissions=${[...sel].join(',')}\n\ngcloud projects add-iam-policy-binding PROJECT_ID \\\n    --member="group:net-eng@cymbal.com" \\\n    --role="projects/PROJECT_ID/roles/customNetFirewall"`:'# pick permissions on the left';
+}
+document.getElementById('cbs').addEventListener('change',builder);
+$('cb-lecture').addEventListener('click',()=>{boxes().forEach(b=>b.checked=LECTURE.has(b.value));builder();});
+$('cb-clear').addEventListener('click',()=>{boxes().forEach(b=>b.checked=false);builder();});
+$('cb-lecture').click();
+
+/* ---------- TAB 4 Karen ---------- */
+const PEOPLE=[
+ {id:'sarah',name:'Sarah',need:'Must be able to view VPC firewall rules.',opts:[
+   ['roles/compute.networkViewer','Network Viewer','good','Read-only on all networking, firewall rules included. The simplest least-privilege fit. For a stricter fit, use a custom role with only compute.firewalls.get and list.'],
+   ['roles/compute.securityAdmin','Security Admin','over','She could create and delete firewall rules and SSL certs. Far more than viewing.'],
+   ['roles/compute.networkAdmin','Network Admin','over','Covers viewing firewall rules, but adds write access to every other networking resource.'],
+   ['roles/editor','Editor (basic)','over','Write access to almost everything in the project.'],
+   ['roles/iam.securityReviewer','Security Reviewer','under','Shows IAM policies, not firewall rules.']]},
+ {id:'jamal',name:'Jamal',need:'Tracks user access to cloud networking resources.',opts:[
+   ['roles/iam.securityReviewer','Security Reviewer + Logs Viewer','good','Security Reviewer shows who has which roles. roles/logging.viewer adds who did what, from the Admin Activity audit logs. Add roles/logging.privateLogViewer for Data Access logs.'],
+   ['roles/compute.networkViewer','Network Viewer','under','Shows network configuration, but not who has access or who changed what.'],
+   ['roles/viewer','Viewer (basic)','over','Read access to almost everything, far beyond networking and access tracking.'],
+   ['roles/compute.networkAdmin','Network Admin','over','Write access to the network, and still no IAM policy view.']]},
+ {id:'kalani',name:'Kalani',need:'Must be able to view VPC network configurations.',opts:[
+   ['roles/compute.networkViewer','Network Viewer','good','Read-only on all networking resources: an exact match for the job.'],
+   ['roles/compute.networkAdmin','Network Admin','over','She could create and delete VPCs, subnets and routes.'],
+   ['roles/viewer','Viewer (basic)','over','Read access to every service in the project, not just networking.'],
+   ['roles/compute.securityAdmin','Security Admin','over','Write access to firewall rules and certificates, which she doesn\'t need.']]}
+];
+$('people').innerHTML=PEOPLE.map(p=>`<div class="person"><h3>${p.name}</h3><p class="need">${p.need}</p><div class="field"><label for="k-${p.id}">Grant</label><select id="k-${p.id}"><option value="">Choose a role…</option>${p.opts.map((o,i)=>`<option value="${i}">${o[1]}</option>`).join('')}</select></div><div class="res" id="kr-${p.id}">No role yet.</div></div>`).join('');
+PEOPLE.forEach(p=>$('k-'+p.id).addEventListener('change',e=>{
+  const o=p.opts[+e.target.value];const out=$('kr-'+p.id);
+  if(!o){out.className='res';out.textContent='No role yet.';return;}
+  const label={good:'✔ Least privilege',over:'⚠ Too much access',under:'✕ Doesn\'t cover the need'}[o[2]];
+  out.className='res '+o[2];out.innerHTML=`<b>${label}.</b> ${o[3]}<br><code>${o[0]}</code>`;
+}));
+})();
+</script>
+</body>
+</html>

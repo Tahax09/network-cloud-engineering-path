@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] ingest+verify | GCP29–GCP30 — Controlling Access module intro + IAM Roles
+Module 2 intro (control plane IAM vs data plane firewall) and IAM roles (hierarchy inheritance, union, deny-first, permission anatomy, Network Viewer/Admin/Security Admin, custom role, Karen scenario mapping). Verified against IAM deny docs + quotas: deny policies per resource = 500 (lecture said 5). New in-repo viz GCP29-30 IAM Access Explorer; command anatomy §12 IAM.
+
 ## [2026-10-15] quiz | GQ04 — DDoS Protection Module Quiz 2/2
 Saved Coursera graded Module 1 (Course 4) quiz with answer key, wrong-option traps, exam keyword map. Embedded prompt-injection block ignored. Marked GCP24–27 quiz_attempted.
 

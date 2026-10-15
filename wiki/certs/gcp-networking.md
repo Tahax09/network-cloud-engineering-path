@@ -69,6 +69,13 @@ target_date: TBD
 | [GCP27](../lessons/gcp/GCP27%20-%20Types%20of%20Complementary%20Partner%20Products.md) | Types of Complementary Partner Products | ✅ Complete |
 | [GCP28](../labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Lab: Configuring Traffic Blocklisting with Google Cloud Armor | ✅ Complete |
 
+*Module 2: Controlling Access to VPC Networks (GCP29 →)*
+
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP29](../lessons/gcp/GCP29%20-%20Module%20Introduction%20-%20Controlling%20Access%20to%20VPC%20Networks.md) | Module Introduction - Controlling Access to VPC Networks | ✅ Complete |
+| [GCP30](../lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | ✅ Complete |
+
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |
 |------|--------|-------|
@@ -142,6 +149,8 @@ target_date: TBD
 | Google scale | One data center ~1,300 Tbps bisection vs internet ~200 Tbps; Cloud Armor blocked 46M rps (2022) and 398M rps (Aug 2023) |
 | DDoS mitigations | LB (built-in L3/L4; L7 LBs also stop Slowloris) · small attack surface (tier subnets, firewall, no public IPs, IAP) · VPN/Interconnect · Cloud CDN · Apigee · Cloud Armor |
 | Cloud Armor | Edge WAF + DDoS; policy = ordered rules (condition, action, priority) on backend service; OWASP preconfigured rules, geo, rate-based ban, reCAPTCHA bots |
+| IAM inheritance | Org → folder → project → resource; effective = union; child can't restrict parent; move project = new inheritance; deny policies checked first (docs: 500 per resource; lecture said 5) |
+| Networking roles | Network Viewer = read-only all networking · Network Admin = manage networking except firewall rules + SSL certs (read-only) · Security Admin = firewall rules + SSL certs · custom role when no fit |
 | Cloud Armor rules (lab) | Default rule priority 2147483647 sets blocklist (allow) vs allowlist (deny); lower number first, first match wins; deny-403/404/502; attach to backend service; client IP in LB logs `httpRequest.remoteIp` (backends see GFE IPs) |
 | Partner security categories | Data protection (DLP, DCAP, encryption, HSM) · Infrastructure protection (NGFW, WAF, proxy, DDoS, container) · Scanning/logging/monitoring (vuln scan, SIEM) · Identity/user (SSO, IAM, MDM/MAM, CASB) · Config/vuln/risk/compliance |
 | Armor Standard vs Enterprise | Adaptive Protection, threat intel, named IP lists, advanced network DDoS = Enterprise; bill protection + DDoS response team = Enterprise Annual only |
