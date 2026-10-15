@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] visualize | GCP28 — Cloud Armor at the Edge (interactive)
+Published interactive artifact https://claude.ai/artifact/HUYW5ZyNyEmr5ZnnWx1Wvj (source wiki/visualizations/gcp/). New standing rule: every GCP lesson gets an interactive visualization; backfill GCP01–GCP27 pending.
+
 ## [2026-10-15] update | gcp-product-map diagrams
 Added 5 Mermaid diagrams: request-path big picture (edge → compute → data → APIs), compute decision flow, storage/DB decision flow, networking connectivity map (+ need→product table), resource hierarchy GCP vs AWS.
 

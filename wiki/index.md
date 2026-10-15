@@ -169,3 +169,8 @@
 | [GCP12 lab](labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | GCP Private Google Access + Cloud NAT + IAP + NAT logging | Complete |
 | [GCP19 lab](labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | GCP hub-and-spoke with Network Connectivity Center (VPC spokes, mesh preset) | Complete |
 | [GCP28 lab](labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor IP blocklist (deny-404) on a global Application LB + policy logs | Complete |
+
+## Interactive Visualizations
+| ID | Visualization | Shows |
+|----|---------------|-------|
+| GCP28 | [Cloud Armor at the Edge](https://claude.ai/artifact/HUYW5ZyNyEmr5ZnnWx1Wvj) | POP/GFE routing to closest backend with capacity, stress overflow, blocklist vs allowlist, propagation, policy logs |
