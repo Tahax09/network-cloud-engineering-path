@@ -55,6 +55,13 @@ target_date: TBD
 | [GCP19](../labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | ✅ Complete |
 | [GCP20](../lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | ✅ Complete |
 
+## Scenario Walkthroughs & Practice
+- [[GS01 - Private Connectivity Scenarios]] — Private connectivity scenarios — 8 walkthroughs with diagrams
+- [[GS02 - Network Topologies Explained]] — Topologies explained — how, when, pros/cons, implementation
+- [[GS03 - Architecture and Topology Scenarios]] — Architecture & topology scenarios — 8 walkthroughs with diagrams
+- [[GPL01 - Private Connectivity Practice Labs]] — Practice labs: hardened VPC, PSC overlap, PSA hybrid, NAT load, PSC for APIs
+- [[GPL02 - Architecture and Topology Practice Labs]] — Practice labs: 3-tier SA firewall, NCC star, VPN hub, failover, gated egress, mirrored IaC
+
 ## Key Exam Facts (collected from sessions)
 
 | Topic | Key Fact |

@@ -26,7 +26,8 @@ Networking + Cloud/
     │   ├── gcp/                     ← GQxx (Google Cloud Networking)
     │   ├── wireshark/               ← WQxx (Wireshark 101)
     │   └── interview/               ← IQxx interview prep
-    └── labs/                        ← hands-on projects and exercises
+    ├── scenarios/gcp/               ← GSxx scenario walkthroughs (diagrams, steps, why)
+    └── labs/                        ← hands-on projects and exercises; labs/practice/ = GPLxx practice labs
 ```
 
 ## Page Formats

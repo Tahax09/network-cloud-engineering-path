@@ -13,6 +13,7 @@ An Obsidian knowledge base for self-study in **networking, cloud, and infrastruc
 - [CompTIA Network+ N10-009](#comptia-network-n10-009)
 - [Google Cloud Networking](#google-cloud-networking)
 - [Wireshark 101](#wireshark-101-packet-analysis-essentials)
+- [Scenario Walkthroughs & Practice Labs](#scenario-walkthroughs--practice-labs)
 - [Quizzes & Practice Exams](#quizzes--practice-exams)
 - [Concept Reference](#concept-reference)
 - [Labs](#labs)
@@ -49,7 +50,8 @@ An Obsidian knowledge base for self-study in **networking, cloud, and infrastruc
     │   ├── gcp/                  # GQ graded
     │   ├── wireshark/            # WQ quizzes
     │   └── interview/            # IQ interview prep
-    └── labs/                     # Hands-on lab notes
+    ├── scenarios/gcp/            # GSxx scenario walkthroughs + topology guide
+    └── labs/                     # Hands-on lab notes; labs/practice/ = GPLxx practice labs
 ```
 
 ## How a Lesson Page Works
@@ -163,6 +165,20 @@ Lab-heavy protocol analysis course, running in parallel with Google Cloud. Cours
 | [WS10](wiki/lessons/wireshark/WS10%20-%20The%20Statistics%20View.md) | The Statistics View | Pre-Lab-SlowNetwork.pcapng | Conversations & Endpoints per layer, asymmetric next-hop MACs, tshark -z |
 
 Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
+
+---
+
+## Scenario Walkthroughs & Practice Labs
+
+Step-by-step explanations of every course scenario (context → architecture diagram → diagnosis workflow → commands → why → verify), plus original practice labs with hidden solutions. Diagrams are Mermaid (render in Obsidian and GitHub).
+
+| ID | Page | Covers |
+|----|------|--------|
+| [GS01](wiki/scenarios/gcp/GS01%20-%20Private%20Connectivity%20Scenarios.md) | Private connectivity scenarios — 8 walkthroughs with diagrams | GCP07–GCP13 |
+| [GS02](wiki/scenarios/gcp/GS02%20-%20Network%20Topologies%20Explained.md) | Topologies explained — how, when, pros/cons, implementation | GCP17–GCP20 |
+| [GS03](wiki/scenarios/gcp/GS03%20-%20Architecture%20and%20Topology%20Scenarios.md) | Architecture & topology scenarios — 8 walkthroughs with diagrams | GCP14–GCP20 |
+| [GPL01](wiki/labs/practice/GPL01%20-%20Private%20Connectivity%20Practice%20Labs.md) | Practice labs: hardened VPC, PSC overlap, PSA hybrid, NAT load, PSC for APIs | GCP07–GCP13 |
+| [GPL02](wiki/labs/practice/GPL02%20-%20Architecture%20and%20Topology%20Practice%20Labs.md) | Practice labs: 3-tier SA firewall, NCC star, VPN hub, failover, gated egress, mirrored IaC | GCP14–GCP20 |
 
 ---
 

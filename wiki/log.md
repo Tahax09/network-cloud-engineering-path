@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] create | GCP scenario walkthroughs (GS01–GS03) + practice labs (GPL01–GPL02)
+GS01: 8 private-connectivity scenarios (PGA use case, PGA vs NAT, on-prem PGA advertisement, PSC partner API with overlap, PSC from peered VPC, PSA hybrid both directions, NAT port exhaustion, NAT subnet mapping) — each with Mermaid architecture + diagnosis workflow, commands, why, verify. GS02: topology guide (hub-and-spoke incl. NCC star, full mesh, partial mesh + failover sequence, mirrored, gated egress/ingress) with how-it-works, when, pros/cons, implementation commands, comparison table. GS03: 8 architecture/topology scenarios (Cymbal global 3-tier, cloned IPs, IPAM/compliance, peering sprawl → NCC migration, non-transitive peering hub fixes, NCC spoke3 debug, DR mirror, Nur's hybrid estate). GPL01/GPL02: 11 new practice labs + design challenge with hidden solutions. New folders scenarios/gcp/ and labs/practice/ (CLAUDE.md updated).
+
 ## [2026-10-15] ingest | GCP20 — Other Topologies: Mesh, Mirrored, Gated (Course 3, Module 2)
 Ingested mesh (full vs partial; GKE Enterprise microservices; cross-region failover; HA/scalability/performance/no central point), mirrored (DR standby, isolated dev/test, nearby-region performance), gated (egress, ingress, ingress+egress for hybrid/multicloud). Added trade-offs (n(n−1)/2, no central inspection → per-node policy), mirror-layout-not-addresses rule, implementation mapping per gated pattern, full Module 2 topology comparison table. Filled the pending mesh/mirrored/gated rows on gcp-network-architecture concept page and GCP17 module map.
 

@@ -132,6 +132,16 @@
 |----|-------|--------|------|--------|
 | [IQ01](quizzes/interview/IQ01_CCNA_Interview_Questions.md) | CCNA-level interview questions — self-test (Q1–Q80) | L01–L25 | 2026-10-09 | In progress |
 
+## Scenario Walkthroughs & Practice Labs — Google Cloud
+
+| ID | Page | Covers |
+|----|------|--------|
+| [GS01](scenarios/gcp/GS01%20-%20Private%20Connectivity%20Scenarios.md) | Private connectivity scenarios — 8 walkthroughs with diagrams | GCP07–GCP13 |
+| [GS02](scenarios/gcp/GS02%20-%20Network%20Topologies%20Explained.md) | Topologies explained — how, when, pros/cons, implementation | GCP17–GCP20 |
+| [GS03](scenarios/gcp/GS03%20-%20Architecture%20and%20Topology%20Scenarios.md) | Architecture & topology scenarios — 8 walkthroughs with diagrams | GCP14–GCP20 |
+| [GPL01](labs/practice/GPL01%20-%20Private%20Connectivity%20Practice%20Labs.md) | Practice labs: hardened VPC, PSC overlap, PSA hybrid, NAT load, PSC for APIs | GCP07–GCP13 |
+| [GPL02](labs/practice/GPL02%20-%20Architecture%20and%20Topology%20Practice%20Labs.md) | Practice labs: 3-tier SA firewall, NCC star, VPN hub, failover, gated egress, mirrored IaC | GCP14–GCP20 |
+
 ## Labs
 
 | Page | Description | Status |
