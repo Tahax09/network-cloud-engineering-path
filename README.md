@@ -249,6 +249,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [gcp-dns](wiki/concepts/gcp-dns.md) | Cloud DNS zones and policies |
 | [gcp-network-architecture](wiki/concepts/gcp-network-architecture.md) | Design process, service tiers, topologies, Network Connectivity Center |
 | [gcp-private-access](wiki/concepts/gcp-private-access.md) | PGA, PSC, PSA, Cloud NAT + AWS mapping |
+| [gcp-product-map](wiki/concepts/gcp-product-map.md) | Google Cloud products, their use, and AWS/Azure equivalents |
 | [wireshark](wiki/concepts/wireshark.md) | Capture workflow, time formats, RTT vs server time, filters, tshark |
 
 ---

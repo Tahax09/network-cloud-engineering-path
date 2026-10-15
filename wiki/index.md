@@ -94,6 +94,7 @@
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
 | [gcp-network-architecture](concepts/gcp-network-architecture.md) | Design process, toolkit, service tiers, topologies, NCC + AWS/Azure mapping | GCP14–GCP22 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP13 |
+| [gcp-product-map](concepts/gcp-product-map.md) | Every major Google Cloud product: what it does + AWS/Azure equivalents; GCP vs AWS conceptual differences | Reference |
 | [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS10 |
 
 ## Certifications

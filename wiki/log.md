@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] query | Google Cloud product map
+Filed concept page gcp-product-map: compute, storage, DB/analytics, networking (with lesson links), security, ops, DevOps, integration, AI, hybrid/migration — each with AWS (and Azure) equivalents, plus GCP-vs-AWS conceptual differences table.
+
 ## [2026-10-15] ingest | GCP27 — Types of Complementary Partner Products
 Five partner security categories with native-counterpart comparison, reasons to choose partners (hybrid consistency, BYOL, gaps), multi-NIC NVA + internal NLB next-hop insertion pattern, NVA troubleshooting scenario (health checks, symmetric routing, can-ip-forward). Updated GCP24 module map links.
 
