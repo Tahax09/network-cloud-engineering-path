@@ -1,0 +1,29 @@
+As you have seen, here at Google,
+we offer some of the best in class platform security,
+but we didn't stop there. Google also partners with a number
+of security centric firms. In this section, we will review some
+of the complementary partner products. There are several different categories
+of security in our security ecosystem. Data protection, which includes things
+like governance, data loss prevention, data-centric audit and protection,
+encryption, hardware security modules. Infrastructure protection, which
+includes DDoS protection, network and application firewalls, intrusion detection
+and prevention, container security. Scanning, logging, and monitoring,
+which includes a vulnerability scanner and security and information management tools. Identity and user protection,
+which includes single sign-on, identity and access management,
+anti-malware, mobile device and application management,
+cloud access security brokers. Configuration, vulnerability, risk, and compliance protection across all
+areas of your infrastructure. Infrastructure protection helps
+protect your cloud infrastructure and applications from cyber attacks. There are many industry leaders that
+provide services that can be leveraged from Google Cloud, covering a wide range
+of solutions including next generation firewalls, web application firewalls,
+web proxies and cloud gateways. Server endpoint protection, distributed
+denial of service, and container security. Data protection partners can help protect
+your data from unauthorized access as well as internal and
+external threats through encryption. Key management and policy driven
+data loss prevention controls. Logging and monitoring partners
+help enable visibility and auditability of user and
+system activities in your infrastructure, while providing policy-driven alerting and
+reporting. Configuration, vulnerability, risk,
+and compliance partners can facilitate the visualization and inspection of your
+network and application deployments for vulnerabilities, security, and compliance
+risks and assist with remediation.
