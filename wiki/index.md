@@ -59,6 +59,7 @@
 | [GCP24](lessons/gcp/GCP24%20-%20Module%20Introduction%20-%20DDoS%20Protection.md) | Module Introduction - DDoS Protection | Network Security — Module 1 | 2026-10-15 | Complete |
 | [GCP25](lessons/gcp/GCP25%20-%20How%20DDoS%20Attacks%20Work.md) | How DDoS Attacks Work | Network Security — Module 1 | 2026-10-15 | Complete |
 | [GCP26](lessons/gcp/GCP26%20-%20Google%20Cloud%20DDoS%20Mitigations.md) | Google Cloud DDoS Mitigations | Network Security — Module 1 | 2026-10-15 | Complete |
+| [GCP27](lessons/gcp/GCP27%20-%20Types%20of%20Complementary%20Partner%20Products.md) | Types of Complementary Partner Products | Network Security — Module 1 | 2026-10-15 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 

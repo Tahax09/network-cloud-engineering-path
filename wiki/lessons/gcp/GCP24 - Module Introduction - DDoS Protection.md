@@ -24,8 +24,8 @@ tags: [gcp, ddos, module-intro, cloud-armor, mitigation, partner-products]
 | Step | Lesson |
 |------|--------|
 | 1 | How DDoS attacks work: [[GCP25 - How DDoS Attacks Work]] |
-| 2 | Google Cloud DDoS mitigation techniques *(upcoming)* |
-| 3 | Complementary partner products *(upcoming)* |
+| 2 | Google Cloud DDoS mitigation techniques: [[GCP26 - Google Cloud DDoS Mitigations]] |
+| 3 | Complementary partner products: [[GCP27 - Types of Complementary Partner Products]] |
 | 4 | Lab: DDoS mitigation in action *(upcoming)* |
 
 ### Why it matters

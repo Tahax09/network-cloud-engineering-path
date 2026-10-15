@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-59-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-60-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -152,6 +152,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP24](wiki/lessons/gcp/GCP24%20-%20Module%20Introduction%20-%20DDoS%20Protection.md) | Module Introduction - DDoS Protection | Module map: attacks → Google mitigation → partner products → lab |
 | [GCP25](wiki/lessons/gcp/GCP25%20-%20How%20DDoS%20Attacks%20Work.md) | How DDoS Attacks Work | Botnets, volumetric vs protocol vs L7, bisection bandwidth, 46M/398M rps records |
 | [GCP26](wiki/lessons/gcp/GCP26%20-%20Google%20Cloud%20DDoS%20Mitigations.md) | Google Cloud DDoS Mitigations | LB built-in defense, attack surface, CDN, Apigee, Cloud Armor (WAF, rate limits, Adaptive Protection), Standard vs Enterprise |
+| [GCP27](wiki/lessons/gcp/GCP27%20-%20Types%20of%20Complementary%20Partner%20Products.md) | Types of Complementary Partner Products | 5 partner categories (data, infrastructure, logging/monitoring, identity, compliance), NVA insertion pattern |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 

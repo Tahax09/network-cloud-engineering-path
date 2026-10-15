@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] ingest | GCP27 — Types of Complementary Partner Products
+Five partner security categories with native-counterpart comparison, reasons to choose partners (hybrid consistency, BYOL, gaps), multi-NIC NVA + internal NLB next-hop insertion pattern, NVA troubleshooting scenario (health checks, symmetric routing, can-ip-forward). Updated GCP24 module map links.
+
 ## [2026-10-15] ingest+verify | GCP26 — Google Cloud DDoS Mitigations
 Ingested the six mitigation strategies (Cloud Load Balancing built-in defense incl. L7 vs Slowloris, attack-surface reduction, internal isolation via VPN/Interconnect, Cloud CDN, Apigee, Cloud Armor). Verified Cloud Armor against docs (overview + Enterprise): Adaptive Protection requires Enterprise (lecture implied general), Standard vs Enterprise feature table, bill protection/DDoS response team Annual-only, supported LBs incl. Cloud CDN/Media CDN, network edge policies for VM public IPs. Added layered-defense diagram, defensive policy example (preconfigured WAF, rate-based ban, Adaptive Protection), WAF false-positive scenario.
 
