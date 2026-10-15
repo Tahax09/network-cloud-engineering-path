@@ -1,0 +1,96 @@
+Now let's review some DDoS mitigation techniques
+that are provided by Google Cloud. Kai is a network engineer at Cymbal Corporation. Their current DDoS solution is outdated and
+resource-intensive, struggling to handle the increasing traffic volume and sophistication
+of modern attacks. Kai needs a scalable, cloud-based solution
+that is cost effective and does not require contracts or long-term agreements. A solution that can effectively defend their
+website without impacting performance. Let us see the ways you can address this challenge. Creating secure applications requires a multi-faceted
+approach which has been customized to fit your business’ needs, vulnerabilities, and
+resources. Properly understanding the different options
+available when facing a DDoS attack can help your organization create a plan to minimize
+the impact. Let’s look at these generalized strategies
+in more detail and discuss how Google Cloud helps you implement them. In this lesson, you will learn more about: Leveraging Cloud Load Balancing. Reducing the network attack surface. Isolating internal traffic. Using Cloud CDN. Using API management and monitoring. Leveraging the Google Cloud Armor defense
+service. Cloud Load Balancing provides built-in defense
+against infrastructure DDoS attacks— —and no additional configuration is needed. Placing a load balancer in front of your services
+will filter known-bad traffic streams before they reach your resources. Google Cloud offers load balancing at layer
+4 (the transport layer, such as TCP or UDP) and layer 7 (the application layer, generally
+HTTP or HTTPS). The layer 4 load balancers automatically protect
+against things like UDP floods and TCP SYN floods. The layer 7 load balancers provide layer 4
+protection plus protection from connection-based attacks like Slowloris. Google Cloud load balancers leverage Google’s
+global DoS mitigation service. If the system detects an attack, it will automatically
+configure the load balancers to drop or throttle traffic. An attack surface of a software environment
+is the sum of the different points where an unauthorized user can try to enter data to
+or extract data from this environment. Keeping the attack surface as small as possible
+is a basic security measure. Reducing the attack surface means reducing
+how much exposure your VMs have to the internet. You should host Compute Engine resources that
+require network communication on the same VPC network. If the resources aren’t related and don’t
+require network communication among themselves, consider hosting them on different VPC networks. For most applications implemented in Google
+Cloud, Google also recommends creating separate subnets within a network for each tier of
+an application (for example, web front end, services layer, and database backend). That is because subnetting is a convenient
+way to implement inter-network firewall restrictions. You can control individual ingress and egress
+traffic for compute resources using firewall rules. Be sure you are blocking both unused ports
+as well as unwanted sources. Remember, you can use firewall tags and service
+accounts to help control which targets to use for firewall rules. It is also important to ensure you restrict
+external traffic within your VPCs. Virtual machines should not be given public
+IP addresses unnecessarily. Even if you need to connect to the VM from
+the internet, leveraging solutions like Identity-Aware Proxy or bastion hosts can help restrict the
+internal traffic. You can also connect your on-premise network
+with your VPC network using VPN IPsec Tunnels or Dedicated Interconnect. Google’s Cloud Content Delivery Network
+(or CDN) is used to cache web content at over 90 edge locations, or points of presence (POPs),
+around the globe. Cloud CDN provides very similar protection
+as Google’s load balancers. In addition, requests for your content are
+routed to Google’s POPs (points of presence) rather than directly to your resources. Thus, Google Cloud’s resilient network infrastructure
+absorbs the brunt of attacks. This also naturally reduces the load on your
+resources even when there are no attacks. For IT, network, and DevOps teams, allowing
+access to backend services is often required to facilitate interactions between applications,
+services, customers, and business partners. This access can also introduce vulnerabilities
+and challenges. Putting an API gateway, or API management,
+in front of your backend services can help prevent denial of service attacks by: Throttling requests to limit the number of
+requests per client. Controlling access to API from a single centralized
+location. Adding the ability to monitor and track all
+API usage. In Google Cloud, use Apigee for implementing
+API management. Throttling requests to limit the number of
+requests per client. Controlling access to API from a single centralized
+location. Adding the ability to monitor and track all
+API usage. In Google Cloud, use Apigee for implementing
+API management. Google Cloud Armor is a DDoS and application
+defense service. It delivers defense at scale against infrastructure
+and web application Distributed Denial of Service (DDoS) attacks using Google’s global
+infrastructure and security systems. Similar to CDNs, Google Cloud Armor protection
+is delivered at the edge of Google’s network and can block attacks close to their source
+before they have a chance of affecting your applications. Google Cloud Armor works with the global external
+Application Load Balancer to provide built-in defenses against infrastructure DDoS attacks. It defends against both network-layer (L3/L4)
+and application-layer (L7) DDoS attacks, safeguarding your services from being overwhelmed by malicious
+traffic. Google Cloud Armor comes with pre-defined
+rulesets specifically designed to protect against the OWASP Top 10 web application vulnerabilities. These include common threats like SQL injection
+(SQLi), cross-site scripting (XSS), and insecure deserialization. You can easily configure Google Cloud Armor
+to block traffic originating from specific countries or regions. This is helpful for preventing attacks from
+known malicious sources or complying with regional regulations. Google Cloud Armor also provides detailed
+logs for analysis and monitoring of traffic patterns and potential security threats. Google Cloud Armor defense is customized using
+a security policy which can contain one or more rules. Rules tell your security policy what to do
+(the action), when to do it (the condition), and where to apply the rule (the target). Google Cloud Armor also provides several predefined
+rules to defend against cross-site scripting (XSS) and SQL injection (SQLi) application-aware
+attacks. Google Cloud Armor also provides the following
+features: Variety of load balancer support: Google Cloud Armor now supports a variety
+of load balancers: Global external Application Load Balancer
+Regional external Application Load Balancer Classic Application Load Balancer External
+proxy Network Load Balancer External passthrough Network Load Balancer Rate limiting: rate-based
+rules help you protect your applications from a large volume of requests that flood your
+instances and block access for legitimate users. Adaptive protection: helps you protect your
+Google Cloud applications, websites, and services against L7 distributed denial-of-service (DDoS)
+attacks such as HTTP floods and other high-frequency layer 7 (application-level) malicious activity. Cloud Armor bot management with reCAPTCHA
+Enterprise: helps you evaluate and act on incoming requests that might be from automated
+clients. Custom rules language: enables you to define
+prioritized rules with configurable match conditions and actions in a security policy. For the latest Google Cloud Armor updates,
+check out the Google Cloud Armor release notes. To explore Google Cloud Armor features further,
+check out the Securing your Network with Cloud Armor quest. Cloud Armor Enterprise expands upon Google
+Cloud Armor Standard, providing enhanced security capabilities for your applications and infrastructure. It offers flexible pricing models—annual
+for predictable budgeting or pay-as-you-go for scalability. Cloud Armor Enterprise includes unlimited
+access to the Web Application Firewall (WAF), covering rules, policies, and requests for
+comprehensive and simplified protection. Proactive security is bolstered by curated
+third-party IP lists and Google Threat Intelligence insights, keeping you ahead of emerging threats. The service employs advanced protection mechanisms,
+including machine learning-powered Adaptive Protection for Layer 7 and robust defenses
+against DDoS attacks for pass-through endpoints. If you opt for the annual plan, you'll gain
+access to DDoS bill protection and expert support from the DDoS response team, as well
+as in-depth visibility into DDoS attack patterns to help you strengthen your security posture. Cloud Armor Enterprise equips you with a robust
+and adaptable security toolkit to defend against the ever-changing threat landscape and keep
+your digital assets secure.

@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-15] ingest+verify | GCP26 — Google Cloud DDoS Mitigations
+Ingested the six mitigation strategies (Cloud Load Balancing built-in defense incl. L7 vs Slowloris, attack-surface reduction, internal isolation via VPN/Interconnect, Cloud CDN, Apigee, Cloud Armor). Verified Cloud Armor against docs (overview + Enterprise): Adaptive Protection requires Enterprise (lecture implied general), Standard vs Enterprise feature table, bill protection/DDoS response team Annual-only, supported LBs incl. Cloud CDN/Media CDN, network edge policies for VM public IPs. Added layered-defense diagram, defensive policy example (preconfigured WAF, rate-based ban, Adaptive Protection), WAF false-positive scenario.
+
 ## [2026-10-15] ingest | GCP24–GCP25 — DDoS Protection module intro + How DDoS attacks work
 GCP24: module map (attacks → Google mitigation → partner products → lab). GCP25: DDoS definition, botnets, attack categories (volumetric / protocol / L7) with defenses, Google bisection bandwidth (~1,300 Tbps DC vs ~200 Tbps internet), record L7 attacks (46M rps 2022, 398M rps Aug 2023). Fact-check note: Google's public figure for its largest 2017 attack is ~2.5 Tbps vs lecture's ~4 Tbps. Hands-on kept defensive (LB logging, Cloud Armor deny rule, PCAP review).
 

@@ -59,7 +59,8 @@
 | GCP23 | Network Security - Course Introduction | Network Security (Course 4) | 2026-10-15 | Complete | — |
 | GCP24 | Module Introduction - DDoS Protection | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
 | GCP25 | How DDoS Attacks Work | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
-| GCP26 | — | — | — | Pending | — |
+| GCP26 | Google Cloud DDoS Mitigations | Network Security — Module 1 | 2026-10-15 | Complete | Pending |
+| GCP27 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 
