@@ -43,7 +43,7 @@ target_date: TBD
 | [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ### Course 3: Network Architecture
-*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP21 →)*
+*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP22)*
 
 | ID | Title | Status |
 |----|-------|--------|
@@ -55,6 +55,7 @@ target_date: TBD
 | [GCP19](../labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | ✅ Complete |
 | [GCP20](../lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | ✅ Complete |
 | [GCP21](../lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | ✅ Complete |
+| [GCP22](../lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | ✅ Complete |
 
 ## Scenario Walkthroughs & Practice
 - [[GS01 - Private Connectivity Scenarios]] — Private connectivity scenarios — 8 walkthroughs with diagrams
@@ -114,6 +115,10 @@ target_date: TBD
 | PGA ranges (docs) | private 199.36.153.8/30 + IPv6 2600:2d00:0002:2000::/56; restricted 199.36.153.4/30 + 2600:2d00:0002:1000::/56; also route/allow 34.126.0.0/18 (direct connectivity) |
 | NCC spoke types (docs) | VPC, producer VPC, NCC Gateway, hybrid; hybrid IPv6 = Preview; router appliance IPv4-only |
 | NAT ports (docs) | 64,512 TCP + 64,512 UDP ports per NAT IP; Public NAT static by default, Private NAT dynamic by default |
+| Centralized hybrid | Hybrid links in dedicated hub VPC; peer spokes with export/import custom routes + custom advertisement of spoke ranges → spoke↔on-prem (NOT spoke↔spoke) |
+| Hybrid DNS | Two authoritative systems: Cloud DNS (GCP) + existing on-prem DNS, forwarding zones + inbound server policy |
+| Expose apps | Through APIs via API gateway/LB; Apigee = security, rate limiting, quotas, analytics; LB + Apigee + CDN + Cloud Armor together |
+| Interconnect encryption | Not encrypted by default → MACsec or HA VPN over Interconnect (or TLS) |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit

@@ -54,6 +54,7 @@
 | [GCP19](labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | Network Architecture — Module 2 | 2026-10-15 | Complete |
 | [GCP20](lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | Network Architecture — Module 2 | 2026-10-15 | Complete |
 | [GCP21](lessons/gcp/GCP21%20-%20Getting%20Topology%20Data.md) | Getting Topology Data | Network Architecture — Module 2 | 2026-10-15 | Complete |
+| [GCP22](lessons/gcp/GCP22%20-%20Best%20Practices%20for%20Connectivity%20and%20Topologies.md) | Best Practices for Connectivity and Topologies | Network Architecture — Module 2 | 2026-10-15 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -86,7 +87,7 @@
 | [modern-networks](concepts/modern-networks.md) | SDN, VXLAN, Zero Trust, SASE, IaC tools, IPv6 | L08 |
 | [gcp-routing](concepts/gcp-routing.md) | Route types, Cloud Router, BGP, multi-NIC, IPv6, BYOIP | GCP01–GCP03 |
 | [gcp-dns](concepts/gcp-dns.md) | Cloud DNS, zones, server/response/routing policies | GCP04–GCP05 |
-| [gcp-network-architecture](concepts/gcp-network-architecture.md) | Design process, toolkit, service tiers, topologies, NCC + AWS/Azure mapping | GCP14–GCP21 |
+| [gcp-network-architecture](concepts/gcp-network-architecture.md) | Design process, toolkit, service tiers, topologies, NCC + AWS/Azure mapping | GCP14–GCP22 |
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP13 |
 | [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS10 |
 

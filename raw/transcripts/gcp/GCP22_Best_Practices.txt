@@ -1,0 +1,30 @@
+Now that you've learned how to gather
+topology data, let's next explore some best practices to consider when exploring
+the right connectivity options. Selecting the right network
+connectivity solution for hybrid or multi cloud environments requires careful
+consideration of several key factors. These include ensuring the solution meets
+the required service level agreements for performance and uptime. For organizations aiming to expand a
+hub-and-spoke network architecture across multiple VPC networks, establishing
+centralized hybrid connectivity within a dedicated VPC network,
+then peering with other projects using custom-advertised routes can
+be an effective strategy. This approach enables the seamless sharing
+of both static and dynamically learned routes with peered VPC networks,
+fostering a centralized configuration that simplifies management and facilitates
+scalability in your VPC network design. To enhance application, accessibility,
+and management, it's recommended to expose applications through APIs
+using an API gateway or load balancer. A comprehensive API platform such as
+Apigee can be utilized to simplify this process. This type of platform acts as
+an intermediary for your backend service APIs, providing features like enhanced
+security, rate limiting, quotas, and analytics for better control and
+monitoring of your API usage. When leveraging Cloud Load Balancing, utilize the application capacity
+optimization features whenever possible. These capabilities can be valuable in
+mitigating capacity challenges that often arise in globally
+distributed applications, ensuring smoother operation and
+better user experiences. When deciding where DNS resolution
+should be performed in a hybrid setup, it is recommended to use two
+authoritative DNS systems for your private Google Cloud environment and
+for your on premises resources that are hosted by existing DNS
+servers in your on premises environment. Before we wrap up, heres a quick preview
+of some prompts you can use with Gemini related to network topology. You can use a prompt such as describe
+a scenario where a topology name would be the best choice, or
+what are the advantages and disadvantages of a mesh topology.

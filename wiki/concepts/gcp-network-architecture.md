@@ -33,6 +33,9 @@ VPC + regional subnets · firewall rules/policies (prefer service-account target
 - No overlapping IP ranges · hybrid-spoke IPv6 = **Preview** (router appliance IPv4-only) · privately used public IPs supported · export filters per spoke; VPC spokes import all routes from their group.
 - NCC also hosts **inter-VPC (private) NAT** ([[GCP11 - Cloud NAT]]).
 
+## Best Practices (lecture + Architecture Center docs)
+Meet SLAs · centralize hybrid connectivity in a hub VPC (peering + custom routes gives spoke↔on-prem only) or use NCC/Shared VPC · expose apps via API gateway/LB (Apigee) · LB capacity optimization · two authoritative DNS systems with forwarding · SA-based firewall + firewall policies · multilayer security (Cloud Armor, Cloud IDS, NGFW IPS) · MACsec/HA VPN over Interconnect · see [[GCP22 - Best Practices for Connectivity and Topologies]].
+
 ## Observability: Network Topology
 Graph of entities (VMs → instance groups → zones → subnets → networks → regions; pods → workloads → namespaces → clusters; LBs; NAT) and traffic lines, with hourly throughput, packet loss, median RTT; **6 weeks** of hourly snapshots; only `nic0`; see [[GCP21 - Getting Topology Data]].
 
