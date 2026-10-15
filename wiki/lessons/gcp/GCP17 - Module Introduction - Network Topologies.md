@@ -27,12 +27,12 @@ tags: [gcp, network-topologies, hub-and-spoke, mesh, mirrored, gated, network-co
 | Lesson | Topology | Page |
 |--------|----------|------|
 | 1 | **Hub-and-spoke**: one central hub, all others connect through it | [[GCP18 - Hub-and-Spoke Topology]] |
-| 2+ | **Mesh**: every network connects to every other | *(upcoming)* |
-| | **Mirrored**: identical environments (e.g., prod and DR/test) with the same layout | *(upcoming)* |
-| | **Gated**: traffic forced through a controlled entry point (ingress/egress inspection) | *(upcoming)* |
+| 2 | **Mesh** (full / partial): every network connects to every other, or strategic links only | [[GCP20 - Other Topologies - Mesh, Mirrored, Gated]] |
+| | **Mirrored**: replica of the network in another environment/region (DR, dev/test, performance) | [[GCP20 - Other Topologies - Mesh, Mirrored, Gated]] |
+| | **Gated**: controlled egress, ingress, or both (hybrid/multicloud) | [[GCP20 - Other Topologies - Mesh, Mirrored, Gated]] |
 | Lab | Hub-and-spoke with NCC | [[GCP19 - Lab - Implement a Hub-and-Spoke Network Using Network Connectivity Center]] |
 
-*(Descriptions for mesh/mirrored/gated are preliminary and will be refined when those lessons are ingested.)*
+
 
 ### Topologies you already know (Network+)
 | Network+ ([[L06 - Network Topologies, Architectures & Traffic Flows]]) | Google Cloud equivalent |

@@ -136,6 +136,7 @@ spoke: on-prem DC ──── [ HUB ] ──── spoke: remote office
 
 ## Linked Pages
 - [[GCP17 - Module Introduction - Network Topologies]] — Module 2 map
+- [[GCP20 - Other Topologies - Mesh, Mirrored, Gated]] — Mesh, mirrored, gated alternatives
 - [[GCP19 - Lab - Implement a Hub-and-Spoke Network Using Network Connectivity Center]] — Hands-on lab
 - [[GCP10 - Private Services Access]] — Peering non-transitivity
 - [[GCP11 - Cloud NAT]] — NCC also hosts inter-VPC (private) NAT

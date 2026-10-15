@@ -16,9 +16,9 @@ VPC + regional subnets · firewall rules/policies (prefer service-account target
 | Topology | Shape | Pros | Cons | GCP implementation |
 |----------|-------|------|------|--------------------|
 | **Hub-and-spoke** | Central hub as transit for spokes | Central control, simple admin, add spokes easily, central security | Hub path/capacity; must design transitivity | **NCC** (VPC + hybrid spokes), HA VPN + BGP, or peering + NVA |
-| **Mesh** | Every network ↔ every other | Direct paths, low latency | n(n−1)/2 links; peering quotas | VPC peering mesh, or NCC **mesh preset** |
-| **Mirrored** | Identical environments (e.g., prod/DR), unique IP ranges | Predictable failover/testing | Duplicate cost | Same layout per region/env *(details pending lesson)* |
-| **Gated** | Traffic forced through controlled entry/exit | Central inspection | Choke point | NVAs/firewalls at ingress/egress *(details pending lesson)* |
+| **Mesh** (full / partial) | Full: every network ↔ every other · Partial: strategic links only (e.g., cross-region failover) | HA, resilience, load spreading, no central point | n(n−1)/2 links; quotas; no central inspection point | VPC peering mesh, or NCC **mesh preset**; partial mesh for failover pairs |
+| **Mirrored** | Replica of network infra in another env/region | DR standby, isolated dev/test, nearby-region performance | Duplicate cost | Same layout per region/env; **unique IP ranges** if they will ever connect |
+| **Gated** (egress / ingress / both) | Controlled exit, entry, or both between cloud and external (hybrid/multicloud) | Security, compliance, expose APIs not networks | Gateways add latency/management | Cloud NAT + egress policy/SWP (egress); LB/API gateway/Cloud Armor/PSC (ingress); NVAs |
 
 ## Hub-and-Spoke Implementation Comparison
 | Method | Transitive spoke↔spoke? | Notes |
@@ -52,5 +52,5 @@ gcloud compute routes list --filter="network~spoke1-vpc"
 
 ## Linked Lessons
 - [[GCP14 - Network Architecture - Course Introduction]] · [[GCP15 - Cloud Network Architecture Overview]] · [[GCP16 - Getting Started with Network Architecture]]
-- [[GCP17 - Module Introduction - Network Topologies]] · [[GCP18 - Hub-and-Spoke Topology]] · [[GCP19 - Lab - Implement a Hub-and-Spoke Network Using Network Connectivity Center]]
+- [[GCP17 - Module Introduction - Network Topologies]] · [[GCP18 - Hub-and-Spoke Topology]] · [[GCP19 - Lab - Implement a Hub-and-Spoke Network Using Network Connectivity Center]] · [[GCP20 - Other Topologies - Mesh, Mirrored, Gated]]
 - [[L06 - Network Topologies, Architectures & Traffic Flows]] · [[L09 - Routing Technologies]]

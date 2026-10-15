@@ -43,7 +43,7 @@ target_date: TBD
 | [GQ01](../quizzes/gcp/GQ01_Private_Connection_Options.md) | Quiz 2 (graded) | ✅ Reviewed |
 
 ### Course 3: Network Architecture
-*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP19 →)*
+*Module 1: Introduction to Network Architecture (GCP14–GCP16, quiz GQ02 pending) · Module 2: Network Topologies (GCP17–GCP20 →)*
 
 | ID | Title | Status |
 |----|-------|--------|
@@ -53,6 +53,7 @@ target_date: TBD
 | [GCP17](../lessons/gcp/GCP17%20-%20Module%20Introduction%20-%20Network%20Topologies.md) | Module Introduction - Network Topologies | ✅ Complete |
 | [GCP18](../lessons/gcp/GCP18%20-%20Hub-and-Spoke%20Topology.md) | Hub-and-Spoke Topology | ✅ Complete |
 | [GCP19](../labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Lab: Implement a Hub-and-Spoke Network Using NCC | ✅ Complete |
+| [GCP20](../lessons/gcp/GCP20%20-%20Other%20Topologies%20-%20Mesh%2C%20Mirrored%2C%20Gated.md) | Other Topologies - Mesh, Mirrored, Gated | ✅ Complete |
 
 ## Key Exam Facts (collected from sessions)
 
@@ -98,6 +99,9 @@ target_date: TBD
 | Hub-and-spoke methods | Peering = low latency but NOT transitive; HA VPN + BGP = transitive, encrypted, more latency; NCC = centralized, transitive, extra cost |
 | NCC spokes | VPC spokes (cross-project/org) + hybrid (HA VPN, Interconnect VLAN, router appliance VM); no IP overlap; no IPv6 on hybrid; PUPI ok |
 | NCC lab result | Two isolated VPCs → VPC spokes on mesh hub → subnet routes exchanged → ping works without firewall changes |
+| Mesh | Full = all↔all (GKE Enterprise microservices); partial = strategic links (cross-region failover); HA/scale/perf, but n(n−1)/2 links |
+| Mirrored | Replica env/region for DR, dev/test, performance — unique IPs if ever connected |
+| Gated | Gated egress (outbound from cloud), gated ingress (inbound to cloud), gated ingress+egress (both) — hybrid/multicloud control |
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit

@@ -1,0 +1,38 @@
+We covered hub and spoke in the previous section. Now, let's explore other topologies. In a mesh topology, devices or network nodes
+have multiple interconnected links. This contrasts with a hub-and-spoke topology,
+where devices connect through a central point, that is, the hub. There are two main types of mesh topology. In a full mesh, every node is connected to
+every other node. This topology can be useful for GKE Enterprise
+applications, where the microservices are all internally connected. In a partial mesh, only select, strategic
+nodes are connected. For example, for some failover scenarios,
+a partial mesh is helpful. You create a partial mesh between VPCs in
+different regions or zones. You can configure routing rules that direct
+traffic to the active region or zone normally but also configure automatic failover. If a primary region experiences issues, automatic
+failover to a nearby region or zone using the mesh links keeps your workloads working
+normally from a client perspective. Let’s consider some of the benefits of a
+mesh topology. Mesh topologies provide high availability
+and resilience. The multiple paths between nodes in a mesh
+network ensure that if one connection fails, traffic can be rerouted. This makes mesh networks ideal for mission-critical
+applications that require high uptime. The Google Cloud infrastructure is designed
+for scalability. Mesh topologies can easily expand with your
+cloud environment as you add new nodes or Google Cloud regions. A mesh topology can offer the potential for
+improved performance. The multiple pathways in a mesh can facilitate
+better load balancing and reduce network congestion, potentially leading to improved application
+performance. The lack of a single central point of failure
+also aids in security. By distributing traffic across multiple paths,
+mesh topology can make it harder for attackers to compromise the entire network. In Google Cloud, mirrored topology means creating
+a replica of your network infrastructure in another environment or region. Let’s consider some use cases For disaster
+recovery, an identical standby environment is ready to take over in case of failure. For testing and development, an isolated but
+otherwise identical configuration as a production environment is available for testing and experimentation. Here are two examples shown. Any actions taken in the testing and development
+environment will have no effect on production. Finally, by distributing traffic across regions,
+your workloads can take advantage of having an identical environment available nearby,
+resulting in improved workload performance. Shown here is an example of a type of gating
+topology. Gating topologies are essential for managing
+and securing network traffic flows in cloud environments, particularly in hybrid and multi-cloud
+scenarios. By implementing these gating mechanisms, you
+gain fine-grained control over data movement between your cloud and external resources,
+ensuring security and compliance. There are three types of topologies that restrict
+access: There are three types of topologies that restrict access:
+Gated egress: Controls outbound traffic from the cloud. Gated ingress: Controls inbound traffic to
+the cloud. This is the gating topology type shown here. Gated ingress and egress: Controls inbound
+and outbound traffic between hybrid and multi-cloud environments. More information about each of these topologies
+can be found in Gated patterns, in the Google Cloud documentation.

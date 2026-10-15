@@ -53,7 +53,8 @@
 | GCP17 | Module Introduction - Network Topologies | Network Architecture — Module 2 | 2026-10-15 | Complete | — |
 | GCP18 | Hub-and-Spoke Topology | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP19 | Lab: Implement a Hub-and-Spoke Network Using NCC (wiki/labs/) | Network Architecture — Module 2 | 2026-10-15 | Complete | — |
-| GCP20 | — | — | — | Pending | — |
+| GCP20 | Other Topologies - Mesh, Mirrored, Gated | Network Architecture — Module 2 | 2026-10-15 | Complete | Pending |
+| GCP21 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 
