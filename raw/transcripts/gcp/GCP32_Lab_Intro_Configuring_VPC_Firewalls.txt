@@ -1,0 +1,4 @@
+>> Next, in a lab exercise,
+you'll control access to VPC networks. In this lab, you investigate virtual
+private cloud VPC networks and create firewall rules to allow and
+deny access to a network. And instances.

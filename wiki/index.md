@@ -64,6 +64,7 @@
 | [GCP29](lessons/gcp/GCP29%20-%20Module%20Introduction%20-%20Controlling%20Access%20to%20VPC%20Networks.md) | Module Introduction - Controlling Access to VPC Networks | Network Security — Module 2 | 2026-10-15 | Complete |
 | [GCP30](lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | Network Security — Module 2 | 2026-10-15 | Complete |
 | [GCP31](lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete |
+| [GCP32](labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Network Security — Module 2 | 2026-10-16 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -175,11 +176,13 @@
 | [GCP12 lab](labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | GCP Private Google Access + Cloud NAT + IAP + NAT logging | Complete |
 | [GCP19 lab](labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | GCP hub-and-spoke with Network Connectivity Center (VPC spokes, mesh preset) | Complete |
 | [GCP28 lab](labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor IP blocklist (deny-404) on a global Application LB + policy logs | Complete |
+| [GCP32 lab](labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | VPC firewall rules: default vs user-created network, target tags, priority, egress deny | Complete |
 
 ## Interactive Visualizations
 | ID | Visualization | Shows |
 |----|---------------|-------|
 | GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GCP32 | [VPC Firewall Lab](visualizations/gcp/GCP32%20-%20VPC%20Firewall%20Lab.html) | Task-by-task lab replay: SSH/ping tests evaluated against egress + ingress rules at each step, NAT'd external ping, priority flip, egress deny |
 | GCP31 | [Firewall Rule Evaluator](visualizations/gcp/GCP31%20-%20Firewall%20Rule%20Evaluator.html) | Packet builder through priority-sorted rules (deny wins ties, implied rules, stateful return), SA vs tag targets, NGFW policy hierarchy with goto_next, default VPC hardening audit |
 | GCP29–30 | [IAM Access Explorer](visualizations/gcp/GCP29-30%20-%20IAM%20Access%20Explorer.html) | Hierarchy inheritance + deny-first evaluation, networking role matrix, custom role builder, Karen least-privilege scenario |
 | GCP28 | [Cloud Armor at the Edge](visualizations/gcp/GCP28%20-%20Cloud%20Armor%20at%20the%20Edge.html) | POP/GFE routing to closest backend with capacity, stress overflow, blocklist vs allowlist, propagation, policy logs |

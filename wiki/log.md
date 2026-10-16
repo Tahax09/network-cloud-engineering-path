@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-16] ingest | GCP32 — Lab: Configuring VPC Firewalls
+Lab page from intro transcript + pasted lab (credentials not stored): auto-mode mynetwork, default vs user-created rules, delete default network, tag-scoped SSH from Cloud Shell, internal ICMP rule + NAT'd external-ping failure, priority 500 vs 2000, egress deny 10000. Flagged lab-text errors: implied egress is allow (not deny); "higher priority" wording inverted for 2000/10000; summary claims custom-mode network. New viz GCP32 VPC Firewall Lab; command anatomy adds add-tags, update --priority, ssh user@vm. Module 2 map complete (quiz pending).
+
 ## [2026-10-16] ingest+verify | GCP31 — Firewall Rules
 Stateful/distributed rules, 5 parameters, targets (all/tags/SA), priority + deny-wins-tie, implied and default-VPC rules, always allowed/blocked traffic, best practices, Cloud NGFW hierarchical/global/regional policies, secure tags, Firewall Insights, Kwan scenario. Verified vs docs (firewalls page): 10-min connection tracking, deny wins only at equal priority. Evaluation-order page not fetchable (client-rendered) — flagged in lesson. New viz GCP31 Firewall Rule Evaluator; command anatomy adds hierarchical policies, secure tags, insights.
 

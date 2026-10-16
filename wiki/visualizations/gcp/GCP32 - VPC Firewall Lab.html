@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VPC Firewall Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: header + task stepper; explanation + command; network diagram beside test buttons; rule tables (egress / ingress) below */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b;
+  --band:#e2efe7; --band2:#ece6f7;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+    --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c;
+    --band:#14271f; --band2:#221b33; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+  --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c;
+  --band:#14271f; --band2:#221b33; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:800px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+p{margin:0}
+.lead{color:var(--muted);max-width:70ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.steps button{width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;display:grid;gap:2px;min-height:58px}
+.steps button[aria-current="step"]{background:var(--accent-soft);border-color:var(--accent)}
+.steps .n{font:600 11px var(--f-mono);color:var(--accent)}
+.steps .l{font:600 13px/1.25 var(--f-body)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.explain{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+@media (max-width:860px){.explain{grid-template-columns:1fr}}
+.explain .b{display:grid;gap:8px;min-width:0}
+.fix{border:1px solid var(--warn);border-radius:8px;padding:8px 10px;font-size:13px;background:var(--sunken)}
+.fix b{color:var(--warn)}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre;min-width:0}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+@media (max-width:980px){.main{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:640px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+.node.gone{opacity:.25}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}
+.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.tag{font:500 10.5px var(--f-mono);fill:var(--accent)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.5;stroke-dasharray:4 4}
+.edge.ok{stroke:var(--ok);stroke-dasharray:none;stroke-width:2.6}
+.edge.bad{stroke:var(--bad);stroke-dasharray:none;stroke-width:2.6}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}
+.x{font:700 18px var(--f-body);fill:var(--bad)}
+.tests{display:grid;gap:8px}
+.test{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;background:var(--surface);font:inherit;color:var(--ink);text-align:left}
+.test:hover{border-color:var(--accent)}
+.test[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.test .t{font-size:13.5px;font-weight:600}
+.test .s{font:500 11px var(--f-mono);color:var(--muted)}
+.res{font:700 15px var(--f-mono)}
+.res.ok{color:var(--ok)}.res.bad{color:var(--bad)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}
+.tables{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:980px){.tables{grid-template-columns:1fr}}
+.scroll{overflow-x:auto}
+table.rt{width:100%;border-collapse:collapse;font:12px/1.35 var(--f-mono);font-variant-numeric:tabular-nums}
+.rt th{text-align:left;font-weight:500;color:var(--muted);padding:5px 7px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.rt td{padding:5px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+.rt tr.hit td{background:var(--accent-soft);font-weight:500}
+.rt tr.after td{opacity:.35}
+.rt tr.new td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+.act{display:inline-block;padding:0 6px;border-radius:999px;font-size:10.5px;border:1px solid currentColor}
+.act.allow{color:var(--ok)}.act.deny{color:var(--bad)}
+.note{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP32 · Lab: Configuring VPC Firewalls</div>
+    <h1>VPC Firewall Lab</h1>
+    <p class="lead">Replay the lab task by task. Each task changes the firewall rules exactly as the lab does. Run the lab's tests at any point to see whether the egress check at the sender and the ingress check at the receiver allow the traffic, and which rule decides.</p>
+  </header>
+
+  <ol class="steps" id="steps"></ol>
+
+  <section class="explain" aria-live="polite">
+    <div class="b"><h2 id="x-title"></h2><p id="x-body"></p><div class="fix" id="x-fix" hidden></div></div>
+    <pre class="cmd" id="x-cmd"></pre>
+  </section>
+
+  <div class="main">
+    <section class="panel">
+      <div class="mapbox"><svg id="map" viewBox="0 0 760 330" aria-label="Lab topology"></svg></div>
+      <div class="verdict" id="verdict">Pick a test on the right.</div>
+    </section>
+    <aside class="panel">
+      <h2>Run a test</h2>
+      <div class="tests" id="tests"></div>
+      <p class="note">Results reflect the rules in place at the selected task.</p>
+    </aside>
+  </div>
+
+  <div class="tables">
+    <section class="panel"><h2 id="eg-h">Egress rules at the sender</h2><div class="scroll"><table class="rt"><thead><tr><th>Name</th><th>Pri</th><th>Action</th><th>Dest</th><th>Target</th><th>Proto</th></tr></thead><tbody id="eg"></tbody></table></div></section>
+    <section class="panel"><h2 id="in-h">Ingress rules at the receiver</h2><div class="scroll"><table class="rt"><thead><tr><th>Name</th><th>Pri</th><th>Action</th><th>Source</th><th>Target</th><th>Proto</th></tr></thead><tbody id="in"></tbody></table></div></section>
+  </div>
+  <p class="note">Amber edge = rule added in this task. Highlighted row = the first match by priority. Faded rows are never evaluated. The IPs follow the lab's pattern (auto-mode subnets inside 10.128.0.0/9); the external IPs are documentation examples.</p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CS_IP='35.229.72.135';
+const H={
+ cs:{label:'Cloud Shell',sub:CS_IP,x:20,y:130,net:'ext',ip:CS_IP},
+ gc:{label:'Browser SSH',sub:'Google IPs (vary)',x:20,y:230,net:'ext',ip:'35.235.10.20'},
+ d1:{label:'default-vm-1',sub:'10.128.0.2 · default',x:260,y:40,net:'default',ip:'10.128.0.2'},
+ v1:{label:'mynet-vm-1',sub:'10.128.0.3 · ext 34.0.0.11',x:260,y:160,net:'mynet',ip:'10.128.0.3',ext:'34.0.0.11'},
+ v2:{label:'mynet-vm-2',sub:'10.132.0.2 · ext 34.0.0.22',x:540,y:160,net:'mynet',ip:'10.132.0.2',ext:'34.0.0.22'},
+ inet:{label:'www.google.com',sub:'internet',x:540,y:40,net:'ext',ip:'142.250.0.1'}
+};
+const toInt=ip=>ip.split('.').reduce((a,o)=>((a<<8)>>>0)+(+o),0)>>>0;
+function inC(ip,c){const[n,b]=c.split('/');const m=+b===0?0:(0xFFFFFFFF<<(32-+b))>>>0;return((toInt(ip)&m)>>>0)===((toInt(n)&m)>>>0);}
+/* rule sets */
+const R={
+ dSSH:{net:'default',name:'default-allow-ssh',dir:'IN',pri:65534,act:'allow',r:'0.0.0.0/0',tg:null,p:'tcp:22'},
+ dICMP:{net:'default',name:'default-allow-icmp',dir:'IN',pri:65534,act:'allow',r:'0.0.0.0/0',tg:null,p:'icmp'},
+ dINT:{net:'default',name:'default-allow-internal',dir:'IN',pri:65534,act:'allow',r:'10.128.0.0/9',tg:null,p:'all'},
+ dRDP:{net:'default',name:'default-allow-rdp',dir:'IN',pri:65534,act:'allow',r:'0.0.0.0/0',tg:null,p:'tcp:3389'},
+ ssh:{net:'mynet',name:'mynetwork-ingress-allow-ssh-from-cs',dir:'IN',pri:1000,act:'allow',r:CS_IP+'/32',tg:'lab-ssh',p:'tcp:22'},
+ icmp:{net:'mynet',name:'mynetwork-ingress-allow-icmp-internal',dir:'IN',pri:1000,act:'allow',r:'10.128.0.0/9',tg:null,p:'icmp'},
+ deny500:{net:'mynet',name:'mynetwork-ingress-deny-icmp-all',dir:'IN',pri:500,act:'deny',r:'0.0.0.0/0',tg:null,p:'icmp'},
+ deny2000:{net:'mynet',name:'mynetwork-ingress-deny-icmp-all',dir:'IN',pri:2000,act:'deny',r:'0.0.0.0/0',tg:null,p:'icmp'},
+ egdeny:{net:'mynet',name:'mynetwork-egress-deny-icmp-all',dir:'OUT',pri:10000,act:'deny',r:'0.0.0.0/0',tg:null,p:'icmp'}
+};
+const IMPL=[{name:'implied-allow-egress',dir:'OUT',pri:65535,act:'allow',r:'0.0.0.0/0',tg:null,p:'all',impl:true},{name:'implied-deny-ingress',dir:'IN',pri:65535,act:'deny',r:'0.0.0.0/0',tg:null,p:'all',impl:true}];
+const STEPS=[
+ {s:'Start',t:'Task 1 · Create the network and VMs',rules:['dSSH','dICMP','dINT','dRDP'],tags:false,defaultNet:true,added:['dSSH','dICMP','dINT','dRDP'],
+  b:'mynetwork is an auto-mode VPC: one subnet per region, all inside 10.128.0.0/9. default-vm-1 sits in the default network, which comes with four permissive rules. mynetwork has only the two implied rules.',
+  c:'gcloud compute networks create mynetwork --subnet-mode=auto\ngcloud compute instances create default-vm-1 --machine-type e2-micro --zone=ZONE_1 --network=default\ngcloud compute instances create mynet-vm-1   --machine-type e2-micro --zone=ZONE_1 --network=mynetwork\ngcloud compute instances create mynet-vm-2   --machine-type e2-micro --zone=ZONE_2 --network=mynetwork'},
+ {s:'T2 Default net',t:'Task 2 · The default network lets SSH in',rules:['dSSH','dICMP','dINT','dRDP'],tags:false,defaultNet:true,added:[],test:'d1ssh',
+  b:'default-allow-ssh (0.0.0.0/0, priority 65534) lets any source SSH to any VM in the default network, so console SSH to default-vm-1 works. ping www.google.com works through the implied egress allow. Then the lab deletes default-vm-1 and the default network: too open for production.',
+  fix:'<b>Lab text error:</b> the lab says the implied rules are "deny all ingress and deny all egress". They are deny ingress and <b>allow</b> egress. That\'s why ping www.google.com works.',
+  c:'# Console: VPC network → Firewall shows the 4 default-* rules\n# SSH to default-vm-1 → works\nping www.google.com     # works (implied allow egress)\n# then delete default-vm-1, then the default network'},
+ {s:'T3 No ingress',t:'Task 3 · A user-created network blocks everything inbound',rules:[],tags:false,defaultNet:false,added:[],test:'cs2',
+  b:'mynetwork has no rules except the implied ones. Every inbound packet falls through to implied-deny-ingress (65535), so SSH from Cloud Shell and from the console both fail.',
+  c:'gcloud compute ssh qwiklabs@mynet-vm-2 --zone ZONE_2\n# ERROR: (gcloud.compute.ssh) [/usr/bin/ssh] exited with return code [255]'},
+ {s:'T4 SSH rule',t:'Task 4a · Allow SSH from Cloud Shell, by tag',rules:['ssh'],tags:true,defaultNet:false,added:['ssh'],test:'cs2',
+  b:'The rule allows tcp:22 only from Cloud Shell\'s public IP, and only to VMs tagged lab-ssh. It does nothing until add-tags puts the tag on both VMs. Replies flow back with no egress rule, because the firewall is stateful.',
+  fix:'Browser SSH still fails: it comes from Google addresses that change per session. In production, allow the IAP range 35.235.240.0/20 instead of opening port 22 to everyone.',
+  c:'ip=$(curl -s https://api.ipify.org)\ngcloud compute firewall-rules create mynetwork-ingress-allow-ssh-from-cs \\\n  --network mynetwork --action ALLOW --direction INGRESS \\\n  --rules tcp:22 --source-ranges $ip --target-tags=lab-ssh\ngcloud compute instances add-tags mynet-vm-2 --zone ZONE_2 --tags lab-ssh\ngcloud compute instances add-tags mynet-vm-1 --zone ZONE_1 --tags lab-ssh'},
+ {s:'T4 ICMP rule',t:'Task 4b · Allow internal ping',rules:['ssh','icmp'],tags:true,defaultNet:false,added:['icmp'],test:'pingInt',
+  b:'This rule has no target, so it applies to every VM in mynetwork. Internal ping works now. Ping to vm-2\'s external IP still fails: the packet goes out through the internet gateway, its source becomes vm-1\'s external IP, and that address isn\'t in 10.128.0.0/9.',
+  c:'gcloud compute firewall-rules create mynetwork-ingress-allow-icmp-internal \\\n  --network mynetwork --action ALLOW --direction INGRESS --rules icmp \\\n  --source-ranges 10.128.0.0/9\nping mynet-vm-2.ZONE_2          # works (internal DNS → 10.132.0.x)\nping <EXTERNAL_IP_OF_mynet-vm-2> # fails (source NATed)'},
+ {s:'T5 Deny 500',t:'Task 5a · A deny at 500 beats the allow at 1000',rules:['ssh','icmp','deny500'],tags:true,defaultNet:false,added:['deny500'],test:'pingInt',
+  b:'A lower number means a higher priority. The deny at 500 is evaluated before the allow at 1000, and the first match wins, so ping fails.',
+  c:'gcloud compute firewall-rules create mynetwork-ingress-deny-icmp-all \\\n  --network mynetwork --action DENY --direction INGRESS --rules icmp --priority 500'},
+ {s:'T5 Deny 2000',t:'Task 5b · Move the deny to 2000',rules:['ssh','icmp','deny2000'],tags:true,defaultNet:false,added:['deny2000'],test:'pingInt',
+  b:'Now the allow at 1000 matches first, so ping works and the deny at 2000 is never evaluated.',
+  c:'gcloud compute firewall-rules update mynetwork-ingress-deny-icmp-all --priority 2000'},
+ {s:'T6 Egress',t:'Task 6 · An egress deny blocks ping at the sender',rules:['ssh','icmp','deny2000','egdeny'],tags:true,defaultNet:false,added:['egdeny'],test:'pingInt',
+  b:'Egress and ingress are separate lists, and priority only orders rules within one direction. The egress deny at 10000 is the first matching egress rule (only the implied allow at 65535 comes after it), so ICMP is dropped as it leaves vm-1. vm-2\'s ingress rules are never reached.',
+  fix:'<b>Lab text wording:</b> the lab calls 10000 a "much higher priority". A larger number is a <b>lower</b> priority. The egress deny wins because it\'s the only matching rule in the egress list, not because of its number.',
+  c:'gcloud compute firewall-rules create mynetwork-egress-deny-icmp-all \\\n  --network mynetwork --action DENY --direction EGRESS --rules icmp --priority 10000\ngcloud compute firewall-rules list --filter="network:mynetwork"'}
+];
+const TESTS={
+ d1ssh:{t:'Console SSH → default-vm-1',s:'tcp:22',from:'gc',to:'d1',p:'tcp:22'},
+ inetPing:{t:'default-vm-1 → www.google.com',s:'icmp',from:'d1',to:'inet',p:'icmp'},
+ cs2:{t:'Cloud Shell → mynet-vm-2 SSH',s:'tcp:22',from:'cs',to:'v2',p:'tcp:22'},
+ cs1:{t:'Cloud Shell → mynet-vm-1 SSH',s:'tcp:22',from:'cs',to:'v1',p:'tcp:22'},
+ gc2:{t:'Console SSH → mynet-vm-2',s:'tcp:22 from Google IPs',from:'gc',to:'v2',p:'tcp:22'},
+ pingInt:{t:'vm-1 → vm-2 ping (internal IP)',s:'icmp 10.132.0.2',from:'v1',to:'v2',p:'icmp'},
+ pingExt:{t:'vm-1 → vm-2 ping (external IP)',s:'icmp 34.0.0.22',from:'v1',to:'v2',p:'icmp',viaExt:true}
+};
+let cur=0,sel='cs2';
+function rulesFor(net,dir){
+  const st=STEPS[cur];
+  const list=st.rules.map(k=>({...R[k],key:k})).filter(r=>r.net===net&&r.dir===dir);
+  return [...list,...IMPL.filter(r=>r.dir===dir)].sort((a,b)=>a.pri-b.pri||(a.act==='deny'?-1:1));
+}
+function match(r,ep,peerIp,port){
+  if(!(r.p==='all'||r.p===port))return false;
+  if(!inC(peerIp,r.r))return false;
+  if(r.tg&&!(STEPS[cur].tags&&ep.net==='mynet'))return false;
+  return true;
+}
+function evalTest(k){
+  const T=TESTS[k],st=STEPS[cur],A=H[T.from],B=H[T.to];
+  if((A.net==='default'||B.net==='default')&&!st.defaultNet)return{gone:true};
+  let srcIp=A.ip,dstIp=B.ip;
+  if(T.viaExt){srcIp=A.ext;dstIp=B.ext;}
+  const out={eg:null,ing:null,egRows:[],inRows:[],ok:true};
+  if(A.net!=='ext'){
+    out.egRows=rulesFor(A.net,'OUT');out.eg=out.egRows.find(r=>match(r,A,dstIp,T.p));
+    if(out.eg.act==='deny')out.ok=false;
+  }
+  if(B.net!=='ext'){
+    out.inRows=rulesFor(B.net,'IN');
+    if(out.ok){out.ing=out.inRows.find(r=>match(r,B,srcIp,T.p));if(out.ing.act==='deny')out.ok=false;}
+  }
+  out.srcIp=srcIp;return out;
+}
+function rows(list,hit,dirLabel){
+  if(!list.length)return `<tr><td colspan="6" class="note">The sender is outside the VPC, so no ${dirLabel} check applies here.</td></tr>`;
+  let seen=false;
+  return list.map(r=>{let cls='';if(hit===r){cls='hit';seen=true;}else if(seen||!hit)cls=hit?'after':'after';if(!hit)cls='after';
+    if(STEPS[cur].added.includes(r.key))cls+=' new';
+    return `<tr class="${cls}"><td>${r.name}</td><td>${r.pri}</td><td><span class="act ${r.act}">${r.act}</span></td><td>${r.r}</td><td>${r.tg?'tag:'+r.tg:'all'}</td><td>${r.p}</td></tr>`;}).join('');
+}
+function draw(res){
+  const svg=$('map');svg.innerHTML='';const st=STEPS[cur];
+  el('rect',{x:240,y:140,width:510,height:120,rx:12,class:'bandr'},svg);el('text',{x:252,y:132,class:'bl'},svg,'mynetwork (auto mode, 10.128.0.0/9)');
+  el('rect',{x:240,y:20,width:220,height:96,rx:12,class:'bandr2',opacity:st.defaultNet?1:.25},svg);el('text',{x:252,y:14,class:'bl'},svg,st.defaultNet?'default network':'default network (deleted)');
+  el('text',{x:20,y:118,class:'bl'},svg,'Outside the VPC');
+  for(const [k,n] of Object.entries(H)){
+    const gone=n.net==='default'&&!st.defaultNet;
+    el('rect',{x:n.x,y:n.y,width:200,height:56,rx:8,class:'node'+(gone?' gone':'')},svg);
+    el('text',{x:n.x+10,y:n.y+21,class:'nl',opacity:gone?.3:1},svg,n.label);
+    el('text',{x:n.x+10,y:n.y+38,class:'ns',opacity:gone?.3:1},svg,n.sub);
+    if(n.net==='mynet'&&st.tags)el('text',{x:n.x+10,y:n.y+52,class:'tag'},svg,'tag: lab-ssh');
+  }
+  if(!res||res.gone)return;
+  const T=TESTS[sel],A=H[T.from],B=H[T.to];
+  const ax=A.x+200,ay=A.y+28,bx=B.x,by=B.y+28;
+  let d;
+  if(T.viaExt){d=`M${A.x+100} ${A.y+56} C ${A.x+100} 310, ${B.x+100} 310, ${B.x+100} ${B.y+56}`;el('text',{x:400,y:322,class:'ns','text-anchor':'middle'},svg,'via internet gateway: source NATed to 34.0.0.11');}
+  else if(A.x===B.x){d=`M${A.x+100} ${A.y+56} L${B.x+100} ${B.y}`;}
+  else d=`M${ax} ${ay} C ${(ax+bx)/2} ${ay}, ${(ax+bx)/2} ${by}, ${bx} ${by}`;
+  const path=el('path',{d,class:'edge '+(res.ok?'ok':'bad')},svg);
+  const L=path.getTotalLength();
+  const stopAt=res.ok?1:(res.eg&&res.eg.act==='deny'?0.12:0.88);
+  const pt=path.getPointAtLength(L*stopAt);
+  if(!res.ok)el('text',{x:pt.x-6,y:pt.y-8,class:'x'},svg,'✕');
+  if(reduce)return;
+  const c=el('circle',{r:5.5,class:'pk'},svg);let t0=null;
+  (function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/1800)%1;const q=Math.min(u/.8,1)*stopAt;const p=path.getPointAtLength(L*q);c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('class','pk'+(u>.8?(res.ok?' ok':' bad'):''));requestAnimationFrame(f);})(performance.now());
+}
+function render(){
+  const st=STEPS[cur];
+  document.querySelectorAll('.steps button').forEach((b,i)=>i===cur?b.setAttribute('aria-current','step'):b.removeAttribute('aria-current'));
+  $('x-title').textContent=st.t;$('x-body').textContent=st.b;$('x-cmd').textContent=st.c;
+  const fx=$('x-fix');if(st.fix){fx.hidden=false;fx.innerHTML=st.fix;}else fx.hidden=true;
+  const avail=Object.entries(TESTS).filter(([k,T])=>{const def=H[T.from].net==='default'||H[T.to].net==='default';return st.defaultNet?true:!def;});
+  if(!avail.find(([k])=>k===sel))sel=avail[0][0];
+  $('tests').innerHTML=avail.map(([k,T])=>{const r=evalTest(k);return `<button class="test" type="button" data-k="${k}" aria-pressed="${k===sel}"><span><span class="t">${T.t}</span><br><span class="s">${T.s}</span></span><span class="res ${r.gone?'':r.ok?'ok':'bad'}">${r.gone?'—':r.ok?'✔':'✕'}</span></button>`;}).join('');
+  $('tests').querySelectorAll('.test').forEach(b=>b.addEventListener('click',()=>{sel=b.dataset.k;render();}));
+  const res=evalTest(sel),T=TESTS[sel];
+  $('eg-h').textContent=`Egress rules at ${H[T.from].label}`;
+  $('in-h').textContent=`Ingress rules at ${H[T.to].label}`;
+  $('eg').innerHTML=rows(res.egRows||[],res.eg,'egress');
+  $('in').innerHTML=res.ok||!res.eg||res.eg.act!=='deny'?rows(res.inRows||[],res.ing,'ingress'):(res.inRows.length?`<tr><td colspan="6" class="note">Never reached: the packet was dropped at the sender's egress check.</td></tr>`:'');
+  const v=$('verdict');
+  if(res.gone){v.className='verdict';v.textContent='default-vm-1 and the default network were deleted in Task 2.';}
+  else{
+    const why=[];
+    if(res.eg)why.push(`Egress at ${H[T.from].label}: ${res.eg.name} (${res.eg.act}, ${res.eg.pri})`);
+    if(res.ing)why.push(`ingress at ${H[T.to].label}: ${res.ing.name} (${res.ing.act}, ${res.ing.pri})`);
+    let extra='';
+    if(T.viaExt)extra=` The source is ${res.srcIp} after NAT, which isn't in 10.128.0.0/9.`;
+    if(sel==='gc2'&&!res.ok)extra=' Browser SSH comes from changing Google IPs that no rule allows.';
+    if(res.ok&&res.ing&&res.ing.p==='tcp:22')extra+=' Replies return automatically, because the firewall is stateful.';
+    v.className='verdict '+(res.ok?'ok':'bad');
+    v.textContent=(res.ok?'✔ Works. ':'✕ Blocked. ')+why.join(', then ')+'.'+extra;
+  }
+  draw(res);
+}
+STEPS.forEach((s,i)=>{const li=document.createElement('li');li.innerHTML=`<button type="button"><span class="n">STEP ${i+1}</span><span class="l">${s.s}</span></button>`;li.firstChild.addEventListener('click',()=>{cur=i;if(s.test)sel=s.test;render();});$('steps').appendChild(li);});
+render();
+})();
+</script>
+</body>
+</html>

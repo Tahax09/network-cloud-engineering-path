@@ -76,6 +76,7 @@ target_date: TBD
 | [GCP29](../lessons/gcp/GCP29%20-%20Module%20Introduction%20-%20Controlling%20Access%20to%20VPC%20Networks.md) | Module Introduction - Controlling Access to VPC Networks | ✅ Complete |
 | [GCP30](../lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | ✅ Complete |
 | [GCP31](../lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | ✅ Complete |
+| [GCP32](../labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |

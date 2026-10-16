@@ -65,7 +65,8 @@
 | GCP29 | Module Introduction - Controlling Access to VPC Networks | Network Security — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP30 | IAM Roles | Network Security — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP31 | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete | Pending |
-| GCP32 | — | — | — | Pending | — |
+| GCP32 | Lab: Configuring VPC Firewalls (wiki/labs/) | Network Security — Module 2 | 2026-10-16 | Complete | — |
+| GCP33 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

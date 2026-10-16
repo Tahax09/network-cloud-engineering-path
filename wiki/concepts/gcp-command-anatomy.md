@@ -155,6 +155,26 @@ gcloud compute firewall-rules list --format="table(name,network,direction,source
 **When:** audits. Flag any ingress from `0.0.0.0/0`.
 
 ```bash
+ip=$(curl -s https://api.ipify.org)                     # your client's public IP
+gcloud compute firewall-rules create mynetwork-ingress-allow-ssh-from-cs \
+    --network mynetwork --action ALLOW --direction INGRESS \
+    --rules tcp:22 --source-ranges $ip --target-tags=lab-ssh
+gcloud compute instances add-tags mynet-vm-2 --zone ZONE --tags lab-ssh
+gcloud compute instances remove-tags mynet-vm-2 --zone ZONE --tags lab-ssh
+gcloud compute firewall-rules update mynetwork-ingress-deny-icmp-all --priority 2000
+gcloud compute ssh qwiklabs@mynet-vm-2 --zone ZONE       # user@vm; uses the external IP (no IAP)
+```
+| Piece | Meaning |
+|-------|---------|
+| `api.ipify.org` | Returns the caller's public IP. Cloud Shell's IP changes when the session is recycled |
+| `--source-ranges $ip` | A bare IP = `/32` |
+| `add-tags` / `remove-tags` | Attach or detach network tags. Takes effect immediately, no restart |
+| `firewall-rules update --priority` | Re-order a rule in place (the lab flips a deny from 500 to 2000) |
+| `compute ssh user@vm` | Pushes an SSH key via metadata, then connects to the external IP. Return code 255 = TCP blocked |
+
+**When:** GCP32 lab: open SSH only from your client, scope it with tags, test priority changes. → [[GCP32 - Lab - Configuring VPC Firewalls]]
+
+```bash
 # Network firewall policy (newer model, attachable to many VPCs, supports FQDN objects)
 gcloud compute network-firewall-policies create gate --global
 gcloud compute network-firewall-policies rules create 100 --firewall-policy=gate --global-firewall-policy \

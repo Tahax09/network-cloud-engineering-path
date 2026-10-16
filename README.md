@@ -157,6 +157,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP29](wiki/lessons/gcp/GCP29%20-%20Module%20Introduction%20-%20Controlling%20Access%20to%20VPC%20Networks.md) | Module Introduction - Controlling Access to VPC Networks | Control plane (IAM, hierarchy, Org Policy) vs data plane (firewall rules) |
 | [GCP30](wiki/lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | Hierarchy inheritance, deny policies first, permission anatomy, Network Viewer/Admin vs Security Admin, custom roles |
 | [GCP31](wiki/lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Stateful distributed rules, 5 parameters, priority/deny-wins-tie, implied + default rules, SA vs tag targets, Cloud NGFW hierarchical/network policies, Firewall Insights |
+| [GCP32](wiki/labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Hands-on: auto-mode VPC, delete default network, tag-based SSH rule, internal ICMP, priority 500 vs 2000, egress deny |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -269,6 +270,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [GCP12 lab](wiki/labs/GCP12%20-%20Lab%20-%20Implement%20Private%20Google%20Access%20and%20Cloud%20NAT.md) | Private Google Access + Cloud NAT for a VM with no external IP, reached via IAP |
 | [GCP19 lab](wiki/labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Hub-and-spoke with Network Connectivity Center: two isolated VPCs connected as VPC spokes |
 | [GCP28 lab](wiki/labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor blocklist of one client IP at Google's edge; verify with curl and policy logs |
+| [GCP32 lab](wiki/labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Firewall rules end to end: implied rules, target tags, NAT'd external-IP ping, priority and egress |
 
 ---
 
