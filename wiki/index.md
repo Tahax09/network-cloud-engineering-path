@@ -63,6 +63,7 @@
 | [GCP28](labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Lab: Configuring Traffic Blocklisting with Google Cloud Armor | Network Security — Module 1 | 2026-10-15 | Complete |
 | [GCP29](lessons/gcp/GCP29%20-%20Module%20Introduction%20-%20Controlling%20Access%20to%20VPC%20Networks.md) | Module Introduction - Controlling Access to VPC Networks | Network Security — Module 2 | 2026-10-15 | Complete |
 | [GCP30](lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | Network Security — Module 2 | 2026-10-15 | Complete |
+| [GCP31](lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -179,5 +180,6 @@
 | ID | Visualization | Shows |
 |----|---------------|-------|
 | GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GCP31 | [Firewall Rule Evaluator](visualizations/gcp/GCP31%20-%20Firewall%20Rule%20Evaluator.html) | Packet builder through priority-sorted rules (deny wins ties, implied rules, stateful return), SA vs tag targets, NGFW policy hierarchy with goto_next, default VPC hardening audit |
 | GCP29–30 | [IAM Access Explorer](visualizations/gcp/GCP29-30%20-%20IAM%20Access%20Explorer.html) | Hierarchy inheritance + deny-first evaluation, networking role matrix, custom role builder, Karen least-privilege scenario |
 | GCP28 | [Cloud Armor at the Edge](visualizations/gcp/GCP28%20-%20Cloud%20Armor%20at%20the%20Edge.html) | POP/GFE routing to closest backend with capacity, stress overflow, blocklist vs allowlist, propagation, policy logs |

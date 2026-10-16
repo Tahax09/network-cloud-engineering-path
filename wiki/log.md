@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-16] ingest+verify | GCP31 — Firewall Rules
+Stateful/distributed rules, 5 parameters, targets (all/tags/SA), priority + deny-wins-tie, implied and default-VPC rules, always allowed/blocked traffic, best practices, Cloud NGFW hierarchical/global/regional policies, secure tags, Firewall Insights, Kwan scenario. Verified vs docs (firewalls page): 10-min connection tracking, deny wins only at equal priority. Evaluation-order page not fetchable (client-rendered) — flagged in lesson. New viz GCP31 Firewall Rule Evaluator; command anatomy adds hierarchical policies, secure tags, insights.
+
 ## [2026-10-16] catalog | Added 17 Coursera programs to the certification list
 New page certs/course-catalog: Cisco (Network Fundamentals, CCNA 200-301, Network Automation, Wireless Foundations, SD-WAN), CyberOps, AWS (CCP Essentials, Fundamentals, Cloud Solutions Architect), Azure (AZ-900, AZ-104 course + specialization), Kubernetes (Docker & K8s Masterclass, KCNA, CKA, CKS), Google AI. Titles/providers/course counts checked against Coursera. Duplicate CKA/CKS links collapsed. Updated CLAUDE.md track table, README roadmap, overview, index.
 

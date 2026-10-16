@@ -49,7 +49,7 @@ The two are independent. A Network Admin with no firewall-edit permission still 
 |------|--------|
 | 1 | IAM roles: [[GCP30 - IAM Roles]] |
 | 2 | Resource hierarchy and policy constraints *(upcoming)* |
-| 3 | Firewall rules *(upcoming)* |
+| 3 | Firewall rules: [[GCP31 - Firewall Rules]] |
 | 4 | Lab: Controlling Access to VPC Networks *(upcoming)* |
 | 5 | Quiz *(upcoming)* |
 

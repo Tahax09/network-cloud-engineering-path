@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Firewall Rule Evaluator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: header + tabs; tab 1 = packet builder beside sorted rule table, then a packet-flow diagram; tab 2 = policy hierarchy pipeline; tab 3 = default VPC audit */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb;
+  --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+    --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c; --vio:#ab88f3; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+  --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c; --vio:#ab88f3; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:20px}
+header{display:grid;gap:6px;max-width:800px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}
+.lead{color:var(--muted);max-width:70ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:12px;min-width:0}
+.field{display:grid;gap:4px}
+.k,.field label{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.help{font-size:13px;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:600 13px var(--f-body);color:var(--ink);background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;font-size:14px}
+.switch input{appearance:none;width:38px;height:21px;border-radius:11px;background:var(--line);position:relative;cursor:pointer;flex:none}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:var(--surface);transition:left .15s}
+.switch input:checked{background:var(--accent)}
+.switch input:checked::after{left:20px}
+.scroll{overflow-x:auto}
+table.rt{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono);font-variant-numeric:tabular-nums}
+.rt th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--sunken)}
+.rt td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+.rt td.why{white-space:normal;min-width:200px;font-family:var(--f-body);font-size:12.5px;color:var(--muted)}
+.rt tr.off td{opacity:.35}
+.rt tr.skip td:not(.why){opacity:.5}
+.rt tr.hit td{background:var(--accent-soft);font-weight:500}
+.rt tr.after td{opacity:.35}
+.rt tr.implied td:first-child::before{content:"🔒 ";}
+.act{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;border:1px solid currentColor}
+.act.allow{color:var(--ok)}.act.deny{color:var(--bad)}.act.goto{color:var(--vio)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14.5px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}
+.vbig{font:700 22px/1.15 var(--f-display)}
+.vbig.ok{color:var(--ok)}.vbig.bad{color:var(--bad)}
+svg{display:block;width:100%;height:auto}
+.mapbox{overflow-x:auto}.mapbox svg{min-width:620px}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+.node.hl{stroke:var(--accent);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}
+.ns{font:400 11px var(--f-mono);fill:var(--muted)}
+.wall{fill:var(--sunken);stroke:var(--line)}
+.wall.ok{stroke:var(--ok);fill:color-mix(in srgb,var(--ok) 14%,var(--surface))}
+.wall.bad{stroke:var(--bad);fill:color-mix(in srgb,var(--bad) 14%,var(--surface))}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}
+.pk{fill:var(--accent)}.pk.ret{fill:var(--ok)}.pk.drop{fill:var(--bad)}
+.lbl{font:500 11.5px var(--f-mono);fill:var(--muted)}
+.pipe{display:grid;gap:8px}
+.lvl{display:grid;grid-template-columns:28px minmax(0,1fr) 220px;gap:10px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--surface)}
+@media (max-width:700px){.lvl{grid-template-columns:28px minmax(0,1fr)}.lvl select{grid-column:1/-1}}
+.lvl .n{font:600 12px var(--f-mono);color:var(--muted)}
+.lvl.cur{border-color:var(--accent);background:var(--accent-soft)}
+.lvl.done{opacity:.6}
+.lvl.after{opacity:.35}
+.lvl.stop{border-color:var(--ok)}
+.lvl.stopbad{border-color:var(--bad)}
+.audit{display:grid;gap:10px}
+.arow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:10px 12px;border-left:4px solid var(--line)}
+.arow.risk{border-left-color:var(--bad)}.arow.warn{border-left-color:var(--warn)}.arow.good{border-left-color:var(--ok)}
+.arow .t{font:500 13px var(--f-mono)}
+.note{font-size:12.5px;color:var(--muted)}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.score{font:700 28px/1 var(--f-display);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP31 · Network Security, Module 2: Controlling Access to VPC Networks</div>
+    <h1>Firewall Rule Evaluator</h1>
+    <p class="lead">Build a packet and send it through Cymbal's VPC firewall. Rules are sorted by priority, the first match wins, and a deny beats an allow at the same priority. Allowed connections get their return traffic automatically. Then step through the full Cloud NGFW policy hierarchy and audit the default VPC.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">VPC rules</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Policy hierarchy</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Default VPC audit</button>
+  </div>
+
+  <!-- TAB 1 -->
+  <section id="p1" role="tabpanel" style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Packet</h2>
+        <div class="field"><label for="f-src">From</label>
+          <select id="f-src">
+            <option value="internet">Internet client · 203.0.113.9</option>
+            <option value="iap">IAP · 35.235.240.10</option>
+            <option value="onprem">On-prem admin · 10.200.1.5</option>
+            <option value="web" selected>web-vm · 10.10.1.2 (tag web, SA web-sa)</option>
+            <option value="api">api-vm · 10.10.2.2 (tag api, SA api-sa)</option>
+            <option value="db">db-vm · 10.10.3.2 (SA db-sa)</option>
+          </select></div>
+        <div class="field"><label for="f-dst">To</label>
+          <select id="f-dst">
+            <option value="web">web-vm · 10.10.1.2</option>
+            <option value="api" selected>api-vm · 10.10.2.2</option>
+            <option value="db">db-vm · 10.10.3.2</option>
+            <option value="internet">Internet · 93.184.216.34</option>
+          </select></div>
+        <div class="field"><label for="f-port">Protocol / port</label>
+          <select id="f-port">
+            <option value="tcp:22">tcp:22 (SSH)</option>
+            <option value="tcp:443">tcp:443 (HTTPS)</option>
+            <option value="tcp:80">tcp:80 (HTTP)</option>
+            <option value="tcp:8443" selected>tcp:8443 (API)</option>
+            <option value="tcp:5432">tcp:5432 (PostgreSQL)</option>
+            <option value="icmp">icmp (ping)</option>
+          </select></div>
+        <div class="btns"><button class="btn primary" id="send" type="button">Send packet</button></div>
+        <hr style="border:0;border-top:1px solid var(--line);width:100%;margin:2px 0">
+        <h2>Change the rules</h2>
+        <label class="switch" for="o-tie"><span>Add a deny tcp:8443 at priority 1000 (same as the allow)</span><input type="checkbox" id="o-tie"></label>
+        <label class="switch" for="o-egress"><span>Egress lockdown: egress-deny-all at 65534</span><input type="checkbox" id="o-egress"></label>
+        <label class="switch" for="o-sa"><span>Use service-account targets instead of tags</span><input type="checkbox" id="o-sa"></label>
+        <p class="help">Pick a scenario:</p>
+        <div class="btns">
+          <button class="btn" data-s="1" type="button">web → api</button>
+          <button class="btn" data-s="2" type="button">Internet SSH</button>
+          <button class="btn" data-s="3" type="button">IAP SSH</button>
+          <button class="btn" data-s="4" type="button">web → db</button>
+          <button class="btn" data-s="5" type="button">VM → internet</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 id="r-head">app-vpc firewall rules, sorted by priority</h2>
+        <div class="scroll"><table class="rt"><thead><tr><th>Name</th><th>Dir</th><th>Pri</th><th>Action</th><th>Source / dest</th><th>Target</th><th>Ports</th><th>Check</th></tr></thead><tbody id="rules"></tbody></table></div>
+        <div class="vbig" id="vbig"></div>
+        <div class="verdict" id="verdict" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>What happens on the wire</h2>
+      <div class="mapbox"><svg id="wire" viewBox="0 0 760 200" aria-label="Packet path through the distributed firewall"></svg></div>
+      <p class="note">The firewall is enforced at each VM's virtual NIC, not at a central box. Dropped packets disappear silently: no RST and no ICMP unreachable comes back. A tracked connection stays open while at least one packet passes every 10 minutes.</p>
+    </div>
+  </section>
+
+  <!-- TAB 2 -->
+  <section id="p2" role="tabpanel" hidden style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Kwan's problem</h2>
+        <p class="help">Cymbal needs firewalling at several levels: org-wide rules from security, per-department exceptions, then the app teams' own rules. Cloud NGFW evaluates each level in order. Set what each level does with this packet:</p>
+        <p><code>Internet 203.0.113.9 → web-vm tcp:3389 (RDP)</code></p>
+        <label class="switch" for="o-before"><span>Network policies before classic VPC rules (BEFORE_CLASSIC_FIREWALL)</span><input type="checkbox" id="o-before"></label>
+        <div class="btns">
+          <button class="btn" id="h-run" type="button">Step</button>
+          <button class="btn" id="h-all" type="button">Run all</button>
+          <button class="btn" id="h-reset" type="button">Start over</button>
+        </div>
+        <div class="verdict" id="h-verdict"></div>
+      </div>
+      <div class="panel">
+        <h2>Evaluation order</h2>
+        <div class="pipe" id="pipe"></div>
+        <p class="note">This is the default order as described in the Cloud NGFW docs. The live docs page couldn't be fetched when this was built, so re-check it before relying on it for an exam.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3 -->
+  <section id="p3" role="tabpanel" hidden style="display:grid;gap:18px">
+    <div class="grid">
+      <div class="panel">
+        <h2>Hardening score</h2>
+        <div class="score" id="score"></div>
+        <p class="help">Every project starts with a default VPC containing four permissive rules at priority 65534. Fix each one and watch the score.</p>
+        <span class="k">gcloud for your changes</span>
+        <pre class="cmd" id="a-cmd"></pre>
+      </div>
+      <div class="panel">
+        <h2>Default VPC rules</h2>
+        <div class="audit" id="audit"></div>
+        <p class="note">The implied rules (allow egress and deny ingress at 65535) can't be removed. The four default-* rules can be edited or deleted, and should be.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+['1','2','3'].forEach(n=>$('t'+n).addEventListener('click',()=>{['1','2','3'].forEach(m=>{$('t'+m).setAttribute('aria-selected',m===n);$('p'+m).hidden=m!==n;});}));
+
+/* ---------- endpoints ---------- */
+const EP={
+ internet:{label:'Internet client',ip:'203.0.113.9',ext:true},
+ iap:{label:'IAP',ip:'35.235.240.10',ext:true},
+ onprem:{label:'On-prem admin',ip:'10.200.1.5',ext:true},
+ web:{label:'web-vm',ip:'10.10.1.2',tag:'web',sa:'web-sa',vm:true},
+ api:{label:'api-vm',ip:'10.10.2.2',tag:'api',sa:'api-sa',vm:true},
+ db:{label:'db-vm',ip:'10.10.3.2',tag:'db',sa:'db-sa',vm:true}
+};
+const toInt=ip=>ip.split('.').reduce((a,o)=>((a<<8)>>>0)+(+o),0)>>>0;
+function inCidr(ip,c){const[n,b]=c.split('/');const m=+b===0?0:(0xFFFFFFFF<<(32-+b))>>>0;return((toInt(ip)&m)>>>0)===((toInt(n)&m)>>>0);}
+
+/* ---------- rules ---------- */
+function rules(){
+  const sa=$('o-sa').checked;
+  const T=(tag,s)=>sa?{sa:s}:{tag};
+  const r=[
+   {name:'ingress-allow-https-from-any',dir:'INGRESS',pri:1000,act:'allow',src:{range:'0.0.0.0/0'},tgt:T('web','web-sa'),ports:['tcp:443','tcp:80']},
+   {name:'ingress-allow-ssh-from-iap',dir:'INGRESS',pri:1000,act:'allow',src:{range:'35.235.240.0/20'},tgt:{all:true},ports:['tcp:22']},
+   {name:'ingress-allow-ssh-from-onprem',dir:'INGRESS',pri:1000,act:'allow',src:{range:'10.200.0.0/16'},tgt:{all:true},ports:['tcp:22']},
+   {name:'ingress-allow-8443-from-web',dir:'INGRESS',pri:1000,act:'allow',src:sa?{sa:'web-sa'}:{tag:'web'},tgt:T('api','api-sa'),ports:['tcp:8443']},
+   {name:'ingress-allow-5432-from-api',dir:'INGRESS',pri:1000,act:'allow',src:sa?{sa:'api-sa'}:{tag:'api'},tgt:{sa:'db-sa'},ports:['tcp:5432']},
+   {name:'ingress-allow-icmp-from-internal',dir:'INGRESS',pri:1100,act:'allow',src:{range:'10.10.0.0/16'},tgt:{all:true},ports:['icmp']},
+   {name:'ingress-deny-8443-from-any',dir:'INGRESS',pri:1000,act:'deny',src:{range:'0.0.0.0/0'},tgt:{all:true},ports:['tcp:8443'],opt:'o-tie'},
+   {name:'egress-allow-https-to-any',dir:'EGRESS',pri:1000,act:'allow',dst:{range:'0.0.0.0/0'},tgt:{all:true},ports:['tcp:443']},
+   {name:'egress-deny-all',dir:'EGRESS',pri:65534,act:'deny',dst:{range:'0.0.0.0/0'},tgt:{all:true},ports:['all'],opt:'o-egress'},
+   {name:'implied-allow-egress',dir:'EGRESS',pri:65535,act:'allow',dst:{range:'0.0.0.0/0'},tgt:{all:true},ports:['all'],implied:true},
+   {name:'implied-deny-ingress',dir:'INGRESS',pri:65535,act:'deny',src:{range:'0.0.0.0/0'},tgt:{all:true},ports:['all'],implied:true}
+  ];
+  r.forEach(x=>x.on=!x.opt||$(x.opt).checked);
+  // stable sort: priority, then deny before allow at same priority
+  return r.sort((a,b)=>a.pri-b.pri||(a.act==='deny'?-1:1)-(b.act==='deny'?-1:1));
+}
+const fmtSel=s=>s.range?s.range:s.tag?'tag:'+s.tag:s.sa?'sa:'+s.sa:'all instances';
+function portOk(r,p){return r.ports.includes('all')||r.ports.includes(p);}
+function tgtOk(t,ep){if(!ep.vm)return false;if(t.all)return true;if(t.tag)return ep.tag===t.tag;if(t.sa)return ep.sa===t.sa;return false;}
+function srcOk(s,ep){
+  if(s.range)return inCidr(ep.ip,s.range);
+  if(!ep.vm)return false;
+  if(s.tag)return ep.tag===s.tag; if(s.sa)return ep.sa===s.sa; return false;
+}
+function evaluate(dir,from,to,port){
+  const rs=rules();const rows=[];let hit=null;
+  for(const r of rs){
+    if(!r.on){rows.push({r,cls:'off',why:'Turned off'});continue;}
+    if(hit){rows.push({r,cls:'after',why:'Not evaluated: an earlier rule already matched'});continue;}
+    if(r.dir!==dir){rows.push({r,cls:'skip',why:`${r.dir.toLowerCase()} rule: doesn't apply to this ${dir.toLowerCase()} packet`});continue;}
+    const tgtEp=dir==='INGRESS'?EP[to]:EP[from];
+    if(!tgtOk(r.tgt,tgtEp)){rows.push({r,cls:'skip',why:`Target ${fmtSel(r.tgt)} doesn't include ${tgtEp.label}`});continue;}
+    if(dir==='INGRESS'&&!srcOk(r.src,EP[from])){rows.push({r,cls:'skip',why:`Source ${fmtSel(r.src)} doesn't match ${EP[from].label} (${EP[from].ip})${r.src.tag||r.src.sa?'. Tag and SA sources only match VMs, by primary internal IP':''}`});continue;}
+    if(dir==='EGRESS'){const d=to==='internet'?'93.184.216.34':EP[to].ip;if(!inCidr(d,r.dst.range)){rows.push({r,cls:'skip',why:`Destination ${r.dst.range} doesn't contain ${d}`});continue;}}
+    if(!portOk(r,port)){rows.push({r,cls:'skip',why:`Ports ${r.ports.join(',')} don't include ${port}`});continue;}
+    hit=r;rows.push({r,cls:'hit',why:`MATCH: first matching rule by priority${r.implied?' (implied rule)':''}`});
+  }
+  return{rows,hit};
+}
+let anim=null;
+function run(){
+  const from=$('f-src').value,to=$('f-dst').value,port=$('f-port').value;
+  let verdict,ok,rows=[];
+  if(from===to){$('rules').innerHTML='';$('vbig').textContent='';$('verdict').className='verdict';$('verdict').textContent='Pick different endpoints. A VM\'s traffic to its own IP never leaves the VM, so no firewall rule applies.';drawWire(null);return;}
+  if(!EP[from]?.vm&&to==='internet'){$('rules').innerHTML='';$('vbig').textContent='';$('verdict').className='verdict';$('verdict').textContent='Both ends are outside the VPC, so this VPC\'s firewall never sees the packet.';drawWire(null);return;}
+  // egress check on source VM (if VM), then ingress on dest VM (if VM)
+  const stages=[];
+  if(EP[from]?.vm){stages.push({dir:'EGRESS',on:from,res:evaluate('EGRESS',from,to,port)});}
+  if(to!=='internet'&&EP[to].vm){stages.push({dir:'INGRESS',on:to,res:evaluate('INGRESS',from,to,port)});}
+  const failed=stages.find(s=>s.res.hit.act==='deny');
+  ok=!failed;
+  const show=failed||stages[stages.length-1];
+  rows=show.res.rows;
+  $('r-head').textContent=`${show.dir==='EGRESS'?'Egress':'Ingress'} check at ${EP[show.on].label}'s NIC`+(stages.length>1&&!failed?` (egress check at ${EP[from].label} also passed)`:'');
+  $('rules').innerHTML=rows.map(({r,cls,why})=>`<tr class="${cls}${r.implied?' implied':''}"><td>${r.name}</td><td>${r.dir==='INGRESS'?'IN':'OUT'}</td><td>${r.pri}</td><td><span class="act ${r.act}">${r.act}</span></td><td>${fmtSel(r.src||r.dst)}</td><td>${fmtSel(r.tgt)}</td><td>${r.ports.join(',')}</td><td class="why">${why}</td></tr>`).join('');
+  const h=show.res.hit;
+  const tie=$('o-tie').checked&&port==='tcp:8443'&&show.dir==='INGRESS';
+  $('vbig').className='vbig '+(ok?'ok':'bad');
+  $('vbig').textContent=ok?'✔ Allowed':'✕ Dropped';
+  let txt;
+  if(!ok){
+    txt=`${h.name} (${h.act}, priority ${h.pri}) matched first, so the packet is dropped silently at ${EP[show.on].label}'s NIC.`;
+    if(tie)txt+=' The allow rule has the same priority (1000), and at equal priority a deny always wins.';
+    if(h.name==='implied-deny-ingress')txt+=' Nothing allowed it, so the implied deny-ingress rule caught it. Nothing reaches a VM unless a rule allows it.';
+    if(h.name==='egress-deny-all')txt+=' Your egress lockdown blocks every port that no higher-priority rule opens.';
+  }else{
+    txt=`${h.name} allows it.`+(stages.length>1?` The egress check at ${EP[from].label} passed too (${stages[0].res.hit.name}).`:'')+' Return traffic is allowed automatically, because the firewall is stateful and tracks the connection.';
+    if(h.implied)txt+=' Only the implied allow-egress rule permitted this. Lock egress down if you want least privilege.';
+    if(!$('o-sa').checked&&(h.tgt.tag||h.src?.tag))txt+=' This rule matched on a network tag, and anyone with Instance Admin can add that tag to their own VM. Service-account targets are safer.';
+  }
+  $('verdict').className='verdict '+(ok?'ok':'bad');$('verdict').textContent=txt;
+  drawWire({from,to,ok,dropAt:failed?failed.dir:null});
+}
+function drawWire(s){
+  const svg=$('wire');svg.innerHTML='';if(anim)cancelAnimationFrame(anim);
+  if(!s)return;
+  const A={x:20,y:70},B={x:560,y:70};
+  const fromL=EP[s.from].label+' '+EP[s.from].ip;
+  const toL=s.to==='internet'?'Internet 93.184.216.34':EP[s.to].label+' '+EP[s.to].ip;
+  el('rect',{x:A.x,y:A.y,width:180,height:56,rx:8,class:'node hl'},svg);el('text',{x:A.x+10,y:A.y+22,class:'nl'},svg,EP[s.from].label);el('text',{x:A.x+10,y:A.y+40,class:'ns'},svg,EP[s.from].ip);
+  el('rect',{x:B.x,y:B.y,width:180,height:56,rx:8,class:'node hl'},svg);el('text',{x:B.x+10,y:B.y+22,class:'nl'},svg,s.to==='internet'?'Internet':EP[s.to].label);el('text',{x:B.x+10,y:B.y+40,class:'ns'},svg,s.to==='internet'?'93.184.216.34':EP[s.to].ip);
+  const walls=[];
+  if(EP[s.from].vm)walls.push({x:225,label:'egress check',dir:'EGRESS'});
+  if(s.to!=='internet'&&EP[s.to].vm)walls.push({x:510,label:'ingress check',dir:'INGRESS'});
+  walls.forEach(w=>{const st=s.dropAt===w.dir?'bad':(s.dropAt&&w.dir==='INGRESS'&&s.dropAt==='EGRESS')?'':'ok';el('rect',{x:w.x,y:50,width:24,height:96,rx:4,class:'wall '+st},svg);el('text',{x:w.x+12,y:168,class:'lbl','text-anchor':'middle'},svg,w.label);});
+  el('path',{d:`M200 98 L560 98`,class:'edge'},svg);
+  el('text',{x:380,y:40,class:'lbl','text-anchor':'middle'},svg,s.ok?'request → , ← return traffic allowed automatically (stateful)':'request dropped silently: no RST, no ICMP');
+  if(reduce)return;
+  let t0=null;
+  const dropX=s.dropAt==='EGRESS'?225:s.dropAt==='INGRESS'?510:null;
+  const p=el('circle',{r:6,class:'pk',cx:200,cy:92},svg);
+  const q=s.ok?el('circle',{r:6,class:'pk ret',cx:560,cy:106},svg):null;
+  function f(ts){
+    if(t0==null)t0=ts;const u=((ts-t0)/2200)%1;
+    if(s.ok){
+      const x1=u<.5?200+(360*(u/.5)):560; p.setAttribute('cx',x1);p.style.opacity=u<.5?1:0;
+      const x2=u>=.5?560-(360*((u-.5)/.5)):560; q.setAttribute('cx',x2);q.style.opacity=u>=.5?1:0;
+    }else{
+      const end=dropX;const x=200+(end-200)*Math.min(1,u/.6);p.setAttribute('cx',x);p.setAttribute('class',u>.6?'pk drop':'pk');p.style.opacity=u>.85?0:1;
+    }
+    anim=requestAnimationFrame(f);
+  }
+  anim=requestAnimationFrame(f);
+}
+$('send').addEventListener('click',run);
+['f-src','f-dst','f-port','o-tie','o-egress','o-sa'].forEach(id=>$(id).addEventListener('change',run));
+const SC={1:['web','api','tcp:8443'],2:['internet','web','tcp:22'],3:['iap','db','tcp:22'],4:['web','db','tcp:5432'],5:['api','internet','tcp:80']};
+document.querySelectorAll('[data-s]').forEach(b=>b.addEventListener('click',()=>{const [a,c,p]=SC[b.dataset.s];$('f-src').value=a;$('f-dst').value=c;$('f-port').value=p;run();}));
+run();
+
+/* ---------- TAB 2 hierarchy ---------- */
+const LV=[
+ {id:'org',t:'Hierarchical policy · Organization cymbal.com',d:'Security team rules for every project',opts:[['goto_next','goto_next (delegate down)'],['deny','deny tcp:3389 from 0.0.0.0/0'],['allow','allow tcp:3389 from 0.0.0.0/0'],['none','no matching rule']],def:'goto_next'},
+ {id:'folder',t:'Hierarchical policy · Folder Department X',d:'Department exceptions',opts:[['none','no matching rule'],['goto_next','goto_next (delegate down)'],['deny','deny tcp:3389'],['allow','allow tcp:3389']],def:'none'},
+ {id:'vpc',t:'VPC firewall rules · app-vpc',d:'Classic per-VPC rules (e.g. default-allow-rdp)',opts:[['allow','allow tcp:3389 (default-allow-rdp)'],['none','no matching rule'],['deny','deny tcp:3389']],def:'allow',classic:true},
+ {id:'global',t:'Global network firewall policy',d:'One per VPC, applies in all regions',opts:[['none','no matching rule'],['deny','deny tcp:3389 (secure tag env=prod)'],['allow','allow tcp:3389'],['goto_next','goto_next']],def:'none',net:true},
+ {id:'regional',t:'Regional network firewall policy · us-central1',d:'One per region per VPC, only in its region',opts:[['none','no matching rule'],['deny','deny tcp:3389'],['allow','allow tcp:3389']],def:'none',net:true},
+ {id:'implied',t:'Implied rule',d:'deny all ingress, priority 65535',opts:[['deny','deny (always)']],def:'deny',fixed:true}
+];
+const H={};LV.forEach(l=>H[l.id]=l.def);
+let hi=-1;
+function order(){const before=$('o-before').checked;const net=LV.filter(l=>l.net),cl=LV.filter(l=>l.classic);const org=LV.slice(0,2),imp=LV.slice(-1);return before?[...org,...net,...cl,...imp]:[...org,...cl,...net,...imp];}
+function hplan(){const o=order();for(let i=0;i<o.length;i++){const a=H[o[i].id];if(a==='allow'||a==='deny')return{o,stop:i,act:a};}return{o,stop:o.length-1,act:'deny'};}
+function hrender(){
+  const {o,stop,act}=hplan();
+  $('pipe').innerHTML=o.map((l,i)=>{
+    let cls='';if(hi>=0){if(i<hi&&i<=stop)cls='done';if(i===Math.min(hi,stop))cls=(hi>=stop&&i===stop)?(act==='allow'?'stop':'stopbad'):'cur';if(i>stop&&hi>=stop)cls='after';}
+    return `<div class="lvl ${cls}"><span class="n">${i+1}</span><div><h3>${l.t}</h3><span class="help">${l.d}</span></div><select data-l="${l.id}" ${l.fixed?'disabled':''} aria-label="${l.t}">${l.opts.map(([v,t])=>`<option value="${v}" ${H[l.id]===v?'selected':''}>${t}</option>`).join('')}</select></div>`;
+  }).join('');
+  $('pipe').querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>{H[s.dataset.l]=s.value;hi=-1;hrender();}));
+  const v=$('h-verdict');
+  if(hi<0){v.className='verdict';v.textContent='Press Step to evaluate level by level.';return;}
+  const cur=o[Math.min(hi,stop)];const a=H[cur.id];
+  if(hi<stop){v.className='verdict';v.textContent=a==='goto_next'?`${cur.t}: goto_next, so evaluation is delegated to the next level.`:`${cur.t}: no rule matches, so evaluation continues to the next level.`;}
+  else{v.className='verdict '+(act==='allow'?'ok':'bad');
+    v.textContent=(act==='allow'?'✔ Allowed':'✕ Denied')+` by ${o[stop].t}. Evaluation stops at the first allow or deny.`+(o[stop].id==='org'?' An org-level deny can\'t be overridden by any project, which is exactly the guardrail security teams want.':'')+(o[stop].id==='vpc'&&act==='allow'?' The default-allow-rdp rule exposes RDP to the internet. Have the org policy deny it before evaluation ever reaches the VPC.':'');}
+}
+$('h-run').addEventListener('click',()=>{const {stop}=hplan();hi=Math.min(hi+1,stop);hrender();});
+$('h-all').addEventListener('click',()=>{hi=hplan().stop;hrender();});
+$('h-reset').addEventListener('click',()=>{hi=-1;hrender();});
+$('o-before').addEventListener('change',()=>{hi=-1;hrender();});
+hrender();
+
+/* ---------- TAB 3 audit ---------- */
+const AUD=[
+ {name:'default-allow-internal',desc:'All protocols and ports between VMs, source 10.128.0.0/9',sev:'warn',fixes:[['keep','Keep'],['narrow','Replace with per-tier rules (web→api 8443, api→db 5432)'],['delete','Delete']],good:['narrow'],cmd:{narrow:'gcloud compute firewall-rules delete default-allow-internal -q\ngcloud compute firewall-rules create ingress-allow-8443-from-web --network=default \\\n  --allow=tcp:8443 --source-service-accounts=web-sa@P.iam.gserviceaccount.com \\\n  --target-service-accounts=api-sa@P.iam.gserviceaccount.com',delete:'gcloud compute firewall-rules delete default-allow-internal -q'}},
+ {name:'default-allow-ssh',desc:'tcp:22 from 0.0.0.0/0 to every VM',sev:'risk',fixes:[['keep','Keep'],['iap','Restrict the source to IAP 35.235.240.0/20'],['delete','Delete']],good:['iap','delete'],cmd:{iap:'gcloud compute firewall-rules update default-allow-ssh --source-ranges=35.235.240.0/20',delete:'gcloud compute firewall-rules delete default-allow-ssh -q'}},
+ {name:'default-allow-rdp',desc:'tcp:3389 from 0.0.0.0/0 to every VM',sev:'risk',fixes:[['keep','Keep'],['iap','Restrict the source to IAP 35.235.240.0/20'],['delete','Delete (no Windows VMs)']],good:['iap','delete'],cmd:{iap:'gcloud compute firewall-rules update default-allow-rdp --source-ranges=35.235.240.0/20',delete:'gcloud compute firewall-rules delete default-allow-rdp -q'}},
+ {name:'default-allow-icmp',desc:'ICMP from 0.0.0.0/0 to every VM',sev:'warn',fixes:[['keep','Keep'],['internal','Restrict the source to internal ranges'],['delete','Delete']],good:['internal','delete'],cmd:{internal:'gcloud compute firewall-rules update default-allow-icmp --source-ranges=10.128.0.0/9',delete:'gcloud compute firewall-rules delete default-allow-icmp -q'}},
+ {name:'(missing) egress-deny-all',desc:'Nothing restricts outbound traffic: the implied allow-egress lets VMs reach anywhere',sev:'warn',fixes:[['keep','Leave as is'],['add','Add egress-deny-all at 65534 + specific egress allows']],good:['add'],cmd:{add:'gcloud compute firewall-rules create egress-deny-all --network=default \\\n  --direction=EGRESS --action=DENY --rules=all --destination-ranges=0.0.0.0/0 --priority=65534\ngcloud compute firewall-rules create egress-allow-https-to-any --network=default \\\n  --direction=EGRESS --action=ALLOW --rules=tcp:443 --destination-ranges=0.0.0.0/0 --priority=1000'}}
+];
+const AS={};AUD.forEach(a=>AS[a.name]='keep');
+function arender(){
+  $('audit').innerHTML=AUD.map(a=>{const v=AS[a.name];const good=a.good.includes(v);const cls=good?'good':a.sev;
+    return `<div class="arow ${cls}"><div><div class="t">${a.name}</div><div class="help">${a.desc}${good?' · fixed ✔':a.sev==='risk'?' · exposed to the internet':' · broader than needed'}</div></div><select data-a="${a.name}" aria-label="${a.name}">${a.fixes.map(([k,t])=>`<option value="${k}" ${v===k?'selected':''}>${t}</option>`).join('')}</select></div>`;}).join('');
+  $('audit').querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>{AS[s.dataset.a]=s.value;arender();}));
+  const fixed=AUD.filter(a=>a.good.includes(AS[a.name])).length;
+  $('score').textContent=`${fixed} / ${AUD.length} fixed`;
+  const cmds=AUD.map(a=>a.cmd[AS[a.name]]).filter(Boolean);
+  $('a-cmd').textContent=cmds.length?cmds.join('\n\n'):'# choose a fix on the right';
+}
+arender();
+})();
+</script>
+</body>
+</html>

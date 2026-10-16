@@ -1,0 +1,176 @@
+Applying rules to all instances in the network
+means the rule will apply to every instance running in that VPC network without having to tag or mark
+the instances in any other way. Applying rules to instances tagged with a
+specified target tag requires any instance needing the firewall rule to be “tagged”
+with the firewall rule target tag. Lastly, applying firewall rules to specific
+service accounts will apply those rules to both new instances created and associated
+with the service account and existing instances if you change
+their service accounts. Note that changing the service
+account associated with an instance requires that you stop and restart it
+for the change to take effect. Google Cloud firewalls are stateful,
+which means that, for each initiated connection tracked
+by allow rules in one direction, the return traffic is automatically allowed
+regardless of any other rules in place. In other words, firewall rules allow bi-directional
+communication once a session is established. The connection is considered active if at
+least one packet is sent every 10 minutes. To apply firewall rules to multiple VPC networks
+in an organization, use firewall policies. Network firewall policies use tags. Tags are key-value pairs defined at the organization
+level that provide a flexible way to identify and group resources for firewall rules with
+granular control through IAM permissions. A firewall rule is composed of many settings
+that are specified by the following five parameters: Direction: rules can be applied depending
+on the connection direction, values can be ingress or egress. Source or destination: the source parameter
+is only applicable to ingress rules and the destination parameter is
+only applicable to egress rules. Firewall targets can be applied to all instances
+in a network, source tags, and service accounts, and can be further filtered by
+IP addresses or ranges. Protocol and port: the protocol, such as TCP,
+UDP, or ICMP and port number. You can specify a protocol,
+a protocol and one or more ports, a combination of protocols and ports,
+or nothing. If the protocol is not set, the firewall rule
+applies to all protocols. Action: an action can be set to
+either allow or deny, and will determine if the rule
+permits or blocks traffic. Priority: a numerical value
+from zero to 65,535, which is used to determine the
+order the rules are evaluated. Rules are evaluated starting from zero, so
+a lower number indicates a higher priority. If you do not specify a priority when creating
+a rule, it is assigned a priority of 1000. When evaluating rules, the first rule that
+matches is the one that will be applied. If two rules have the same priority, the rule with a deny action overrides
+a rule with an allow action. Implied IPv4 firewall rules are
+present in all VPC networks, regardless of how the networks
+are created, and whether they are auto mode
+or custom mode VPC networks. The default network has the
+same implied rules. Implied IPv4 allow egress rule. An egress rule whose action is allow,
+destination is 0.0.0.0/0, and priority is the lowest possible (65,535)
+lets any instance send traffic to any destination, except for traffic blocked
+by Google Cloud. Implied IPv4 deny ingress rule. An ingress rule whose action is deny,
+source is 0.0.0.0/0, and priority is the lowest possible (65,535) protects all instances by blocking
+incoming connections to them. A higher priority rule might
+allow incoming access. If IPv6 is enabled, the VPC network
+also has these two implied rules: The implied IPv6 allow egress rule. An egress rule whose action is allow,
+destination is any IPv6 address, and priority is the lowest possible (65,535) lets any instance send traffic
+to any destination, except for traffic blocked
+by Google Cloud. A higher priority firewall rule may
+restrict outbound access. Internet access is allowed if no other
+firewall rules deny outbound traffic and if the instance has an
+external IP address. Implied IPv6 deny ingress rule. An ingress rule whose action is deny,
+source is any IPv6 address, and priority is the lowest possible (65,535) protects all instances by blocking
+incoming connections to them. A higher priority rule might
+allow incoming access. The implied rules cannot be removed,
+but they have the lowest possible priorities. For more information, check out the Google
+Cloud documentation on default firewall rules. In Google Cloud, all projects get a
+default VPC created automatically. In addition to the implied rules, the default
+VPC network is pre-populated with firewall rules that allow incoming,
+or ingress, traffic to instances. The first rule is default-allow-internal, which allows ingress connections for all protocols
+and ports among instances within the VPC network. It effectively permits incoming connections
+to VM instances from others in the same network. The other three rules in the default
+network are default-allow-ssh, default-allow-rdp, and default-allow-icmp. These rules allow port 22,
+secure shell (ssh), port 3389, remote desktop protocol (RDP),
+and ICMP traffic respectively, from any source IP address to any
+instance in the VPC network. All of these rules have the
+second-to-lowest priority of 65,534. As you may have noticed some of
+these rules can be a little dangerous. These rules can (and should) be
+deleted or modified as necessary. Some network traffic is always allowed. For VM instances, VPC firewall rules, and
+hierarchical firewall policies do not apply to: Packets sent to and received from the
+Google Cloud metadata server, And packets sent to an IP address
+assigned to one of the instance's own network interfaces (NICs)
+where packets stay within the VM itself. IP addresses assigned to an
+instance's NIC include: The primary internal IPv4
+address of the NIC. Any internal IPv4 address from an
+alias IP range of the NIC. If IPv6 is configured on the subnet, any of
+the IPv6 addresses assigned to the NIC. An internal or external IPv4 address associated
+with a forwarding rule for load balancing or protocol forwarding if the instance is
+a backend for the load balancer or is a target instance for
+protocol forwarding. Loopback addresses. And, addresses configured as part
+of networking overlay software you can run within the instance itself. Check out the link in the Course Resources
+section for more information. There is some network traffic that
+is always blocked on VPC networks. Google Cloud blocks incoming DHCP offers
+and acknowledgments from all sources except for DHCP packets coming
+from the metadata server. External IPv4 and IPv6
+addresses only accept TCP, UDP, ICMP, ICMPv6, IPIP,
+AH, ESP, SCTP, and GRE packets. There are a few firewall rule best practices to help secure instances running
+in Compute Engine. Keep your firewall rules in line with the
+model of least privilege. Create rules to explicitly allow only traffic
+necessary for your applications to communicate. It is always best to minimize
+direct exposure to the internet. To do this, avoid having “allow”
+firewall rules defined with the source or destination
+range set to 0.0.0.0/0. To prevent ports and protocols
+from being exposed accidentally, create a firewall rule
+with the lowest priority that blocks all outbound traffic
+for all protocols and ports. This rule will override the implied egress
+rule that allows all outbound traffic and instead lock down your Compute Engine
+instances from making connections. You should then create higher-priority firewall
+rules for specific Compute Engine instances to open required ports and protocols. This helps prevent ports and protocols
+from being exposed unnecessarily. Another best practice is to adopt a standard
+naming convention for firewall rules. The exact format is not critically important,
+just create a standard and be consistent. An example of a naming
+convention would be to include the following information
+in your firewall rules: The direction, which is ingress or egress
+allow or deny indicating the rule’s action. The service or protocol name. The word “from” or “to” and then a
+short description of the source or destination. Examples using this formation would be ingress-allow-ssh-from-onprem and, egress-allow-all-to-gcevms. When applying firewall rules, you should consider using
+service account firewall rules instead of tag-based rules. The reason for this is that tag-based
+firewall rules can be applied by any user who has the Compute Engine
+instance administrator role, but users require explicit IAM rights
+to use a service account. Cloud Next Generation Firewall packages
+firewall rules into firewall policies. Cloud NGFW consists of more than just Allow or
+Deny rules at the VPC network level. Cloud NGFW provides the
+ability to apply: Policies to VPC networks
+globally or regionally. Policies hierarchically to organizations,
+folder, and projects— and the ability to delegate an action
+to a lower level in the hierarchy. Layer 7 filtering, allowing you to
+control traffic based on applications. And enhanced filtering, based on URL,
+fully qualified domain names, and geolocations. Cloud NGFW provides an
+intrusion prevention service to detect and block known
+attack patterns, and also integrates with
+Google Threat Intelligence, to stay updated on the latest threats. Hierarchical firewall policies let you create
+and enforce a consistent firewall policy across your organization. You can assign hierarchical firewall
+policies to the organization as a whole or to individual folders. These policies contain rules that can
+explicitly deny or allow connections, as do Virtual Private Cloud (VPC)
+firewall rules. Global and regional network
+firewall policies improve upon the previous
+VPC firewall rules structure. Similar to hierarchical firewall policies, these network firewall policy structures
+act as a container for firewall rules. Rules defined in a network
+firewall policy are enforced once the policy is associated
+with a VPC network, enabling simultaneous batch updates
+to multiple rules in the same policy. The same network firewall policy can be
+associated with more than one VPC network, and each VPC network can only have
+one global network firewall policy and one regional firewall policy
+per region associated with it. Both global network firewall policies and
+regional network firewall policies support IAM-governed tags, and all Cloud firewall enhancements
+moving forward will be delivered on the new network firewall
+policy constructs. A global network firewall policy provides
+a global firewall configuration structure to match the global nature of
+Google Cloud VPC networks. It applies to workloads deployed in all
+Google Cloud regions in the VPC network. A regional network firewall policy provides
+a regional firewall configuration structure for Google Cloud firewalls that can only be
+used in a single target region. When using regional network
+firewall policies, users can designate a target
+region for a firewall policy. The firewall configuration data will be applied
+to workloads only in that specific region and will not be propagated to
+any other Google Cloud regions. Firewall Insights, a component product of
+Network Intelligence Center, produces metrics and insights that let you
+make better decisions about your firewall rules. It provides data about how your
+firewall rules are being used, exposes misconfigurations, and identifies
+rules that could be made more strict. Firewall Insights uses Cloud Monitoring
+metrics and Recommender insights. Cloud Monitoring collects measurements
+to help you understand how your applications and
+system services are performing. A collection of these measurements
+is generically called a metric. The applications and system services being
+monitored are called monitored resources. Measurements might include the
+latency of requests to a service, the amount of disk space
+available on a machine, the number of tables in
+your SQL database, the number of widgets sold,
+and so forth. Resources might include virtual machines,
+database instances, disks, and so forth. Recommender is a service that
+provides recommendations and insights for using resources on Google Cloud. These recommendations and insights
+are per-product or per-service, and are generated based on
+heuristic methods, machine learning,
+and current resource usage. You can use insights independently
+from recommendations. Each insight has a specific insight type. Insight types are specific to a single
+Google Cloud product and resource type. A single product can have
+multiple insight types, where each provides a different type
+of insight for a different resource. Cymbal has recently migrated its
+on-premises networks to Google Cloud. Kwan, a network engineer, is tasked with
+securing the Cymbal VPC networks. The firewall solution from the on-premises
+network works, but Kwan wants a flexible solution that can be applied at multiple levels of
+the Cymbal cloud infrastructure hierarchy. What should Kwan use? Solution: Kwan should use Cloud Firewall. Cloud Firewall includes hierarchical
+firewall policies that can be applied at the organization,
+folder, project or VPC level. It also includes global and regional
+network firewall policies.

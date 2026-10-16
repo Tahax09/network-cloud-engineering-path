@@ -175,6 +175,50 @@ gcloud compute network-firewall-policies associations create --firewall-policy=g
 
 ---
 
+### Hierarchical policies, secure tags, insights
+→ [[GCP31 - Firewall Rules]] · visualization: [Firewall Rule Evaluator](../visualizations/gcp/GCP31%20-%20Firewall%20Rule%20Evaluator.html)
+
+```bash
+gcloud compute firewall-policies create --organization=ORG_ID --short-name=org-baseline
+gcloud compute firewall-policies rules create 100 --firewall-policy=org-baseline --organization=ORG_ID \
+    --direction=INGRESS --action=deny --src-ip-ranges=0.0.0.0/0 --layer4-configs=tcp:3389
+gcloud compute firewall-policies rules create 1000 --firewall-policy=org-baseline --organization=ORG_ID \
+    --direction=INGRESS --action=goto_next --src-ip-ranges=0.0.0.0/0 --layer4-configs=all
+gcloud compute firewall-policies associations create --firewall-policy=org-baseline \
+    --organization=ORG_ID [--folder=FOLDER_ID]
+```
+| Piece | Meaning |
+|-------|---------|
+| `firewall-policies` (no `network-`) | **Hierarchical** policy: lives on the org/folder |
+| `--action=goto_next` | Don't decide here. Pass evaluation to the next level (folder → VPC rules → network policies) |
+| `associations create --organization / --folder` | Where it applies. Everything below inherits it, and projects can't override it |
+
+**When:** org-wide guardrails: block RDP/SSH from the internet everywhere, allow only corporate ranges, while letting app teams own the rest.
+
+```bash
+gcloud resource-manager tags keys create env --parent=organizations/ORG_ID \
+    --purpose=GCE_FIREWALL --purpose-data=network=PROJECT/app-vpc
+gcloud resource-manager tags values create prod --parent=ORG_ID/env
+gcloud compute network-firewall-policies rules create 200 --firewall-policy=gate --global-firewall-policy \
+    --direction=INGRESS --action=allow --src-secure-tags=ORG_ID/env/prod --target-secure-tags=ORG_ID/env/prod \
+    --layer4-configs=tcp:5432
+gcloud compute networks update app-vpc --network-firewall-policy-enforcement-order=BEFORE_CLASSIC_FIREWALL
+```
+| Piece | Meaning |
+|-------|---------|
+| `--purpose=GCE_FIREWALL` | The tag key is usable in firewall policies, scoped to a network |
+| `--src/--target-secure-tags` | Match by IAM-governed tag (attaching it needs `tagUser`), unlike network tags |
+| `--network-firewall-policy-enforcement-order` | `AFTER_CLASSIC_FIREWALL` (default) or `BEFORE_CLASSIC_FIREWALL` |
+
+```bash
+gcloud compute firewall-rules update RULE --enable-logging --logging-metadata=include-all
+gcloud recommender insights list --project=PROJECT --location=global \
+    --insight-type=google.compute.firewall.Insight
+```
+**When:** Firewall Insights. Logging feeds hit counts. The insights list shows shadowed, unused and overly permissive rules.
+
+---
+
 ## 4. VMs and access
 → [[GCP12 - Lab - Implement Private Google Access and Cloud NAT]], [[GCP19 - Lab - Implement a Hub-and-Spoke Network Using Network Connectivity Center]]
 

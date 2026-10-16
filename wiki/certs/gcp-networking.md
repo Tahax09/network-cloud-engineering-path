@@ -75,6 +75,7 @@ target_date: TBD
 |----|-------|--------|
 | [GCP29](../lessons/gcp/GCP29%20-%20Module%20Introduction%20-%20Controlling%20Access%20to%20VPC%20Networks.md) | Module Introduction - Controlling Access to VPC Networks | ✅ Complete |
 | [GCP30](../lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | ✅ Complete |
+| [GCP31](../lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |
@@ -150,6 +151,8 @@ target_date: TBD
 | DDoS mitigations | LB (built-in L3/L4; L7 LBs also stop Slowloris) · small attack surface (tier subnets, firewall, no public IPs, IAP) · VPN/Interconnect · Cloud CDN · Apigee · Cloud Armor |
 | Cloud Armor | Edge WAF + DDoS; policy = ordered rules (condition, action, priority) on backend service; OWASP preconfigured rules, geo, rate-based ban, reCAPTCHA bots |
 | IAM inheritance | Org → folder → project → resource; effective = union; child can't restrict parent; move project = new inheritance; deny policies checked first (docs: 500 per resource; lecture said 5) |
+| Firewall rules | Stateful (return traffic auto, active if ≥1 pkt/10 min); priority 0–65535, default 1000, first match wins, same priority → deny wins; implied allow-egress/deny-ingress 65535 (not deletable); default VPC rules at 65534; SA targets > tags (IAM-controlled) |
+| Firewall policies | Hierarchical (org/folder, goto_next) · global network (1 per VPC) · regional network (1 per region per VPC); secure tags; Cloud NGFW adds L7, FQDN, geo, IPS, threat intel; Firewall Insights = Monitoring metrics + Recommender |
 | Networking roles | Network Viewer = read-only all networking · Network Admin = manage networking except firewall rules + SSL certs (read-only) · Security Admin = firewall rules + SSL certs · custom role when no fit |
 | Cloud Armor rules (lab) | Default rule priority 2147483647 sets blocklist (allow) vs allowlist (deny); lower number first, first match wins; deny-403/404/502; attach to backend service; client IP in LB logs `httpRequest.remoteIp` (backends see GFE IPs) |
 | Partner security categories | Data protection (DLP, DCAP, encryption, HSM) · Infrastructure protection (NGFW, WAF, proxy, DDoS, container) · Scanning/logging/monitoring (vuln scan, SIEM) · Identity/user (SSO, IAM, MDM/MAM, CASB) · Config/vuln/risk/compliance |

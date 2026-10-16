@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-62-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-63-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -156,6 +156,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP28](wiki/labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Lab: Configuring Traffic Blocklisting with Google Cloud Armor | Hands-on: verify global App LB, access-test VM, deny-404 blocklist rule, Cloud Armor logs |
 | [GCP29](wiki/lessons/gcp/GCP29%20-%20Module%20Introduction%20-%20Controlling%20Access%20to%20VPC%20Networks.md) | Module Introduction - Controlling Access to VPC Networks | Control plane (IAM, hierarchy, Org Policy) vs data plane (firewall rules) |
 | [GCP30](wiki/lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | Hierarchy inheritance, deny policies first, permission anatomy, Network Viewer/Admin vs Security Admin, custom roles |
+| [GCP31](wiki/lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Stateful distributed rules, 5 parameters, priority/deny-wins-tie, implied + default rules, SA vs tag targets, Cloud NGFW hierarchical/network policies, Firewall Insights |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
