@@ -98,6 +98,22 @@ Say: "lint the wiki". LLM checks: contradictions between pages, orphan pages, mi
 | Google Cloud Networking Specialization | `gcp-networking` | Not Started | TBD |
 | Wireshark 101 (course) | `wireshark` | In Progress | — |
 | Kubernetes / Docker / Linux / DevOps | `k8s-devops` | Ongoing (lab) | TBD |
+| Cisco Network Fundamentals (Coursera) | `cisco-netfund` | Not Started | TBD |
+| Cisco CCNA 200-301 | `ccna` | Not Started | TBD |
+| Cisco Network Automation Engineering Fundamentals | `cisco-netauto` | Not Started | TBD |
+| Understanding Cisco Wireless Foundations | `cisco-wireless` | Not Started | TBD |
+| Cisco SD-WAN for Enterprise and Cloud | `cisco-sdwan` | Not Started | TBD |
+| Cisco CyberOps Associate (Cybersecurity Operations Fundamentals) | `cbrops` | Not Started | TBD |
+| AWS Fundamentals (Coursera) | `aws-fund` | Not Started | TBD |
+| Microsoft Azure Fundamentals AZ-900 | `az-900` | Not Started | TBD |
+| Microsoft Azure Administrator AZ-104 | `az-104` | Not Started | TBD |
+| Docker and Kubernetes Masterclass | `docker-k8s` | Not Started | TBD |
+| Kubernetes and Cloud Native Associate (KCNA) | `kcna` | Not Started | TBD |
+| Certified Kubernetes Administrator (CKA) | `cka` | Not Started | TBD |
+| Certified Kubernetes Security Specialist (CKS) | `cks` | Not Started | TBD |
+| Google AI Professional Certificate | `google-ai` | Not Started | TBD |
+
+Full catalog with Coursera links, providers, exam mapping and roadmap order: `wiki/certs/course-catalog.md`.
 
 ## Teaching Structure (per session)
 Every lesson response follows:

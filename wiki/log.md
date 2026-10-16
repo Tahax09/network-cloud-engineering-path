@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-16] catalog | Added 17 Coursera programs to the certification list
+New page certs/course-catalog: Cisco (Network Fundamentals, CCNA 200-301, Network Automation, Wireless Foundations, SD-WAN), CyberOps, AWS (CCP Essentials, Fundamentals, Cloud Solutions Architect), Azure (AZ-900, AZ-104 course + specialization), Kubernetes (Docker & K8s Masterclass, KCNA, CKA, CKS), Google AI. Titles/providers/course counts checked against Coursera. Duplicate CKA/CKS links collapsed. Updated CLAUDE.md track table, README roadmap, overview, index.
+
 ## [2026-10-15] ingest+verify | GCP29–GCP30 — Controlling Access module intro + IAM Roles
 Module 2 intro (control plane IAM vs data plane firewall) and IAM roles (hierarchy inheritance, union, deny-first, permission anatomy, Network Viewer/Admin/Security Admin, custom role, Karen scenario mapping). Verified against IAM deny docs + quotas: deny policies per resource = 500 (lecture said 5). New in-repo viz GCP29-30 IAM Access Explorer; command anatomy §12 IAM.
 

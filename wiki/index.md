@@ -110,6 +110,7 @@
 | [aws-saa](certs/aws-saa.md) | AWS Solutions Architect – Associate | Not Started |
 | [gcp-networking](certs/gcp-networking.md) | Google Cloud Networking Specialization | In Progress |
 | [wireshark-101](certs/wireshark-101.md) | Wireshark 101: Packet Analysis Essentials (course) | In Progress |
+| [course-catalog](certs/course-catalog.md) | All Coursera programs (Cisco CCNA/CyberOps/Automation/Wireless/SD-WAN, AWS, Azure AZ-900/104, KCNA/CKA/CKS, Docker & K8s, Google AI) with exam mapping | Catalog |
 
 ## Quizzes
 

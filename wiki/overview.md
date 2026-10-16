@@ -11,6 +11,8 @@ Become a cloud/network infrastructure engineer. Build deep, practical understand
 | AWS Cloud Practitioner | 3rd | Not Started | TBD |
 | AWS Solutions Architect – Associate | 4th | Not Started | TBD |
 
+Planned programs (Cisco, Azure, Kubernetes, AI), with links and roadmap order: [course-catalog](certs/course-catalog.md).
+
 ## Current Focus
 **CompTIA Network+ N10-009** — All 5 domains complete (L01–L25). Next: Domain 5 graded quiz, full review, practice exams, schedule exam.
 **Google Cloud Networking** — Course 4 *Network Security* in progress (GCP23–GCP30). Course 3 *Network Architecture* complete (Module 1 GCP14–GCP16; Module 2 GCP17–GCP22 incl. NCC lab). Course 2 *Routing and Addressing* complete: Routing & Addressing module (GCP01–GCP06) + Private Connection Options module (GCP07–GCP13 incl. GCP12 lab, GQ01).

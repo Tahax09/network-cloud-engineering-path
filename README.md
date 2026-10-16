@@ -276,8 +276,12 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 ```
 Now      CompTIA Network+ N10-009 ── course complete, exam prep (PE01)
 Parallel Wireshark 101 (in progress)  +  Networking in Google Cloud (courses 2–6)
-Next     KCNA ─▶ CKA ─▶ AZ-500 ─▶ KCSA ─▶ CKS      (PCA anywhere after CKA)
-Planned  AWS Cloud Practitioner ─▶ AWS Solutions Architect – Associate
+Next     Docker & Kubernetes Masterclass ─▶ KCNA ─▶ CKA ─▶ AZ-500 ─▶ KCSA ─▶ CKS   (PCA anywhere after CKA)
+Azure    AZ-900 ─▶ AZ-104 ─▶ AZ-500
+AWS      Cloud Practitioner Essentials / AWS Fundamentals ─▶ CCP ─▶ AWS Cloud Solutions Architect (SAA)
+Cisco    Network Fundamentals ─▶ CCNA 200-301 ─▶ Wireless Foundations · Network Automation · SD-WAN
+Security Cybersecurity Operations Fundamentals (CyberOps 200-201 CBROPS)
+Anytime  Google AI Professional Certificate
 ```
 
 | Certification | Status |
@@ -292,6 +296,15 @@ Planned  AWS Cloud Practitioner ─▶ AWS Solutions Architect – Associate
 | Certified Kubernetes Security Specialist (CKS) | Planned |
 | Prometheus Certified Associate (PCA) | Planned |
 | AWS Cloud Practitioner / Solutions Architect – Associate | Planned |
+| Docker and Kubernetes Masterclass (Packt) | Planned |
+| Microsoft Azure Fundamentals (AZ-900) / Azure Administrator (AZ-104) | Planned |
+| AWS Fundamentals (AWS) | Planned |
+| Cisco Network Fundamentals / CCNA 200-301 | Planned |
+| Cisco Network Automation · Wireless Foundations · SD-WAN | Planned |
+| Cisco CyberOps Associate (Cybersecurity Operations Fundamentals) | Planned |
+| Google AI Professional Certificate | Planned |
+
+Full list with Coursera links, providers, course counts and the exam each one prepares for: [wiki/certs/course-catalog.md](wiki/certs/course-catalog.md).
 
 ---
 
