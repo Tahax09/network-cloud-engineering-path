@@ -67,7 +67,8 @@
 | GCP31 | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete | Pending |
 | GCP32 | Lab: Configuring VPC Firewalls (wiki/labs/) | Network Security — Module 2 | 2026-10-16 | Complete | — |
 | GCP33 | Cloud IDS | Network Security (module TBC) | 2026-10-16 | Complete | Pending |
-| GCP34 | — | — | — | Pending | — |
+| GCP34 | Lab: Getting Started with Cloud IDS (wiki/labs/) | Network Security (module TBC) | 2026-10-16 | Complete | — |
+| GCP35 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

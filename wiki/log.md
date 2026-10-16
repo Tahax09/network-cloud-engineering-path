@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-16] ingest | GCP34 — Lab: Getting Started with Cloud IDS
+Lab page from intro transcript + pasted lab (credentials not stored; attack test requests summarized by category, not reproduced). Tasks: APIs, custom VPC + PSA, IDS endpoint INFORMATIONAL --async, IAP/HTTP rules + NAT, server/attacker VMs + EICAR, mirroring to endpoint forwarding rule, low→critical signatures, duplicate detections (egress + ingress mirrored), priority-1 emergency deny, verify via DENIED firewall logs. Lab-text notes: attacker is internal (east-west), not external/perimeter; Chronicle → Google Security Operations. New viz GCP34 Cloud IDS Lab; command anatomy §13 lab extras.
+
 ## [2026-10-16] ingest+verify | GCP33 — Cloud IDS
 Quinn/Cymbal scenario; IDS endpoints (zonal, any zone in region), Packet Mirroring → endpoint forwarding rule, Google-managed peered network with Palo Alto engine, north-south + east-west, auto-updated signatures. Verified vs Cloud IDS docs: detect-only (no prevention), PSA prerequisite with unique range, 5 Gbps/endpoint (spikes ~17), severity levels, 99 threat exceptions, PCI 11.4 + HIPAA (lecture said "PCI 11"). Module placement unconfirmed (no module intro received). New viz GCP33 Cloud IDS Explorer; command anatomy §13.
 

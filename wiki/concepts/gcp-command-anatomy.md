@@ -626,6 +626,28 @@ gcloud logging read 'logName:"ids.googleapis.com%2Fthreat" AND jsonPayload.alert
 ```
 **When:** triage. Route these logs to Security Command Center, BigQuery, or an alerting policy.
 
+**Lab GCP34 extras** → [[GCP34 - Lab - Getting Started with Cloud IDS]]
+```bash
+export PROJECT_ID=$(gcloud config get-value project | sed '2d')
+gcloud ids endpoints create cloud-ids-east1 --network=cloud-ids --zone=us-east1-b --severity=INFORMATIONAL --async
+gcloud ids endpoints list --project=$PROJECT_ID | grep STATE
+export FORWARDING_RULE=$(gcloud ids endpoints describe cloud-ids-east1 --zone=us-east1-b --format="value(endpointForwardingRule)")
+gcloud compute packet-mirrorings list
+gcloud compute instances create server --no-address --private-network-ip=192.168.10.20 \
+    --metadata=startup-script='#! /bin/bash
+apt-get update && apt-get -qq -y install nginx' --tags=server ...
+gcloud compute firewall-rules create cymbal-emergency-block --direction=INGRESS --priority=1 \
+    --network=cloud-ids --action=DENY --rules=all --source-ranges=192.168.10.10/32 --enable-logging
+```
+| Piece | Meaning |
+|-------|---------|
+| `config get-value project \| sed '2d'` | Capture just the project ID (drops the extra notice line) |
+| `--async` | Return immediately. Poll `endpoints list` until `READY` (~20 min) |
+| `--format="value(endpointForwardingRule)"` | Extract the internal LB URL to use as `--collector-ilb` |
+| `--no-address` / `--private-network-ip` | No public IP; fixed internal IP (stable for firewall rules and tests) |
+| `--metadata=startup-script` | Runs as root at every boot (installs nginx) |
+| `--priority=1 --rules=all --enable-logging` | Emergency containment: beats every normal allow, covers all protocols, and is auditable (`jsonPayload.disposition="DENIED"`) |
+
 ---
 
 ## Linked Pages

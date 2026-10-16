@@ -78,6 +78,7 @@ target_date: TBD
 | [GCP31](../lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | ✅ Complete |
 | [GCP32](../labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | ✅ Complete |
 | [GCP33](../lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS *(module placement to confirm)* | ✅ Complete |
+| [GCP34](../labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Lab: Getting Started with Cloud IDS | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |

@@ -159,6 +159,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP31](wiki/lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Stateful distributed rules, 5 parameters, priority/deny-wins-tie, implied + default rules, SA vs tag targets, Cloud NGFW hierarchical/network policies, Firewall Insights |
 | [GCP32](wiki/labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Hands-on: auto-mode VPC, delete default network, tag-based SSH rule, internal ICMP, priority 500 vs 2000, egress deny |
 | [GCP33](wiki/lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | Managed IDS (detect only): IDS endpoints + Packet Mirroring, Palo Alto engine, north-south + east-west, PSA prerequisite, 5 Gbps/endpoint |
+| [GCP34](wiki/labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Lab: Getting Started with Cloud IDS | Hands-on: PSA + IDS endpoint + mirroring, low→critical test signatures, duplicate detections, emergency firewall block |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -272,6 +273,7 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [GCP19 lab](wiki/labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | Hub-and-spoke with Network Connectivity Center: two isolated VPCs connected as VPC spokes |
 | [GCP28 lab](wiki/labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor blocklist of one client IP at Google's edge; verify with curl and policy logs |
 | [GCP32 lab](wiki/labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Firewall rules end to end: implied rules, target tags, NAT'd external-IP ping, priority and egress |
+| [GCP34 lab](wiki/labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Detect with Cloud IDS, respond with a priority-1 firewall deny, verify with firewall logs |
 
 ---
 

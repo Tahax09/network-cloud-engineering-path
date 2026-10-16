@@ -66,6 +66,7 @@
 | [GCP31](lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete |
 | [GCP32](labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Network Security — Module 2 | 2026-10-16 | Complete |
 | [GCP33](lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | Network Security | 2026-10-16 | Complete |
+| [GCP34](labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Lab: Getting Started with Cloud IDS | Network Security | 2026-10-16 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -178,11 +179,13 @@
 | [GCP19 lab](labs/GCP19%20-%20Lab%20-%20Implement%20a%20Hub-and-Spoke%20Network%20Using%20Network%20Connectivity%20Center.md) | GCP hub-and-spoke with Network Connectivity Center (VPC spokes, mesh preset) | Complete |
 | [GCP28 lab](labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor IP blocklist (deny-404) on a global Application LB + policy logs | Complete |
 | [GCP32 lab](labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | VPC firewall rules: default vs user-created network, target tags, priority, egress deny | Complete |
+| [GCP34 lab](labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Cloud IDS: PSA, endpoint, packet mirroring, severity test requests, priority-1 deny incident response | Complete |
 
 ## Interactive Visualizations
 | ID | Visualization | Shows |
 |----|---------------|-------|
 | GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GCP34 | [Cloud IDS Lab](visualizations/gcp/GCP34%20-%20Cloud%20IDS%20Lab.html) | 10-task replay: footprint build, endpoint CREATING→READY, severity test requests with duplicate egress/ingress detections, emergency block + DENIED firewall log |
 | GCP33 | [Cloud IDS Explorer](visualizations/gcp/GCP33%20-%20Cloud%20IDS%20Explorer.html) | Mirroring sources/direction, severity threshold + threat exceptions, simulated north-south/east-west/C2 events, threat log entries, endpoint sizing |
 | GCP32 | [VPC Firewall Lab](visualizations/gcp/GCP32%20-%20VPC%20Firewall%20Lab.html) | Task-by-task lab replay: SSH/ping tests evaluated against egress + ingress rules at each step, NAT'd external ping, priority flip, egress deny |
 | GCP31 | [Firewall Rule Evaluator](visualizations/gcp/GCP31%20-%20Firewall%20Rule%20Evaluator.html) | Packet builder through priority-sorted rules (deny wins ties, implied rules, stateful return), SA vs tag targets, NGFW policy hierarchy with goto_next, default VPC hardening audit |

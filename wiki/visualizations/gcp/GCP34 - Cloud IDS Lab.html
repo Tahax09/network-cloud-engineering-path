@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cloud IDS Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: header + 10-task stepper; explanation + command; footprint diagram beside action panel; threats + firewall log tables */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b;
+  --band:#e2efe7; --band2:#ece6f7; --mirror:#c27a00;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+    --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c;
+    --band:#14271f; --band2:#221b33; --mirror:#f0a93a; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1420; --surface:#152033; --sunken:#111a2a; --ink:#e3e9f3; --muted:#97a5bc; --line:#2a3a54;
+  --accent:#77a2ff; --accent-soft:#1d2d4d; --ok:#3cc4ae; --warn:#f0a93a; --bad:#ff6b5c;
+  --band:#14271f; --band2:#221b33; --mirror:#f0a93a; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:820px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+p{margin:0}
+.lead{color:var(--muted);max-width:72ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px}
+@media (max-width:1000px){.steps{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (max-width:560px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.steps button{width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 9px;cursor:pointer;display:grid;gap:2px;min-height:56px}
+.steps button[aria-current="step"]{background:var(--accent-soft);border-color:var(--accent)}
+.steps .n{font:600 11px var(--f-mono);color:var(--accent)}
+.steps .l{font:600 12.5px/1.2 var(--f-body)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.explain{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+@media (max-width:860px){.explain{grid-template-columns:1fr}}
+.explain .b{display:grid;gap:8px;min-width:0}
+.why{font-size:13.5px;color:var(--muted)}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:11.5px/1.5 var(--f-mono);overflow-x:auto;white-space:pre;min-width:0}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+@media (max-width:980px){.main{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2;transition:opacity .3s}
+.node.on{stroke:var(--accent);stroke-width:1.8}
+.node.mir{stroke:var(--mirror);stroke-width:2}
+.node.alert{stroke:var(--bad);stroke-width:2.6}
+.off{opacity:.18}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}
+.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}
+.medge{fill:none;stroke:var(--mirror);stroke-width:1.6;stroke-dasharray:5 4}
+.aedge{fill:none;stroke:var(--accent);stroke-width:2.4}
+.pk{fill:var(--accent)}.pk.copy{fill:var(--mirror)}.pk.bad{fill:var(--bad)}
+.x{font:700 18px var(--f-body);fill:var(--bad)}
+.blk{fill:color-mix(in srgb,var(--bad) 16%,var(--surface));stroke:var(--bad)}
+.acts{display:grid;gap:8px}
+.act{display:grid;gap:2px;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer}
+.act:hover:not(:disabled){border-color:var(--accent)}
+.act:disabled{opacity:.4;cursor:not-allowed}
+.act b{font-size:13.5px}
+.act .m{font:500 11px var(--f-mono);color:var(--muted)}
+.sev{display:inline-block;padding:0 7px;border-radius:999px;font:500 10.5px var(--f-mono);border:1px solid currentColor}
+.sev.CRITICAL,.sev.HIGH{color:var(--bad)}.sev.MEDIUM{color:var(--warn)}.sev.LOW{color:var(--muted)}
+.state{font:600 12px var(--f-mono)}
+.state.ready{color:var(--ok)}.state.creating{color:var(--warn)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.bad{border-left-color:var(--bad)}.verdict.ok{border-left-color:var(--ok)}.verdict.warn{border-left-color:var(--warn)}
+.tables{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
+@media (max-width:980px){.tables{grid-template-columns:1fr}}
+.tbl{overflow:auto;border:1px solid var(--line);border-radius:6px;max-height:280px}
+table.t{width:100%;border-collapse:collapse;font:12px/1.3 var(--f-mono);font-variant-numeric:tabular-nums}
+.t th{position:sticky;top:0;background:var(--sunken);text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.t tr.pair td{background:var(--accent-soft)}
+.empty{padding:14px;color:var(--muted);font-size:13px}
+.note{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP34 · Lab: Getting Started with Cloud IDS · Cymbal Bank</div>
+    <h1>Cloud IDS Lab</h1>
+    <p class="lead">Alice's lab, one task at a time. The footprint lights up as you build it. Once the endpoint is READY and mirroring is attached, send each severity's test request, watch both mirrored copies reach Cloud IDS, then block the attacker and retry.</p>
+  </header>
+
+  <ol class="steps" id="steps"></ol>
+
+  <section class="explain" aria-live="polite">
+    <div class="b"><h2 id="x-t"></h2><p id="x-b"></p><p class="why" id="x-w"></p></div>
+    <pre class="cmd" id="x-c"></pre>
+  </section>
+
+  <div class="main">
+    <section class="panel">
+      <div class="mapbox"><svg id="map" viewBox="0 0 780 380" aria-label="Lab footprint"></svg></div>
+      <div class="verdict" id="verdict"></div>
+    </section>
+    <aside class="panel">
+      <h2>Attacker VM</h2>
+      <p class="help note">Lab test requests (categories only), sent attacker 192.168.10.10 → server 192.168.10.20:80</p>
+      <div class="acts" id="acts"></div>
+      <p class="note">Endpoint state: <span class="state" id="st"></span></p>
+    </aside>
+  </div>
+
+  <div class="tables">
+    <section class="panel"><h2>IDS threats</h2><div class="tbl"><table class="t"><thead><tr><th>Session</th><th>Severity</th><th>Threat</th><th>Source → Dest</th><th>Mirrored copy</th></tr></thead><tbody id="th"></tbody></table><div class="empty" id="th-e">No threats yet.</div></div></section>
+    <section class="panel"><h2>Firewall log · cymbal-emergency-block</h2><div class="tbl"><table class="t"><thead><tr><th>Time</th><th>Disposition</th><th>Source</th><th>Dest</th></tr></thead><tbody id="fw"></tbody></table><div class="empty" id="fw-e">Rule not created yet (Task 9).</div></div></section>
+  </div>
+  <p class="note">The highlighted pairs in the threat table are the same request seen twice: once from the attacker's egress and once from the server's ingress. Both VMs are in the mirrored subnet.</p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const T=[
+ {s:'APIs',t:'Task 1 · Enable APIs',b:'Turn on Service Networking (for private services access), Cloud IDS, and Cloud Logging.',w:'Why: Cloud IDS is a managed service in Google\'s producer network. Without Service Networking there\'s no PSA peering to reach it.',c:"export PROJECT_ID=$(gcloud config get-value project | sed '2d')\ngcloud services enable servicenetworking.googleapis.com --project=$PROJECT_ID\ngcloud services enable ids.googleapis.com --project=$PROJECT_ID\ngcloud services enable logging.googleapis.com --project=$PROJECT_ID",has:[]},
+ {s:'VPC + PSA',t:'Task 2 · VPC, subnet and private services access',b:'Custom VPC cloud-ids, subnet 192.168.10.0/24 in us-east1, and a /24 (10.10.10.0) allocated to Google, then peered.',w:'Why: the IDS endpoint and its Palo Alto inspection VMs live in the peered Google network. Mirrored packets reach them over internal IPs.',c:'gcloud compute networks create cloud-ids --subnet-mode=custom\ngcloud compute networks subnets create cloud-ids-useast1 --range=192.168.10.0/24 \\\n  --network=cloud-ids --region=us-east1\ngcloud compute addresses create cloud-ids-ips --global --purpose=VPC_PEERING \\\n  --addresses=10.10.10.0 --prefix-length=24 --network=cloud-ids\ngcloud services vpc-peerings connect --service=servicenetworking.googleapis.com \\\n  --ranges=cloud-ids-ips --network=cloud-ids --project=$PROJECT_ID',has:['vpc','psa']},
+ {s:'Endpoint',t:'Task 3 · Create the IDS endpoint',b:'cloud-ids-east1 in us-east1-b, severity INFORMATIONAL, created with --async. State: CREATING (about 20 minutes).',w:'Why INFORMATIONAL: report every severity, which suits a lab. The endpoint is zonal but inspects traffic from any zone in us-east1.',c:'gcloud ids endpoints create cloud-ids-east1 --network=cloud-ids --zone=us-east1-b \\\n  --severity=INFORMATIONAL --async\ngcloud ids endpoints list --project=$PROJECT_ID   # STATE: CREATING',has:['vpc','psa','ep-creating']},
+ {s:'FW + NAT',t:'Task 4 · Firewall rules, Cloud Router and NAT',b:'allow-http-icmp (tcp:80 and ICMP to tag server), allow-iap-proxy (tcp:22 from 35.235.240.0/20), plus a router and NAT in us-east1.',w:'Why: the VMs have no external IPs. IAP gives SSH, NAT gives outbound access for apt-get, and the HTTP rule lets the attacker reach nginx.',c:'gcloud compute firewall-rules create allow-http-icmp --direction=INGRESS --priority=1000 \\\n  --network=cloud-ids --action=ALLOW --rules=tcp:80,icmp --source-ranges=0.0.0.0/0 --target-tags=server\ngcloud compute firewall-rules create allow-iap-proxy --direction=INGRESS --priority=1000 \\\n  --network=cloud-ids --action=ALLOW --rules=tcp:22 --source-ranges=35.235.240.0/20\ngcloud compute routers create cr-cloud-ids-useast1 --region=us-east1 --network=cloud-ids\ngcloud compute routers nats create nat-cloud-ids-useast1 --router=cr-cloud-ids-useast1 \\\n  --router-region=us-east1 --auto-allocate-nat-external-ips --nat-all-subnet-ip-ranges',has:['vpc','psa','ep-creating','fw','nat']},
+ {s:'VMs',t:'Task 5 · server and attacker VMs',b:'server (192.168.10.20, tag server, nginx from a startup script) and attacker (192.168.10.10), both with --no-address. On the server you create eicar.file in /var/www/html.',w:'Why EICAR: it\'s a harmless, industry-standard test string that every AV/IDS engine flags. It proves the virus signatures work without real malware.',c:'gcloud compute instances create server --zone=us-east1-b --machine-type=e2-medium \\\n  --subnet=cloud-ids-useast1 --no-address --private-network-ip=192.168.10.20 \\\n  --metadata=startup-script=... --tags=server ...\ngcloud compute instances create attacker --zone=us-east1-b --machine-type=e2-medium \\\n  --subnet=cloud-ids-useast1 --no-address --private-network-ip=192.168.10.10 ...\ngcloud compute ssh server --zone=us-east1-b --tunnel-through-iap\nsudo systemctl status nginx\ncd /var/www/html/ && sudo touch eicar.file   # write the EICAR test string',has:['vpc','psa','ep-creating','fw','nat','vms']},
+ {s:'Mirroring',t:'Task 6 · Wait for READY, then attach mirroring',b:'Once the endpoint is READY, read its forwarding rule and create a mirroring policy for the whole subnet that sends copies to it.',w:'Why wait: the forwarding rule (an internal LB in Google\'s network) only exists when the endpoint is READY. It\'s the --collector-ilb target.',c:'gcloud ids endpoints list --project=$PROJECT_ID | grep STATE   # READY\nexport FORWARDING_RULE=$(gcloud ids endpoints describe cloud-ids-east1 \\\n  --zone=us-east1-b --format="value(endpointForwardingRule)")\ngcloud compute packet-mirrorings create cloud-ids-packet-mirroring --region=us-east1 \\\n  --collector-ilb=$FORWARDING_RULE --network=cloud-ids --mirrored-subnets=cloud-ids-useast1\ngcloud compute packet-mirrorings list   # ENABLE: TRUE',has:['vpc','psa','ep','fw','nat','vms','mirror']},
+ {s:'Attack',t:'Task 7 · Send the test requests',b:'From the attacker (via IAP SSH), send the lab\'s four severity levels of test requests to the server. Use the buttons on the right.',w:'Watch: each request is copied twice, as it leaves the attacker and as it reaches the server, because both VMs are in the mirrored subnet.',c:'gcloud compute ssh attacker --zone=us-east1-b --tunnel-through-iap\n# run the lab\'s curl test requests → http://192.168.10.20/...\nexit',has:['vpc','psa','ep','fw','nat','vms','mirror'],attack:true},
+ {s:'Review',t:'Task 8 · Review threats',b:'IDS Dashboard → Top threats → Bash Remote Code Execution Vulnerability → View threat details / View threat logs.',w:'Same threat name, different session IDs: that\'s the two mirrored copies. Logs can go to Cloud Storage, Google Security Operations or any SIEM/SOAR, or trigger a function that writes a firewall rule.',c:'# Console: Network Security → IDS Dashboard → View top threats\n# Logs Explorer:\nlogName:"ids.googleapis.com%2Fthreat"\njsonPayload.name="Bash Remote Code Execution Vulnerability"',has:['vpc','psa','ep','fw','nat','vms','mirror'],attack:true},
+ {s:'Block',t:'Task 9 · Manual incident response',b:'Take the attacker\'s IP from the threat details (192.168.10.10) and create an ingress DENY for all protocols at priority 1, with logging.',w:'Why priority 1: it\'s evaluated before allow-http-icmp (1000). Cloud IDS never blocks anything itself. The firewall acts on what IDS found.',c:'gcloud compute firewall-rules create cymbal-emergency-block --direction=INGRESS --priority=1 \\\n  --network=cloud-ids --action=DENY --rules=all \\\n  --source-ranges=192.168.10.10/32 --enable-logging\ngcloud compute firewall-rules list',has:['vpc','psa','ep','fw','nat','vms','mirror','block'],attack:true},
+ {s:'Verify',t:'Task 10 · Verify the defense',b:'Re-run the critical request. It hangs and times out. Firewall logs show disposition DENIED.',w:'Why a timeout: GCP drops packets silently. The SYN never gets a SYN-ACK, so no HTTP payload is sent and IDS raises no new alert. IAP SSH to the attacker still works, because its source is 35.235.240.0/20.',c:'gcloud compute ssh attacker --zone=us-east1-b --tunnel-through-iap\n# re-run the critical test request → timeout\n# Logs Explorer:\njsonPayload.disposition="DENIED"',has:['vpc','psa','ep','fw','nat','vms','mirror','block'],attack:true}
+];
+const ATK=[
+ {id:'low',sev:'LOW',name:'Command Injection Attempt (CGI parameter)',d:'shell metacharacters in a login parameter'},
+ {id:'med1',sev:'MEDIUM',name:'Directory Traversal Attempt',d:'../ path toward a Windows system file'},
+ {id:'med2',sev:'MEDIUM',name:'EICAR Test File',d:'GET /eicar.file (virus signature)'},
+ {id:'high',sev:'HIGH',name:'HTTP /etc/passwd Access Attempt',d:'CGI path traversal reading /etc/passwd'},
+ {id:'crit',sev:'CRITICAL',name:'Bash Remote Code Execution Vulnerability',d:'Shellshock CVE-2014-6271 in the User-Agent'}
+];
+let cur=0,sess=4100,threats=[],fwlog=[];
+const has=k=>T[cur].has.includes(k);
+function epState(){return has('ep')?'READY':has('ep-creating')?'CREATING':'—';}
+function draw(anim){
+  const svg=$('map');svg.innerHTML='';
+  const v=has('vpc'),psa=has('psa'),ep=has('ep')||has('ep-creating'),ready=has('ep'),vms=has('vms'),mir=has('mirror'),nat=has('nat'),fw=has('fw'),blk=has('block');
+  el('rect',{x:20,y:24,width:430,height:330,rx:12,class:'bandr'+(v?'':' off')},svg);el('text',{x:32,y:18,class:'bl'+(v?'':' off')},svg,'cloud-ids VPC · cloud-ids-useast1 192.168.10.0/24');
+  el('rect',{x:540,y:60,width:225,height:250,rx:12,class:'bandr2'+(psa?'':' off')},svg);el('text',{x:552,y:54,class:'bl'+(psa?'':' off')},svg,'Google-managed · PSA 10.10.10.0/24');
+  el('path',{d:'M450 185 L540 185',class:'edge'+(psa?'':' off')},svg);el('text',{x:495,y:177,class:'ns','text-anchor':'middle',opacity:psa?1:.2},svg,'peering');
+  const box=(x,y,w,l,s,cls,on)=>{el('rect',{x,y,width:w,height:56,rx:8,class:'node '+cls+(on?'':' off')},svg);el('text',{x:x+10,y:y+22,class:'nl'+(on?'':' off')},svg,l);el('text',{x:x+10,y:y+39,class:'ns'+(on?'':' off')},svg,s);};
+  box(50,60,170,'attacker','192.168.10.10 · no ext IP',mir?'mir':'',vms);
+  box(250,60,180,'server (tag server)','192.168.10.20 · nginx',mir?'mir':'',vms);
+  box(50,270,170,'Cloud Router + NAT','us-east1 · apt-get egress','',nat);
+  box(250,270,180,'Firewall rules',(blk?'+ cymbal-emergency-block (1)':'allow-http-icmp · allow-iap-proxy'),blk?'alert':'',fw);
+  box(560,100,190,'cloud-ids-east1',ep?('us-east1-b · '+(ready?'READY':'CREATING…')):'endpoint','',ep);
+  box(560,210,190,'Palo Alto engine','threat signatures','',ready);
+  if(ready)el('path',{d:'M655 156 L655 210',class:'edge'},svg);
+  if(mir){el('path',{id:'m1',d:'M135 116 C 135 170, 480 140, 560 128',class:'medge'},svg);el('path',{id:'m2',d:'M340 116 C 340 160, 480 135, 560 128',class:'medge'},svg);el('text',{x:400,y:160,class:'ns',fill:'var(--mirror)'},svg,'mirrored copies');}
+  if(blk){el('rect',{x:236,y:66,width:10,height:44,rx:3,class:'blk'},svg);}
+  el('text',{x:580,y:345,class:'ns'},svg,'IAP 35.235.240.0/20 → SSH');
+  if(!anim)return;
+  const a=el('path',{d:'M220 88 L250 88',class:'aedge'},svg);
+  if(anim.blocked){el('text',{x:228,y:58,class:'x'},svg,'✕');}
+  if(reduce)return;
+  const p=el('circle',{r:5.5,class:'pk',cx:220,cy:88},svg);
+  const c1=mir?el('circle',{r:5,class:'pk copy'},svg):null,c2=mir&&!anim.blocked?el('circle',{r:5,class:'pk copy'},svg):null;
+  const m1=svg.querySelector('#m1'),m2=svg.querySelector('#m2');let t0=null;
+  (function f(ts){if(!p.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/2200)%1;
+    const end=anim.blocked?236:250;p.setAttribute('cx',220+(end-220)*Math.min(1,u/.3));p.setAttribute('class','pk'+(anim.blocked&&u>.3?' bad':''));
+    if(c1&&m1){const q=m1.getPointAtLength(m1.getTotalLength()*Math.max(0,Math.min(1,(u-.2)/.6)));c1.setAttribute('cx',q.x);c1.setAttribute('cy',q.y);c1.style.opacity=u<.2?0:1;}
+    if(c2&&m2){const q=m2.getPointAtLength(m2.getTotalLength()*Math.max(0,Math.min(1,(u-.35)/.55)));c2.setAttribute('cx',q.x);c2.setAttribute('cy',q.y);c2.style.opacity=u<.35?0:1;}
+    requestAnimationFrame(f);})(performance.now());
+}
+function fire(id){
+  const a=ATK.find(x=>x.id===id);const blocked=has('block');const v=$('verdict');
+  if(blocked){
+    const d=new Date();fwlog.unshift({t:d.toTimeString().slice(0,8),src:'192.168.10.10:'+(40000+Math.floor(Math.random()*20000)),dst:'192.168.10.20:80'});
+    v.className='verdict ok';v.textContent=`${a.name}: the SYN is dropped by cymbal-emergency-block (priority 1) at the server's NIC, so curl times out. No handshake means no HTTP payload, so IDS has nothing to match and raises no new alert. The firewall log records DENIED.`;
+  }else{
+    const s1=++sess,s2=++sess;
+    threats.unshift({s:s2,sev:a.sev,name:a.name,copy:'server ingress',pair:true},{s:s1,sev:a.sev,name:a.name,copy:'attacker egress',pair:true});
+    v.className='verdict bad';v.textContent=`${a.sev}: "${a.name}" detected twice (sessions ${s1} and ${s2}), once from the attacker's egress copy and once from the server's ingress copy. nginx still answered: Cloud IDS only detects.`;
+  }
+  render(true,{blocked});
+}
+function render(keep,anim){
+  const st=T[cur];
+  document.querySelectorAll('.steps button').forEach((b,i)=>i===cur?b.setAttribute('aria-current','step'):b.removeAttribute('aria-current'));
+  $('x-t').textContent=st.t;$('x-b').textContent=st.b;$('x-w').textContent=st.w;$('x-c').textContent=st.c;
+  const es=epState();$('st').textContent=es;$('st').className='state '+(es==='READY'?'ready':es==='CREATING'?'creating':'');
+  $('acts').innerHTML=ATK.map(a=>`<button class="act" type="button" data-a="${a.id}" ${st.attack?'':'disabled'}><b>${a.name}</b><span class="m"><span class="sev ${a.sev}">${a.sev}</span> ${a.d}</span></button>`).join('');
+  $('acts').querySelectorAll('.act').forEach(b=>b.addEventListener('click',()=>fire(b.dataset.a)));
+  if(!keep){const v=$('verdict');v.className='verdict'+(st.attack?'':' warn');v.textContent=st.attack?(has('block')?'The block is in place. Send a request to test it.':'Send a test request with the buttons on the right.'):'Requests are disabled until the endpoint is READY and the mirroring policy is attached (Task 6).';}
+  $('th-e').hidden=threats.length>0;
+  $('th').innerHTML=threats.map((t,i)=>`<tr class="${Math.floor(i/2)%2===0?'pair':''}"><td>${t.s}</td><td><span class="sev ${t.sev}">${t.sev}</span></td><td>${t.name}</td><td>192.168.10.10 → 192.168.10.20</td><td>${t.copy}</td></tr>`).join('');
+  $('fw-e').hidden=has('block');
+  $('fw').innerHTML=has('block')?fwlog.map(f=>`<tr><td>${f.t}</td><td style="color:var(--bad)">DENIED</td><td>${f.src}</td><td>${f.dst}</td></tr>`).join(''):'';
+  draw(anim);
+}
+T.forEach((s,i)=>{const li=document.createElement('li');li.innerHTML=`<button type="button"><span class="n">TASK ${i+1}</span><span class="l">${s.s}</span></button>`;li.firstChild.addEventListener('click',()=>{cur=i;render(false);});$('steps').appendChild(li);});
+render(false);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Next, we'll explore a lab
+exercise on Cloud IDS. In this lab, you deploy Cloud Intrusion Detection
+System, Cloud IDS, a next generation advanced
+intrusion detection service that provides threat
+detection for intrusions, malware, spyware, and
+command and control attacks. You simulate multiple
+attacks and view the threat details in the
+Google Cloud Console.
