@@ -77,6 +77,7 @@ target_date: TBD
 | [GCP30](../lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | ✅ Complete |
 | [GCP31](../lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | ✅ Complete |
 | [GCP32](../labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | ✅ Complete |
+| [GCP33](../lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS *(module placement to confirm)* | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |
@@ -152,6 +153,7 @@ target_date: TBD
 | DDoS mitigations | LB (built-in L3/L4; L7 LBs also stop Slowloris) · small attack surface (tier subnets, firewall, no public IPs, IAP) · VPN/Interconnect · Cloud CDN · Apigee · Cloud Armor |
 | Cloud Armor | Edge WAF + DDoS; policy = ordered rules (condition, action, priority) on backend service; OWASP preconfigured rules, geo, rate-based ban, reCAPTCHA bots |
 | IAM inheritance | Org → folder → project → resource; effective = union; child can't restrict parent; move project = new inheritance; deny policies checked first (docs: 500 per resource; lecture said 5) |
+| Cloud IDS | Detect + alert only (no blocking → use Cloud NGFW/IPS); IDS endpoint zonal, inspects any zone in region; Packet Mirroring → endpoint forwarding rule; Palo Alto signatures auto-updated; north-south + east-west; needs private services access (own range); 5 Gbps per endpoint; severity INFORMATIONAL→CRITICAL; ≤99 threat exceptions; PCI 11.4 / HIPAA |
 | Firewall rules | Stateful (return traffic auto, active if ≥1 pkt/10 min); priority 0–65535, default 1000, first match wins, same priority → deny wins; implied allow-egress/deny-ingress 65535 (not deletable); default VPC rules at 65534; SA targets > tags (IAM-controlled) |
 | Firewall policies | Hierarchical (org/folder, goto_next) · global network (1 per VPC) · regional network (1 per region per VPC); secure tags; Cloud NGFW adds L7, FQDN, geo, IPS, threat intel; Firewall Insights = Monitoring metrics + Recommender |
 | Networking roles | Network Viewer = read-only all networking · Network Admin = manage networking except firewall rules + SSL certs (read-only) · Security Admin = firewall rules + SSL certs · custom role when no fit |

@@ -65,6 +65,7 @@
 | [GCP30](lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | Network Security — Module 2 | 2026-10-15 | Complete |
 | [GCP31](lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete |
 | [GCP32](labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Network Security — Module 2 | 2026-10-16 | Complete |
+| [GCP33](lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | Network Security | 2026-10-16 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -182,6 +183,7 @@
 | ID | Visualization | Shows |
 |----|---------------|-------|
 | GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GCP33 | [Cloud IDS Explorer](visualizations/gcp/GCP33%20-%20Cloud%20IDS%20Explorer.html) | Mirroring sources/direction, severity threshold + threat exceptions, simulated north-south/east-west/C2 events, threat log entries, endpoint sizing |
 | GCP32 | [VPC Firewall Lab](visualizations/gcp/GCP32%20-%20VPC%20Firewall%20Lab.html) | Task-by-task lab replay: SSH/ping tests evaluated against egress + ingress rules at each step, NAT'd external ping, priority flip, egress deny |
 | GCP31 | [Firewall Rule Evaluator](visualizations/gcp/GCP31%20-%20Firewall%20Rule%20Evaluator.html) | Packet builder through priority-sorted rules (deny wins ties, implied rules, stateful return), SA vs tag targets, NGFW policy hierarchy with goto_next, default VPC hardening audit |
 | GCP29–30 | [IAM Access Explorer](visualizations/gcp/GCP29-30%20-%20IAM%20Access%20Explorer.html) | Hierarchy inheritance + deny-first evaluation, networking role matrix, custom role builder, Karen least-privilege scenario |

@@ -583,6 +583,51 @@ gcloud policy-intelligence troubleshoot-policy iam RESOURCE_FULL_NAME \
 
 ---
 
+## 13. Cloud IDS and Packet Mirroring
+→ [[GCP33 - Cloud IDS]] · visualization: [Cloud IDS Explorer](../visualizations/gcp/GCP33%20-%20Cloud%20IDS%20Explorer.html)
+
+```bash
+gcloud services enable ids.googleapis.com servicenetworking.googleapis.com
+gcloud compute addresses create ids-psa-range --global --purpose=VPC_PEERING --prefix-length=24 --network=VPC
+gcloud services vpc-peerings connect --service=servicenetworking.googleapis.com --ranges=ids-psa-range --network=VPC
+```
+**When:** prerequisite. Cloud IDS lives in a Google-managed producer network reached through **private services access**. Give it its **own** allocated range, separate from Cloud SQL's and so on.
+
+```bash
+gcloud ids endpoints create ids-usc1 --network=VPC --zone=us-central1-a \
+    --severity=MEDIUM [--threat-exceptions=8001,8002] [--no-async]
+gcloud ids endpoints describe ids-usc1 --zone=us-central1-a --format="value(endpointForwardingRule,state)"
+gcloud ids endpoints update ids-usc1 --zone=us-central1-a --threat-exceptions=8001
+```
+| Piece | Meaning |
+|-------|---------|
+| `ids endpoints create` | A **zonal** endpoint that inspects mirrored traffic from **any zone** in its region. ~20 min to become READY |
+| `--severity` (required) | Minimum alert level: `INFORMATIONAL`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL` |
+| `--threat-exceptions` | Threat IDs to mute (noisy scanners). Max **99** |
+| `--no-async` | Wait for completion instead of returning an operation |
+| `endpointForwardingRule` | The internal LB rule that Packet Mirroring sends to |
+
+```bash
+gcloud compute packet-mirrorings create ids-mirror --region=us-central1 --network=VPC \
+    --collector-ilb=ENDPOINT_FORWARDING_RULE \
+    --mirrored-subnets=web-subnet,db-subnet [--mirrored-tags=pci] [--mirrored-instances=...] \
+    [--filter-cidr-ranges=0.0.0.0/0] [--filter-protocols=tcp,udp,icmp] [--filter-direction=both]
+```
+| Piece | Meaning |
+|-------|---------|
+| `--collector-ilb` | Where copies go: the IDS endpoint's forwarding rule (or **your own** internal LB with Zeek/Suricata/tcpdump VMs) |
+| `--mirrored-subnets/-tags/-instances` | Which VMs are copied. Same region as the collector |
+| `--filter-*` | Mirror less: specific CIDRs, protocols, or `ingress`/`egress`/`both` |
+
+**When:** feeding Cloud IDS, or any out-of-band analysis (it's the cloud SPAN port for the Wireshark course).
+
+```bash
+gcloud logging read 'logName:"ids.googleapis.com%2Fthreat" AND jsonPayload.alert_severity="CRITICAL"' --limit=10
+```
+**When:** triage. Route these logs to Security Command Center, BigQuery, or an alerting policy.
+
+---
+
 ## Linked Pages
 - [[gcp-product-map]] · [[gcp-private-access]] · [[gcp-network-architecture]] · [[gcp-routing]] · [[gcp-dns]]
 - [[certs/gcp-networking]]

@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-63-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-64-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -158,6 +158,7 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP30](wiki/lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | Hierarchy inheritance, deny policies first, permission anatomy, Network Viewer/Admin vs Security Admin, custom roles |
 | [GCP31](wiki/lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Stateful distributed rules, 5 parameters, priority/deny-wins-tie, implied + default rules, SA vs tag targets, Cloud NGFW hierarchical/network policies, Firewall Insights |
 | [GCP32](wiki/labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Hands-on: auto-mode VPC, delete default network, tag-based SSH rule, internal ICMP, priority 500 vs 2000, egress deny |
+| [GCP33](wiki/lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | Managed IDS (detect only): IDS endpoints + Packet Mirroring, Palo Alto engine, north-south + east-west, PSA prerequisite, 5 Gbps/endpoint |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 

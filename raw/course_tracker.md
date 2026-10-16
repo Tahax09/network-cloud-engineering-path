@@ -66,7 +66,8 @@
 | GCP30 | IAM Roles | Network Security — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP31 | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete | Pending |
 | GCP32 | Lab: Configuring VPC Firewalls (wiki/labs/) | Network Security — Module 2 | 2026-10-16 | Complete | — |
-| GCP33 | — | — | — | Pending | — |
+| GCP33 | Cloud IDS | Network Security (module TBC) | 2026-10-16 | Complete | Pending |
+| GCP34 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

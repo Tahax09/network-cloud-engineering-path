@@ -1,0 +1,46 @@
+Let's talk briefly about another
+Google Cloud security offering, Cloud IDS. Quinn, a network engineer at
+Cymbal Corporation, is looking for a way to improve the security of
+the company's cloud infrastructure. Cymbal has observed a concerning rise
+in cyber attacks targeting sensitive customer and financial data. These attacks range from unauthorized
+access attempts, to the delivery and execution of malicious software. Additionally, covert monitoring tools and
+command-and-control attacks attempting to establish communication
+channels between compromised systems and external servers have been detected. Such threats pose a substantial
+risk to Cymbal's reputation, customer trust, and regulatory compliance, underscoring the urgent need for
+advanced security measures. Solution to mitigate these
+escalating cyber threats, Cymbal has implemented Google Cloud IDS. Cloud IDS is a network security service
+offered by Google Cloud that provides real time detection of intrusions, malware,
+spyware, and command-and-control attacks. With comprehensive monitoring of both
+internal and external traffic, Cloud IDS offers Cymbal improved visibility into
+their network and system vulnerabilities. The scalability of the service allows
+Cymbal to adapt their threat detection capabilities as their
+infrastructure expands. As a fully-managed service,
+Cloud IDS simplifies security management, enabling Cymbal's IT team to
+focus on other priorities, while ensuring the safeguarding
+of their critical assets. Cloud IDS is an intrusion detection
+service that provides threat detection for intrusions, malware, spyware, and command-and-control attacks
+on your network. Cloud IDS works by creating
+a Google-managed peered network with mirrored VMs. Traffic in the peered network is mirrored,
+and then inspected by Palo Alto Networks' threat protection technologies to
+provide advanced threat detection. Cloud IDS provides full
+visibility into network traffic, including both north-south and
+east-west traffic, letting you monitor VM-to-VM
+communication to detect lateral movement. Cloud IDS provides full
+visibility into network traffic, including both north-south and
+east-west traffic, letting you monitor VM-to-VM
+communication to detect lateral movement. Cloud IDS gives you immediate indications
+when attackers are attempting to breach your network, and the service can also be used for
+compliance validation like PCI 11. In addition, Cloud IDS automatically
+updates all signatures, without any user intervention,
+enabling users to focus on analyzing and resolving threats without managing or
+updating signatures. To better understand Cloud IDS, it's
+important to understand how the service uses endpoints and packet mirroring. Cloud IDS uses a resource
+known as an IDS endpoint, a zonal resource that can inspect
+traffic from any zone in its region. Each IDS endpoint receives
+mirrored traffic and performs threat detection analysis. Cloud IDS uses Google Cloud
+packet mirroring, which creates a copy of
+your network traffic. After creating an IDS endpoint,
+you must attach one or more packet mirroring policies to it. These policies send mirrored traffic to
+a single IDS endpoint for inspection. The packet mirroring logic sends
+all traffic from individual VMs to Google-managed IDS VMs. For example, all traffic mirrored from VM1
+and VM2 will always be sent to IDS-VM1.

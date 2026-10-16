@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-10-16] ingest+verify | GCP33 — Cloud IDS
+Quinn/Cymbal scenario; IDS endpoints (zonal, any zone in region), Packet Mirroring → endpoint forwarding rule, Google-managed peered network with Palo Alto engine, north-south + east-west, auto-updated signatures. Verified vs Cloud IDS docs: detect-only (no prevention), PSA prerequisite with unique range, 5 Gbps/endpoint (spikes ~17), severity levels, 99 threat exceptions, PCI 11.4 + HIPAA (lecture said "PCI 11"). Module placement unconfirmed (no module intro received). New viz GCP33 Cloud IDS Explorer; command anatomy §13.
+
 ## [2026-10-16] ingest | GCP32 — Lab: Configuring VPC Firewalls
 Lab page from intro transcript + pasted lab (credentials not stored): auto-mode mynetwork, default vs user-created rules, delete default network, tag-scoped SSH from Cloud Shell, internal ICMP rule + NAT'd external-ping failure, priority 500 vs 2000, egress deny 10000. Flagged lab-text errors: implied egress is allow (not deny); "higher priority" wording inverted for 2000/10000; summary claims custom-mode network. New viz GCP32 VPC Firewall Lab; command anatomy adds add-tags, update --priority, ssh user@vm. Module 2 map complete (quiz pending).
 
