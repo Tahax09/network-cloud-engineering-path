@@ -1,0 +1,6 @@
+Welcome to the Advanced Security Monitoring and Analysis Module. This module provides
+an overview of packet mirroring for
+enhanced network security. Learn how to leverage this
+tool for traffic inspection, threat detection,
+and troubleshooting. We'll also cover essential network security best practices and test your
+knowledge with a quiz.

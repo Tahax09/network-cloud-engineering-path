@@ -1,0 +1,41 @@
+Let's explore Secure Web Proxy and
+its use case. Secure Web Proxy is a Google Cloud
+service designed to enhance the security of outbound web traffic,
+HTTP/HTTPS from various sources, including virtual machines, containers, serverless environments, and
+workloads outside of Google Cloud. It acts as a gateway, filtering
+traffic-based on configurable policies that leverage cloud identities and
+web applications. This enables organizations to enforce
+granular control over web access, improving overall security postures while
+maintaining flexibility and ease of use. Secure Web Proxy provides the following
+benefits, streamlined cloud migration. Secure Web Proxy simplifies your
+transition to Google Cloud by maintaining your current security
+policies for outbound web traffic. This eliminates the need for third party
+tools or manual configuration adjustments. Controlled access to external services
+by allowing you to define granular access policies, Secure Web Proxy
+enhances the security of your network. You can establish specific identities for
+workloads or applications and then apply policies to various web locations,
+monitored access to untrusted websites. Secure Web Proxy identifies and
+logs any traffic that deviates from your established policies,
+providing you with valuable insights. This allows you to monitor Internet usage,
+uncover potential threats, and respond proactively to
+safeguard your network. Let's explore the last one on the list. Quan, a network engineer
+at Symbol Corporation, is staring down a growing
+network infrastructure headache. Quan needs a unified automated
+solution that simplifies network management across both on premises and cloud environments while providing
+granular security and cost control. Secure Web Proxy lets you
+apply granular access policies to your egress web traffic so
+that you can secure your network. This allows you to
+programmatically restrict cloud workload access to only
+trusted external web services. Secure Web Proxy enables you to
+create very specific rules for outgoing web traffic from
+your cloud environment. This means you can define exactly
+which external websites and services your cloud workloads
+are allowed to access. By doing this, you can significantly
+increase the security of your network. You're essentially creating an allow
+list of approved web destinations, preventing your systems from
+communicating with potentially harmful or unauthorized websites. This programmatic restriction ensures
+that your cloud workloads interact only with the specific external web services
+you trust, minimizing the risk of data breaches, malware infections,
+and other security threats. It's a proactive approach to cybersecurity
+that helps you maintain control over your network traffic and
+safeguard your valuable assets.

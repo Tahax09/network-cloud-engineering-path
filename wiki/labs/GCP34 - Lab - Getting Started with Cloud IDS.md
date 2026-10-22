@@ -4,7 +4,7 @@ aliases: [GCP34]
 title: "Lab: Getting Started with Cloud IDS"
 course: Google Cloud Networking Specialization
 cert_track: gcp-networking
-module: "Course 4: Network Security (module placement to confirm)"
+module: "Course 4: Network Security — Module 2: Controlling Access to VPC Networks"
 date: 2026-10-16
 status: Complete
 quiz_attempted: No

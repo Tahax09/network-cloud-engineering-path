@@ -1,0 +1,81 @@
+Let's next discuss
+hybrid load balancing. A hybrid load balancer, lets you extend Cloud load balancing to
+workloads that run on your existing infrastructure
+outside of Google Cloud. A hybrid strategy is a pragmatic solution for
+you to adapt to changing market demands and incrementally modernize the backend services
+that run your workloads. You can create a hybrid
+deployment to enable migration to a modern Cloud based solution or a permanent fixture of your organization
+IT infrastructure. Next, let's look at a
+few general use cases of hybrid load balancing. Jia, a Cloud network engineer, needs to modernize the
+symbol corporation IT infrastructure to improve application performance
+and scalability. Currently, Symbol runs a mix
+of on-premises applications and applications deployed in Google Kubernetes
+Engine, or GKE. Traffic is often unpredictable with sudden surges during
+sales or promotions, overwhelming their
+on-premises servers. Azumi knows they need a way to handle these spikes
+without compromising performance or
+spending a fortune on excess capacity that sits
+idle most of the time. Additionally,
+managing two separate load balancing solutions for the premises and GKE environments is becoming
+increasingly cumbersome. In this example,
+traffic from clients on the public Internet enters your private on-premises
+environment, and traffic from another
+public Cloud provider enters through a
+Cloud load balancer. The load balancer also gets requests from internal clients. The load balancer
+sends requests to the services that
+run your workloads. These services are the
+load balancer endpoints, and they can be located inside or outside of Google Cloud. You can figure a load
+balancer backend service to communicate to the
+external endpoints by using a hybrid NEG. The external
+environments can use Cloud Interconnect or Cloud VPN to communicate
+with Google Cloud. The load balancer must be
+able to reach each service with a valid IP address
+port combination. The example shows a load
+balancer backend service with a hybrid and a Zonal NEG. The hybrid NEG connects
+to endpoints that are on-premises and in
+other public Clouds. The Zonal NEG points to the Cloud endpoints in
+the same subnet and zone. A hybrid load balancer requires special configuration only
+for the backend service. The frontend
+configuration is the same as any other load balancer. To configure the
+backend services outside of Google Cloud, first configure
+one or more hybrid connectivity network
+endpoint groups or NEGs. Add each non Google
+Cloud Network endpoint IP port combination to a hybrid connectivity network
+endpoint group or NEG. Ensure that the IP address and port are reachable
+from Google Cloud. For hybrid connectivity NEGs, you set the network
+endpoint type to non GCP Private IP Port. Create the NEG in a
+Google Cloud zone that is as close as possible to
+your other environment. For example, if you're
+hosting a service in a non premises
+environment in Bengaluru, India, can place the NEG in the Asia South 1A
+Google Cloud zone, as shown in the example. Next, add a health
+check to the NEG. Add the hybrid connectivity NEGs to a hybrid load
+balancer backend. A hybrid connectivity
+NEG must only include endpoints
+outside Google Cloud. Traffic might be dropped
+if a hybrid NEG includes endpoints for resources within a Google Cloud VPC network. You can use hybrid load
+balancing with the following, global external
+application load balancer, classic application
+load balancer, regional external
+application load balancer, cross region internal
+application load balancer, regional internal
+application load balancer, external proxy network load balancer, global and regional, regional internal proxy
+network load balancer, and cross region internal
+proxy network load balancer. You choose a load balancer
+depending on your needs, such as where the clients
+and workloads are located. To create, delete, or
+manage a load balancer with mixed zonal and hybrid
+connectivity NEG backends in a single backend service, you must use the Google
+Cloud CLI or the Rest API. Regional dynamic routing, and static routes are not supported. The Cloud router used
+for hybrid connectivity must be enabled with
+global dynamic routing. The internal application
+load balancer and hybrid connectivity must be configured in the same region. If they are configured
+in different regions, you might see
+backends as healthy, but client requests will not
+be forwarded to the backend. Ensure that you also review the security settings on your hybrid connectivity
+configuration. Currently, HA Cloud
+VPN connections are encrypted by default,
+using IPSec encryption. Cloud Interconnect
+connections are not encrypted by default. For more details, go
+to the encryption in transit in Google Cloud on
+the Google Cloud website.

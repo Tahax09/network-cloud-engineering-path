@@ -1,0 +1,17 @@
+Welcome to the fifth course of the
+Networking in Google Cloud course series, Load Balancing. In this course, we will cover the
+topics listed on the screen. We’ll begin with an overview of
+Google Cloud load balancing, and continue with a discussion
+of hybrid load balancing - in other words, load balancing
+between Google Cloud, other public clouds,
+and on-premises environments. We’ll follow with a discussion
+of traffic management, which provides enhanced
+features to route traffic based on criteria that you specify. After that, you’ll apply what you’ve learned
+in a traffic management lab exercise. Next, we’ll discuss using internal Network
+Load Balancers as next hops, including benefits, caveats,
+and some use cases. We’ll continue by discussing how to use
+the Google global edge network to serve content closer to users with the
+Cloud Content Delivery Network (CDN), and discuss the benefit of using
+Google Cloud Armor with Cloud CDN to provide a secure and optimized
+web experience. We’ll follow that with a lab exercise. Finally, we’ll cover content caching and share some strategies to
+optimize load balancing, and end with a brief quiz. Let’s get started!

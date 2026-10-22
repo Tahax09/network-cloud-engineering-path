@@ -1,0 +1,53 @@
+Some of the network
+security best practices are listed on this slide. This list varies on a case-by-case basis based
+on the environment. Adopt a zero-trust
+network model. This approach ensures that no user or device is implicitly trusted regardless
+of their location inside or outside the
+organization's network. By verifying both user identity and context during
+access requests, you shift security controls from the network perimeter to
+individual users and devices, providing a more robust and granular approach
+to security. Secure connections between
+on-prem and Google Cloud. For organizations operating in hybrid or multi-cloud
+environments, prioritize secure
+connectivity between all environments to ensure data protection and
+minimize risks. Leverage Google Cloud's
+private access options like Cross-Cloud Interconnect, Dedicated Partner Interconnect, and IPSec VPNs to
+establish secure, high-speed connections between your on-premises infrastructure and various Cloud environments. Additionally, explore
+Private Service Connect for accessing Google APIs and publish services
+with enhanced security, ensuring seamless
+communication while maintaining robust
+security measures. Disable default networks. To enhance network security and avoid IP address conflicts, disable the creation of default networks in
+Google Cloud Projects. Plan your network and
+IP address allocation strategically across connected
+deployments and projects to ensure efficient and
+secure communication. As a best practice, limit the number of
+VPC networks per project to one for more
+effective access control. Secure Cloud perimeter with Google Cloud's tools like firewalls and VPC
+Service Controls. Employ shared VPC to centralize network management and isolate workloads into
+separate projects, enhancing security and control. Create firewall policies and
+rules at multiple levels, organization,
+folder, VPC network, to allow or deny traffic
+based on various criteria, including IP addresses, protocols, ports, service
+accounts, and secure tags. Analyze your network. Google Cloud provides two tools, Cloud IDS and Packet Mirroring
+to help you monitor and secure your network traffic in Compute Engine and Google
+Kubernetes Engine. Cloud IDS provides visibility into your VPC network traffic, while Packet Mirroring
+allows you to clone and forward specific VM traffic for further analysis and inspection with
+security tools. Use a web application firewall. Strengthen the security of your external web
+applications and services by implementing
+Google Cloud Armor, a web application firewall, WAF, that also provides protection
+against DDoS attacks. For optimal protection
+of critical workloads, leverage the advanced
+features offered by Google Cloud Armor's managed
+protection plus tier, adopt automated
+infrastructure provisioning using tools like
+Terraform, Jenkins, or Cloud Build to create immutable environments for enhanced security and
+streamlined operations. Leverage Google Cloud security blueprints as a foundation, or build upon them with
+your own automation to align with security best
+practices and guidelines. Monitor your network: Implement VPC flow logs and
+firewall rules logging to gain near real-time
+visibility into your Google Cloud network
+traffic and firewall activity. Utilize tools like
+Cloud Logging, Cloud Monitoring,
+Firewall Insights, and Network Intelligence
+Center to track, analyze, and optimize your network security
+and performance.

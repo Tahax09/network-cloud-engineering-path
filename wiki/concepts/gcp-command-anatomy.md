@@ -622,6 +622,21 @@ gcloud compute packet-mirrorings create ids-mirror --region=us-central1 --networ
 **When:** feeding Cloud IDS, or any out-of-band analysis (it's the cloud SPAN port for the Wireshark course).
 
 ```bash
+# Your own collector (instead of Cloud IDS): internal passthrough NLB flagged for mirroring
+gcloud compute forwarding-rules create collector-fr --region=us-west4 --load-balancing-scheme=INTERNAL \
+    --backend-service=collector-bes --ports=all --is-mirroring-collector --network=prod-vpc --subnet=collector-subnet
+gcloud compute packet-mirrorings update web-mirror --region=us-west4 --no-enable     # pause without deleting
+```
+| Piece | Meaning |
+|-------|---------|
+| `--is-mirroring-collector` | Marks the ILB forwarding rule as a valid mirroring destination (it can't also serve normal traffic) |
+| `--ports=all` | Collect every port |
+| `--no-enable` / `--enable` | Toggle a policy on or off |
+| Limits | ≤5 subnets, 5 tags or 50 instances per policy; ≤30 filters = ranges × protocols; collector in the same region; can't mirror and collect on the same NIC |
+
+→ [[GCP37 - Packet Mirroring for Network Traffic Inspection]]
+
+```bash
 gcloud logging read 'logName:"ids.googleapis.com%2Fthreat" AND jsonPayload.alert_severity="CRITICAL"' --limit=10
 ```
 **When:** triage. Route these logs to Security Command Center, BigQuery, or an alerting policy.
@@ -647,6 +662,60 @@ gcloud compute firewall-rules create cymbal-emergency-block --direction=INGRESS 
 | `--no-address` / `--private-network-ip` | No public IP; fixed internal IP (stable for firewall rules and tests) |
 | `--metadata=startup-script` | Runs as root at every boot (installs nginx) |
 | `--priority=1 --rules=all --enable-logging` | Emergency containment: beats every normal allow, covers all protocols, and is auditable (`jsonPayload.disposition="DENIED"`) |
+
+---
+
+## 14. Secure Web Proxy
+→ [[GCP35 - Secure Web Proxy]] · visualization: [Secure Web Proxy Policy](../visualizations/gcp/GCP35%20-%20Secure%20Web%20Proxy%20Policy.html)
+
+```bash
+gcloud compute networks subnets create swp-proxy-only --purpose=REGIONAL_MANAGED_PROXY --role=ACTIVE \
+    --region=us-west1 --network=prod-vpc --range=192.168.100.0/23
+gcloud network-security url-lists import trusted-dev --location=us-west1 --source=urls.yaml
+gcloud network-security gateway-security-policies import egress-policy --location=us-west1 --source=policy.yaml
+gcloud network-security gateway-security-policies rules import allow-ci --location=us-west1 \
+    --gateway-security-policy=egress-policy --source=rule.yaml
+gcloud network-services gateways import swp-usw1 --location=us-west1 --source=gateway.yaml
+```
+| Piece | Meaning |
+|-------|---------|
+| `--purpose=REGIONAL_MANAGED_PROXY` | Proxy-only subnet: the address space Google's Envoy proxies use (shared with Envoy-based LBs in that region) |
+| `network-security url-lists` | Reusable host/URL allowlists (`*.github.com`, `pypi.org`) |
+| `gateway-security-policies` | The policy container. **`rules`** inside it have priority, `basicProfile: ALLOW/DENY`, `sessionMatcher`, optional `applicationMatcher` |
+| `sessionMatcher` (CEL) | `source.matchServiceAccount('sa@...')`, `source.matchTag('tagValues/...')`, `host() == 'x'`, `inUrlList(host(), 'projects/.../urlLists/trusted-dev')` |
+| `applicationMatcher` (CEL) | `request.path.startsWith('/repos/cymbal/')`. HTTPS paths are only visible with a **TLS inspection policy** |
+| `network-services gateways` (`type: SECURE_WEB_GATEWAY`) | The proxy itself: internal address + port, attached policy, network/subnet |
+| `import --source=file.yaml` | SWP objects are mostly created from YAML (declarative) |
+
+**When:** egress allowlisting by workload identity, logging every outbound web request, replacing a self-managed Squid fleet. Clients: `export HTTPS_PROXY=http://GATEWAY_IP:443` (explicit mode).
+
+---
+
+## 15. NEGs and hybrid load balancing
+→ [[GCP40 - Module Introduction - Hybrid Load Balancing and Traffic Management]] · [[GCP41 - Hybrid Load Balancing]] · visualization: [Hybrid Load Balancer Builder](../visualizations/gcp/GCP39-41%20-%20Hybrid%20Load%20Balancer%20Builder.html)
+
+```bash
+gcloud compute network-endpoint-groups create onprem-neg --zone=asia-south1-a \
+    --network=hybrid-vpc --network-endpoint-type=NON_GCP_PRIVATE_IP_PORT --default-port=443
+gcloud compute network-endpoint-groups update onprem-neg --zone=asia-south1-a \
+    --add-endpoint="ip=10.50.1.10,port=443" [--remove-endpoint="ip=...,port=..."]
+gcloud compute network-endpoint-groups list-network-endpoints onprem-neg --zone=asia-south1-a
+gcloud compute backend-services add-backend web-bes --global --network-endpoint-group=onprem-neg \
+    --network-endpoint-group-zone=asia-south1-a --balancing-mode=RATE --max-rate-per-endpoint=100
+gcloud compute networks update hybrid-vpc --bgp-routing-mode=global
+gcloud compute routers update hybrid-cr --region=asia-south1 --advertisement-mode=custom \
+    --set-advertisement-groups=all_subnets --set-advertisement-ranges=35.191.0.0/16,130.211.0.0/22
+```
+| Piece | Meaning |
+|-------|---------|
+| `--network-endpoint-type` | `GCE_VM_IP_PORT` (zonal, VMs/pods) · `INTERNET_FQDN_PORT` / `INTERNET_IP_PORT` (internet, `--global`) · `serverless` (`--region`, `--cloud-run-service`) · `private-service-connect` (`--psc-target-service`) · **`NON_GCP_PRIVATE_IP_PORT`** (hybrid) |
+| `--zone` (hybrid) | The zone **closest to the external site**. It drives latency and the health-check path |
+| `--add-endpoint` | `ip=,port=` (hybrid/zonal) or `fqdn=,port=` (internet). Hybrid endpoints must be **outside** Google Cloud |
+| `--balancing-mode=RATE --max-rate-per-endpoint` | Caps requests per endpoint, so extra load spills to other backends (cloud bursting) |
+| `--bgp-routing-mode=global` | **Required**: the LB only uses dynamic routes, and regional mode or static routes aren't supported |
+| `--set-advertisement-ranges` | Tell on-prem how to reach Google's probers (global external / classic LBs) or the proxy-only subnet (Envoy-based LBs) |
+
+**When:** fronting on-prem or other-cloud servers with a Google LB (migration, bursting, one global endpoint). Mixed zonal + hybrid backends in one backend service: **gcloud/API only**.
 
 ---
 

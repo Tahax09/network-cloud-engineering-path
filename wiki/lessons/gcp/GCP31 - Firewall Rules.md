@@ -7,7 +7,7 @@ cert_track: gcp-networking
 module: "Course 4: Network Security — Module 2: Controlling Access to VPC Networks"
 date: 2026-10-16
 status: Complete
-quiz_attempted: No
+quiz_attempted: Yes
 weak_areas: []
 tags: [gcp, firewall, vpc-firewall-rules, stateful, implied-rules, default-network, network-tags, service-accounts, cloud-ngfw, hierarchical-firewall-policy, network-firewall-policy, secure-tags, firewall-insights, least-privilege]
 ---

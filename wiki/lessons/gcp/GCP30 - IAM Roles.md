@@ -7,7 +7,7 @@ cert_track: gcp-networking
 module: "Course 4: Network Security — Module 2: Controlling Access to VPC Networks"
 date: 2026-10-15
 status: Complete
-quiz_attempted: No
+quiz_attempted: Yes
 weak_areas: []
 tags: [gcp, iam, least-privilege, resource-hierarchy, policy-inheritance, deny-policies, predefined-roles, custom-roles, network-admin, security-admin, network-viewer, permissions]
 ---

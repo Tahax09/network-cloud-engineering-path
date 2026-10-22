@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Packet Mirroring Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+/* Layout: header + tabs; planner = controls beside diagram, then checks + bandwidth; best practices = checklist beside score */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b; --band:#e2efe7; --band2:#ece6f7; --mirror:#c27a00;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#97a5bc;--line:#2a3a54;--accent:#77a2ff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff6b5c;--band:#14271f;--band2:#221b33;--mirror:#f0a93a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#97a5bc;--line:#2a3a54;--accent:#77a2ff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff6b5c;--band:#14271f;--band2:#221b33;--mirror:#f0a93a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:820px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:72ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:640px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.mir{stroke:var(--mirror);stroke-width:2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.off{opacity:.3}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.medge{fill:none;stroke:var(--mirror);stroke-width:1.8;stroke-dasharray:5 4}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}
+.pk{fill:var(--mirror)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}
+.meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.meters{grid-template-columns:1fr}}
+.meter{display:grid;gap:4px}
+.meter .v{font:600 22px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.bar{height:10px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);transition:width .2s}
+.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bp{display:grid;gap:8px}
+.bprow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;border-left:4px solid var(--line);cursor:pointer}
+.bprow.on{border-left-color:var(--ok)}.bprow.gap{border-left-color:var(--bad)}
+.bprow .tools{font:500 11.5px var(--f-mono);color:var(--muted)}
+.score{font:700 30px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.note{font-size:12.5px;color:var(--muted)}
+.stack{display:grid;gap:18px}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP36 to GCP38 · Network Security, Module 3: Advanced Security Monitoring and Analysis</div>
+    <h1>Packet Mirroring Planner</h1>
+    <p class="lead">Izumi needs to watch traffic from selected VMs. Pick what to mirror, add filters, and place the collector. The planner checks each placement rule and shows the extra egress bandwidth the copies cost on the mirrored VMs.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Mirroring planner</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Best practices</button>
+  </div>
+
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Mirrored sources</h2>
+        <label class="chk" for="s-web"><input type="checkbox" id="s-web" checked>web-subnet (us-west4) · 4 VMs</label>
+        <label class="chk" for="s-pay"><input type="checkbox" id="s-pay">pay-subnet (us-west4) · 2 VMs, PCI</label>
+        <label class="chk" for="s-eu"><input type="checkbox" id="s-eu">web-eu-subnet (europe-west1) · 3 VMs</label>
+        <h2>Collector</h2>
+        <span class="k">Collector region</span>
+        <div class="seg" id="c-region"><button type="button" data-v="us-west4" aria-pressed="true">us-west4</button><button type="button" data-v="europe-west1" aria-pressed="false">europe-west1</button></div>
+        <span class="k">Collector placement</span>
+        <div class="seg" id="c-place"><button type="button" data-v="own" aria-pressed="true">Own collector subnet</button><button type="button" data-v="peer" aria-pressed="false">Peered VPC</button><button type="button" data-v="same" aria-pressed="false">Inside web-subnet</button></div>
+        <h2>Filters</h2>
+        <label class="k" for="f-cidr">CIDR ranges: <span id="f-cidr-v">1</span></label>
+        <input type="range" id="f-cidr" min="1" max="20" value="1">
+        <span class="k">Protocols</span>
+        <div class="seg" id="f-proto"><button type="button" data-v="tcp" aria-pressed="true">tcp</button><button type="button" data-v="udp" aria-pressed="false">udp</button><button type="button" data-v="icmp" aria-pressed="false">icmp</button></div>
+        <span class="k">Direction</span>
+        <div class="seg" id="f-dir"><button type="button" data-v="both" aria-pressed="true">both</button><button type="button" data-v="ingress" aria-pressed="false">ingress</button><button type="button" data-v="egress" aria-pressed="false">egress</button></div>
+        <label class="chk" for="f-skipbk"><input type="checkbox" id="f-skipbk">CIDR filter excludes the backup traffic to 10.0.50.0/24</label>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="map" viewBox="0 0 760 330" aria-label="Mirroring topology"></svg></div>
+        <div class="meters">
+          <div class="meter"><span class="k">Filters used</span><span class="v" id="m-f"></span><div class="bar"><i id="b-f"></i></div></div>
+          <div class="meter"><span class="k">Extra egress per web VM</span><span class="v" id="m-e"></span><div class="bar"><i id="b-e"></i></div></div>
+          <div class="meter"><span class="k">Collector intake</span><span class="v" id="m-c"></span><div class="bar"><i id="b-c"></i></div></div>
+        </div>
+        <p class="help" id="bw-note"></p>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="panel"><h2>Rule checks</h2><ul class="checks" id="checks"></ul></div>
+      <div class="panel"><h2>gcloud for this plan</h2><pre class="cmd" id="cmd"></pre><p class="note">Assumed traffic per web VM: 2 Gbps in, 1.5 Gbps out, of which 1 Gbps out is backup traffic to 10.0.50.0/24. Egress cap per VM: 8 Gbps. Numbers are illustrative.</p></div>
+    </div>
+  </section>
+
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Score</h2>
+        <div class="score" id="score"></div>
+        <p class="help">The lecture's eight practices. Tick the ones a project already does. Each gap shows the tools that close it.</p>
+        <span class="k">Load an example</span>
+        <div class="seg"><button type="button" id="ex-new" aria-pressed="false">New default project</button><button type="button" id="ex-k3s" aria-pressed="false">Tah's k3s-style setup</button><button type="button" id="ex-good" aria-pressed="false">Landing zone done right</button></div>
+        <p class="note">The deck's "Managed Protection Plus" tier is now called Cloud Armor Enterprise.</p>
+      </div>
+      <div class="panel"><div class="bp" id="bp"></div></div>
+    </div>
+  </section>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+['1','2'].forEach(n=>$('t'+n).addEventListener('click',()=>{['1','2'].forEach(m=>{$('t'+m).setAttribute('aria-selected',m===n);$('p'+m).hidden=m!==n;});}));
+function seg(id,multi){const g=$(id);g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(multi){const on=b.getAttribute('aria-pressed')==='true';const n=g.querySelectorAll('[aria-pressed="true"]').length;if(on&&n===1)return;b.setAttribute('aria-pressed',!on);}else g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));plan();});}
+seg('c-region');seg('c-place');seg('f-proto',true);seg('f-dir');
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+const vals=id=>[...$(id).querySelectorAll('[aria-pressed="true"]')].map(b=>b.dataset.v);
+['s-web','s-pay','s-eu','f-cidr','f-skipbk'].forEach(id=>$(id).addEventListener('input',plan));
+let anim=null;
+function plan(){
+  const src={web:$('s-web').checked,pay:$('s-pay').checked,eu:$('s-eu').checked};
+  const region=val('c-region'),place=val('c-place'),protos=vals('f-proto'),dir=val('f-dir');
+  const cidr=+$('f-cidr').value;$('f-cidr-v').textContent=cidr;
+  const filters=cidr*protos.length;
+  const checks=[];
+  const srcRegions=[...new Set([src.web||src.pay?'us-west4':null,src.eu?'europe-west1':null].filter(Boolean))];
+  if(!srcRegions.length)checks.push(['bad','No mirrored sources selected. Pick at least one subnet.']);
+  if(srcRegions.length>1)checks.push(['bad','Sources span two regions. One policy must have all sources in a single region: create a second policy and collector for europe-west1.']);
+  else if(srcRegions.length===1&&srcRegions[0]!==region)checks.push(['bad',`Collector is in ${region}, but the sources are in ${srcRegions[0]}. The collector must be in the same region as the mirrored sources.`]);
+  else if(srcRegions.length)checks.push(['ok',`Sources and collector are both in ${region}.`]);
+  if(place==='same')checks.push(['bad','A collector VM inside web-subnet would be mirrored too. You can\'t mirror and collect on the same NIC (mirroring loop). Use a separate collector subnet.']);
+  else checks.push(['ok',place==='peer'?'Collector in a peered VPC: allowed.':'Collector in its own subnet of the same VPC: allowed.']);
+  const nsub=Object.values(src).filter(Boolean).length;
+  checks.push([nsub<=5?'ok':'bad',`${nsub} subnet source${nsub===1?'':'s'} (limit 5 subnets, 5 tags or 50 instances per policy).`]);
+  checks.push([filters<=30?'ok':'bad',`Filters: ${cidr} CIDR range${cidr>1?'s':''} x ${protos.length} protocol${protos.length>1?'s':''} = ${filters} (limit 30).${filters>30?' Merge ranges into broader CIDRs or drop a protocol.':''}`]);
+  checks.push(['ok','Collector is an internal passthrough NLB with --is-mirroring-collector; each flow sticks to one collector VM.']);
+  if(src.pay)checks.push(['ok','pay-subnet mirrored: full packet capture supports PCI DSS forensics.']);
+  // bandwidth per web VM
+  const inG=2,outG=1.5,bk=1;
+  const protoShare=protos.includes('tcp')?(protos.length===3?1:protos.length===2?0.99:0.95):0.05;
+  let copy=0;
+  if(dir==='both'||dir==='ingress')copy+=inG;
+  if(dir==='both'||dir==='egress')copy+=outG-($('f-skipbk').checked?bk:0);
+  copy*=protoShare;
+  const totalOut=outG+copy,cap=8;
+  const vms=(src.web?4:0)+(src.pay?2:0)+(src.eu?3:0);
+  const intake=copy*vms;
+  $('m-f').textContent=`${filters} / 30`;const bf=$('b-f');bf.style.width=Math.min(100,filters/30*100)+'%';bf.className=filters>30?'bad':filters>24?'warn':'';
+  $('m-e').textContent=`+${copy.toFixed(1)} Gbps`;const be=$('b-e');be.style.width=Math.min(100,totalOut/cap*100)+'%';be.className=totalOut/cap>.9?'bad':totalOut/cap>.6?'warn':'';
+  $('m-c').textContent=`${intake.toFixed(1)} Gbps`;const bc=$('b-c');bc.style.width=Math.min(100,intake/20*100)+'%';bc.className=intake>15?'bad':intake>10?'warn':'';
+  $('bw-note').textContent=`Each mirrored web VM now sends ${totalOut.toFixed(1)} of its ${cap} Gbps egress cap (${outG} real + ${copy.toFixed(1)} copies). Mirroring happens on the host, so copies compete with real traffic. ${dir==='both'&&!$('f-skipbk').checked?'Try ingress-only or excluding the backup range.':''}`;
+  $('checks').innerHTML=checks.map(([c,t])=>`<li><span class="tag ${c}">${c==='ok'?'OK':'FAIL'}</span><span>${t}</span></li>`).join('');
+  const subs=[src.web?'web-subnet':null,src.pay?'pay-subnet':null,src.eu?'web-eu-subnet':null].filter(Boolean).join(',')||'SUBNET';
+  const cidrs=$('f-skipbk').checked?'0.0.0.0/5,8.0.0.0/7,11.0.0.0/8,12.0.0.0/6,16.0.0.0/4,32.0.0.0/3,64.0.0.0/2,128.0.0.0/1  # everything except 10.0.0.0/8 (incl. backup 10.0.50.0/24)':cidr===1?'0.0.0.0/0':`RANGE_1,...,RANGE_${cidr}`;
+  $('cmd').textContent=`gcloud compute forwarding-rules create collector-fr --region=${region} \\\n  --load-balancing-scheme=INTERNAL --backend-service=collector-bes --ports=all \\\n  --is-mirroring-collector --network=${place==='peer'?'tools-vpc':'prod-vpc'} --subnet=${place==='same'?'web-subnet':'collector-subnet'}\ngcloud compute packet-mirrorings create izumi-mirror --region=${region} --network=prod-vpc \\\n  --collector-ilb=collector-fr --mirrored-subnets=${subs} \\\n  --filter-protocols=${protos.join(',')} --filter-direction=${dir} \\\n  --filter-cidr-ranges=${cidrs}`;
+  draw(src,region,place,dir);
+}
+function draw(src,region,place,dir){
+  const svg=$('map');svg.innerHTML='';if(anim)cancelAnimationFrame(anim);
+  el('rect',{x:10,y:20,width:470,height:300,rx:12,class:'bandr'},svg);el('text',{x:22,y:14,class:'bl'},svg,'prod-vpc');
+  const box=(x,y,w,l,s,cls)=>{el('rect',{x,y,width:w,height:52,rx:8,class:'node '+cls},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);el('text',{x:x+10,y:y+38,class:'ns'},svg,s);};
+  box(30,40,200,'web-subnet · us-west4','4 web VMs',src.web?'mir':'off');
+  box(30,130,200,'pay-subnet · us-west4','2 VMs (PCI)',src.pay?'mir':'off');
+  box(30,220,200,'web-eu-subnet · europe-west1','3 VMs',src.eu?'mir':'off');
+  const regionBad=(src.eu&&(src.web||src.pay))||((src.web||src.pay)&&region!=='us-west4')||(src.eu&&!src.web&&!src.pay&&region!=='europe-west1');
+  const cx=place==='peer'?540:280,cy=place==='same'?40:140;
+  if(place==='peer'){el('rect',{x:500,y:110,width:250,height:130,rx:12,class:'bandr2'},svg);el('text',{x:512,y:104,class:'bl'},svg,'tools-vpc (peered)');}
+  box(cx,cy+(place==='same'?60:0),190,'ILB collector · '+region,'--is-mirroring-collector',(regionBad||place==='same')?'bad':'');
+  const cY=cy+(place==='same'?60:0);
+  box(cx,cY+80,190,'Collector VMs','IDS / tshark / forensics','');
+  el('path',{d:`M${cx+95} ${cY+52} L${cx+95} ${cY+80}`,class:'edge'},svg);
+  const paths=[];
+  [['web',66],['pay',156],['eu',246]].forEach(([k,y])=>{if(src[k]){paths.push(el('path',{d:`M230 ${y} C ${cx-30} ${y}, ${cx-30} ${cY+26}, ${cx} ${cY+26}`,class:'medge'},svg));}});
+  el('text',{x:250,y:312,class:'ns'},svg,`copies: ${dir}`);
+  if(reduce||!paths.length)return;
+  const dots=paths.map(()=>el('circle',{r:4.5,class:'pk'},svg));let t0=null;
+  (function f(ts){if(t0==null)t0=ts;const u=((ts-t0)/1600)%1;paths.forEach((p,i)=>{const q=p.getPointAtLength(p.getTotalLength()*((u+i*.25)%1));dots[i].setAttribute('cx',q.x);dots[i].setAttribute('cy',q.y);});anim=requestAnimationFrame(f);})(performance.now());
+}
+plan();
+/* best practices */
+const BP=[
+ ['Adopt a zero-trust model','Verify identity and context on every request; no implicit trust inside the network.','IAP, IAM, context-aware access, Chrome Enterprise Premium'],
+ ['Secure on-prem to cloud connections','Encrypted, private hybrid links; private access to Google APIs and published services.','HA VPN (IPsec), Dedicated/Partner/Cross-Cloud Interconnect (+ MACsec), Private Service Connect'],
+ ['Disable default networks','Avoid 10.128.0.0/9 overlaps and permissive default rules; about one VPC per project.','Org policy compute.skipDefaultNetworkCreation, custom-mode VPCs'],
+ ['Secure the cloud perimeter','Central network, isolated workload projects, multi-level firewall policy, API data perimeter.','Shared VPC, hierarchical + network firewall policies, VPC Service Controls'],
+ ['Analyze your network','Inspect packets and detect threats, including east-west.','Cloud IDS, Packet Mirroring'],
+ ['Use a web application firewall','Protect external web apps from OWASP attacks and DDoS.','Cloud Armor (Enterprise for critical workloads)'],
+ ['Automate provisioning','Immutable environments, reviewed changes, no console drift.','Terraform, Cloud Build, Jenkins, Google security blueprints'],
+ ['Monitor your network','Near real-time visibility into traffic and firewall decisions.','VPC Flow Logs, Firewall Rules Logging, Cloud Logging/Monitoring, Firewall Insights, Network Intelligence Center']
+];
+const ON=new Set();
+function bpr(){
+  $('bp').innerHTML=BP.map((b,i)=>`<label class="bprow ${ON.has(i)?'on':'gap'}" for="bp${i}"><input type="checkbox" id="bp${i}" ${ON.has(i)?'checked':''}><span><h3>${i+1}. ${b[0]}</h3><span class="help">${b[1]}</span><br><span class="tools">${ON.has(i)?'In place':'Gap: '+b[2]}</span></span></label>`).join('');
+  BP.forEach((b,i)=>$('bp'+i).addEventListener('change',e=>{e.target.checked?ON.add(i):ON.delete(i);bpr();}));
+  $('score').textContent=`${ON.size} / 8 practices`;
+}
+const EX={'ex-new':[],'ex-k3s':[0,4,6,7],'ex-good':[0,1,2,3,4,5,6,7]};
+Object.keys(EX).forEach(id=>$(id).addEventListener('click',()=>{ON.clear();EX[id].forEach(i=>ON.add(i));Object.keys(EX).forEach(k=>$(k).setAttribute('aria-pressed',k===id));bpr();}));
+bpr();
+})();
+</script>
+</body>
+</html>

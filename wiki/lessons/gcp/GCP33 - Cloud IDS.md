@@ -4,10 +4,10 @@ aliases: [GCP33]
 title: Cloud IDS
 course: Google Cloud Networking Specialization
 cert_track: gcp-networking
-module: "Course 4: Network Security (module placement to confirm)"
+module: "Course 4: Network Security — Module 2: Controlling Access to VPC Networks"
 date: 2026-10-16
 status: Complete
-quiz_attempted: No
+quiz_attempted: Yes
 weak_areas: []
 tags: [gcp, cloud-ids, intrusion-detection, packet-mirroring, ids-endpoint, palo-alto, private-services-access, north-south, east-west, lateral-movement, c2, pci-dss, threat-logs]
 ---

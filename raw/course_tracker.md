@@ -66,9 +66,16 @@
 | GCP30 | IAM Roles | Network Security — Module 2 | 2026-10-15 | Complete | Pending |
 | GCP31 | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete | Pending |
 | GCP32 | Lab: Configuring VPC Firewalls (wiki/labs/) | Network Security — Module 2 | 2026-10-16 | Complete | — |
-| GCP33 | Cloud IDS | Network Security (module TBC) | 2026-10-16 | Complete | Pending |
-| GCP34 | Lab: Getting Started with Cloud IDS (wiki/labs/) | Network Security (module TBC) | 2026-10-16 | Complete | — |
-| GCP35 | — | — | — | Pending | — |
+| GCP33 | Cloud IDS | Network Security — Module 2 | 2026-10-16 | Complete | Pending |
+| GCP34 | Lab: Getting Started with Cloud IDS (wiki/labs/) | Network Security — Module 2 | 2026-10-16 | Complete | — |
+| GCP35 | Secure Web Proxy | Network Security — Module 2 | 2026-10-22 | Complete | Yes |
+| GCP36 | Module Introduction - Advanced Security Monitoring and Analysis | Network Security — Module 3 | 2026-10-22 | Complete | Yes |
+| GCP37 | Packet Mirroring for Network Traffic Inspection | Network Security — Module 3 | 2026-10-22 | Complete | Yes |
+| GCP38 | Network Security Best Practices | Network Security — Module 3 | 2026-10-22 | Complete | Yes |
+| GCP39 | Load Balancing - Course Introduction | Load Balancing — Introduction | 2026-10-22 | Complete | Pending |
+| GCP40 | Module Introduction - Hybrid Load Balancing and Traffic Management | Load Balancing — Module 1 | 2026-10-22 | Complete | Pending |
+| GCP41 | Hybrid Load Balancing | Load Balancing — Module 1 | 2026-10-22 | Complete | Pending |
+| GCP42 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

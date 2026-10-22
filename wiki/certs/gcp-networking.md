@@ -14,8 +14,8 @@ target_date: TBD
 | 1 | Networking in Google Cloud: Fundamentals | ✅ Complete (Coursera) | Transcripts pending — to be ingested |
 | 2 | Networking in Google Cloud: Routing and Addressing | ✅ Complete | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP13 (Private Connection Options module), GQ01 |
 | 3 | Networking in Google Cloud: Network Architecture | ✅ Complete (GQ02 pending) | GCP14 → (Module 1: Introduction to Network Architecture · Module 2: Network Topologies) |
-| 4 | Networking in Google Cloud: Network Security | 🔄 In progress | GCP23 → (DDoS protection · Controlling access to VPC networks · Advanced security monitoring) |
-| 5 | Networking in Google Cloud: Load Balancing | Not started | — |
+| 4 | Networking in Google Cloud: Network Security | ✅ Complete (GQ04–GQ06) |
+| 5 | Networking in Google Cloud: Load Balancing | 🔄 In progress |
 | 6 | Networking in Google Cloud: Hybrid and Multicloud | Not started | — |
 
 ## Modules Completed
@@ -69,7 +69,7 @@ target_date: TBD
 | [GCP27](../lessons/gcp/GCP27%20-%20Types%20of%20Complementary%20Partner%20Products.md) | Types of Complementary Partner Products | ✅ Complete |
 | [GCP28](../labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Lab: Configuring Traffic Blocklisting with Google Cloud Armor | ✅ Complete |
 
-*Module 2: Controlling Access to VPC Networks (GCP29 →)*
+*Module 2: Controlling Access to VPC Networks (GCP29–GCP35, quiz [GQ05](../quizzes/gcp/GQ05_Controlling_Access_to_VPC_Networks.md) 2/2 ✅)*
 
 | ID | Title | Status |
 |----|-------|--------|
@@ -77,14 +77,36 @@ target_date: TBD
 | [GCP30](../lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | ✅ Complete |
 | [GCP31](../lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | ✅ Complete |
 | [GCP32](../labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | ✅ Complete |
-| [GCP33](../lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS *(module placement to confirm)* | ✅ Complete |
+| [GCP33](../lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | ✅ Complete |
 | [GCP34](../labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Lab: Getting Started with Cloud IDS | ✅ Complete |
+| [GCP35](../lessons/gcp/GCP35%20-%20Secure%20Web%20Proxy.md) | Secure Web Proxy | ✅ Complete |
+
+*Module 3: Advanced Security Monitoring and Analysis (GCP36–GCP38, quiz [GQ06](../quizzes/gcp/GQ06_Advanced_Security_Monitoring.md) 2/2 ✅)*
+
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP36](../lessons/gcp/GCP36%20-%20Module%20Introduction%20-%20Advanced%20Security%20Monitoring%20and%20Analysis.md) | Module Introduction - Advanced Security Monitoring and Analysis | ✅ Complete |
+| [GCP37](../lessons/gcp/GCP37%20-%20Packet%20Mirroring%20for%20Network%20Traffic%20Inspection.md) | Packet Mirroring for Network Traffic Inspection | ✅ Complete |
+| [GCP38](../lessons/gcp/GCP38%20-%20Network%20Security%20Best%20Practices.md) | Network Security Best Practices | ✅ Complete |
+
+### Course 5: Load Balancing
+
+*Introduction (GCP39) · Module 1: Hybrid Load Balancing and Traffic Management (GCP40 →)*
+
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP39](../lessons/gcp/GCP39%20-%20Load%20Balancing%20-%20Course%20Introduction.md) | Load Balancing - Course Introduction | ✅ Complete |
+| [GCP40](../lessons/gcp/GCP40%20-%20Module%20Introduction%20-%20Hybrid%20Load%20Balancing%20and%20Traffic%20Management.md) | Module Introduction - Hybrid Load Balancing and Traffic Management | ✅ Complete |
+| [GCP41](../lessons/gcp/GCP41%20-%20Hybrid%20Load%20Balancing.md) | Hybrid Load Balancing | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |
 |------|--------|-------|
 | `05 Private Connection Options_ILT.pdf` (63 slides) | GCP07–GCP13 | Confirms GQ01 answers; slide 52 Gemini sample command is invalid (noted in GCP11) |
 | `06 Introduction to Network Architecture_ILT.pdf` (29 slides) | GCP14–GCP16 | Adds Shared VPC / VPC Peering / centralized appliances (GCP15); slide 17 subnet ranges invalid (noted in GCP15); Module 1 practice quiz (GCP16) |
+| `08 Distributed Denial of Service (DDoS) Protection_ILT.pdf` (34 slides) | GCP24–GCP28 | Module 1 deck; quiz slides 30–31 match GQ04 |
+| `09 Controlling Access to VPC Networks_ILT.pdf` (44 slides) | GCP29–GCP35 | Agenda (slide 33) confirms Cloud IDS, its lab and Secure Web Proxy are **Module 2**; slide 31 says PCI 11.4; slide 38 names Kwan; quiz = GQ05 |
+| `10 Advanced Security Monitoring and Analysis.pdf` (14 slides) | GCP36–GCP38 | Packet Mirroring + best practices; slide 8 "Managed Protection Plus" = now Cloud Armor Enterprise; quiz = GQ06 |
 
 ## Scenario Walkthroughs & Practice
 - [[GS01 - Private Connectivity Scenarios]] — Private connectivity scenarios — 8 walkthroughs with diagrams
@@ -154,6 +176,12 @@ target_date: TBD
 | DDoS mitigations | LB (built-in L3/L4; L7 LBs also stop Slowloris) · small attack surface (tier subnets, firewall, no public IPs, IAP) · VPN/Interconnect · Cloud CDN · Apigee · Cloud Armor |
 | Cloud Armor | Edge WAF + DDoS; policy = ordered rules (condition, action, priority) on backend service; OWASP preconfigured rules, geo, rate-based ban, reCAPTCHA bots |
 | IAM inheritance | Org → folder → project → resource; effective = union; child can't restrict parent; move project = new inheritance; deny policies checked first (docs: 500 per resource; lecture said 5) |
+| Secure Web Proxy | Managed egress forward proxy (HTTP/S); default deny; rules = priority + session matcher (SA / secure tag / mTLS + host, URL lists) + application matcher (path, needs TLS inspection); explicit proxy / next hop / PSC; egress via Cloud NAT |
+| Packet Mirroring | Clones full packets (ingress+egress) on the VM host → uses mirrored VM egress bandwidth; collector = ILB with --is-mirroring-collector, same region, same/peered VPC; ≤5 subnets/5 tags/50 instances; ≤30 filters (ranges × protocols); can't mirror+collect on same NIC |
+| Security best practices | Zero trust · secure hybrid links (HA VPN encrypted, Interconnect not) · disable default network · perimeter (Shared VPC, firewall policies, VPC-SC) · IDS + mirroring · Cloud Armor WAF · IaC · Flow Logs/FW logging/Insights |
+| LB families | Application (L7 proxy, XFF) · proxy Network (L4 proxy, PROXY protocol) · passthrough Network (client IP preserved, any protocol); backend service (MIG/NEG, health check, affinity, CDN/IAP) vs backend bucket (Cloud Storage) |
+| NEG types | Zonal (VM/pod IP:port) · Internet (1 public FQDN/IP:port) · Serverless (same region) · PSC (1 API/service) · Hybrid (NON_GCP_PRIVATE_IP_PORT over VPN/Interconnect) |
+| Hybrid LB | Backend-only config; NEG in zone closest to site; non-GCP endpoints only; Cloud Router global dynamic routing (no regional/static); advertise 35.191/16 + 130.211/22 (global ext) or proxy-only subnet (Envoy LBs); internal ALB same region as connectivity; mixed NEGs = gcloud/API only; no passthrough NLB |
 | Cloud IDS | Detect + alert only (no blocking → use Cloud NGFW/IPS); IDS endpoint zonal, inspects any zone in region; Packet Mirroring → endpoint forwarding rule; Palo Alto signatures auto-updated; north-south + east-west; needs private services access (own range); 5 Gbps per endpoint; severity INFORMATIONAL→CRITICAL; ≤99 threat exceptions; PCI 11.4 / HIPAA |
 | Firewall rules | Stateful (return traffic auto, active if ≥1 pkt/10 min); priority 0–65535, default 1000, first match wins, same priority → deny wins; implied allow-egress/deny-ingress 65535 (not deletable); default VPC rules at 65534; SA targets > tags (IAM-controlled) |
 | Firewall policies | Hierarchical (org/folder, goto_next) · global network (1 per VPC) · regional network (1 per region per VPC); secure tags; Cloud NGFW adds L7, FQDN, geo, IPS, threat intel; Firewall Insights = Monitoring metrics + Recommender |

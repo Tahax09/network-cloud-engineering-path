@@ -1,0 +1,89 @@
+Welcome to the hybrid load balancing and traffic
+management module of the networking and Google
+Cloud load balancing course. In this module, we will cover the topics
+listed on the screen. We'll begin with an note review
+of cloud load balancing. We will continue
+with the discussion of hybrid load balancing. In other words, load balancing
+between Google Cloud, other public clouds, and
+on-premises environments. We will follow with a discussion
+on traffic management, which provides enhanced
+features to route traffic based on criteria
+that you specify. After that, you'll apply
+what you've learned in a traffic management lab
+exercise. Let's get started. A load balancer, as
+the name suggests, balances load across multiple instances of
+your applications. Cloud load balancing
+receives client traffic. This traffic can be external or internal depending on the
+load balancer you use. A backend configuration
+distributes requests to healthy backends. Some load balancers also
+support backend buckets. One or more back ends
+must be connected to the backend service
+or backend bucket. Backend configuration defines
+how traffic is distributed, which health check to use, if session affinity is used, and which other
+services are used, such as Cloud CDN or
+Identity-Aware Proxy. Cloud load balancing
+can route traffic to either a backend service
+or a backend bucket. The backend services define
+how to handle the traffic. For example, backend services define how the traffic
+is distributed, which health check to use, and if session affinity is used. Backend services also define which other Google
+Cloud services to use, such as Cloud CDN or
+Identity-Aware Proxy. On the other hand,
+backend buckets direct incoming traffic to
+Cloud Storage buckets. Backend buckets are useful
+in serving static content. We will discuss this in more detail in the upcoming section. Some of the backend
+services include a managed instance group or a network endpoint group or NEG. In this module, we
+are going to look at some special features related
+to network endpoint groups. Google Cloud Platform
+offers a range of load balancing solutions
+that can be classified based on the OSI
+model layer that they operate at and their
+specific functionalities. Application load balancers, these load balancers
+are designed to handle HTTP and HTTPS traffic, making them ideal
+for web applications and services that require advanced features
+like content based routing and SSL or
+TSL termination. Application load balancers
+operate as reverse proxies, distributing incoming
+traffic across multiple backend instances based on rules that you define. They are highly flexible
+and can be configured for both Internet facing external
+and internal applications. Network load balancers. Network load
+balancers operate at the transport layer and
+efficiently handle TCP, UDP, and other IP protocols. They can be further
+classified into two types, proxy load balancers. These also function
+as reverse proxies, terminating client
+connections and establishing new ones
+to backend services. They offer advanced traffic
+management capabilities and support backends
+located both on-premises and in various
+cloud environments and passthrough load balancers. Unlike proxy load balancers, these do not modify or
+terminate connections. Instead, they directly
+forward traffic to the backend while preserving the original source IP address. This type is well suited for
+applications that require direct server return or need to handle a wide range
+of IP protocols. A network endpoint
+group or NEG is a configuration object that specifies a group of backend
+endpoints or services. A common use case for
+this configuration is deploying services
+and containers, as in Google Kubernetes Engine. The load balancer must be able to select a pod
+from the container, as shown in the example. You can also
+distribute traffic in a granular fashion to workloads and services that run
+on your backend hosts. You can use NEGs as backends for some load balancers
+with traffic director. There are five types of NEGs. Zonal NEGs define how end
+points should be reached, whether they are reachable
+and where they are located. A zonal NEG contains one or more endpoints
+that can be compute engine virtual machines, VMs, or services
+that run on VMs. Each endpoint is
+specified either by an IP address or an
+IP port combination. An Internet NEG contains a single endpoint that is
+hosted outside of Google Cloud. This endpoint is specified by host name FQDN port or IP port. A serverless NEG
+is a backend that points to a cloud-run
+app engine, cloud functions or
+API gateway service that resides in the
+same region as the NEG. A private service NEG
+contains a single endpoint. That endpoint resolves to either a Google managed regional API endpoint or a managed service published by using
+Private Service Connect. A hybrid connectivity
+NEG points to traffic director services that run outside of Google Cloud, on-premises or other
+public cloud backends. The focus in this module is
+on hybrid connectivity NEGs. For more information
+on using NEGs and a complete list of
+supported load balancers, please refer to the
+network endpoint groups overview in the Google
+Cloud documentation.

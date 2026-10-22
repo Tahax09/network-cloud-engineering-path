@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Secure Web Proxy Policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; spacing/size px are local layout values with no shared theme to reference */
+/* Layout: header; request builder beside rule table; flow diagram + verdict; proxy log */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b; --band:#e2efe7;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#97a5bc;--line:#2a3a54;--accent:#77a2ff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff6b5c;--band:#14271f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#97a5bc;--line:#2a3a54;--accent:#77a2ff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff6b5c;--band:#14271f;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:820px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:72ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.grid{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.field{display:grid;gap:4px}
+.field label,.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;font-size:14px}
+.switch input{appearance:none;width:38px;height:21px;border-radius:11px;background:var(--line);position:relative;cursor:pointer;flex:none}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:var(--surface);transition:left .15s}
+.switch input:checked{background:var(--accent)}.switch input:checked::after{left:20px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn{font:600 13px var(--f-body);color:var(--surface);background:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:7px 12px;cursor:pointer}
+.help{font-size:13px;color:var(--muted)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);font-size:12.5px;color:var(--muted);min-width:180px}
+.t tr.off td{opacity:.35}.t tr.skip td:not(.why){opacity:.55}.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.after td{opacity:.35}
+.act{display:inline-block;padding:0 7px;border-radius:999px;font-size:10.5px;border:1px solid currentColor}.act.allow{color:var(--ok)}.act.deny{color:var(--bad)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:620px}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.bandr{fill:var(--band)}.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.6}.edge.bad{stroke:var(--bad);stroke-width:2.6}
+.pk{fill:var(--accent)}.pk.bad{fill:var(--bad)}.pk.ok{fill:var(--ok)}
+.x{font:700 18px var(--f-body);fill:var(--bad)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.tbl{overflow:auto;border:1px solid var(--line);border-radius:6px;max-height:260px}
+.empty{padding:14px;color:var(--muted);font-size:13px}
+.note{font-size:12.5px;color:var(--muted)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP35 · Network Security, Module 2 · Secure Web Proxy</div>
+    <h1>Secure Web Proxy Policy</h1>
+    <p class="lead">Kwan's egress allowlist for Cymbal. Every outbound web request goes through the proxy, which checks who is asking and where they're going against rules in priority order. Anything no rule allows is denied. Send requests from different workloads and see which rule decides.</p>
+  </header>
+
+  <div class="grid">
+    <section class="panel">
+      <h2>Outbound request</h2>
+      <div class="field"><label for="w">Workload</label>
+        <!-- ds-allow-native-select: native control keeps keyboard and screen-reader behavior for a simple study tool -->
+        <select id="w"><option value="ci">ci-runner VM · SA ci-runner@</option><option value="web">web-frontend VM · SA web@</option><option value="fin">finance-app (GKE) · secure tag team=finance</option><option value="old">legacy VM · default compute SA</option></select></div>
+      <div class="field"><label for="u">Destination</label>
+        <!-- ds-allow-native-select: native control keeps keyboard and screen-reader behavior for a simple study tool -->
+        <select id="u">
+          <option value="https://api.github.com/repos/cymbal/app">https://api.github.com/repos/cymbal/app</option>
+          <option value="https://api.github.com/repos/someone-else/tool">https://api.github.com/repos/someone-else/tool</option>
+          <option value="https://pypi.org/simple/requests/">https://pypi.org/simple/requests/</option>
+          <option value="https://files.pythonhosted.org/packages/req.whl">https://files.pythonhosted.org/packages/req.whl</option>
+          <option value="https://api.bank.example/v1/payments">https://api.bank.example/v1/payments</option>
+          <option value="https://paste.example.net/upload">https://paste.example.net/upload</option>
+          <option value="http://update.vendor.example/agent.bin">http://update.vendor.example/agent.bin</option>
+        </select></div>
+      <label class="switch" for="tls"><span>TLS inspection enabled</span><input type="checkbox" id="tls"></label>
+      <label class="switch" for="pyfix"><span>Add files.pythonhosted.org to the dev URL list</span><input type="checkbox" id="pyfix"></label>
+      <button class="btn" id="send" type="button">Send through proxy</button>
+      <p class="help">Clients use explicit proxy mode: <code>HTTPS_PROXY=http://10.0.9.10:443</code></p>
+    </section>
+    <section class="panel">
+      <h2>Gateway security policy: egress-policy</h2>
+      <div class="scroll"><table class="t"><thead><tr><th>Pri</th><th>Action</th><th>Session matcher (who + host)</th><th>Application matcher (path)</th><th>Check</th></tr></thead><tbody id="rules"></tbody></table></div>
+      <div class="verdict" id="verdict">Pick a workload and destination, then send.</div>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="mapbox"><svg id="map" viewBox="0 0 760 220" aria-label="Request through Secure Web Proxy"></svg></div>
+  </section>
+
+  <section class="panel">
+    <h2>Proxy log</h2>
+    <div class="tbl"><table class="t"><thead><tr><th>Time</th><th>Source identity</th><th>Host</th><th>Path seen</th><th>Rule</th><th>Result</th></tr></thead><tbody id="log"></tbody></table><div class="empty" id="le">Nothing logged yet. Every request through the proxy appears here, allowed or denied.</div></div>
+    <p class="note">Hosts are documentation examples. Rule syntax is simplified from the real CEL session and application matchers.</p>
+  </section>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const W={ci:{label:'ci-runner',id:'sa:ci-runner@',sa:'ci-runner@'},web:{label:'web-frontend',id:'sa:web@',sa:'web@'},fin:{label:'finance-app',id:'tag:team=finance',tag:'team=finance'},old:{label:'legacy VM',id:'sa:default-compute@',sa:'default-compute@'}};
+const DEV=()=>['api.github.com','pypi.org'].concat($('pyfix').checked?['files.pythonhosted.org']:[]);
+function rules(){return[
+ {p:100,act:'deny',who:'any',hosts:['paste.example.net'],path:null,txt:"host() == 'paste.example.net'",why:'Known exfiltration site, blocked for everyone'},
+ {p:200,act:'allow',who:{sa:'ci-runner@'},hosts:['api.github.com'],path:'/repos/cymbal/',txt:"SA ci-runner@ && host() == 'api.github.com'",ptxt:"request.path.startsWith('/repos/cymbal/')"},
+ {p:300,act:'allow',who:{sa:'ci-runner@'},hosts:'DEV',path:null,txt:"SA ci-runner@ && inUrlList(host(), 'trusted-dev')"},
+ {p:400,act:'allow',who:{tag:'team=finance'},hosts:['api.bank.example'],path:null,txt:"tag team=finance && host() == 'api.bank.example'"},
+ {p:500,act:'allow',who:{sa:'web@'},hosts:['api.bank.example'],path:'/v1/rates',txt:"SA web@ && host() == 'api.bank.example'",ptxt:"request.path.startsWith('/v1/rates')"}
+];}
+const whoTxt=w=>w==='any'?'any':w.sa?'SA '+w.sa:'tag '+w.tag;
+function matchWho(w,c){return w==='any'||(w.sa&&c.sa===w.sa)||(w.tag&&c.tag===w.tag);}
+let logs=[],anim=null;
+function evaluate(){
+  const c=W[$('w').value];const url=new URL($('u').value);const host=url.hostname,path=url.pathname,https=url.protocol==='https:';
+  const tls=$('tls').checked;const pathVisible=!https||tls;
+  const rows=[];let hit=null;
+  for(const r of rules()){
+    if(hit){rows.push({r,cls:'after',why:'Not evaluated'});continue;}
+    const hs=r.hosts==='DEV'?DEV():r.hosts;
+    if(!matchWho(r.who,c)){rows.push({r,cls:'skip',why:`Identity ${c.id} doesn't match ${whoTxt(r.who)}`});continue;}
+    if(!hs.includes(host)){rows.push({r,cls:'skip',why:`Host ${host} isn't ${r.hosts==='DEV'?'in trusted-dev ['+hs.join(', ')+']':hs.join(', ')}`});continue;}
+    if(r.path){
+      if(!pathVisible){rows.push({r,cls:'skip',why:'Path rule needs TLS inspection. Without it, HTTPS is an encrypted tunnel and only the host is visible, so this rule can\'t match'});continue;}
+      if(!path.startsWith(r.path)){rows.push({r,cls:'skip',why:`Path ${path} doesn't start with ${r.path}`});continue;}
+    }
+    hit=r;rows.push({r,cls:'hit',why:'MATCH: first rule that matches by priority'});
+  }
+  return{c,host,path,https,pathVisible,rows,hit};
+}
+function render(send){
+  const e=evaluate();
+  const all=rules();
+  $('rules').innerHTML=(send?e.rows:all.map(r=>({r,cls:'',why:''}))).map(({r,cls,why})=>`<tr class="${cls}"><td>${r.p}</td><td><span class="act ${r.act}">${r.act}</span></td><td>${r.txt}</td><td>${r.ptxt||'none'}</td><td class="why">${why}</td></tr>`).join('')+`<tr class="${send&&!e.hit?'hit':''}"><td>default</td><td><span class="act deny">deny</span></td><td>everything else</td><td>none</td><td class="why">${send&&!e.hit?'MATCH: no rule allowed it, so the default deny applies':''}</td></tr>`;
+  if(!send){draw(null);return;}
+  const ok=e.hit&&e.hit.act==='allow';const v=$('verdict');
+  let t;
+  if(ok)t=`Allowed by rule ${e.hit.p}. The proxy opens the connection to ${e.host} and forwards it to the internet through Cloud NAT.`;
+  else if(e.hit)t=`Denied by rule ${e.hit.p}: ${e.hit.why||'explicit deny'}. The client gets HTTP 403 from the proxy.`;
+  else t=`Denied by the default rule: no rule allows ${e.c.id} to reach ${e.host}. The client gets 403.`;
+  if(!e.pathVisible&&e.rows.some(x=>x.r.path&&x.cls==='skip'&&x.why.startsWith('Path rule')))t+=' Turn on TLS inspection to let path rules work.';
+  if(e.host==='files.pythonhosted.org'&&!ok)t+=' This is why pip breaks: package files come from files.pythonhosted.org, not pypi.org.';
+  if(ok&&e.hit.p===300&&e.host==='api.github.com')t+=' Note: with TLS inspection off, rule 200\'s path limit was skipped, and rule 300 lets ci-runner reach all of api.github.com.';
+  v.className='verdict '+(ok?'ok':'bad');v.textContent=t;
+  const d=new Date();logs.unshift({t:d.toTimeString().slice(0,8),id:e.c.id,h:e.host,p:e.pathVisible?e.path:'(encrypted)',r:e.hit?e.hit.p:'default',ok});
+  $('le').hidden=true;$('log').innerHTML=logs.slice(0,40).map(l=>`<tr><td>${l.t}</td><td>${l.id}</td><td>${l.h}</td><td>${l.p}</td><td>${l.r}</td><td><span class="act ${l.ok?'allow':'deny'}">${l.ok?'ALLOW':'DENY 403'}</span></td></tr>`).join('');
+  draw({ok,host:e.host,who:e.c});
+}
+function draw(s){
+  const svg=$('map');svg.innerHTML='';if(anim)cancelAnimationFrame(anim);
+  el('rect',{x:10,y:20,width:420,height:180,rx:12,class:'bandr'},svg);el('text',{x:22,y:14,class:'bl'},svg,'Cymbal VPC · us-west1');
+  const W0=s?s.who.label:'workload';
+  el('rect',{x:30,y:80,width:170,height:56,rx:8,class:'node hl'},svg);el('text',{x:42,y:103,class:'nl'},svg,W0);el('text',{x:42,y:121,class:'ns'},svg,s?s.who.id:'');
+  el('rect',{x:240,y:70,width:170,height:76,rx:8,class:'node'+(s?' hl':'')},svg);el('text',{x:252,y:94,class:'nl'},svg,'Secure Web Proxy');el('text',{x:252,y:112,class:'ns'},svg,'gateway 10.0.9.10:443');el('text',{x:252,y:128,class:'ns'},svg,$('tls').checked?'TLS inspection: on':'TLS inspection: off');
+  el('rect',{x:470,y:80,width:120,height:56,rx:8,class:'node'},svg);el('text',{x:482,y:103,class:'nl'},svg,'Cloud NAT');el('text',{x:482,y:121,class:'ns'},svg,'fixed egress IPs');
+  el('rect',{x:620,y:80,width:130,height:56,rx:8,class:'node'},svg);el('text',{x:632,y:103,class:'nl'},svg,s?'':'Internet');el('text',{x:632,y:103,class:'ns'},svg,s?s.host:'');
+  const p1=el('path',{d:'M200 108 L240 108',class:'edge'+(s?(' '+(s.ok?'ok':'bad')):'')},svg);
+  const p2=el('path',{d:'M410 108 L470 108 M590 108 L620 108',class:'edge'+(s&&s.ok?' ok':'')},svg);
+  if(!s)return;
+  if(!s.ok)el('text',{x:415,y:100,class:'x'},svg,'BLOCKED 403');
+  if(reduce)return;
+  const c=el('circle',{r:5.5,class:'pk'},svg);let t0=null;
+  const end=s.ok?620:325;
+  (function f(ts){if(t0==null)t0=ts;const u=((ts-t0)/1800)%1;const x=200+(end-200)*Math.min(1,u/.8);c.setAttribute('cx',x);c.setAttribute('cy',108);c.setAttribute('class','pk'+(u>.8?(s.ok?' ok':' bad'):''));anim=requestAnimationFrame(f);})(performance.now());
+}
+$('send').addEventListener('click',()=>render(true));
+['w','u','tls','pyfix'].forEach(id=>$(id).addEventListener('change',()=>render(true)));
+render(false);
+})();
+</script>
+</body>
+</html>

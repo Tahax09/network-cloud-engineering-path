@@ -7,7 +7,7 @@ cert_track: gcp-networking
 module: "Course 4: Network Security — Module 2: Controlling Access to VPC Networks"
 date: 2026-10-15
 status: Complete
-quiz_attempted: No
+quiz_attempted: Yes
 weak_areas: []
 tags: [gcp, module-intro, iam, resource-hierarchy, org-policy, firewall-rules, access-control]
 ---
@@ -48,10 +48,13 @@ The two are independent. A Network Admin with no firewall-edit permission still 
 | Step | Lesson |
 |------|--------|
 | 1 | IAM roles: [[GCP30 - IAM Roles]] |
-| 2 | Resource hierarchy and policy constraints *(upcoming)* |
+| 2 | Resource hierarchy and policy constraints: covered inside [[GCP30 - IAM Roles]] |
 | 3 | Firewall rules: [[GCP31 - Firewall Rules]] |
 | 4 | Lab: [[GCP32 - Lab - Configuring VPC Firewalls]] |
-| 5 | Quiz *(upcoming)* |
+| 5 | Cloud IDS: [[GCP33 - Cloud IDS]] |
+| 6 | Lab: [[GCP34 - Lab - Getting Started with Cloud IDS]] |
+| 7 | Secure Web Proxy: [[GCP35 - Secure Web Proxy]] |
+| 8 | Quiz: [[GQ05_Controlling_Access_to_VPC_Networks]] (2/2) |
 
 ---
 

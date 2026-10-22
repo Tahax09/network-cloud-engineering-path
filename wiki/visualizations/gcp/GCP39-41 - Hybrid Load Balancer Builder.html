@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hybrid Load Balancer Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+/* Layout: header + tabs; picker = questions beside recommendation; NEG = backend chooser beside NEG card; hybrid = controls beside diagram + checks + bursting */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#c27a00; --bad:#d6372b; --band:#e2efe7; --band2:#ece6f7; --onprem:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#97a5bc;--line:#2a3a54;--accent:#77a2ff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff6b5c;--band:#14271f;--band2:#221b33;--onprem:#ab88f3;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#97a5bc;--line:#2a3a54;--accent:#77a2ff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff6b5c;--band:#14271f;--band2:#221b33;--onprem:#ab88f3;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:820px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:72ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.help{font-size:13px;color:var(--muted)}
+.rec{border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:14px 16px;display:grid;gap:6px}
+.rec .name{font:700 22px/1.15 var(--f-display)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.negs{display:grid;gap:8px}
+.negbtn{display:grid;gap:2px;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px;cursor:pointer}
+.negbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.negbtn .m{font:500 11px var(--f-mono);color:var(--muted)}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.ok{stroke:var(--ok);stroke-width:2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}
+.pk{fill:var(--accent)}.pk.on{fill:var(--onprem)}.pk.cl{fill:var(--ok)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.burst{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:700px){.burst{grid-template-columns:1fr}}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:120px minmax(0,1fr) 90px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s}
+.bar i.on{background:var(--onprem)}.bar i.cl{background:var(--ok)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.note{font-size:12.5px;color:var(--muted)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP39 to GCP41 · Course 5: Load Balancing, Module 1</div>
+    <h1>Hybrid Load Balancer Builder</h1>
+    <p class="lead">Pick the right Google Cloud load balancer, match each backend to its network endpoint group (NEG), then build Jia's hybrid setup: one load balancer in front of GKE and an on-prem site in Bengaluru. The checker flags each requirement the lecture and docs call out.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Pick a load balancer</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">NEG types</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Hybrid NEG checker</button>
+  </div>
+
+  <!-- TAB 1 -->
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <div class="q"><span class="k">Traffic</span><div class="seg" id="q-l7"><button type="button" data-v="http" aria-pressed="true">HTTP / HTTPS</button><button type="button" data-v="tcp" aria-pressed="false">Other TCP</button><button type="button" data-v="udp" aria-pressed="false">UDP / any IP protocol</button></div></div>
+        <div class="q"><span class="k">Clients</span><div class="seg" id="q-ext"><button type="button" data-v="ext" aria-pressed="true">Internet (external)</button><button type="button" data-v="int" aria-pressed="false">Inside VPC / hybrid (internal)</button></div></div>
+        <div class="q"><span class="k">Backends in</span><div class="seg" id="q-scope"><button type="button" data-v="multi" aria-pressed="true">Several regions</button><button type="button" data-v="one" aria-pressed="false">One region</button></div></div>
+        <div class="q"><span class="k">Backend must see the client's IP in the packet</span><div class="seg" id="q-ip"><button type="button" data-v="no" aria-pressed="true">No (headers are fine)</button><button type="button" data-v="yes" aria-pressed="false">Yes</button></div></div>
+        <div class="q"><span class="k">Some backends on-prem or in another cloud</span><div class="seg" id="q-hyb"><button type="button" data-v="no" aria-pressed="false">No</button><button type="button" data-v="yes" aria-pressed="true">Yes</button></div></div>
+      </div>
+      <div class="panel">
+        <div class="rec"><span class="k">Recommended</span><span class="name" id="r-name"></span><span id="r-why"></span></div>
+        <div class="facts" id="r-facts"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2 -->
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel"><h2>Where is the backend?</h2><div class="negs" id="negs"></div></div>
+      <div class="panel" id="negcard"></div>
+    </div>
+  </section>
+
+  <!-- TAB 3 -->
+  <section id="p3" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <div class="q"><span class="k">Load balancer</span><div class="seg" id="h-lb"><button type="button" data-v="gext" aria-pressed="true">Global external ALB</button><button type="button" data-v="rint" aria-pressed="false">Regional internal ALB</button><button type="button" data-v="pass" aria-pressed="false">Passthrough NLB</button></div></div>
+        <div class="q"><span class="k">LB region (internal only)</span><div class="seg" id="h-lbr"><button type="button" data-v="asia-south1" aria-pressed="true">asia-south1</button><button type="button" data-v="us-central1" aria-pressed="false">us-central1</button></div></div>
+        <div class="q"><span class="k">Hybrid NEG zone</span><div class="seg" id="h-zone"><button type="button" data-v="asia-south1-a" aria-pressed="true">asia-south1-a</button><button type="button" data-v="us-central1-a" aria-pressed="false">us-central1-a</button></div></div>
+        <div class="q"><span class="k">Link to Bengaluru</span><div class="seg" id="h-link"><button type="button" data-v="vpn" aria-pressed="true">HA VPN</button><button type="button" data-v="ic" aria-pressed="false">Interconnect</button><button type="button" data-v="icm" aria-pressed="false">Interconnect + MACsec</button></div></div>
+        <div class="q"><span class="k">VPC dynamic routing mode</span><div class="seg" id="h-route"><button type="button" data-v="global" aria-pressed="true">Global</button><button type="button" data-v="regional" aria-pressed="false">Regional</button><button type="button" data-v="static" aria-pressed="false">Static routes</button></div></div>
+        <div class="q"><span class="k">Ranges advertised to on-prem</span><div class="seg" id="h-adv"><button type="button" data-v="hc" aria-pressed="true">35.191/16 + 130.211/22</button><button type="button" data-v="pos" aria-pressed="false">Proxy-only subnet</button><button type="button" data-v="none" aria-pressed="false">Subnets only</button></div></div>
+        <div class="q"><span class="k">Hybrid NEG endpoints</span><div class="seg" id="h-ep"><button type="button" data-v="onprem" aria-pressed="true">On-prem IPs only</button><button type="button" data-v="mixed" aria-pressed="false">Also a VPC VM IP</button></div></div>
+        <div class="q"><span class="k">Built with</span><div class="seg" id="h-tool"><button type="button" data-v="gcloud" aria-pressed="true">gcloud / REST</button><button type="button" data-v="console" aria-pressed="false">Console (zonal + hybrid)</button></div></div>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="map" viewBox="0 0 780 340" aria-label="Hybrid load balancing topology"></svg></div>
+        <ul class="checks" id="checks"></ul>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Cloud bursting: Jia's sale-day spike</h2>
+      <div class="burst">
+        <div><label class="k" for="b-load">Incoming requests per second: <span id="b-v">300</span></label><input type="range" id="b-load" min="50" max="2000" step="50" value="300"><p class="help">On-prem: 2 servers at --max-rate-per-endpoint=100, so 200 rps of capacity. GKE pods autoscale behind the zonal NEG. Both NEGs sit in one backend service with RATE balancing. This simplified model fills on-prem to its cap first, then spills to GKE.</p></div>
+        <div class="bars">
+          <div class="brow"><span>On-prem (hybrid NEG)</span><div class="bar"><i class="on" id="b-on"></i></div><span class="num" id="b-onv"></span></div>
+          <div class="brow"><span>GKE (zonal NEG)</span><div class="bar"><i class="cl" id="b-cl"></i></div><span class="num" id="b-clv"></span></div>
+          <p class="help" id="b-txt"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+['1','2','3'].forEach(n=>$('t'+n).addEventListener('click',()=>{['1','2','3'].forEach(m=>{$('t'+m).setAttribute('aria-selected',m===n);$('p'+m).hidden=m!==n;});}));
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+
+/* TAB 1 */
+function pick(){
+  const l7=val('q-l7'),ext=val('q-ext'),sc=val('q-scope'),ip=val('q-ip'),hyb=val('q-hyb');
+  let name,why,family,proxy=true,hybOk=true;
+  if(ip==='yes'||l7==='udp'){family='Passthrough Network LB';proxy=false;hybOk=false;
+    name=(ext==='ext'?'External':'Internal')+' passthrough Network Load Balancer';
+    why='Packets are forwarded unchanged, so the backend sees the real client IP and any IP protocol works. It is always regional.';}
+  else if(l7==='http'){family='Application LB';
+    name=ext==='ext'?(sc==='multi'?'Global external Application Load Balancer':'Regional external Application Load Balancer'):(sc==='multi'?'Cross-region internal Application Load Balancer':'Regional internal Application Load Balancer');
+    why='A reverse proxy for HTTP(S): URL maps, TLS termination, Cloud CDN and Cloud Armor (external), header-based routing. The client IP arrives in X-Forwarded-For.';}
+  else{family='Proxy Network LB';
+    name=ext==='ext'?(sc==='multi'?'Global external proxy Network Load Balancer':'Regional external proxy Network Load Balancer'):(sc==='multi'?'Cross-region internal proxy Network Load Balancer':'Regional internal proxy Network Load Balancer');
+    why='A TCP reverse proxy (optional TLS offload). Use the PROXY protocol if the backend needs the client IP.';}
+  $('r-name').textContent=name;
+  let hy=hyb==='yes'?(hybOk?'Supported: put on-prem endpoints in a hybrid connectivity NEG.':'Not supported: hybrid NEGs need a proxy-based load balancer. Drop the client-IP requirement (use X-Forwarded-For or the PROXY protocol) or route on-prem differently.'):'Not needed.';
+  $('r-why').textContent=why;
+  const facts=[['Family',family],['Proxy?',proxy?'Yes: terminates and re-originates connections':'No: passthrough'],['Hybrid backends',hy],['Health checks from',proxy?(name.startsWith('Global external')||name.startsWith('Classic')?'Centralized probers 35.191.0.0/16, 130.211.0.0/22':(name.includes('Global external proxy')?'Centralized probers':'Envoy proxies in the proxy-only subnet')):'Centralized probers 35.191.0.0/16, 130.211.0.0/22']];
+  $('r-facts').innerHTML=facts.map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');
+}
+['q-l7','q-ext','q-scope','q-ip','q-hyb'].forEach(id=>seg(id,pick));pick();
+
+/* TAB 2 */
+const NEG=[
+ {id:'zonal',q:'VMs or GKE pods in my VPC',t:'Zonal NEG',type:'GCE_VM_IP_PORT / GCE_VM_IP',ep:'One or more endpoints: IP or IP:port of VMs, or pod IPs (container-native load balancing)',note:'Pods are reached directly, with no NodePort hop.',cmd:'gcloud compute network-endpoint-groups create gke-neg --zone=asia-south1-a \\\n  --network=hybrid-vpc --subnet=gke-subnet --network-endpoint-type=GCE_VM_IP_PORT'},
+ {id:'internet',q:'A public API on the internet (partner.example.com)',t:'Internet NEG',type:'INTERNET_FQDN_PORT / INTERNET_IP_PORT',ep:'Exactly one endpoint: FQDN:port or public IP:port, reached over the internet',note:'Use it to put Cloud CDN or a URL map in front of an external origin.',cmd:'gcloud compute network-endpoint-groups create partner-neg --global \\\n  --network-endpoint-type=INTERNET_FQDN_PORT\ngcloud compute network-endpoint-groups update partner-neg --global \\\n  --add-endpoint="fqdn=partner.example.com,port=443"'},
+ {id:'serverless',q:'Cloud Run, App Engine, Cloud Run functions or API Gateway',t:'Serverless NEG',type:'SERVERLESS',ep:'Points to a serverless service in the same region as the NEG',note:'One global LB can front regional serverless NEGs in several regions.',cmd:'gcloud compute network-endpoint-groups create run-neg --region=asia-south1 \\\n  --network-endpoint-type=serverless --cloud-run-service=checkout'},
+ {id:'psc',q:'A Google regional API or a service published with Private Service Connect',t:'Private Service Connect NEG',type:'PRIVATE_SERVICE_CONNECT',ep:'Exactly one endpoint: a regional Google API or a PSC service attachment',note:'Lets your own LB add URL maps, Cloud Armor or custom domains in front of a producer service.',cmd:'gcloud compute network-endpoint-groups create psc-neg --region=asia-south1 \\\n  --network-endpoint-type=private-service-connect \\\n  --psc-target-service=projects/PROD/regions/asia-south1/serviceAttachments/api-sa'},
+ {id:'hybrid',q:'Servers on-prem or in another cloud, private IPs over VPN or Interconnect',t:'Hybrid connectivity NEG',type:'NON_GCP_PRIVATE_IP_PORT',ep:'IP:port endpoints outside Google Cloud, reachable over Cloud VPN or Interconnect',note:'Create it in the zone closest to the site. Only non-GCP endpoints: VPC IPs in a hybrid NEG can have their traffic dropped.',cmd:'gcloud compute network-endpoint-groups create onprem-neg --zone=asia-south1-a \\\n  --network=hybrid-vpc --network-endpoint-type=NON_GCP_PRIVATE_IP_PORT --default-port=443\ngcloud compute network-endpoint-groups update onprem-neg --zone=asia-south1-a \\\n  --add-endpoint="ip=10.50.1.10,port=443"'}
+];
+let negSel='hybrid';
+function negr(){
+  $('negs').innerHTML=NEG.map(n=>`<button type="button" class="negbtn" data-n="${n.id}" aria-pressed="${n.id===negSel}"><b>${n.q}</b><span class="m">${n.t}</span></button>`).join('');
+  $('negs').querySelectorAll('.negbtn').forEach(b=>b.addEventListener('click',()=>{negSel=b.dataset.n;negr();}));
+  const n=NEG.find(x=>x.id===negSel);
+  $('negcard').innerHTML=`<span class="k">Use</span><h2>${n.t}</h2><div class="facts"><div class="fact"><b>Endpoint type</b><code>${n.type}</code></div><div class="fact"><b>Endpoints</b>${n.ep}</div></div><p class="help">${n.note}</p><pre class="cmd">${n.cmd}</pre>${n.id==='internet'||n.id==='hybrid'?'<p class="note">Internet NEG = public address over the internet. Hybrid NEG = private address over VPN or Interconnect.</p>':''}`;
+}
+negr();
+
+/* TAB 3 */
+let anim=null;
+function hyb(){
+  const lb=val('h-lb'),lbr=val('h-lbr'),zone=val('h-zone'),link=val('h-link'),route=val('h-route'),adv=val('h-adv'),ep=val('h-ep'),tool=val('h-tool');
+  const C=[];let works=true;
+  const fail=(t)=>{C.push(['bad',t]);works=false;};
+  if(lb==='pass')fail('Passthrough NLBs don\'t support hybrid NEGs. Hybrid endpoints need a proxy-based LB (Application or proxy Network).');
+  else C.push(['ok',lb==='gext'?'Global external Application LB supports hybrid NEGs.':'Regional internal Application LB supports hybrid NEGs.']);
+  if(route!=='global')fail(route==='static'?'Static routes aren\'t supported for hybrid NEGs. Cloud Router must learn on-prem routes by BGP.':'Regional dynamic routing isn\'t supported. Set the VPC to global dynamic routing.');
+  else C.push(['ok','Global dynamic routing: Cloud Router-learned on-prem routes are usable by the load balancer.']);
+  const needAdv=lb==='gext'?'hc':'pos';
+  if(lb!=='pass'){
+    if(adv!==needAdv)fail(lb==='gext'?'Global external ALB uses centralized health checks. Advertise 35.191.0.0/16 and 130.211.0.0/22 to on-prem (and allow them), or every on-prem endpoint shows unhealthy.':'Envoy-based internal ALB health-checks from the proxy-only subnet. Advertise that range to on-prem, or endpoints show unhealthy.');
+    else C.push(['ok','Health-check source ranges are advertised to on-prem.']);
+  }
+  if(lb==='rint'&&lbr!=='asia-south1'){C.push(['bad','The internal ALB is in us-central1 but the hybrid connectivity lands in asia-south1. Backends can show healthy while requests are never forwarded.']);works=false;}
+  else if(lb==='rint')C.push(['ok','Internal ALB is in the same region as the hybrid connectivity.']);
+  if(zone!=='asia-south1-a')C.push(['warn','The hybrid NEG is in us-central1-a, far from Bengaluru. It works, but put the NEG in the zone closest to the site (asia-south1-a).']);
+  else C.push(['ok','Hybrid NEG is in asia-south1-a, the zone closest to Bengaluru.']);
+  if(ep==='mixed')fail('A VPC VM IP is in the hybrid NEG. Hybrid NEGs must hold only endpoints outside Google Cloud, or traffic may be dropped. Put VMs in a zonal NEG.');
+  else C.push(['ok','Hybrid NEG holds only on-prem endpoints (NON_GCP_PRIVATE_IP_PORT).']);
+  if(tool==='console')fail('A backend service mixing zonal and hybrid NEGs can only be created or managed with gcloud or the REST API.');
+  else C.push(['ok','Built with gcloud: mixed zonal + hybrid backends are allowed.']);
+  if(link==='ic')C.push(['warn','Cloud Interconnect is not encrypted by default. Add MACsec, run HA VPN over Interconnect, or use TLS end to end.']);
+  else C.push(['ok',link==='vpn'?'HA VPN is IPsec-encrypted by default.':'Interconnect with MACsec: the link is encrypted.']);
+  $('checks').innerHTML=C.map(([c,t])=>`<li><span class="tag ${c}">${c==='ok'?'OK':c==='warn'?'WARN':'FAIL'}</span><span>${t}</span></li>`).join('');
+  draw(works,lb,link);
+}
+function draw(works,lb,link){
+  const svg=$('map');svg.innerHTML='';if(anim)cancelAnimationFrame(anim);
+  el('rect',{x:160,y:16,width:400,height:310,rx:12,class:'bandr'},svg);el('text',{x:172,y:12,class:'bl'},svg,'Google Cloud · hybrid-vpc');
+  el('rect',{x:600,y:150,width:170,height:170,rx:12,class:'bandr2'},svg);el('text',{x:612,y:146,class:'bl'},svg,'On-prem · Bengaluru');
+  const box=(x,y,w,l,s,cls)=>{el('rect',{x,y,width:w,height:52,rx:8,class:'node '+cls},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);el('text',{x:x+10,y:y+38,class:'ns'},svg,s);};
+  box(10,140,130,'Clients',lb==='rint'?'internal / hybrid':'internet','');
+  box(180,140,160,lb==='gext'?'Global ext. ALB':lb==='rint'?'Regional int. ALB':'Passthrough NLB','frontend unchanged',lb==='pass'?'bad':'hl');
+  box(370,40,170,'Zonal NEG','GKE pods · asia-south1-a','ok');
+  box(370,240,170,'Hybrid NEG','NON_GCP_PRIVATE_IP_PORT',works?'ok':'bad');
+  box(370,140,170,'Cloud Router','BGP · global routing','');
+  box(615,190,140,'10.50.1.10:443','nginx',works?'ok':'bad');
+  box(615,256,140,'10.50.1.11:443','nginx',works?'ok':'bad');
+  el('path',{d:'M140 166 L180 166',class:'edge ok'},svg);
+  const pz=el('path',{d:'M340 160 C 355 160, 355 66, 370 66',class:'edge ok'},svg);
+  const ph=el('path',{d:'M340 172 C 355 172, 355 266, 370 266',class:'edge '+(works?'ok':'bad')},svg);
+  const pl=el('path',{d:'M540 266 C 580 266, 580 216, 615 216',class:'edge '+(works?'ok':'bad')},svg);
+  el('text',{x:548,y:300,class:'ns'},svg,link==='vpn'?'HA VPN (IPsec)':link==='ic'?'Interconnect (plaintext)':'Interconnect + MACsec');
+  el('path',{d:'M540 166 C 575 166, 575 200, 615 210',class:'edge'},svg);el('text',{x:548,y:160,class:'ns'},svg,'BGP routes');
+  if(reduce)return;
+  const a=el('circle',{r:5,class:'pk cl'},svg),b=el('circle',{r:5,class:'pk on'},svg);let t0=null;
+  (function f(ts){if(t0==null)t0=ts;const u=((ts-t0)/2000)%1;
+    const q=pz.getPointAtLength(pz.getTotalLength()*u);a.setAttribute('cx',q.x);a.setAttribute('cy',q.y);
+    const v=(u+.5)%1;const L1=ph.getTotalLength(),L2=pl.getTotalLength();let r;
+    if(!works){r=ph.getPointAtLength(L1*Math.min(1,v)*.7);}else r=v<.5?ph.getPointAtLength(L1*v*2):pl.getPointAtLength(L2*(v-.5)*2);
+    b.setAttribute('cx',r.x);b.setAttribute('cy',r.y);anim=requestAnimationFrame(f);})(performance.now());
+}
+['h-lb','h-lbr','h-zone','h-link','h-route','h-adv','h-ep','h-tool'].forEach(id=>seg(id,hyb));hyb();
+
+function burst(){
+  const L=+$('b-load').value;$('b-v').textContent=L;
+  const cap=200,on=Math.min(L,cap),cl=Math.max(0,L-cap);const max=2000;
+  $('b-on').style.width=(on/max*100)+'%';$('b-cl').style.width=(cl/max*100)+'%';
+  $('b-onv').textContent=on+' rps';$('b-clv').textContent=cl+' rps';
+  const pods=Math.ceil(cl/100);
+  $('b-txt').textContent=cl?`On-prem is full at ${cap} rps. The other ${cl} rps spill to GKE, which scales to about ${pods} pod${pods>1?'s':''} at 100 rps each. No idle spare capacity on-prem.`:'Everything fits on-prem. GKE stays at its minimum size.';
+}
+$('b-load').addEventListener('input',burst);burst();
+})();
+</script>
+</body>
+</html>

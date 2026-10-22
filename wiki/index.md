@@ -65,8 +65,15 @@
 | [GCP30](lessons/gcp/GCP30%20-%20IAM%20Roles.md) | IAM Roles | Network Security — Module 2 | 2026-10-15 | Complete |
 | [GCP31](lessons/gcp/GCP31%20-%20Firewall%20Rules.md) | Firewall Rules | Network Security — Module 2 | 2026-10-16 | Complete |
 | [GCP32](labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Network Security — Module 2 | 2026-10-16 | Complete |
-| [GCP33](lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | Network Security | 2026-10-16 | Complete |
-| [GCP34](labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Lab: Getting Started with Cloud IDS | Network Security | 2026-10-16 | Complete |
+| [GCP33](lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | Network Security — Module 2 | 2026-10-16 | Complete |
+| [GCP34](labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Lab: Getting Started with Cloud IDS | Network Security — Module 2 | 2026-10-16 | Complete |
+| [GCP35](lessons/gcp/GCP35%20-%20Secure%20Web%20Proxy.md) | Secure Web Proxy | Network Security — Module 2 | 2026-10-22 | Complete |
+| [GCP36](lessons/gcp/GCP36%20-%20Module%20Introduction%20-%20Advanced%20Security%20Monitoring%20and%20Analysis.md) | Module Introduction - Advanced Security Monitoring and Analysis | Network Security — Module 3 | 2026-10-22 | Complete |
+| [GCP37](lessons/gcp/GCP37%20-%20Packet%20Mirroring%20for%20Network%20Traffic%20Inspection.md) | Packet Mirroring for Network Traffic Inspection | Network Security — Module 3 | 2026-10-22 | Complete |
+| [GCP38](lessons/gcp/GCP38%20-%20Network%20Security%20Best%20Practices.md) | Network Security Best Practices | Network Security — Module 3 | 2026-10-22 | Complete |
+| [GCP39](lessons/gcp/GCP39%20-%20Load%20Balancing%20-%20Course%20Introduction.md) | Load Balancing - Course Introduction | Load Balancing — Introduction | 2026-10-22 | Complete |
+| [GCP40](lessons/gcp/GCP40%20-%20Module%20Introduction%20-%20Hybrid%20Load%20Balancing%20and%20Traffic%20Management.md) | Module Introduction - Hybrid Load Balancing and Traffic Management | Load Balancing — Module 1 | 2026-10-22 | Complete |
+| [GCP41](lessons/gcp/GCP41%20-%20Hybrid%20Load%20Balancing.md) | Hybrid Load Balancing | Load Balancing — Module 1 | 2026-10-22 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -138,6 +145,8 @@
 | [GQ01](quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP13 | 2026-10-09 | Reviewed |
 | [GQ03](quizzes/gcp/GQ03_Network_Topologies.md) | Network Topologies Quiz (Coursera graded) | GCP17–GCP22 | 2026-10-15 | 2/2 |
 | [GQ04](quizzes/gcp/GQ04_DDoS_Protection.md) | DDoS Protection Module Quiz (Coursera graded) | GCP24–GCP28 | 2026-10-15 | 2/2 |
+| [GQ05](quizzes/gcp/GQ05_Controlling_Access_to_VPC_Networks.md) | Controlling Access to VPC Networks Module Quiz (Coursera graded) | GCP29–GCP35 | 2026-10-22 | 2/2 |
+| [GQ06](quizzes/gcp/GQ06_Advanced_Security_Monitoring.md) | Advanced Security Monitoring and Analysis Module Quiz (Coursera graded) | GCP36–GCP38 | 2026-10-22 | 2/2 |
 
 ### Wireshark 101 — `quizzes/wireshark/`
 
@@ -185,6 +194,9 @@
 | ID | Visualization | Shows |
 |----|---------------|-------|
 | GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GCP39–41 | [Hybrid Load Balancer Builder](visualizations/gcp/GCP39-41%20-%20Hybrid%20Load%20Balancer%20Builder.html) | LB picker (proxy vs passthrough, scope, client IP, hybrid support), five NEG types with gcloud, hybrid NEG requirement checker, cloud-bursting slider |
+| GCP36–38 | [Packet Mirroring Planner](visualizations/gcp/GCP36-38%20-%20Packet%20Mirroring%20Planner.html) | Sources, collector region/placement, filter count vs 30 limit, egress bandwidth cost, best-practices scorecard |
+| GCP35 | [Secure Web Proxy Policy](visualizations/gcp/GCP35%20-%20Secure%20Web%20Proxy%20Policy.html) | Identity + host rules in priority order, default deny, URL list fix, TLS inspection for path rules, proxy log |
 | GCP34 | [Cloud IDS Lab](visualizations/gcp/GCP34%20-%20Cloud%20IDS%20Lab.html) | 10-task replay: footprint build, endpoint CREATING→READY, severity test requests with duplicate egress/ingress detections, emergency block + DENIED firewall log |
 | GCP33 | [Cloud IDS Explorer](visualizations/gcp/GCP33%20-%20Cloud%20IDS%20Explorer.html) | Mirroring sources/direction, severity threshold + threat exceptions, simulated north-south/east-west/C2 events, threat log entries, endpoint sizing |
 | GCP32 | [VPC Firewall Lab](visualizations/gcp/GCP32%20-%20VPC%20Firewall%20Lab.html) | Task-by-task lab replay: SSH/ping tests evaluated against egress + ingress rules at each step, NAT'd external ping, priority flip, egress deny |

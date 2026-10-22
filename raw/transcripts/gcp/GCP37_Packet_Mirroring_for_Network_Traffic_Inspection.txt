@@ -1,0 +1,45 @@
+Izumi, a network engineer
+at Symbol Corporation needs to monitor
+the network traffic from selected virtual machines, VMs, to determine if malicious
+activity is occurring. Organizations face challenges in monitoring and securing
+specific virtual machines, VMs within their network. Traditional security
+measures might not be sufficient to detect sophisticated attacks that span multiple network packets
+and target specific VMs. This can lead to
+vulnerabilities and security breaches compromising sensitive data and
+critical systems. Packet Mirroring offers a
+solution by creating a copy of network traffic specifically
+from the selected VMs. This mirrored traffic
+is then directed to a security analysis platform where it undergoes deep
+packet inspection. By capturing and analyzing
+all packets within each flow, security teams can
+identify anomalies, detect complex attack patterns, and promptly respond to threats targeting
+those specific VMs. This proactive approach
+enhances security posture, safeguards sensitive data, and ensures the integrity
+of critical systems. Packet Mirroring
+clones the traffic of specific instances in your
+virtual private Cloud, VPC, network and forwards
+it for examination. Packet Mirroring captures all ingress and egress
+traffic and packet data such as payloads and headers. The mirroring happens on the virtual machine VM
+instances, not on the network. Therefore, Packet
+Mirroring consumes additional bandwidth
+on the hosts. Packet Mirroring is
+useful when you need to monitor and analyze
+your security status. It exports all traffic, not only the traffic
+between sampling periods. For example, you can use
+security software that analyzes mirrored traffic to detect all threats or anomalies. Also, you can inspect the
+full traffic flow to detect application performance
+issues and to provide network forensics for payment card industry
+data security standards, PCI, DSS, compliance, and
+other regulatory use cases. We will elaborate on this
+further in the next few slides. Obviously, Packet Mirroring can generate significant data. So collector destination is
+generally an instance group behind an internal load balance
+or equivalent technology. One of the major limitations of Packet Mirroring is
+bandwidth consumption. Packet Mirroring
+consumes the egress bandwidth of the
+mirrored instances. However, there is a workaround. Use filters to reduce the traffic collected
+for mirrored instances. This filter can be used
+for IP address ranges, protocols, traffic
+directions, and a lot more. The current maximum
+number of filters that can be used for Packet
+Mirroring is 30. For more information, refer to the link in the
+speaker notes.

@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-64-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-71-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -160,6 +160,18 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP32](wiki/labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Lab: Configuring VPC Firewalls | Hands-on: auto-mode VPC, delete default network, tag-based SSH rule, internal ICMP, priority 500 vs 2000, egress deny |
 | [GCP33](wiki/lessons/gcp/GCP33%20-%20Cloud%20IDS.md) | Cloud IDS | Managed IDS (detect only): IDS endpoints + Packet Mirroring, Palo Alto engine, north-south + east-west, PSA prerequisite, 5 Gbps/endpoint |
 | [GCP34](wiki/labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Lab: Getting Started with Cloud IDS | Hands-on: PSA + IDS endpoint + mirroring, low→critical test signatures, duplicate detections, emergency firewall block |
+| [GCP35](wiki/lessons/gcp/GCP35%20-%20Secure%20Web%20Proxy.md) | Secure Web Proxy | Managed egress forward proxy: identity (SA/secure tag/mTLS) + host/URL rules, default deny, URL lists, TLS inspection for paths |
+| [GCP36](wiki/lessons/gcp/GCP36%20-%20Module%20Introduction%20-%20Advanced%20Security%20Monitoring%20and%20Analysis.md) | Module Introduction - Advanced Security Monitoring and Analysis | Module map: Packet Mirroring → best practices → quiz |
+| [GCP37](wiki/lessons/gcp/GCP37%20-%20Packet%20Mirroring%20for%20Network%20Traffic%20Inspection.md) | Packet Mirroring for Network Traffic Inspection | Full-packet clones to an ILB collector, host egress cost, filters (ranges × protocols ≤ 30), region/NIC rules, PCI forensics |
+| [GCP38](wiki/lessons/gcp/GCP38%20-%20Network%20Security%20Best%20Practices.md) | Network Security Best Practices | Eight practices (zero trust, secure hybrid, no default network, perimeter, IDS+mirroring, WAF, IaC, monitoring) mapped to tools |
+
+### Course 5: Load Balancing
+
+| ID | Lesson | Key topics |
+|----|--------|------------|
+| [GCP39](wiki/lessons/gcp/GCP39%20-%20Load%20Balancing%20-%20Course%20Introduction.md) | Load Balancing - Course Introduction | Course 5 map: LB overview, hybrid LB, traffic management, ILB next hops, Cloud CDN + Armor, caching |
+| [GCP40](wiki/lessons/gcp/GCP40%20-%20Module%20Introduction%20-%20Hybrid%20Load%20Balancing%20and%20Traffic%20Management.md) | Module Introduction - Hybrid Load Balancing and Traffic Management | Backend service vs bucket, Application / proxy / passthrough LBs, five NEG types (zonal, internet, serverless, PSC, hybrid) |
+| [GCP41](wiki/lessons/gcp/GCP41%20-%20Hybrid%20Load%20Balancing.md) | Hybrid Load Balancing | Hybrid NEG (NON_GCP_PRIVATE_IP_PORT), closest zone, global dynamic routing, health-check range advertisement, same-region internal ALB, encryption, bursting |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -223,6 +235,8 @@ Step-by-step explanations of every course scenario (context → architecture dia
 | [GQ01](wiki/quizzes/gcp/GQ01_Private_Connection_Options.md) | GCP Private Connection Options (Coursera graded) | GCP07–GCP13 |
 | [GQ03](wiki/quizzes/gcp/GQ03_Network_Topologies.md) | Network Topologies Quiz (Coursera graded) | GCP17–GCP22 |
 | [GQ04](wiki/quizzes/gcp/GQ04_DDoS_Protection.md) | DDoS Protection Module Quiz (Coursera graded) | GCP24–GCP28 |
+| [GQ05](wiki/quizzes/gcp/GQ05_Controlling_Access_to_VPC_Networks.md) | Controlling Access to VPC Networks Module Quiz (Coursera graded) | GCP29–GCP35 |
+| [GQ06](wiki/quizzes/gcp/GQ06_Advanced_Security_Monitoring.md) | Advanced Security Monitoring and Analysis Module Quiz (Coursera graded) | GCP36–GCP38 |
 
 ### Wireshark 101
 
@@ -293,7 +307,7 @@ Anytime  Google AI Professional Certificate
 | Certification | Status |
 |---------------|--------|
 | CompTIA Network+ N10-009 | Course complete, exam prep |
-| Google Cloud Networking (6-course program) | Course 4 in progress |
+| Google Cloud Networking (6-course program) | Course 5 in progress |
 | Wireshark 101: Packet Analysis Essentials (course) | In progress |
 | Kubernetes and Cloud Native Associate (KCNA) | Next |
 | Certified Kubernetes Administrator (CKA) | Planned |
