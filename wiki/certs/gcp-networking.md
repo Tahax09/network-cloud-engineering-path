@@ -1,11 +1,13 @@
 ---
 cert: Google Cloud Networking Specialization
 platform: Coursera / Google Cloud
-status: In Progress
+status: Complete
 target_date: TBD
 ---
 
 # Google Cloud Networking Specialization
+
+> ✅ **Program completed (2026-10-22).** Wiki covers Courses 2–6 (GCP01–GCP60, GQ01, GQ03–GQ10). Still open: Course 1 transcripts, GQ02 quiz, GQ10 answer key. Next: practice with GS04–GS07 and GPL03–GPL06, then the capstone.
 
 **Program:** *Networking in Google Cloud* (Coursera, offered via Re:Coded) — 6 courses.
 
@@ -16,7 +18,7 @@ target_date: TBD
 | 3 | Networking in Google Cloud: Network Architecture | ✅ Complete (GQ02 pending) | GCP14 → (Module 1: Introduction to Network Architecture · Module 2: Network Topologies) |
 | 4 | Networking in Google Cloud: Network Security | ✅ Complete (GQ04–GQ06) |
 | 5 | Networking in Google Cloud: Load Balancing | ✅ Complete (GQ07–GQ08) |
-| 6 | Networking in Google Cloud: Hybrid and Multicloud | 🔄 In progress |
+| 6 | Networking in Google Cloud: Hybrid and Multicloud | ✅ Complete (GQ09; GQ10 key pending) |
 
 ## Modules Completed
 
@@ -150,6 +152,14 @@ target_date: TBD
 - [[GS03 - Architecture and Topology Scenarios]] — Architecture & topology scenarios — 8 walkthroughs with diagrams
 - [[GPL01 - Private Connectivity Practice Labs]] — Practice labs: hardened VPC, PSC overlap, PSA hybrid, NAT load, PSC for APIs
 - [[GPL02 - Architecture and Topology Practice Labs]] — Practice labs: 3-tier SA firewall, NCC star, VPN hub, failover, gated egress, mirrored IaC
+- [[GS04 - Network Security Scenarios]] — Network security scenarios: L7 flood, least-privilege IAM, org firewall guardrail, lateral movement + IDS, SWP egress, VPC-SC exfiltration
+- [[GS05 - Load Balancing Scenarios]] — Load balancing scenarios: LB picker, canary + header routing, hybrid bursting, geo-licensed CDN, NVA next hop, cost cuts
+- [[GS06 - Hybrid and Multicloud Scenarios]] — Hybrid scenarios: connection picker, 99.99% Interconnect, active/passive HA VPN, Azure CCI + NCC, L3 partner, VPN break-fix
+- [[GS07 - Capstone - Cymbal Global Landing Zone]] — Capstone design brief + reference landing zone, decision log mapped to all six courses, IP plan, failure drills
+- [[GPL03 - Network Security Practice Labs]] — Practice labs: Armor throttle preview→enforce, IAM deny, secure-tag firewall policy, DIY mirroring + Wireshark, SWP bypass guard, VPC-SC dry run
+- [[GPL04 - Load Balancing Practice Labs]] — Practice labs: canary + header URL map, hybrid NEG over HA VPN, CDN cache-mode matrix, NAT gateways as next-hop ILB, LB-utilization autoscaling
+- [[GPL05 - Hybrid and Multicloud Practice Labs]] — Practice labs: MED active/passive, regional vs global advertisements, NCC hybrid spokes, k3s home lab over HA VPN (strongSwan + FRR), break-fix drill
+- [[GPL06 - Capstone Practice Lab]] — Capstone build in Terraform: 10 verifiable milestones from IP plan to rebuild
 
 ## Key Exam Facts (collected from sessions)
 

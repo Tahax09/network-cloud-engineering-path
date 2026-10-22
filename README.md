@@ -234,6 +234,15 @@ Step-by-step explanations of every course scenario (context → architecture dia
 | [GS03](wiki/scenarios/gcp/GS03%20-%20Architecture%20and%20Topology%20Scenarios.md) | Architecture & topology scenarios — 8 walkthroughs with diagrams | GCP14–GCP20 |
 | [GPL01](wiki/labs/practice/GPL01%20-%20Private%20Connectivity%20Practice%20Labs.md) | Practice labs: hardened VPC, PSC overlap, PSA hybrid, NAT load, PSC for APIs | GCP07–GCP13 |
 | [GPL02](wiki/labs/practice/GPL02%20-%20Architecture%20and%20Topology%20Practice%20Labs.md) | Practice labs: 3-tier SA firewall, NCC star, VPN hub, failover, gated egress, mirrored IaC | GCP14–GCP20 |
+| [GS04](wiki/scenarios/gcp/GS04%20-%20Network%20Security%20Scenarios.md) | Network security scenarios: L7 flood, least-privilege IAM, org firewall guardrail, lateral movement + IDS, SWP egress, VPC-SC exfiltration |
+| [GS05](wiki/scenarios/gcp/GS05%20-%20Load%20Balancing%20Scenarios.md) | Load balancing scenarios: LB picker, canary + header routing, hybrid bursting, geo-licensed CDN, NVA next hop, cost cuts |
+| [GS06](wiki/scenarios/gcp/GS06%20-%20Hybrid%20and%20Multicloud%20Scenarios.md) | Hybrid scenarios: connection picker, 99.99% Interconnect, active/passive HA VPN, Azure CCI + NCC, L3 partner, VPN break-fix |
+| [GS07](wiki/scenarios/gcp/GS07%20-%20Capstone%20-%20Cymbal%20Global%20Landing%20Zone.md) | Capstone design brief + reference landing zone, decision log mapped to all six courses, IP plan, failure drills |
+| [GPL03](wiki/labs/practice/GPL03%20-%20Network%20Security%20Practice%20Labs.md) | Practice labs: Armor throttle preview→enforce, IAM deny, secure-tag firewall policy, DIY mirroring + Wireshark, SWP bypass guard, VPC-SC dry run |
+| [GPL04](wiki/labs/practice/GPL04%20-%20Load%20Balancing%20Practice%20Labs.md) | Practice labs: canary + header URL map, hybrid NEG over HA VPN, CDN cache-mode matrix, NAT gateways as next-hop ILB, LB-utilization autoscaling |
+| [GPL05](wiki/labs/practice/GPL05%20-%20Hybrid%20and%20Multicloud%20Practice%20Labs.md) | Practice labs: MED active/passive, regional vs global advertisements, NCC hybrid spokes, k3s home lab over HA VPN (strongSwan + FRR), break-fix drill |
+| [GPL06](wiki/labs/practice/GPL06%20-%20Capstone%20Practice%20Lab.md) | Capstone build in Terraform: 10 verifiable milestones from IP plan to rebuild |
+| [Scenario Drill](wiki/visualizations/gcp/GS04-07%20-%20Scenario%20Drill.html) | Interactive: 22 decision cards across Courses 4–6 + capstone |
 
 ---
 
@@ -338,7 +347,7 @@ Anytime  Google AI Professional Certificate
 | Certification | Status |
 |---------------|--------|
 | CompTIA Network+ N10-009 | Course complete, exam prep |
-| Google Cloud Networking (6-course program) | Course 6 in progress |
+| Google Cloud Networking (6-course program) | ✅ Complete |
 | Wireshark 101: Packet Analysis Essentials (course) | In progress |
 | Kubernetes and Cloud Native Associate (KCNA) | Next |
 | Certified Kubernetes Administrator (CKA) | Planned |

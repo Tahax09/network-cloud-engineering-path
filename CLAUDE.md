@@ -95,7 +95,7 @@ Say: "lint the wiki". LLM checks: contradictions between pages, orphan pages, mi
 | CompTIA Network+ N10-009 | `network-plus` | In Progress | TBD |
 | AWS Cloud Practitioner | `aws-ccp` | Not Started | TBD |
 | AWS Solutions Architect – Associate | `aws-saa` | Not Started | TBD |
-| Google Cloud Networking Specialization | `gcp-networking` | Not Started | TBD |
+| Google Cloud Networking Specialization | `gcp-networking` | Complete (2026-10-22) | — |
 | Wireshark 101 (course) | `wireshark` | In Progress | — |
 | Kubernetes / Docker / Linux / DevOps | `k8s-devops` | Ongoing (lab) | TBD |
 | Cisco Network Fundamentals (Coursera) | `cisco-netfund` | Not Started | TBD |

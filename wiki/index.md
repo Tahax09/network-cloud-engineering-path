@@ -138,7 +138,7 @@
 | [network-plus](certs/network-plus.md) | CompTIA Network+ N10-009 | In Progress |
 | [aws-ccp](certs/aws-ccp.md) | AWS Cloud Practitioner | Not Started |
 | [aws-saa](certs/aws-saa.md) | AWS Solutions Architect – Associate | Not Started |
-| [gcp-networking](certs/gcp-networking.md) | Google Cloud Networking Specialization | In Progress |
+| [gcp-networking](certs/gcp-networking.md) | Google Cloud Networking Specialization | ✅ Complete (Courses 2–6 in wiki) |
 | [wireshark-101](certs/wireshark-101.md) | Wireshark 101: Packet Analysis Essentials (course) | In Progress |
 | [course-catalog](certs/course-catalog.md) | All Coursera programs (Cisco CCNA/CyberOps/Automation/Wireless/SD-WAN, AWS, Azure AZ-900/104, KCNA/CKA/CKS, Docker & K8s, Google AI) with exam mapping | Catalog |
 
@@ -192,6 +192,14 @@
 | [GS03](scenarios/gcp/GS03%20-%20Architecture%20and%20Topology%20Scenarios.md) | Architecture & topology scenarios — 8 walkthroughs with diagrams | GCP14–GCP20 |
 | [GPL01](labs/practice/GPL01%20-%20Private%20Connectivity%20Practice%20Labs.md) | Practice labs: hardened VPC, PSC overlap, PSA hybrid, NAT load, PSC for APIs | GCP07–GCP13 |
 | [GPL02](labs/practice/GPL02%20-%20Architecture%20and%20Topology%20Practice%20Labs.md) | Practice labs: 3-tier SA firewall, NCC star, VPN hub, failover, gated egress, mirrored IaC | GCP14–GCP20 |
+| [GS04](scenarios/gcp/GS04%20-%20Network%20Security%20Scenarios.md) | Network security scenarios: L7 flood, least-privilege IAM, org firewall guardrail, lateral movement + IDS, SWP egress, VPC-SC exfiltration |
+| [GS05](scenarios/gcp/GS05%20-%20Load%20Balancing%20Scenarios.md) | Load balancing scenarios: LB picker, canary + header routing, hybrid bursting, geo-licensed CDN, NVA next hop, cost cuts |
+| [GS06](scenarios/gcp/GS06%20-%20Hybrid%20and%20Multicloud%20Scenarios.md) | Hybrid scenarios: connection picker, 99.99% Interconnect, active/passive HA VPN, Azure CCI + NCC, L3 partner, VPN break-fix |
+| [GS07](scenarios/gcp/GS07%20-%20Capstone%20-%20Cymbal%20Global%20Landing%20Zone.md) | Capstone design brief + reference landing zone, decision log mapped to all six courses, IP plan, failure drills |
+| [GPL03](labs/practice/GPL03%20-%20Network%20Security%20Practice%20Labs.md) | Practice labs: Armor throttle preview→enforce, IAM deny, secure-tag firewall policy, DIY mirroring + Wireshark, SWP bypass guard, VPC-SC dry run |
+| [GPL04](labs/practice/GPL04%20-%20Load%20Balancing%20Practice%20Labs.md) | Practice labs: canary + header URL map, hybrid NEG over HA VPN, CDN cache-mode matrix, NAT gateways as next-hop ILB, LB-utilization autoscaling |
+| [GPL05](labs/practice/GPL05%20-%20Hybrid%20and%20Multicloud%20Practice%20Labs.md) | Practice labs: MED active/passive, regional vs global advertisements, NCC hybrid spokes, k3s home lab over HA VPN (strongSwan + FRR), break-fix drill |
+| [GPL06](labs/practice/GPL06%20-%20Capstone%20Practice%20Lab.md) | Capstone build in Terraform: 10 verifiable milestones from IP plan to rebuild |
 
 ## Course Resources
 
@@ -220,6 +228,7 @@
 | ID | Visualization | Shows |
 |----|---------------|-------|
 | GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GS04–07 | [Scenario Drill](visualizations/gcp/GS04-07%20-%20Scenario%20Drill.html) | 22 scenario cards (security, load balancing, hybrid, capstone) with answers, explanations and links to walkthroughs |
 | GCP55–60 | [HA VPN and BGP Paths](visualizations/gcp/GCP55-60%20-%20HA%20VPN%20and%20BGP%20Paths.html) | HA VPN peer topologies + redundancy types, HA VPN lab replay with pings, MED path selection and active/passive, NCC spokes and site-to-site |
 | GCP49–54 | [Interconnect Chooser](visualizations/gcp/GCP49-54%20-%20Interconnect%20Chooser.html) | Option chooser with sizing, 99.9/99.99 SLA builder with failure simulation, setup steps by type (L2 vs L3 partner), MACsec scope |
 | GCP45–48 | [Edge Cache and Armor](visualizations/gcp/GCP45-48%20-%20Edge%20Cache%20and%20Armor.html) | CDN hit/miss by city and cache mode, edge vs backend Cloud Armor policies, GSP878 lab replay, cost levers |

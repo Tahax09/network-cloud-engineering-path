@@ -7,7 +7,7 @@ Become a cloud/network infrastructure engineer. Build deep, practical understand
 | Cert | Priority | Status | Target Date |
 |------|----------|--------|-------------|
 | CompTIA Network+ N10-009 | 1st | Course complete (L01–L25) — exam prep | TBD |
-| Google Cloud Networking Specialization | 2nd | In Progress (Routing & Addressing module complete) | TBD |
+| Google Cloud Networking Specialization | 2nd | ✅ Complete (2026-10-22); Courses 2–6 in wiki | — |
 | AWS Cloud Practitioner | 3rd | Not Started | TBD |
 | AWS Solutions Architect – Associate | 4th | Not Started | TBD |
 
@@ -15,7 +15,7 @@ Planned programs (Cisco, Azure, Kubernetes, AI), with links and roadmap order: [
 
 ## Current Focus
 **CompTIA Network+ N10-009** — All 5 domains complete (L01–L25). Next: Domain 5 graded quiz, full review, practice exams, schedule exam.
-**Google Cloud Networking** — Course 6 *Hybrid and Multicloud* in progress (GCP49–GCP60; GQ09 1/2, GQ10 pending). Course 5 *Load Balancing* complete (GCP39–GCP48; GQ07 3/3, GQ08 2/3). Course 4 *Network Security* complete (GCP23–GCP38; quizzes GQ04–GQ06). Course 3 *Network Architecture* complete (Module 1 GCP14–GCP16; Module 2 GCP17–GCP22 incl. NCC lab). Course 2 *Routing and Addressing* complete: Routing & Addressing module (GCP01–GCP06) + Private Connection Options module (GCP07–GCP13 incl. GCP12 lab, GQ01).
+**Google Cloud Networking** — ✅ **Program complete** (2026-10-22). Course 6 *Hybrid and Multicloud* done (GCP49–GCP60; GQ09 1/2, GQ10 key pending). Practice next: [[GS07 - Capstone - Cymbal Global Landing Zone]] and [[GPL06 - Capstone Practice Lab]]. Course 5 *Load Balancing* complete (GCP39–GCP48; GQ07 3/3, GQ08 2/3). Course 4 *Network Security* complete (GCP23–GCP38; quizzes GQ04–GQ06). Course 3 *Network Architecture* complete (Module 1 GCP14–GCP16; Module 2 GCP17–GCP22 incl. NCC lab). Course 2 *Routing and Addressing* complete: Routing & Addressing module (GCP01–GCP06) + Private Connection Options module (GCP07–GCP13 incl. GCP12 lab, GQ01).
 
 **Wireshark 101** — Module 1 *Introduction to Wireshark* complete (WS00–WS04 + WQ01); Modules 1–2 complete: *Introduction to Wireshark* (WS00–WS04 + WQ01) and *The Wireshark Interface* (WS05–WS10).
 

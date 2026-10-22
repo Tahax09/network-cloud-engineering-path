@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scenario Drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#a86a00; --bad:#c9302a; --band:#e2efe7; --band2:#ece6f7; --blue:#1f5fd6; --green:#0f8b7a; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:840px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:74ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.btn{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover,.seg button:hover{border-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text]{font:14px var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}.node.ok{stroke:var(--ok);stroke-width:2.2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.dim{opacity:.35}
+.node.blue{stroke:var(--blue);stroke-width:2.2}.node.green{stroke:var(--green);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}.edge.hl{stroke:var(--accent);stroke-width:2.4}.edge.enc{stroke:var(--ok);stroke-width:4}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}.pk.blue{fill:var(--blue)}.pk.green{fill:var(--green)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}.tag.info{color:var(--accent)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);color:var(--muted);min-width:180px}
+.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.skip td:not(.why){opacity:.55}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:140px minmax(0,1fr) 80px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s;background:var(--accent)}
+.bar i.blue{background:var(--blue)}.bar i.green{background:var(--green)}.bar i.ok{background:var(--ok)}.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr) 120px;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px}
+.steps li .n{font:600 12px var(--f-mono);color:var(--accent)}
+.steps li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.steps li .who{font:600 11px var(--f-mono);text-align:right;color:var(--muted)}
+.steps li .who.you{color:var(--accent)}
+@media (max-width:700px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps li .who{grid-column:2;text-align:left}}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:6px;background:var(--surface)}
+.cell.on{border-color:var(--ok)}.cell.down{border-color:var(--warn);background:var(--sunken)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GS04 to GS07 · Practice scenarios for Courses 4, 5 and 6</div>
+    <h1>Scenario Drill</h1>
+    <p class="lead">Twenty-two design decisions from the network security, load balancing, hybrid and capstone scenarios. Pick an answer, read why, and follow the link to the full walkthrough.</p>
+  </header>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>Deck</h2>
+      <div class="seg" id="d-deck"><button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="sec" aria-pressed="false">Security</button><button type="button" data-v="lb" aria-pressed="false">Load balancing</button><button type="button" data-v="hyb" aria-pressed="false">Hybrid</button><button type="button" data-v="cap" aria-pressed="false">Capstone</button></div>
+      <div class="facts"><div class="fact"><b>Score</b><span id="d-score">0 / 0</span></div><div class="fact"><b>Card</b><span id="d-pos"></span></div></div>
+      <div class="seg"><button type="button" class="btn" id="d-prev">Previous</button><button type="button" class="btn primary" id="d-next">Next card</button><button type="button" class="btn" id="d-shuf">Shuffle</button><button type="button" class="btn" id="d-reset">Reset score</button></div>
+      <p class="help">Answer first, then read why. Every card links to the scenario page that walks through it.</p>
+    </div>
+    <div class="panel">
+      <span class="k" id="d-tag"></span>
+      <h2 id="d-q"></h2>
+      <div class="stack" id="d-opts"></div>
+      <div class="verdict" id="d-why" hidden></div>
+      <p class="note" id="d-src"></p>
+    </div>
+  </div>
+
+</div>
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tabs(n){for(let i=1;i<=n;i++){$('t'+i).addEventListener('click',()=>{for(let j=1;j<=n;j++){$('t'+j).setAttribute('aria-selected',i===j);$('p'+j).hidden=i!==j;}});}}
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+function box(svg,x,y,w,h,l,s,cls){el('rect',{x,y,width:w,height:h,rx:8,class:'node '+(cls||'')},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);if(s)el('text',{x:x+10,y:y+38,class:'ns'},svg,s);}
+function animate(path,cls,dur,stop,svg,holder){if(reduce)return;const c=el('circle',{r:5.5,class:'pk '+(cls||'')},svg);const L=path.getTotalLength();let t0=null;function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/dur)%1;const q=path.getPointAtLength(L*Math.min(1,u/.85)*(stop==null?1:stop));c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+
+const C=[
+ ['sec','L7 flood on /login: bandwidth normal, requests 40x, thousands of IPs.',['Bigger MIG','Cloud Armor per-path throttle in preview, then enforce, plus Adaptive Protection','IP blocklist of the top 10 sources','Cloud CDN'],1,'An L7 attack exhausts the app, not the bandwidth. Rate-limit the path at the edge, and use Adaptive Protection to find signatures. A static blocklist can\'t keep up with a botnet.','GS04 Scenario 1'],
+ ['sec','Builders must create VPCs, routes and NAT, but must not edit firewall rules.',['Editor','Network Admin','Security Admin','Network Viewer'],1,'Network Admin manages networking resources, but firewall rules and SSL certificates are read-only for it. Security Admin is the opposite split.','GS04 Scenario 2'],
+ ['sec','A contractor still has an inherited Editor grant from a folder. How do you block firewall edits without touching the folder?',['Grant Viewer on the project','Deny policy on compute.firewalls.* for that principal','Custom role','Remove the VPC'],1,'A child grant never removes an inherited one. Deny policies are checked first and override allows.','GS04 Scenario 2'],
+ ['sec','Org-wide: allow SSH only from IAP, block 22/3389 from anywhere else, and let app teams own the rest.',['VPC firewall rules in every project','Hierarchical policy: allow IAP at 100, deny 22/3389 at 110, goto_next at 1000','Cloud Armor','Org policy only'],1,'Hierarchical policies can\'t be overridden by projects. The lower priority number wins, so the IAP allow goes first. goto_next hands everything else to the project rules.','GS04 Scenario 3'],
+ ['sec','Detect lateral movement and C2 from VMs inside the VPC.',['Cloud Armor','Cloud IDS fed by Packet Mirroring of the protected tiers','VPC Flow Logs only','Cloud NAT logs'],1,'Cloud Armor only sees traffic to external LBs. Cloud IDS inspects mirrored east-west traffic with Palo Alto signatures, and a firewall rule does the blocking.','GS04 Scenario 4'],
+ ['sec','CI runners may reach only package registries, by workload identity, and every attempt must be logged.',['Egress firewall with registry IPs','Secure Web Proxy rule on SA + URL list, plus an egress deny to stop bypass','Cloud NAT','Cloud Armor'],1,'Registry IPs change constantly. SWP matches identity + host and logs everything. The egress firewall stops clients from skipping the proxy.','GS04 Scenario 5'],
+ ['sec','A leaked analyst key is used to copy a bucket to an outside project.',['Firewall egress deny','VPC Service Controls perimeter around Storage and BigQuery','Cloud IDS','Private Google Access'],1,'This is API traffic, which firewalls don\'t see. VPC-SC blocks API calls that cross the perimeter.','GS04 Scenario 6'],
+ ['lb','UDP game servers need the real client IP in the packet.',['Global external ALB','External proxy NLB','External passthrough NLB','Internal ALB'],2,'Passthrough load balancers forward packets unchanged, so the client IP is preserved and any protocol works.','GS05 Scenario 1'],
+ ['lb','5% canary for API v2, testers always on v2 with X-Canary: 1, instant rollback.',['Two DNS records','URL map route rules: header match at priority 1, weighted split at priority 10','Session affinity','Two load balancers'],1,'Advanced route rules give header routing and weighted splits. The lower priority number is evaluated first, and rollback is a weight change.','GS05 Scenario 2'],
+ ['lb','On-prem farm handles 400 rps; the sale peak is 3000 rps. One endpoint, no DNS change.',['Bigger on-prem servers','One backend service: hybrid NEG capped by RATE + GKE zonal NEG with HPA','Passthrough NLB with a hybrid NEG','Two DNS names'],1,'RATE caps fill on-prem first, and overflow goes to autoscaling GKE. Passthrough NLBs don\'t support hybrid NEGs.','GS05 Scenario 3'],
+ ['lb','A backend policy denies a country, but users there still stream cached video.',['Add a WAF rule','Attach an edge security policy to the CDN backend','Lower the TTL','Disable CDN'],1,'Cache hits never reach backend policies. Edge policies are evaluated before the cache.','GS05 Scenario 4'],
+ ['lb','Next-hop ILB given by IP. Where can the load balancer live?',['Same subnet only','Same VPC or a peered VPC','Any VPC in the org','Shared VPC only'],1,'Routes are VPC-wide, not subnet-scoped. Specifying by IP is what allows a peered VPC. (GQ08 weak area.)','GS05 Scenario 5'],
+ ['lb','Spokes in europe-west1 lose traffic through the hub\'s next-hop ILB in us-central1.',['Add ECMP','Enable global access on the ILB forwarding rule','Switch to a proxy NLB','Recreate the peering'],1,'Without global access, packets from other regions are dropped.','GS05 Scenario 5'],
+ ['hyb','City has no Google colocation facility; you need 2 Gbps of private connectivity.',['Dedicated Interconnect','Partner Interconnect','Cross-Cloud Interconnect','Carrier Peering'],1,'Partner Interconnect goes through a provider that already reaches Google, at 50 Mbps to 50 Gbps per attachment.','GS06 Scenario 1'],
+ ['hyb','Which option needs your own routing equipment and BGP with Google\'s edge?',['Partner Interconnect','Cross-Cloud Interconnect','Dedicated Interconnect','NCC'],2,'Dedicated: your router sits in Google\'s colocation facility and peers BGP with Cloud Router. (GQ09 weak area.)','GS06 Scenario 1'],
+ ['hyb','Requirement: 99.99% on Dedicated Interconnect.',['2 connections, one metro','4 connections: 2 metros x 2 EADs, Cloud Routers in 2 regions, global routing','4 connections in one EAD','2 VPN tunnels'],1,'Two metros protect against a metro failure, and two router regions against a regional disruption.','GS06 Scenario 2'],
+ ['hyb','Same bandwidth after a tunnel failure on HA VPN.',['Active/active','Active/passive using advertised route priority (MED)','More shared secrets','Classic VPN'],1,'Lower MED is preferred, so one tunnel carries the traffic and the standby has the same capacity.','GS06 Scenario 3'],
+ ['hyb','Tunnel ESTABLISHED, BGP up, but VMs in a second region are unreachable from on-prem.',['Shared secret','Firewall','VPC in regional dynamic routing mode','IKE version'],2,'In regional mode, Cloud Router advertises and applies routes for its own region only. Switch to GLOBAL.','GS06 Scenario 6'],
+ ['hyb','Remote plant, provider offers Layer 3 Partner Interconnect, and the plant team doesn\'t know BGP.',['Dedicated Interconnect','Layer 3 Partner: the provider runs BGP with Cloud Router (ASN 16550)','Layer 2 Partner','Cloud VPN static routes'],1,'With Layer 3, the provider owns the BGP sessions. The plant just routes to the provider.','GS06 Scenario 5'],
+ ['cap','Suppliers with overlapping 10.x ranges must reach your inventory API privately.',['VPC peering','PSC service attachment (NAT subnet)','HA VPN per supplier','Public IP with Cloud Armor'],1,'PSC translates consumers into the producer\'s NAT subnet, so overlapping ranges don\'t matter. Peering would fail on the overlap.','GS07 decision log'],
+ ['cap','Central network team, app teams self-serve their own projects.',['One project for everything','Shared VPC: host project + service projects','VPC peering mesh','Separate VPC per app with public IPs'],1,'Shared VPC keeps network admin central while workloads live in separate projects.','GS07 decision log'],
+ ['cap','Interconnect traffic must be encrypted.',['Nothing: it\'s private','MACsec on the links and/or HA VPN over Interconnect, plus TLS','Cloud Armor','Private Google Access'],1,'Interconnect is plaintext by default. MACsec covers the link hop only, so add IPsec or TLS for end to end.','GS07 decision log']
+];
+C.forEach((c,i)=>{const k=(i*3+1)%4;const opts=c[2].map((o,j)=>[o,j]);const rot=opts.slice(k).concat(opts.slice(0,k));c[2]=rot.map(x=>x[0]);c[3]=rot.findIndex(x=>x[1]===c[3]);});
+let deck=C.map((c,i)=>i),pos=0,ans={},right=0,tot=0;
+const TAG={sec:'Network Security',lb:'Load Balancing',hyb:'Hybrid and Multicloud',cap:'Capstone'};
+function build(){const f=val('d-deck');deck=C.map((c,i)=>i).filter(i=>f==='all'||C[i][0]===f);pos=0;show();}
+function show(){const i=deck[pos],c=C[i];$('d-pos').textContent=`${pos+1} of ${deck.length}`;$('d-tag').textContent=TAG[c[0]];$('d-q').textContent=c[1];
+  $('d-opts').innerHTML=c[2].map((o,j)=>`<button type="button" class="btn" data-j="${j}" aria-pressed="false">${'ABCD'[j]}) ${o}</button>`).join('');
+  const w=$('d-why');w.hidden=true;$('d-src').textContent='';
+  if(ans[i]!=null)reveal(i,ans[i],false);
+  $('d-opts').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(ans[i]!=null)return;ans[i]=+b.dataset.j;tot++;if(ans[i]===c[3])right++;reveal(i,ans[i],true);}));}
+function reveal(i,pick,fresh){const c=C[i];$('d-opts').querySelectorAll('button').forEach(b=>{const j=+b.dataset.j;b.disabled=true;if(j===c[3])b.classList.add('primary');if(j===pick&&j!==c[3])b.setAttribute('aria-pressed','true');});
+  const w=$('d-why');w.hidden=false;w.className='verdict '+(pick===c[3]?'ok':'bad');w.textContent=(pick===c[3]?'Correct. ':`Not quite: the answer is ${'ABCD'[c[3]]}. `)+c[4];
+  $('d-src').textContent='Walkthrough: '+c[5];$('d-score').textContent=`${right} / ${tot}`;}
+seg('d-deck',build);
+$('d-next').addEventListener('click',()=>{pos=(pos+1)%deck.length;show();});$('d-prev').addEventListener('click',()=>{pos=(pos-1+deck.length)%deck.length;show();});
+$('d-shuf').addEventListener('click',()=>{for(let k=deck.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[deck[k],deck[r]]=[deck[r],deck[k]];}pos=0;show();});
+$('d-reset').addEventListener('click',()=>{ans={};right=tot=0;$('d-score').textContent='0 / 0';show();});
+build();
+
+})();
+</script>
+</body>
+</html>
+
