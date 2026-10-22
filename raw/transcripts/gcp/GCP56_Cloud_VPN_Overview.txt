@@ -1,0 +1,40 @@
+Use Cloud VPN when
+you don't need the connection speed
+of Cloud Interconnect. Cloud VPN is cheaper and easier to set up than
+Cloud Interconnect. Thus, Cloud VPN is useful for low-volume or low-bandwidth
+data connections. When you prefer the economics of an IPSec tunnel
+over the Internet, and when your network
+infrastructure cannot support dedicated fiber connections to Google Cloud, choose Cloud VPN. You can also use Cloud VPN
+to encrypt data in transit. With Cloud VPN, you
+can selectively advertise routes
+between VPC networks. In contrast, when you set a peering between
+two VPC networks, all the subnet routes
+are advertised. Cloud VPN securely connects
+your peer network to your virtual private
+cloud or VPC network through IPSec tunnels. The data is encrypted as it
+passes through the tunnels. The traffic traveling between the two networks is encrypted by one VPN gateway and then decrypted by the
+other VPN gateway. This action protects your data as it travels over the Internet. There are two types
+of Cloud VPN: high availability VPN
+or HA, and classic VPN. Google Cloud VPN
+primarily offers HA VPN; the recommended solution for dynamic routing and
+enhanced reliability. Classic VPN is available for specific use cases
+requiring static routing. Next, let's discuss both
+Cloud VPN products. Jack is responsible for optimizing the company's
+cloud infrastructure, and he's currently
+focused on updating their networking strategy
+within Google Cloud. Symbol Corporation
+has been relying on classic VPNs to connect their on-premises data center
+to Google Cloud, but they've experienced
+occasional connectivity issues. Now they are looking to enhance our network reliability
+and performance. Considering the critical
+nature of Symbols operations, the switch to
+high-availability VPNs and Google Cloud
+will be suitable. The company's applications
+demand a highly available, secure connection
+to Cloud services and a simplified setup. HA VPNs could provide the
+necessary redundancy and failover capabilities to ensure uninterrupted
+connectivity. The advantages of HA VPNs over classic VPNs include
+improved availability, automatic failover, and
+better performance. The switch to HA VPN will meet the networking requirements
+and contribute to a more resilient and
+efficient infrastructure.

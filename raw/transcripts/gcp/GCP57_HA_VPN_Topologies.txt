@@ -1,0 +1,90 @@
+Let us next cover some of
+the HA VPN topologies. HA VPN supports site-to-site VPN for
+different configuration topologies. These topologies an HA VPN
+gateway to peer VPN devices, an HA VPN gateway to
+an Amazon Web Services, or AWS, virtual private gateway,
+two HA VPN gateways connected to each other, and
+HA VPN to Compute Engine VM instances. Let’s look at each of these topologies. HA VPN has three typical
+peer gateway configurations, an HA VPN gateway to two separate peer VPN
+devices, each with its own IP address, one peer VPN device that uses
+two separate IP addresses, and one peer VPN device
+that uses one IP address. Let’s walk through an example. In this topology, one HA VPN gateway
+connects to two peer devices. Here we see the HA VPN gateway and two VPN
+tunnels that connect to the peer devices. Next, we’ll look at the peer
+devices in the on-premises network. Here you can see
+the on-premises network and the tunnels that come
+from the HA VPN gateway. Each peer device has one interface and
+one external IP address. The HA VPN gateway uses two tunnels,
+one tunnel to each peer device. If your peer side gateway is hardware
+based, having a second peer side gateway provides redundancy and
+failover on that side of the connection. In Google Cloud, the redundancy type for this configuration takes
+the value to IPS redundancy. The example shown here
+provides 99.99% availability. When configuring an HA VPN
+external VPN gateway to AWS, you can use either a transit gateway or
+virtual private gateway. Only the transit gateway supports
+equal cost multipath or ECMP routing. When enabled, ECMP distributes
+traffic equally across active tunnels. Let’s walk through an example. In this topology, you configure
+three major gateway components. An HA VPN gateway in Google Cloud
+with two interfaces, two AWS virtual private gateways that connect to your HA
+VPN gateway, and an external VPN gateway resource in Google Cloud that represents
+your AWS virtual private gateway. This resource provides information to
+Google Cloud about your AWS gateway. Here you can see
+the Google Cloud components and their connections through
+the Internet to the AWS components. The AWS components in this
+topology are shown here, along with their connections to the HA VPN
+gateway and cloud router in Google Cloud. The supported topology requires two
+AWS Site-to-Site VPN connections, Connection 0 and Connection 1, each with two external
+IP addresses. This topology yields four external
+IP addresses in AWS: Connection 0, IP0 and IP1, and Connection 1, IP0 and IP1. The HA VPN has two connections, Interface 0 and Interface 1,
+each with two tunnels. For more information regarding using HA VPN
+to connect to a Microsoft Azure gateway, see Using Cloud VPN with
+Microsoft Azure VPN Gateway. You can connect two Google Cloud VPC
+networks together by using an HA VPN gateway in each network. Let’s walk through a sample topology. Like the other two samples that you’ve
+seen, it’s divided into two parts. Here you see a Google Cloud project
+with a VPC network called network-a. There’s an HA VPN gateway and a cloud router instance that connects to
+VPC network-b, which is not visible here. Each ha VPN gateway has two interfaces. You connect interface 0
+on the HA VPN gateway in network-a to interface 0
+on the HA VPN in network-b. You do the same for
+the interface 1 connecting from the HA VPN gateway in network-a to
+the HA VPN gateway in network-b. Next, let’s look at network-b. Here you see the Google Cloud
+project that contains network-b. You see all the connections from
+the HA VPN gateway that link to network-a. When you deploy HA VPN
+over Cloud Interconnect, you create two operational tiers. The cloud interconnect tier,
+which includes the VLAN attachments and the cloud router for Cloud Interconnect. The HA VPN tier, which includes
+the HA VPN gateways and the tunnels, and the cloud router for HA VPN. Each tier requires its own Cloud Router. The Cloud Router for Cloud Interconnect is
+used exclusively to exchange VPN gateway prefixes between the VLAN attachments. This Cloud Router is used only
+by the VLAN attachments of the Cloud Interconnect tier. It cannot be used in the HA VPN tier. The Cloud Router for HA VPN exchanges
+prefixes between your VPC network and your on-premises network. You configure the cloud router for
+HA VPN and its BGP sessions in the same way you
+would for regular HA VPN deployment. You build the HA VPN tier on top
+of the Cloud Interconnect tier. Therefore, the HA VPN tier requires
+that the Cloud Interconnect tier, based on either dedicated interconnect or
+partner interconnect, is properly configured and operational. The diagram shown here depicts an HA VPN
+over Cloud Interconnect deployment. To learn more about configuration, see
+configure HA VPN over Cloud Interconnect. HA VPN allows you to establish a secure
+connection between an HA VPN gateway and compute engine VMs. Functioning as network virtual
+appliances running IPSEC VPN. The VM instances can be deployed
+within a single zone or distributed across multiple zones. This configuration supports connecting an
+HA VPN gateway to two compute engine VMs, each residing in separate VPCs and
+zones with unique external IP addresses. The VMs act as VPN peer devices. Shown here, the HA VPN gateway is
+situated in a virtual private cloud network named network-a, while
+the two VMs are located in network-b. Both VPC networks are within
+the us-central1 region. The HA VPN gateway in network a is
+configured to use the external IP addresses of each VM in network-b. It is also possible to have the HA VPN
+gateway n-VMs in different regions. This topology is recommended for
+enhanced availability. HA VPN also provides 99.99%
+service availability. Use HA VPN for BGP routing and
+to support multiple tunnels. When you create an HA VPN gateway, Google Cloud automatically chooses
+two external IPV 4 addresses. One for each of its fixed
+number of two interfaces. Each IPV 4 address is automatically chosen
+from a unique address pool to support high availability. VPN tunnels connected to HA VPN
+gateways must use dynamic BGP routing. Use an active passive configuration for
+consistent bandwidth experience. Active/active configurations may
+offer a less consistent experience. Unless combined traffic for both tunnels
+is within single tunnel capacity, failure can cause the available
+bandwidth to be cut in half. You can also use some useful prompts,
+focusing specifically on how Gemini, like AI could assist with
+cloud VPN tasks and analysis. One such example is how can
+I connect a VPC network in Google Cloud to
+an on-premises private network? Gemini will provide the two
+options available on Google Cloud, Cloud VPN and Cloud Interconnect.

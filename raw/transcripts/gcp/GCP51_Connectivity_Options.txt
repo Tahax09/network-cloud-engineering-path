@@ -1,0 +1,33 @@
+Cloud Interconnect provides a fast
+connection to Google's network, Google offers two different
+cloud interconnects products, choose a product based on your
+situation and your needs. When you can physically connect to the
+Google network at a colocation facility, use Dedicated Interconnect. When you cannot connect to the Google
+network at a colocation facility, but can connect through a service provider,
+use Partner Interconnected. When you want to connect to
+other cloud providers directly, use Cross-Cloud Interconnect. Google Cloud also offers Cloud VPN,
+Cloud VPN can be useful when you have lower bandwidth needs, or
+when you must encrypt data in transit. In this module, you will learn more about
+the three types of cloud interconnect. Let's compare these connection options, all these options provide
+internal IP address access, between resources in your on premises
+network, and in your VPC network. The main differences are the connection
+capacity and the requirements, for using a service. The IPsec VPN tunnels,
+that cloud VPN offers, have a capacity of 1.5 gigabits per second,
+to 3 gigabits per second, per tunnel. The tunnels connect to a VPN device
+in your on premises network. The 1.5 gigabits per second capacity,
+applies to traffic that traverses the public internet, and
+the three gigabits per second capacity, applies to traffic that is
+traversing a direct peering link. If you want to scale this capacity,
+you can configure multiple tunnels. Dedicated interconnect has a capacity
+of 10 gigabits per second, or 100 gigabits per second, per link,
+and requires you to have a connection, in a Google supported colocation facility. You can have up to eight links to achieve
+multiples of 10 gigabits per second, or up to two links to achieve multiples
+of 200 gigabits per second, but 10 gigabits per second
+is the minimum capacity. Partner interconnect has a capacity of 50
+megabits per second, to 50 gigabits per second, per connection, and requirements
+depend on the service provider. Dedicated Interconnect,
+and Partner Interconnect, do not encrypt data in transit. Secure data in transit at the application
+layer, using TL's for example. Cross-Cloud Interconnect enables you
+to establish high bandwidth dedicated connectivity between Google Cloud and
+another cloud service provider. Cross-Cloud Interconnect connections
+are available in two sizes,10 gigabits per second, or 100 gigabits per second.

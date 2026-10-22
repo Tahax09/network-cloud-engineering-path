@@ -1,0 +1,73 @@
+Next, let's discuss
+dedicated interconnect. Sam, a network engineer
+at Simbel Corporation, is tasked with migrating mission
+critical workloads to Google Cloud. Sam won't migrate the entire
+on prem to Google, and it makes sense to migrate
+a portion of the workload. These workloads require the highest
+levels of performance and reliability with minimal latency and
+jitter. Currently, Sam is considering using the
+public Internet for the connection, but concerns about security and
+reliability remain. A VPN connection over the Internet is not
+the top choice, as the public Internet is not most performant and overhead of
+VPN on packets can impact performance. Sam needs a solution that guarantees
+consistent high performance connectivity with fiber ports between s one's on
+premises network and Google Cloud. The solution must offer dedicated
+bandwidth, ensuring that mission critical workloads have the resources they
+need to function flawlessly. Additionally, Sam requires the solution
+to be highly secure, with the option to enable robust data encryption and
+isolation from public Internet traffic. Thus, a dedicated interconnect
+option checks all the requirements. Dedicated interconnect provides direct
+physical connections between your on premises network and the Google network. Dedicated interconnect enables you to
+transfer large amounts of data between networks, which can be more cost effective
+than purchasing additional bandwidth over the public Internet. Upon establishing a VLAN attachment,
+it is linked with a cloud router. This cloud router
+initiates a BGP session for both the VLAN attachment and
+its corresponding on premises peer router. Through this BGP session, the cloud router receives routes
+advertised by the on premises router. These routes are then integrated into your
+VPC network as custom dynamic routes. Simultaneously, the cloud router
+advertises routes for Google Cloud resources to the on premises peer router,
+ensuring bi directional route exchange. In order to provide redundancy, create
+at least four interconnect connections, two in each metropolitan areas. Placing a dedicated interconnect
+connection in more than one domain in a metropolitan area provides redundancy. The domains provide isolation
+during scheduled maintenance, which means that two domains in the same
+metropolitan area are not down for maintenance at the same time. If you have a dedicated interconnect
+connection defined in each of the two domains, scheduled maintenance can only affect
+a single connection at any given time. A minimum of two Cloud routers should be
+deployed across at least two separate Google Cloud regions. This is essential even if
+all your virtual machine or VM instances are located
+within a single region. In the event of a region wide disruption,
+Google Cloud can redirect traffic through the unaffected region to ensure
+continued access to your VMs. Each Cloud router must be linked to a pair
+of dedicated interconnect connections situated within the same
+metropolitan area. In the example shown, the network
+configuration features four dedicated interconnect connections distributed
+across two separate metropolitan areas and distinct edge availability domains. Each of these regions houses a cloud
+router within the VPC1 network, with each router maintaining its own independent
+border gateway protocol, or BGP session. For a complete list of co location
+facilities and edge availability zones, see all colocation facilities in
+the Google Cloud documentation. Note that the documentation also
+refers to an edge availability zone as an interconnect location name. Now, to create a dedicated
+interconnect connection, follow these order your connection. You can do this within Google Cloud. Next, Google sends you a LOA.CFA, also known as a letter of authorization
+and connecting facility assignment. The LOA.CFA identifies the connection
+ports that Google has assigned for your dedicated interconnect connection. The LOA.CFA also grants permission for a vendor in a colocation
+facility to connect to them. Send LOA.CFAs to
+the colocation facility so they can complete your connection setup. Your vendor will let you know
+when the setup is complete. Test the connection, Google sends you
+automated emails with configuration information for two different tests. First, Google sends an IP
+address configuration to test light levels on every circuit in
+a dedicated interconnect connection. After those tests pass, Google sends
+a final IP address configuration to test the IP connectivity of each connection. Apply these configurations
+to your Cloud routers so that Google can confirm connectivity. After all tests have passed, your dedicated interconnect
+connection is ready to use. Create VLAN attachments and
+establish BGP sessions. You can do this using
+the Google Cloud console. Configure the on premises routers to
+establish a BGP session with your cloud router. To configure your on premises router,
+use the VLAN ID interface, IP address and peering IP address
+provided by the VLAN attachment. Next, let's talk about
+your connection bandwidth. You can purchase bandwidth as one or
+more circuits. Each circuit can be either 10 gigabits per
+second or 100 gigabits per second, but not both, as it is not possible to have different
+types of circuits in the same connection. A connection can have a maximum of
+810 gigabits per second circuits or 2100 gigabits per second circuits. Therefore, the maximum connection capacity
+is either 80 gigabits per second or 200 gigabits per second, depending
+on which type of circuit you choose.

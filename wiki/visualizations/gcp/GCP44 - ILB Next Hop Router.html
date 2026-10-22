@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ILB Next Hop Router</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#a86a00; --bad:#c9302a; --band:#e2efe7; --band2:#ece6f7; --blue:#1f5fd6; --green:#0f8b7a; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:840px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:74ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.btn{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover,.seg button:hover{border-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text]{font:14px var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}.node.ok{stroke:var(--ok);stroke-width:2.2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.dim{opacity:.35}
+.node.blue{stroke:var(--blue);stroke-width:2.2}.node.green{stroke:var(--green);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}.edge.hl{stroke:var(--accent);stroke-width:2.4}.edge.enc{stroke:var(--ok);stroke-width:4}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}.pk.blue{fill:var(--blue)}.pk.green{fill:var(--green)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}.tag.info{color:var(--accent)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);color:var(--muted);min-width:180px}
+.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.skip td:not(.why){opacity:.55}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:140px minmax(0,1fr) 80px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s;background:var(--accent)}
+.bar i.blue{background:var(--blue)}.bar i.green{background:var(--green)}.bar i.ok{background:var(--ok)}.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr) 120px;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px}
+.steps li .n{font:600 12px var(--f-mono);color:var(--accent)}
+.steps li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.steps li .who{font:600 11px var(--f-mono);text-align:right;color:var(--muted)}
+.steps li .who.you{color:var(--accent)}
+@media (max-width:700px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps li .who{grid-column:2;text-align:left}}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:6px;background:var(--surface)}
+.cell.on{border-color:var(--ok)}.cell.down{border-color:var(--warn);background:var(--sunken)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP44 · Course 5: Load Balancing, Module 2 · Internal passthrough NLB as next hop</div>
+    <h1>ILB Next Hop Router</h1>
+    <p class="lead">A hub VPC routes spoke-to-spoke traffic through firewall appliances behind an internal passthrough Network Load Balancer. Change peering export, global access and appliance health, and see whether the packet reaches spoke2.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Hub-and-spoke through firewalls</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Specifying the next hop</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Two ILBs, one destination</button>
+  </div>
+
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Packet</h2>
+        <div class="q"><span class="k">Source</span><div class="seg" id="h-src"><button type="button" data-v="s1c" aria-pressed="true">spoke1 VM · us-central1</button><button type="button" data-v="s1e" aria-pressed="false">spoke1 VM · europe-west1</button><button type="button" data-v="hub" aria-pressed="false">hub VM · us-central1</button></div></div>
+        <p class="help">Destination: spoke2 app 10.0.2.5. Hub route 10.0.2.0/24 has next hop ILB 10.0.1.100 (us-central1).</p>
+        <div class="q"><span class="k">ILB global access</span><div class="seg" id="h-ga"><button type="button" data-v="off" aria-pressed="true">Off</button><button type="button" data-v="on" aria-pressed="false">On</button></div></div>
+        <label class="chk" for="h-exp"><input type="checkbox" id="h-exp" checked>Hub peering: export custom routes</label>
+        <label class="chk" for="h-imp"><input type="checkbox" id="h-imp" checked>Spoke1 peering: import custom routes</label>
+        <div class="q"><span class="k">Firewall NVA health</span><div class="seg" id="h-hc"><button type="button" data-v="2" aria-pressed="true">Both healthy</button><button type="button" data-v="1" aria-pressed="false">fw-a down</button><button type="button" data-v="0" aria-pressed="false">Both down</button></div></div>
+        <label class="chk" for="h-fo"><input type="checkbox" id="h-fo">Failover policy with a backup NVA group</label>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="h-map" viewBox="0 0 780 360" aria-label="Hub and spoke with next-hop ILB"></svg></div>
+        <ul class="checks" id="h-checks"></ul>
+        <div class="verdict" id="h-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Route definition</h2>
+        <div class="q"><span class="k">Next hop given as</span><div class="seg" id="n-m"><button type="button" data-v="name" aria-pressed="true">Forwarding rule name + region</button><button type="button" data-v="ip" aria-pressed="false">Forwarding rule IP</button><button type="button" data-v="url" aria-pressed="false">Resource link (URL)</button></div></div>
+        <div class="q"><span class="k">Where the ILB lives</span><div class="seg" id="n-loc"><button type="button" data-v="same" aria-pressed="true">Same VPC</button><button type="button" data-v="subnet" aria-pressed="false">Same VPC, other subnet</button><button type="button" data-v="peer" aria-pressed="false">Peered VPC</button><button type="button" data-v="shared" aria-pressed="false">Shared VPC host (same network)</button></div></div>
+      </div>
+      <div class="panel">
+        <div class="verdict" id="n-verdict"></div>
+        <pre class="cmd" id="n-cmd"></pre>
+        <p class="note">Exam answer to memorize: by internal IP, the ILB can be in the same VPC or a peered VPC. Subnets never limit a next hop, because routes apply to the whole VPC.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Two static routes to 10.0.2.0/24</h2>
+        <label class="k" for="e-p1">Route via ilb-a priority: <span id="e-v1">100</span></label><input type="range" id="e-p1" min="100" max="1000" step="100" value="100">
+        <label class="k" for="e-p2">Route via ilb-b priority: <span id="e-v2">100</span></label><input type="range" id="e-p2" min="100" max="1000" step="100" value="100">
+        <button type="button" class="btn primary" id="e-send">Send 8 new flows</button>
+      </div>
+      <div class="panel">
+        <div class="bars"><div class="brow"><span>ilb-a</span><div class="bar"><i id="e-a"></i></div><span class="num" id="e-ca">0</span></div><div class="brow"><span>ilb-b</span><div class="bar"><i class="green" id="e-b"></i></div><span class="num" id="e-cb">0</span></div></div>
+        <div class="verdict" id="e-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tabs(n){for(let i=1;i<=n;i++){$('t'+i).addEventListener('click',()=>{for(let j=1;j<=n;j++){$('t'+j).setAttribute('aria-selected',i===j);$('p'+j).hidden=i!==j;}});}}
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+function box(svg,x,y,w,h,l,s,cls){el('rect',{x,y,width:w,height:h,rx:8,class:'node '+(cls||'')},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);if(s)el('text',{x:x+10,y:y+38,class:'ns'},svg,s);}
+function animate(path,cls,dur,stop,svg,holder){if(reduce)return;const c=el('circle',{r:5.5,class:'pk '+(cls||'')},svg);const L=path.getTotalLength();let t0=null;function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/dur)%1;const q=path.getPointAtLength(L*Math.min(1,u/.85)*(stop==null?1:stop));c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+
+tabs(3);
+function hub(){
+  const src=val('h-src'),ga=val('h-ga')==='on',exp=$('h-exp').checked,imp=$('h-imp').checked,hc=+val('h-hc'),fo=$('h-fo').checked;
+  const C=[];let ok=true,stopAt=null,via=null;
+  const inSpoke=src!=='hub';
+  if(inSpoke){
+    if(!exp||!imp){C.push(['bad',`Spoke1 has no route to 10.0.2.0/24: the hub must export and the spoke must import custom routes. ${!exp?'Hub export is off.':'Spoke import is off.'}`]);ok=false;stopAt='spoke';}
+    else C.push(['ok','Spoke1 learned 10.0.2.0/24 via peering. Routes with a next-hop ILB are exported; next hop default-internet-gateway routes never are.']);
+  }else C.push(['ok','Hub VM uses the hub route 10.0.2.0/24 directly.']);
+  const region=src==='s1e'?'europe-west1':'us-central1';
+  if(ok){
+    if(region!=='us-central1'&&!ga){C.push(['bad','Source is in europe-west1, the ILB is in us-central1, and global access is off: packets from other regions are dropped.']);ok=false;stopAt='ilb';}
+    else C.push(['ok',region==='us-central1'?'Source is in the ILB\'s region.':'Global access on: the next hop works from every region.']);
+  }
+  if(ok){
+    if(hc===2){C.push(['ok','Both NVAs healthy: flows are hashed across fw-a and fw-b.']);via='both';}
+    else if(hc===1){C.push(['ok','fw-a failed its health check: new flows go to fw-b.']);via='b';}
+    else if(fo){C.push(['warn','Both primaries down: the failover policy sends traffic to the backup group.']);via='backup';}
+    else{C.push(['bad','All backends unhealthy, but the route stays in effect: packets are still sent to a backend, where they are likely lost. Add a failover policy.']);via='dead';ok=false;}
+  }
+  $('h-checks').innerHTML=C.map(([c,t])=>`<li><span class="tag ${c}">${c==='ok'?'OK':c==='warn'?'NOTE':'FAIL'}</span><span>${t}</span></li>`).join('');
+  const v=$('h-verdict');v.className='verdict '+(ok?'ok':'bad');
+  v.textContent=ok?`Delivered to 10.0.2.5 through ${via==='both'?'a firewall NVA':via==='b'?'fw-b':'the backup NVA'}. VPC routing steered it through the appliance, so the client needed no configuration.`:'Not delivered. See the failing check.';
+  draw(src,stopAt,via,hc,fo);
+}
+function draw(src,stopAt,via,hc,fo){
+  const svg=$('h-map');svg.innerHTML='';
+  el('rect',{x:250,y:20,width:290,height:320,rx:12,class:'bandr'},svg);el('text',{x:262,y:14,class:'bl'},svg,'hub VPC');
+  el('rect',{x:10,y:20,width:210,height:320,rx:12,class:'bandr2'},svg);el('text',{x:22,y:14,class:'bl'},svg,'spoke1 VPC');
+  el('rect',{x:570,y:120,width:200,height:120,rx:12,class:'bandr2'},svg);el('text',{x:582,y:114,class:'bl'},svg,'spoke2 10.0.2.0/24');
+  const S={s1c:[25,60,'VM us-central1'],s1e:[25,250,'VM europe-west1'],hub:[265,260,'hub VM us-central1']};
+  box(svg,25,60,180,52,'spoke1 VM','us-central1',src==='s1c'?'hl':'');
+  box(svg,25,250,180,52,'spoke1 VM','europe-west1',src==='s1e'?'hl':'');
+  box(svg,265,260,180,52,'hub VM','us-central1',src==='hub'?'hl':'');
+  box(svg,290,60,210,52,'ILB 10.0.1.100','us-central1 · next hop',stopAt==='ilb'?'bad':'hl');
+  box(svg,265,150,120,52,'fw-a','NVA',hc>=2?'ok':'bad');box(svg,400,150,120,52,'fw-b','NVA',hc>=1?'ok':'bad');
+  if(fo)box(svg,330,210,130,40,'backup NVA','','');
+  box(svg,585,155,170,52,'app 10.0.2.5','spoke2',stopAt?'dim':'ok');
+  const sx=S[src][0]+180,sy=S[src][1]+26;
+  const p1=el('path',{d:`M${src==='hub'?355:sx} ${src==='hub'?260:sy} C ${src==='hub'?355:260} ${src==='hub'?180:sy}, 300 86, 290 86`,class:'edge'+(stopAt==='spoke'?' bad':' hl')},svg);
+  const tgt=via==='b'?[460,150]:via==='backup'?[395,210]:[325,150];
+  const p2=el('path',{d:`M395 112 L${tgt[0]} ${tgt[1]}`,class:'edge'+(stopAt?'':' hl')},svg);
+  const p3=el('path',{d:`M${tgt[0]+(via==='b'?60:60)} ${tgt[1]+26} C 560 180, 560 181, 585 181`,class:'edge'+(stopAt||via==='dead'?' bad':' ok')},svg);
+  if(stopAt==='spoke')animate(p1,'bad',1400,.35,svg);
+  else if(stopAt==='ilb')animate(p1,'bad',1400,1,svg);
+  else{animate(p1,'',1600,null,svg);setTimeout(()=>animate(p2,via==='dead'?'bad':'',1200,null,svg),500);if(via!=='dead')setTimeout(()=>animate(p3,'ok',1400,null,svg),900);}
+}
+['h-src','h-ga','h-hc'].forEach(id=>seg(id,hub));['h-exp','h-imp','h-fo'].forEach(id=>$(id).addEventListener('change',hub));hub();
+function nh(){
+  const m=val('n-m'),loc=val('n-loc');let ok,t;
+  if(loc==='peer'){ok=m==='ip';t=ok?'Valid: specifying by internal IP lets the next-hop ILB live in a peered VPC.':'Invalid: a name + region or resource link must point to a forwarding rule in the route\'s own VPC network. Use the forwarding rule\'s IP for a peered VPC.';}
+  else if(loc==='shared'){ok=true;t='Valid: the forwarding rule\'s network matches the route\'s VPC. The rule can sit in a Shared VPC host or service project, or a standalone project, when given by resource link.';}
+  else if(loc==='subnet'){ok=true;t='Valid: the ILB can be in any subnet of the route\'s VPC. Subnets never restrict a next hop, because routes are VPC-wide (the GQ08 Q3 trap).';}
+  else{ok=true;t='Valid: same VPC works with all three methods.';}
+  const v=$('n-verdict');v.className='verdict '+(ok?'ok':'bad');v.textContent=t;
+  $('n-cmd').textContent=m==='name'?'gcloud compute routes create to-spoke2 --network=hub-vpc \\\n  --destination-range=10.0.2.0/24 \\\n  --next-hop-ilb=fw-ilb-fr --next-hop-ilb-region=us-central1':m==='ip'?'gcloud compute routes create to-spoke2 --network=hub-vpc \\\n  --destination-range=10.0.2.0/24 --next-hop-ilb=10.0.1.100':'gcloud compute routes create to-spoke2 --network=hub-vpc \\\n  --destination-range=10.0.2.0/24 \\\n  --next-hop-ilb=projects/HOST/regions/us-central1/forwardingRules/fw-ilb-fr';
+}
+['n-m','n-loc'].forEach(id=>seg(id,nh));nh();
+let ea=0,eb=0;
+function ecmp(send){const a=+$('e-p1').value,b=+$('e-p2').value;$('e-v1').textContent=a;$('e-v2').textContent=b;
+  const v=$('e-verdict');let pick;
+  if(a<b){pick='a';v.className='verdict ok';v.textContent='Different priorities: the route with the lower number (ilb-a) is used for every flow. The other is a standby.';}
+  else if(b<a){pick='b';v.className='verdict ok';v.textContent='Different priorities: ilb-b\'s route wins for every flow.';}
+  else{pick=null;v.className='verdict warn';v.textContent='Equal priorities: Google Cloud never runs ECMP across two next-hop ILBs. It selects one with an internal algorithm and doesn\'t guarantee the same one every time. Avoid this design: give the routes unique priorities.';}
+  if(send){const chosen=pick||(Math.random()<.5?'a':'b');for(let i=0;i<8;i++)chosen==='a'?ea++:eb++;}
+  const t=ea+eb||1;$('e-a').style.width=(ea/t*100)+'%';$('e-b').style.width=(eb/t*100)+'%';$('e-ca').textContent=ea;$('e-cb').textContent=eb;}
+['e-p1','e-p2'].forEach(id=>$(id).addEventListener('input',()=>{ea=eb=0;ecmp(false);}));$('e-send').addEventListener('click',()=>ecmp(true));ecmp(false);
+
+})();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,111 @@
+Next, let's discuss content
+delivery network or CDN, which caches content
+nearer to users. We'll also talk about
+CDN Interconnect, which lets select third party
+content delivery network or CDN providers establish direct
+interconnect links at edge locations in
+the Google network. Cloud CDN caches content at the edges of the
+Google network. This caching provides
+faster content delivery to users while reducing
+transmission costs. Content can be cached at CDN
+nodes as shown on the map. There are over 90 of
+these cache sites spread across metropolitan
+areas in Asia Pacific, the Americas, and AMIA. For an updated list, see the cache locations in the
+Google Cloud documentation. For Cloud CDN performance
+measured by Stexis, please see the reports
+on the Citrix website. When setting up the
+back end service of an application load balancer, you can enable Cloud
+CDN with a checkbox. Using cache modes, you
+can control the factors that determine whether Cloud
+CDN caches your content. Cloud CDN offers
+three cache modes. The cache modes define
+how responses are cached, whether Cloud CDN respects cache directives
+sent by the origin, and how cache TTLs are applied. The available cache modes
+are USE_ORIGIN_HEADERS, CACHE_ALL_STATIC,
+and FORCE_CACHE_ALL. USE_ORIGIN_HEADERS mode
+requires origin responses to set valid cache directives
+and valid caching headers. CACHE_ALL_STATIC mode automatically
+caches static content that doesn't have the no store private or no
+cache directive. Origin responses that set valid caching directives
+are also cached. FORCE_CACHE_ALL mode
+unconditionally caches responses, overriding any cache
+directive set by the origin. If you use a shared back-end
+with this mode configured, ensure that you don't cache
+private per user content, such as dynamic HTML
+or API responses. Let's walk through the Cloud CDN response flow with this diagram. In this example, the
+application load balancer has two types of back-ends. There are managed VM
+instance groups in the US central one and
+Asia East one regions, and there's a Cloud storage
+bucket in US East one. A URL map decides which back-end
+to send the content to. The Cloud storage bucket could be used to
+serve static content, and the instance groups
+could handle PHP traffic. When a user in San Francisco is the first to access content, the cache site in San Francisco sees that it can't
+fulfill the request. This situation is
+called a cache miss. If content is in a nearby cache, Cloud CDN might attempt to
+get the content from it. For example, if a user in Los Angeles has already
+accessed the content. Otherwise, the request is forwarded to the
+application load balancer, which in turn forwards the request to one
+of your back-ends. Depending on the content
+that is being served, the request will be forwarded to the US Central One
+Instance Group or the US East one
+storage bucket. If the content from the
+back end is cacheable, the cache site in San Francisco can store it for
+future requests. In other words, if another user requests the same content
+in San Francisco, the cache site might now be
+able to serve that content. This approach shortens
+the round trip time and saves the origin server from having to
+process the request. This is called a cache hit. For more information on
+what content can be cached, please refer to caching overview in the Google Cloud
+documentation. Each Cloud CDN request is automatically logged
+within Google Cloud. These logs will indicate
+a cache hit or cache miss status for each HTTP request
+of the load balancer. You will explore such
+logs in the next lab. Cache modes, let you control
+how content is cached. CDN Interconnect lets select third party content
+delivery network providers establish direct
+interconnect links at edge locations in the
+Google Edge network. These connections let you
+direct your traffic from your VPC networks to a
+CDN provider network. For a complete list
+of CDN providers, refer to the CDN
+Interconnect overview in the Google Cloud
+documentation. CDN Interconnect lets
+you connect directly to select CDN providers
+from Google Cloud. Your network traffic
+that egresses from Google Cloud through
+one of these links benefits from the
+direct connectivity to supported CDN providers. CDN Interconnect reduces your Cloud CDN cache
+population costs. If you have a high volume
+of egress traffic, consider using CDN Interconnect. You can use the CDN interconnect links between Google Cloud and selected providers
+to automatically optimize the egress
+traffic and save money. If you're populating the
+Cloud CDN cache locations with large data files
+from Google Cloud, this optimization can
+be especially helpful. Frequent content updates are another typical CDN
+Interconnect use case. Cloud workloads that frequently
+update data stored in Cloud CDN cache locations benefit from using
+CDN Interconnect. The direct link to the
+Cloud CDN provider reduces latency. Ingress traffic is
+free for all regions. Egress traffic
+rates apply only to data that leaves compute
+engine or Cloud storage. Egress charges for
+CDN interconnect appear on the invoice as compute engine network egress via carrier peering network. The special pricing for
+your traffic that egress from Google Cloud to a CDN
+provider is automatic. Google works with
+approved CDN partners and supported locations to accept
+provider IP addresses. Any data that you send to your allow listed
+CDN provider from Google Cloud is charged
+at the reduced price. This reduced price applies
+only to IPv4 traffic. It does not apply
+to IPv6 traffic. Intra-region pricing for CDN
+Interconnect applies only to intra-region egress
+traffic that is sent to Google Approved CDN providers
+at specific locations. CDN Interconnect
+does not require any configuration or integration with Cloud load balancing. If your CDN provider is
+already part of the program, you don't need to do anything. Traffic from supported
+Google Cloud locations to your CDN provider automatically benefits from the direct connection
+and reduced pricing. Work with your
+supported CDN provider to learn what locations
+are supported. Your supported CDN
+service provider can also help you correctly configure your deployment to use intra-region egress routes, which costs less than
+intra-region egress traffic.

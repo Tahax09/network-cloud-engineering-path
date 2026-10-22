@@ -74,6 +74,25 @@
 | [GCP39](lessons/gcp/GCP39%20-%20Load%20Balancing%20-%20Course%20Introduction.md) | Load Balancing - Course Introduction | Load Balancing — Introduction | 2026-10-22 | Complete |
 | [GCP40](lessons/gcp/GCP40%20-%20Module%20Introduction%20-%20Hybrid%20Load%20Balancing%20and%20Traffic%20Management.md) | Module Introduction - Hybrid Load Balancing and Traffic Management | Load Balancing — Module 1 | 2026-10-22 | Complete |
 | [GCP41](lessons/gcp/GCP41%20-%20Hybrid%20Load%20Balancing.md) | Hybrid Load Balancing | Load Balancing — Module 1 | 2026-10-22 | Complete |
+| [GCP42](lessons/gcp/GCP42%20-%20Traffic%20Management.md) | Traffic Management | Load Balancing — Module 1 | 2026-10-22 | Complete |
+| [GCP43](labs/GCP43%20-%20Lab%20-%20Configuring%20Traffic%20Management%20with%20a%20Load%20Balancer.md) | Lab: Configuring Traffic Management with a Load Balancer | Load Balancing — Module 1 | 2026-10-22 | Complete |
+| [GCP44](lessons/gcp/GCP44%20-%20Internal%20Network%20Load%20Balancers%20as%20Next%20Hops.md) | Internal Network Load Balancers as Next Hops | Load Balancing — Module 2 | 2026-10-22 | Complete |
+| [GCP45](lessons/gcp/GCP45%20-%20Cloud%20CDN.md) | Cloud CDN | Load Balancing — Module 2 | 2026-10-22 | Complete |
+| [GCP46](lessons/gcp/GCP46%20-%20Google%20Cloud%20Armor%20with%20Cloud%20CDN.md) | Google Cloud Armor with Cloud CDN | Load Balancing — Module 2 | 2026-10-22 | Complete |
+| [GCP47](labs/GCP47%20-%20Lab%20-%20Cloud%20Armor%20Edge%20Security%20Policies%20for%20Cloud%20CDN.md) | Lab: Cloud Armor Edge Security Policies for Cloud CDN | Load Balancing — Module 2 | 2026-10-22 | Complete |
+| [GCP48](lessons/gcp/GCP48%20-%20Load%20Balancer%20Optimization%20Strategies.md) | Load Balancer Optimization Strategies | Load Balancing — Module 2 | 2026-10-22 | Complete |
+| [GCP49](lessons/gcp/GCP49%20-%20Hybrid%20and%20Multicloud%20-%20Course%20Introduction.md) | Hybrid and Multicloud - Course Introduction | Hybrid and Multicloud — Introduction | 2026-10-22 | Complete |
+| [GCP50](lessons/gcp/GCP50%20-%20Module%20Introduction%20-%20Connectivity%20Options.md) | Module Introduction - Connectivity Options | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete |
+| [GCP51](lessons/gcp/GCP51%20-%20Connectivity%20Options.md) | Connectivity Options | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete |
+| [GCP52](lessons/gcp/GCP52%20-%20Dedicated%20Interconnect.md) | Dedicated Interconnect | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete |
+| [GCP53](lessons/gcp/GCP53%20-%20Partner%20Interconnect.md) | Partner Interconnect | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete |
+| [GCP54](lessons/gcp/GCP54%20-%20Cross-Cloud%20Interconnect.md) | Cross-Cloud Interconnect | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete |
+| [GCP55](lessons/gcp/GCP55%20-%20Module%20Introduction%20-%20Cloud%20VPN.md) | Module Introduction - Cloud VPN | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete |
+| [GCP56](lessons/gcp/GCP56%20-%20Cloud%20VPN%20Overview.md) | Cloud VPN Overview | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete |
+| [GCP57](lessons/gcp/GCP57%20-%20HA%20VPN%20Topologies.md) | HA VPN Topologies | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete |
+| [GCP58](labs/GCP58%20-%20Lab%20-%20Configuring%20Google%20Cloud%20HA%20VPN.md) | Lab: Configuring Google Cloud HA VPN | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete |
+| [GCP59](lessons/gcp/GCP59%20-%20Influence%20Best%20Path%20Selection.md) | Influence Best Path Selection | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete |
+| [GCP60](lessons/gcp/GCP60%20-%20Network%20Connectivity%20Center.md) | Network Connectivity Center | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete |
 
 ## Lessons — Wireshark 101: Packet Analysis Essentials
 
@@ -147,6 +166,10 @@
 | [GQ04](quizzes/gcp/GQ04_DDoS_Protection.md) | DDoS Protection Module Quiz (Coursera graded) | GCP24–GCP28 | 2026-10-15 | 2/2 |
 | [GQ05](quizzes/gcp/GQ05_Controlling_Access_to_VPC_Networks.md) | Controlling Access to VPC Networks Module Quiz (Coursera graded) | GCP29–GCP35 | 2026-10-22 | 2/2 |
 | [GQ06](quizzes/gcp/GQ06_Advanced_Security_Monitoring.md) | Advanced Security Monitoring and Analysis Module Quiz (Coursera graded) | GCP36–GCP38 | 2026-10-22 | 2/2 |
+| [GQ07](quizzes/gcp/GQ07_Hybrid_Load_Balancing_and_Traffic_Management.md) | Hybrid Load Balancing and Traffic Management Quiz (Coursera graded) | GCP40–GCP44 | 2026-10-22 | 3/3 |
+| [GQ08](quizzes/gcp/GQ08_Caching_and_Optimizing_Load_Balancing.md) | Caching and Optimizing Load Balancing Quiz (Coursera graded) | GCP44–GCP48 | 2026-10-22 | 2/3 |
+| [GQ09](quizzes/gcp/GQ09_Connectivity_Options.md) | Connectivity Options Quiz (Coursera graded) | GCP50–GCP54 | 2026-10-22 | 1/2 |
+| [GQ10](quizzes/gcp/GQ10_Cloud_VPN.md) | Cloud VPN Quiz (Coursera graded) | GCP55–GCP60 | 2026-10-22 | pending |
 
 ### Wireshark 101 — `quizzes/wireshark/`
 
@@ -189,11 +212,19 @@
 | [GCP28 lab](labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor IP blocklist (deny-404) on a global Application LB + policy logs | Complete |
 | [GCP32 lab](labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | VPC firewall rules: default vs user-created network, target tags, priority, egress deny | Complete |
 | [GCP34 lab](labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Cloud IDS: PSA, endpoint, packet mirroring, severity test requests, priority-1 deny incident response | Complete |
+| [GCP43 lab](labs/GCP43%20-%20Lab%20-%20Configuring%20Traffic%20Management%20with%20a%20Load%20Balancer.md) | Hands-on: regional internal ALB, proxy-only subnet, blue/green backend services, 70/30 weighted route rule | Complete |
+| [GCP47 lab](labs/GCP47%20-%20Lab%20-%20Cloud%20Armor%20Edge%20Security%20Policies%20for%20Cloud%20CDN.md) | Hands-on GSP878: cache populated, origin deleted, deny-all edge policy 403, removed → 200 from cache (Age) | Complete |
+| [GCP58 lab](labs/GCP58%20-%20Lab%20-%20Configuring%20Google%20Cloud%20HA%20VPN.md) | Hands-on: two VPCs, HA VPN gateways, 4 tunnels, BGP on 169.254/30s, global routing for region 2, tunnel failover | Complete |
 
 ## Interactive Visualizations
 | ID | Visualization | Shows |
 |----|---------------|-------|
 | GCP01–03 | [VPC Route Selection](visualizations/gcp/GCP01-03%20-%20VPC%20Route%20Selection.html) | Routing order step-through (PBR → subnet → longest prefix → priority → category → ECMP), IPv6 stack builder, BYOIP longest-prefix BGP |
+| GCP55–60 | [HA VPN and BGP Paths](visualizations/gcp/GCP55-60%20-%20HA%20VPN%20and%20BGP%20Paths.html) | HA VPN peer topologies + redundancy types, HA VPN lab replay with pings, MED path selection and active/passive, NCC spokes and site-to-site |
+| GCP49–54 | [Interconnect Chooser](visualizations/gcp/GCP49-54%20-%20Interconnect%20Chooser.html) | Option chooser with sizing, 99.9/99.99 SLA builder with failure simulation, setup steps by type (L2 vs L3 partner), MACsec scope |
+| GCP45–48 | [Edge Cache and Armor](visualizations/gcp/GCP45-48%20-%20Edge%20Cache%20and%20Armor.html) | CDN hit/miss by city and cache mode, edge vs backend Cloud Armor policies, GSP878 lab replay, cost levers |
+| GCP44 | [ILB Next Hop Router](visualizations/gcp/GCP44%20-%20ILB%20Next%20Hop%20Router.html) | Hub-and-spoke through NVAs: peering export/import, global access, health + failover; next-hop specification rules; no ECMP across ILBs |
+| GCP42–43 | [URL Map and Traffic Split](visualizations/gcp/GCP42-43%20-%20URL%20Map%20and%20Traffic%20Split.html) | Simple-mode path matching (longest match, wildcards), weighted canary split, blue-green lab replay |
 | GCP39–41 | [Hybrid Load Balancer Builder](visualizations/gcp/GCP39-41%20-%20Hybrid%20Load%20Balancer%20Builder.html) | LB picker (proxy vs passthrough, scope, client IP, hybrid support), five NEG types with gcloud, hybrid NEG requirement checker, cloud-bursting slider |
 | GCP36–38 | [Packet Mirroring Planner](visualizations/gcp/GCP36-38%20-%20Packet%20Mirroring%20Planner.html) | Sources, collector region/placement, filter count vs 30 limit, egress bandwidth cost, best-practices scorecard |
 | GCP35 | [Secure Web Proxy Policy](visualizations/gcp/GCP35%20-%20Secure%20Web%20Proxy%20Policy.html) | Identity + host rules in priority order, default deny, URL list fix, TLS inspection for path rules, proxy log |

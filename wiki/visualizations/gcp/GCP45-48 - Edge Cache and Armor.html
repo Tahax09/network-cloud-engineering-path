@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Edge Cache and Armor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#a86a00; --bad:#c9302a; --band:#e2efe7; --band2:#ece6f7; --blue:#1f5fd6; --green:#0f8b7a; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:840px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:74ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.btn{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover,.seg button:hover{border-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text]{font:14px var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}.node.ok{stroke:var(--ok);stroke-width:2.2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.dim{opacity:.35}
+.node.blue{stroke:var(--blue);stroke-width:2.2}.node.green{stroke:var(--green);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}.edge.hl{stroke:var(--accent);stroke-width:2.4}.edge.enc{stroke:var(--ok);stroke-width:4}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}.pk.blue{fill:var(--blue)}.pk.green{fill:var(--green)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}.tag.info{color:var(--accent)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);color:var(--muted);min-width:180px}
+.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.skip td:not(.why){opacity:.55}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:140px minmax(0,1fr) 80px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s;background:var(--accent)}
+.bar i.blue{background:var(--blue)}.bar i.green{background:var(--green)}.bar i.ok{background:var(--ok)}.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr) 120px;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px}
+.steps li .n{font:600 12px var(--f-mono);color:var(--accent)}
+.steps li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.steps li .who{font:600 11px var(--f-mono);text-align:right;color:var(--muted)}
+.steps li .who.you{color:var(--accent)}
+@media (max-width:700px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps li .who{grid-column:2;text-align:left}}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:6px;background:var(--surface)}
+.cell.on{border-color:var(--ok)}.cell.down{border-color:var(--warn);background:var(--sunken)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP45 to GCP48 · Course 5: Load Balancing, Module 2 · Cloud CDN, Cloud Armor, optimization</div>
+    <h1>Edge Cache and Armor</h1>
+    <p class="lead">Follow a request through Google's edge: cache hit or miss, which cache mode stores what, where Cloud Armor edge and backend policies act, the edge-policy lab step by step, and how caching and autoscaling cut cost.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Cache hits and misses</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Edge vs backend policy</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Lab replay (GSP878)</button>
+    <button role="tab" id="t4" aria-selected="false" aria-controls="p4">Cost levers</button>
+  </div>
+
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <div class="q"><span class="k">User in</span><div class="seg" id="c-city"><button type="button" data-v="San Francisco" aria-pressed="true">San Francisco</button><button type="button" data-v="Los Angeles" aria-pressed="false">Los Angeles</button><button type="button" data-v="Tokyo" aria-pressed="false">Tokyo</button></div></div>
+        <div class="q"><span class="k">Object</span><div class="seg" id="c-obj"><button type="button" data-v="logo" aria-pressed="true">/img/logo.png</button><button type="button" data-v="cart" aria-pressed="false">/api/cart</button><button type="button" data-v="clip" aria-pressed="false">/video/ep1.mp4</button></div></div>
+        <div class="q"><span class="k">Cache mode</span><div class="seg" id="c-mode"><button type="button" data-v="USE_ORIGIN_HEADERS" aria-pressed="false">USE_ORIGIN_HEADERS</button><button type="button" data-v="CACHE_ALL_STATIC" aria-pressed="true">CACHE_ALL_STATIC</button><button type="button" data-v="FORCE_CACHE_ALL" aria-pressed="false">FORCE_CACHE_ALL</button></div></div>
+        <div class="seg"><button type="button" class="btn primary" id="c-get">GET</button><button type="button" class="btn" id="c-inv">Invalidate /*</button></div>
+        <pre class="cmd" id="c-hdr"></pre>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="c-map" viewBox="0 0 780 320" aria-label="CDN request flow"></svg></div>
+        <div class="verdict" id="c-verdict">Send a request.</div>
+        <div class="scroll"><table class="t"><thead><tr><th>#</th><th>City</th><th>Path</th><th>cacheHit</th><th>Served by</th></tr></thead><tbody id="c-log"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <div class="q"><span class="k">Client country</span><div class="seg" id="a-cc"><button type="button" data-v="US" aria-pressed="true">US (licensed)</button><button type="button" data-v="XX" aria-pressed="false">XX (not licensed)</button></div></div>
+        <div class="q"><span class="k">Request</span><div class="seg" id="a-req"><button type="button" data-v="cached" aria-pressed="true">Cached video segment</button><button type="button" data-v="dyn" aria-pressed="false">Dynamic page</button><button type="button" data-v="sqli" aria-pressed="false">Dynamic page with SQL injection</button></div></div>
+        <label class="chk" for="a-edge"><input type="checkbox" id="a-edge">Edge security policy: deny origin.region_code == 'XX'</label>
+        <label class="chk" for="a-back"><input type="checkbox" id="a-back" checked>Backend security policy: deny XX + preconfigured SQLi WAF</label>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="a-map" viewBox="0 0 780 220" aria-label="Policy placement"></svg></div>
+        <div class="verdict" id="a-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3" role="tabpanel" hidden class="stack">
+    <div class="panel">
+      <ol class="steps" id="l-steps"></ol>
+      <div class="seg"><button type="button" class="btn" id="l-prev">Previous</button><button type="button" class="btn primary" id="l-next">Next task</button><button type="button" class="btn" id="l-curl">curl -svo /dev/null http://LB_IP/google.png</button></div>
+      <div class="grid">
+        <div class="panel"><span class="k">State</span><div class="facts" id="l-state"></div></div>
+        <div class="panel"><span class="k">curl output</span><pre class="cmd" id="l-out">Press curl.</pre></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p4" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <label class="k" for="o-rps">Requests per second: <span id="o-rv">5000</span></label><input type="range" id="o-rps" min="500" max="20000" step="500" value="5000">
+        <label class="k" for="o-hit">Cloud CDN hit ratio: <span id="o-hv">0</span>%</label><input type="range" id="o-hit" min="0" max="98" value="0">
+        <label class="k" for="o-cap">Requests per backend VM: <span id="o-cv">250</span></label><input type="range" id="o-cap" min="50" max="1000" step="50" value="250">
+        <label class="chk" for="o-auto"><input type="checkbox" id="o-auto" checked>Autoscaling (otherwise sized for a 3x peak all day)</label>
+        <label class="chk" for="o-spot"><input type="checkbox" id="o-spot">Batch reprocessing on Spot VMs</label>
+      </div>
+      <div class="panel">
+        <div class="facts" id="o-facts"></div>
+        <div class="bars"><div class="brow"><span>Relative cost</span><div class="bar"><i id="o-bar"></i></div><span class="num" id="o-pct"></span></div></div>
+        <p class="note">Illustrative model, not a price quote: cost tracks backend VMs plus origin egress. Use Cloud Billing reports and labels to measure the real thing.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tabs(n){for(let i=1;i<=n;i++){$('t'+i).addEventListener('click',()=>{for(let j=1;j<=n;j++){$('t'+j).setAttribute('aria-selected',i===j);$('p'+j).hidden=i!==j;}});}}
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+function box(svg,x,y,w,h,l,s,cls){el('rect',{x,y,width:w,height:h,rx:8,class:'node '+(cls||'')},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);if(s)el('text',{x:x+10,y:y+38,class:'ns'},svg,s);}
+function animate(path,cls,dur,stop,svg,holder){if(reduce)return;const c=el('circle',{r:5.5,class:'pk '+(cls||'')},svg);const L=path.getTotalLength();let t0=null;function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/dur)%1;const q=path.getPointAtLength(L*Math.min(1,u/.85)*(stop==null?1:stop));c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+
+tabs(4);
+/* ---------- cache ---------- */
+const OBJ={logo:{path:'/img/logo.png',hdr:'Cache-Control: public, max-age=3600',stat:true,priv:false,explicit:true,be:'backend bucket (us-east1)'},
+ cart:{path:'/api/cart',hdr:'Cache-Control: private',stat:false,priv:true,explicit:false,be:'MIG us-central1'},
+ clip:{path:'/video/ep1.mp4',hdr:'(no Cache-Control header)',stat:true,priv:false,explicit:false,be:'backend bucket (us-east1)'}};
+let cache={},logs=[],n=0;
+function cacheable(o,mode){if(mode==='FORCE_CACHE_ALL')return true;if(o.priv)return false;if(mode==='USE_ORIGIN_HEADERS')return o.explicit;return o.stat||o.explicit;}
+function get(){
+  const city=val('c-city'),k=val('c-obj'),mode=val('c-mode'),o=OBJ[k];const key=city+k;
+  let hit=!!cache[key],near=false,src;
+  if(!hit&&city==='San Francisco'&&cache['Los Angeles'+k]){near=true;}
+  const ok=cacheable(o,mode);
+  if(hit){src='edge cache in '+city;}else if(near){src='nearby cache (Los Angeles), then stored in '+city;}else src='origin: '+o.be;
+  if(!hit&&ok)cache[key]=Date.now();
+  logs.unshift({n:++n,city,path:o.path,hit,src});
+  const age=hit?Math.round((Date.now()-cache[key])/1000)+3:0;
+  $('c-hdr').textContent=`HTTP/1.1 200 OK\n${o.hdr}\n${hit?'Age: '+age:'(no Age header: fresh from origin)'}\nX-Cache-Mode: ${mode}`;
+  const v=$('c-verdict');
+  let msg=hit?`Cache HIT in ${city}. No origin round trip.`:`Cache MISS in ${city}. `+(near?'Filled from the nearby Los Angeles cache. ':`Forwarded to the load balancer, whose URL map sent it to the ${o.be}. `);
+  if(!hit)msg+=ok?'The response is cacheable, so the next request here will hit.':`Not cached: ${o.priv&&mode!=='FORCE_CACHE_ALL'?'Cache-Control: private':mode==='USE_ORIGIN_HEADERS'?'USE_ORIGIN_HEADERS needs explicit cache directives':'not static content'}.`;
+  if(mode==='FORCE_CACHE_ALL'&&o.priv)msg+=' Danger: FORCE_CACHE_ALL is caching a per-user API response, so the next user would get this cart.';
+  v.className='verdict '+(hit?'ok':(mode==='FORCE_CACHE_ALL'&&o.priv)?'bad':'warn');v.textContent=msg;
+  $('c-log').innerHTML=logs.slice(0,8).map(l=>`<tr><td>${l.n}</td><td>${l.city}</td><td>${l.path}</td><td>${l.hit}</td><td>${l.src}</td></tr>`).join('');
+  cdraw(city,hit,near,o);
+}
+function cdraw(city,hit,near,o){const svg=$('c-map');svg.innerHTML='';
+  box(svg,20,40,170,52,'User',city||'','hl');box(svg,240,40,180,52,'Cache site',city||'edge','');box(svg,240,160,180,52,'Nearby cache','Los Angeles','');
+  box(svg,470,40,140,52,'External ALB','URL map','');box(svg,640,20,130,52,'Bucket','us-east1 static','');box(svg,640,110,130,52,'MIG','us-central1 PHP','');
+  const p1=el('path',{d:'M190 66 L240 66',class:'edge hl'},svg);
+  if(city==null)return;
+  if(hit){animate(p1,'ok',900,null,svg);return;}
+  if(near){const p=el('path',{d:'M330 92 L330 160',class:'edge hl'},svg);animate(p,'',900,null,svg);return;}
+  const p2=el('path',{d:'M420 66 L470 66',class:'edge hl'},svg);const p3=el('path',{d:o.be.includes('bucket')?'M610 66 C 625 66, 625 46, 640 46':'M610 66 C 625 66, 625 136, 640 136',class:'edge hl'},svg);
+  animate(p1,'',900,null,svg);setTimeout(()=>animate(p2,'',700,null,svg),300);setTimeout(()=>animate(p3,'',700,null,svg),600);}
+['c-city','c-obj','c-mode'].forEach(id=>seg(id,()=>{}));
+$('c-mode').addEventListener('click',()=>{cache={};$('c-verdict').textContent='Cache mode changed: caches cleared for the demo.';});
+$('c-get').addEventListener('click',get);
+$('c-inv').addEventListener('click',()=>{cache={};$('c-verdict').className='verdict';$('c-verdict').textContent='gcloud compute url-maps invalidate-cdn-cache web-map --path="/*" ran: every cached object is gone, and the next requests miss.';});
+cdraw(null);
+/* ---------- edge vs backend ---------- */
+function armor(){const cc=val('a-cc'),req=val('a-req'),edge=$('a-edge').checked,back=$('a-back').checked;
+  let at='origin',msg;
+  if(edge&&cc==='XX'){at='edge';msg='Blocked by the edge security policy before cache lookup: 403. Cached content is protected too.';}
+  else if(req==='cached'){at='cache';msg=cc==='XX'?'Served from cache. The backend policy never saw this request, so the unlicensed country got the video. Only an edge policy can block cache hits.':'Served from cache (hit). Backend policies don\'t run on hits.';}
+  else if(back&&(cc==='XX'||req==='sqli')){at='backend';msg=req==='sqli'?'Cache miss, then the backend security policy\'s preconfigured SQLi rule blocked it: 403. WAF rules live in backend policies, not edge policies.':'Cache miss, then the backend policy denied country XX: 403.';}
+  else{at='origin';msg=req==='sqli'?'Reached the origin with an injection payload: no backend WAF is attached.':'Allowed through to the origin.';}
+  const v=$('a-verdict');v.className='verdict '+((at==='cache'&&cc==='XX')||(at==='origin'&&req==='sqli')?'bad':at==='edge'||at==='backend'?'ok':'');v.textContent=msg;
+  const svg=$('a-map');svg.innerHTML='';
+  box(svg,10,80,120,52,'User',cc,'hl');box(svg,160,80,150,52,'Edge policy',edge?'deny XX':'none',at==='edge'?'bad':edge?'hl':'dim');
+  box(svg,340,80,130,52,'Cloud CDN',req==='cached'?'HIT':'MISS',at==='cache'?'ok':'');box(svg,500,80,150,52,'Backend policy',back?'WAF + deny XX':'none',at==='backend'?'bad':back?'hl':'dim');
+  box(svg,680,80,90,52,'Origin','',at==='origin'?'ok':'');
+  const stop={edge:160,cache:340,backend:500,origin:680}[at];
+  const p=el('path',{d:`M130 106 L${stop} 106`,class:'edge hl'},svg);animate(p,(at==='edge'||at==='backend')?'bad':'ok',1400,null,svg);}
+['a-cc','a-req'].forEach(id=>seg(id,armor));['a-edge','a-back'].forEach(id=>$(id).addEventListener('change',armor));armor();
+/* ---------- lab replay ---------- */
+const L=[
+ {t:'Task 1: bucket and google.png exist (Terraform)',obj:true,cached:false,pol:false},
+ {t:'Task 2: query the LB, then a 50-request loop; hit ratio near 100%',obj:true,cached:true,pol:false},
+ {t:'Task 3: delete google.png from the bucket',obj:false,cached:true,pol:false},
+ {t:'Task 4: edge-security-policy, default rule Deny, target lb-backend-bucket',obj:false,cached:true,pol:true},
+ {t:'Task 5: remove the target from the policy',obj:false,cached:true,pol:false}];
+let li=0,age=1500;
+function lr(){$('l-steps').innerHTML=L.map((s,i)=>`<li class="${i===li?'cur':''}"><span class="n">${i+1}</span><span>${s.t}</span><span class="who">${i<li?'done':i===li?'current':''}</span></li>`).join('');
+  const s=L[li];$('l-state').innerHTML=[['Origin object',s.obj?'present':'deleted'],['Edge cache',s.cached?'google.png cached (max-age=3600)':'empty'],['Edge policy',s.pol?'attached: default DENY':'not attached'],['Expected curl',s.pol?'403 Forbidden':(s.cached||s.obj)?'200 OK':'404']].map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');}
+function lcurl(){const s=L[li];age+=37;let out;
+  if(s.pol)out='> GET /google.png HTTP/1.1\n< HTTP/1.1 403 Forbidden\n< Content-Type: application/xml; charset=UTF-8\n\nedge-security-policy denied it before the cache lookup.\nLogs: enforcedEdgeSecurityPolicy, statusDetails=denied_by_security_policy';
+  else if(s.cached&&li>=2)out=`> GET /google.png HTTP/1.1\n< HTTP/1.1 200 OK\n< Content-Type: image/png\n< Cache-Control: public,max-age=3600\n< Age: ${age}\n\nThe object no longer exists in the bucket, yet it's served.\nAge: ${age} means it has sat in the edge cache for ${age} seconds.`;
+  else if(s.cached)out='> GET /google.png HTTP/1.1\n< HTTP/1.1 200 OK\n< Cache-Control: public, max-age=3600\n< Age: 12\n\nCloud CDN > hit ratio is climbing toward 100%.';
+  else out='> GET /google.png HTTP/1.1\n< HTTP/1.1 200 OK\n< Cache-Control: public, max-age=3600\n\nFirst request: cache miss, fetched from the bucket.';
+  $('l-out').textContent=out;}
+$('l-next').addEventListener('click',()=>{li=Math.min(L.length-1,li+1);lr();$('l-out').textContent='Press curl.';});
+$('l-prev').addEventListener('click',()=>{li=Math.max(0,li-1);lr();$('l-out').textContent='Press curl.';});
+$('l-curl').addEventListener('click',lcurl);lr();
+/* ---------- cost ---------- */
+function cost(){const rps=+$('o-rps').value,hit=+$('o-hit').value/100,cap=+$('o-cap').value,auto=$('o-auto').checked,spot=$('o-spot').checked;
+  $('o-rv').textContent=rps;$('o-hv').textContent=Math.round(hit*100);$('o-cv').textContent=cap;
+  const origin=rps*(1-hit);const vms=Math.max(2,Math.ceil(origin/cap));const fleet=auto?vms:Math.max(2,Math.ceil(rps*3/cap));
+  const base=Math.max(2,Math.ceil(rps*3/cap))*1+rps*0.02;const c=fleet*1+origin*0.02+(spot?-0.6*fleet*0.2:0);
+  const pct=Math.max(5,Math.round(c/base*100));
+  $('o-facts').innerHTML=[['Origin requests/s',Math.round(origin)],['Backend VMs running',fleet+(auto?' (autoscaled, min 2)':' (fixed for peak)')],['Served from edge',Math.round(rps*hit)+' rps'],['Main saving',hit>.5?'CDN offload':auto?'Autoscaling':'none yet']].map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');
+  $('o-bar').style.width=pct+'%';$('o-bar').className=pct>80?'bad':pct>50?'warn':'ok';$('o-pct').textContent=pct+'%';}
+['o-rps','o-hit','o-cap','o-auto','o-spot'].forEach(id=>$(id).addEventListener('input',cost));cost();
+
+})();
+</script>
+</body>
+</html>
+

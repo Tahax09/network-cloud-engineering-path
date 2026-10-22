@@ -1,0 +1,19 @@
+Next, let's discuss the benefit of using
+Google Cloud Armor with Cloud CDN. Google Cloud Armor and Cloud CDN work
+in tandem to provide a secure and optimized web experience. Imagine Google Cloud Armor as your
+application's security guard. It inspects incoming traffic, filters out
+malicious requests like DDoS attacks and web exploits, and
+safeguards your backend servers from harm. This protection ensures your application
+stays up and running, even under attack. Meanwhile, Cloud CDN stores copies
+of your website's content, images, videos, etc, around the globe. When a user accesses your website, Cloud CDN delivers the content
+from the location closest to them. This significantly speeds up page load
+times, providing a seamless experience for your users while also reducing
+the strain on your primary servers. To protect CDN origin servers, you can
+use Google Cloud Armor with Cloud CDN. Google Cloud Armor protects your CDN
+origin server from application attacks, mitigates OWASP top ten risks, and
+enforces layer 7 filtering policies. There are two types of security policy
+that affect how Google Cloud Armor works with Cloud CDN, Edge security policies and
+backend security policies. Use Edge security policies to filter
+requests before content is served from cache. Use Google Cloud Armor backend security
+policies to protect requests routed to the backend service. Next, you will explore a lab covering
+how to use Google Cloud Armor to defend Edge cache.

@@ -1,0 +1,14 @@
+Welcome to the sixth course in our Networking and
+Google Cloud Series. Hybrid and Multi-Cloud. The first module will walk you through various Cloud
+connectivity options, with a deep dive into
+Cloud Interconnect, exploring its different
+types and functionalities. In the second module we'll cover Cloud VPN, discussing
+its implementation, high availability
+VPN typologies, and the Network
+Connectivity Center, or NCC, for streamlined
+management. By the end of this course, you will be able to explain the different connectivity
+options available to extend your on-premises and other Cloud networks
+to Google Cloud, and analyze the suitability of different Google
+Cloud hybrid and multi-Cloud connectivity
+services for specific use cases.
+Let's get started.

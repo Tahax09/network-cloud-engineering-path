@@ -15,8 +15,8 @@ target_date: TBD
 | 2 | Networking in Google Cloud: Routing and Addressing | ✅ Complete | GCP01–GCP06 (Routing & Addressing module), GCP07–GCP13 (Private Connection Options module), GQ01 |
 | 3 | Networking in Google Cloud: Network Architecture | ✅ Complete (GQ02 pending) | GCP14 → (Module 1: Introduction to Network Architecture · Module 2: Network Topologies) |
 | 4 | Networking in Google Cloud: Network Security | ✅ Complete (GQ04–GQ06) |
-| 5 | Networking in Google Cloud: Load Balancing | 🔄 In progress |
-| 6 | Networking in Google Cloud: Hybrid and Multicloud | Not started | — |
+| 5 | Networking in Google Cloud: Load Balancing | ✅ Complete (GQ07–GQ08) |
+| 6 | Networking in Google Cloud: Hybrid and Multicloud | 🔄 In progress |
 
 ## Modules Completed
 
@@ -91,13 +91,49 @@ target_date: TBD
 
 ### Course 5: Load Balancing
 
-*Introduction (GCP39) · Module 1: Hybrid Load Balancing and Traffic Management (GCP40 →)*
+*Introduction (GCP39) · Module 1: Hybrid Load Balancing and Traffic Management (GCP40–GCP43, quiz [GQ07](../quizzes/gcp/GQ07_Hybrid_Load_Balancing_and_Traffic_Management.md) 3/3 ✅)*
 
 | ID | Title | Status |
 |----|-------|--------|
 | [GCP39](../lessons/gcp/GCP39%20-%20Load%20Balancing%20-%20Course%20Introduction.md) | Load Balancing - Course Introduction | ✅ Complete |
 | [GCP40](../lessons/gcp/GCP40%20-%20Module%20Introduction%20-%20Hybrid%20Load%20Balancing%20and%20Traffic%20Management.md) | Module Introduction - Hybrid Load Balancing and Traffic Management | ✅ Complete |
 | [GCP41](../lessons/gcp/GCP41%20-%20Hybrid%20Load%20Balancing.md) | Hybrid Load Balancing | ✅ Complete |
+| [GCP42](../lessons/gcp/GCP42%20-%20Traffic%20Management.md) | Traffic Management | ✅ Complete |
+| [GCP43](../labs/GCP43%20-%20Lab%20-%20Configuring%20Traffic%20Management%20with%20a%20Load%20Balancer.md) | Lab: Configuring Traffic Management with a Load Balancer | ✅ Complete |
+
+*Module 2: Caching and Optimizing Load Balancing (GCP44–GCP48, quiz [GQ08](../quizzes/gcp/GQ08_Caching_and_Optimizing_Load_Balancing.md) 2/3 ⚠️)*
+
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP44](../lessons/gcp/GCP44%20-%20Internal%20Network%20Load%20Balancers%20as%20Next%20Hops.md) | Internal Network Load Balancers as Next Hops | ✅ Complete |
+| [GCP45](../lessons/gcp/GCP45%20-%20Cloud%20CDN.md) | Cloud CDN | ✅ Complete |
+| [GCP46](../lessons/gcp/GCP46%20-%20Google%20Cloud%20Armor%20with%20Cloud%20CDN.md) | Google Cloud Armor with Cloud CDN | ✅ Complete |
+| [GCP47](../labs/GCP47%20-%20Lab%20-%20Cloud%20Armor%20Edge%20Security%20Policies%20for%20Cloud%20CDN.md) | Lab: Cloud Armor Edge Security Policies for Cloud CDN | ✅ Complete |
+| [GCP48](../lessons/gcp/GCP48%20-%20Load%20Balancer%20Optimization%20Strategies.md) | Load Balancer Optimization Strategies | ✅ Complete |
+
+### Course 6: Hybrid and Multicloud
+
+*Introduction (GCP49) · Module 1: Connectivity Options (GCP50–GCP54, quiz [GQ09](../quizzes/gcp/GQ09_Connectivity_Options.md) 1/2 ⚠️)*
+
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP49](../lessons/gcp/GCP49%20-%20Hybrid%20and%20Multicloud%20-%20Course%20Introduction.md) | Hybrid and Multicloud - Course Introduction | ✅ Complete |
+| [GCP50](../lessons/gcp/GCP50%20-%20Module%20Introduction%20-%20Connectivity%20Options.md) | Module Introduction - Connectivity Options | ✅ Complete |
+| [GCP51](../lessons/gcp/GCP51%20-%20Connectivity%20Options.md) | Connectivity Options | ✅ Complete |
+| [GCP52](../lessons/gcp/GCP52%20-%20Dedicated%20Interconnect.md) | Dedicated Interconnect | ✅ Complete |
+| [GCP53](../lessons/gcp/GCP53%20-%20Partner%20Interconnect.md) | Partner Interconnect | ✅ Complete |
+| [GCP54](../lessons/gcp/GCP54%20-%20Cross-Cloud%20Interconnect.md) | Cross-Cloud Interconnect | ✅ Complete |
+
+*Module 2: Cloud VPN (GCP55–GCP60, quiz [GQ10](../quizzes/gcp/GQ10_Cloud_VPN.md) pending)*
+
+| ID | Title | Status |
+|----|-------|--------|
+| [GCP55](../lessons/gcp/GCP55%20-%20Module%20Introduction%20-%20Cloud%20VPN.md) | Module Introduction - Cloud VPN | ✅ Complete |
+| [GCP56](../lessons/gcp/GCP56%20-%20Cloud%20VPN%20Overview.md) | Cloud VPN Overview | ✅ Complete |
+| [GCP57](../lessons/gcp/GCP57%20-%20HA%20VPN%20Topologies.md) | HA VPN Topologies | ✅ Complete |
+| [GCP58](../labs/GCP58%20-%20Lab%20-%20Configuring%20Google%20Cloud%20HA%20VPN.md) | Lab: Configuring Google Cloud HA VPN | ✅ Complete |
+| [GCP59](../lessons/gcp/GCP59%20-%20Influence%20Best%20Path%20Selection.md) | Influence Best Path Selection | ✅ Complete |
+| [GCP60](../lessons/gcp/GCP60%20-%20Network%20Connectivity%20Center.md) | Network Connectivity Center | ✅ Complete |
 
 ## Course Resources (official decks, `raw/assets/gcp-networking/`)
 | Deck | Covers | Notes |
@@ -176,6 +212,15 @@ target_date: TBD
 | DDoS mitigations | LB (built-in L3/L4; L7 LBs also stop Slowloris) · small attack surface (tier subnets, firewall, no public IPs, IAP) · VPN/Interconnect · Cloud CDN · Apigee · Cloud Armor |
 | Cloud Armor | Edge WAF + DDoS; policy = ordered rules (condition, action, priority) on backend service; OWASP preconfigured rules, geo, rate-based ban, reCAPTCHA bots |
 | IAM inheritance | Org → folder → project → resource; effective = union; child can't restrict parent; move project = new inheritance; deny policies checked first (docs: 500 per resource; lecture said 5) |
+| Traffic management | Configured in the URL map; simple mode = path rules, longest match; advanced = route rules by priority (weighted splits, retries, mirroring, header/URL rewrites, CORS); one mode per URL map; `/video/*` doesn't match `/video`; only Application LBs |
+| Next-hop ILB | Internal passthrough NLB as static-route next hop; by name+region (same VPC), **by IP (same VPC or peered)**, by URL; global access needed for other regions; no ECMP across ILBs; route stays if all backends unhealthy (use failover); peering exports ILB-next-hop routes, not default-internet-gateway ones |
+| Cloud CDN | Enable on external ALB backend; modes USE_ORIGIN_HEADERS / CACHE_ALL_STATIC (gcloud default) / FORCE_CACHE_ALL (not for private content); `Age` header = hit; CDN Interconnect = discounted peering to third-party CDNs (IPv4, no config) |
+| Armor + CDN | Edge policy (before cache: IP/geo, backend buckets) vs backend policy (misses only: WAF, rate limiting) |
+| Interconnect choice | Dedicated (own router in Google colo, 10/100/400G circuits, LOA-CFA) · Partner (provider, pairing key, 50 Mbps–50 Gbps, L2 you run BGP / L3 provider runs BGP) · Cross-Cloud (AWS/Azure/OCI/Alibaba) · VPN (encrypted, ~1.5 Gbps/tunnel); Interconnect unencrypted by default |
+| Interconnect SLA | 99.9% = 2 connections, one metro, 2 EADs; 99.99% = 4 connections, 2 metros × 2 EADs, Cloud Routers in 2 regions, global routing |
+| HA VPN | 2 interfaces/IPs, BGP only, 99.99% with a tunnel per interface; redundancy SINGLE_IP_INTERNALLY_REDUNDANT / TWO_IPS / FOUR_IPS (AWS, TGW for ECMP); HA-to-HA if0↔if0; over Interconnect = 2 Cloud Routers; prefer active/passive |
+| BGP MED | Advertised route priority 0–65535 (default 100, lower wins) + region-to-region cost 201–9999 in global mode |
+| NCC | Hub + VPC spokes and hybrid spokes (VPN tunnels, VLAN attachments, router appliances); site-to-site data transfer = Google as WAN |
 | Secure Web Proxy | Managed egress forward proxy (HTTP/S); default deny; rules = priority + session matcher (SA / secure tag / mTLS + host, URL lists) + application matcher (path, needs TLS inspection); explicit proxy / next hop / PSC; egress via Cloud NAT |
 | Packet Mirroring | Clones full packets (ingress+egress) on the VM host → uses mirrored VM egress bandwidth; collector = ILB with --is-mirroring-collector, same region, same/peered VPC; ≤5 subnets/5 tags/50 instances; ≤30 filters (ranges × protocols); can't mirror+collect on same NIC |
 | Security best practices | Zero trust · secure hybrid links (HA VPN encrypted, Interconnect not) · disable default network · perimeter (Shared VPC, firewall policies, VPC-SC) · IDS + mirroring · Cloud Armor WAF · IaC · Flow Logs/FW logging/Insights |
@@ -192,7 +237,10 @@ target_date: TBD
 | NAT logging | Translations and/or errors (port-exhaustion drops) → Cloud Logging, `resource.type="nat_gateway"` |
 
 ## Weak Areas to Revisit
-*(none flagged yet)*
+| Topic | Missed in | Lesson |
+|-------|-----------|--------|
+| Next-hop ILB by IP = same VPC **or peered VPC** (never subnet-scoped) | GQ08 Q3 (got GQ07 Q1 right; answer was in a different position) | [[GCP44 - Internal Network Load Balancers as Next Hops]] |
+| "Own routing equipment + BGP with Google's edge" = **Dedicated** Interconnect | GQ09 Q2 (chose Partner) | [[GCP52 - Dedicated Interconnect]] |
 
 ## Notes
 - All GCP concepts connect to AWS equivalents — use the comparison tables in each lesson

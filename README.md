@@ -2,7 +2,7 @@
 
 An Obsidian knowledge base for self-study in **networking, cloud, and infrastructure engineering**, maintained with an LLM study coach. Course transcripts are turned into consistent lesson pages, each tied back to a hands-on k3s lab, AWS VPC, and enterprise practice.
 
-![Lessons](https://img.shields.io/badge/lessons-71-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
+![Lessons](https://img.shields.io/badge/lessons-87-blue) ![Network+](https://img.shields.io/badge/Network%2B%20N10--009-course%20complete-success) ![GCP](https://img.shields.io/badge/GCP%20Networking-course%204%20of%206-yellow) ![Quizzes](https://img.shields.io/badge/quizzes-12-informational) ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
 
 ---
 
@@ -172,6 +172,30 @@ Progress, exam traps, and weak areas: [wiki/certs/network-plus.md](wiki/certs/ne
 | [GCP39](wiki/lessons/gcp/GCP39%20-%20Load%20Balancing%20-%20Course%20Introduction.md) | Load Balancing - Course Introduction | Course 5 map: LB overview, hybrid LB, traffic management, ILB next hops, Cloud CDN + Armor, caching |
 | [GCP40](wiki/lessons/gcp/GCP40%20-%20Module%20Introduction%20-%20Hybrid%20Load%20Balancing%20and%20Traffic%20Management.md) | Module Introduction - Hybrid Load Balancing and Traffic Management | Backend service vs bucket, Application / proxy / passthrough LBs, five NEG types (zonal, internet, serverless, PSC, hybrid) |
 | [GCP41](wiki/lessons/gcp/GCP41%20-%20Hybrid%20Load%20Balancing.md) | Hybrid Load Balancing | Hybrid NEG (NON_GCP_PRIVATE_IP_PORT), closest zone, global dynamic routing, health-check range advertisement, same-region internal ALB, encryption, bursting |
+| [GCP42](wiki/lessons/gcp/GCP42%20-%20Traffic%20Management.md) | Traffic Management | URL map: host rules, path matchers (longest match), route rules (priority), weighted splits, retries/mirroring/CORS; /video/* rules |
+| [GCP43](wiki/labs/GCP43%20-%20Lab%20-%20Configuring%20Traffic%20Management%20with%20a%20Load%20Balancer.md) | Lab: Configuring Traffic Management with a Load Balancer | Hands-on: regional internal ALB, proxy-only subnet, blue/green backend services, 70/30 weighted route rule |
+| [GCP44](wiki/lessons/gcp/GCP44%20-%20Internal%20Network%20Load%20Balancers%20as%20Next%20Hops.md) | Internal Network Load Balancers as Next Hops | Next-hop ILB by name/IP/URL (IP allows peered VPC), NAT/firewall NVAs, peering export, global access, no ECMP across ILBs |
+| [GCP45](wiki/lessons/gcp/GCP45%20-%20Cloud%20CDN.md) | Cloud CDN | Cache modes (USE_ORIGIN_HEADERS / CACHE_ALL_STATIC default / FORCE_CACHE_ALL), hit/miss flow, Age header, CDN Interconnect |
+| [GCP46](wiki/lessons/gcp/GCP46%20-%20Google%20Cloud%20Armor%20with%20Cloud%20CDN.md) | Google Cloud Armor with Cloud CDN | Edge security policies (before cache, IP/geo) vs backend policies (WAF, rate limits) |
+| [GCP47](wiki/labs/GCP47%20-%20Lab%20-%20Cloud%20Armor%20Edge%20Security%20Policies%20for%20Cloud%20CDN.md) | Lab: Cloud Armor Edge Security Policies for Cloud CDN | Hands-on GSP878: cache populated, origin deleted, deny-all edge policy 403, removed → 200 from cache (Age) |
+| [GCP48](wiki/lessons/gcp/GCP48%20-%20Load%20Balancer%20Optimization%20Strategies.md) | Load Balancer Optimization Strategies | Autoscaling on LB utilization, right-sizing, monitoring/billing/labels, CUDs, Spot VMs, CDN offload |
+
+### Course 6: Hybrid and Multicloud
+
+| ID | Lesson | Key topics |
+|----|--------|------------|
+| [GCP49](wiki/lessons/gcp/GCP49%20-%20Hybrid%20and%20Multicloud%20-%20Course%20Introduction.md) | Hybrid and Multicloud - Course Introduction | Course 6 map: connectivity options (Interconnect) and Cloud VPN (HA VPN, NCC) |
+| [GCP50](wiki/lessons/gcp/GCP50%20-%20Module%20Introduction%20-%20Connectivity%20Options.md) | Module Introduction - Connectivity Options | Module map: VPN/Interconnect overview → Dedicated → Partner → Cross-Cloud |
+| [GCP51](wiki/lessons/gcp/GCP51%20-%20Connectivity%20Options.md) | Connectivity Options | VPN vs Dedicated vs Partner vs Cross-Cloud: capacity, encryption, lead time, decision flow |
+| [GCP52](wiki/lessons/gcp/GCP52%20-%20Dedicated%20Interconnect.md) | Dedicated Interconnect | Own router in Google colo, LOA-CFA, BGP over VLAN attachments, 10/100/400G circuits, 99.9 vs 99.99 topologies |
+| [GCP53](wiki/lessons/gcp/GCP53%20-%20Partner%20Interconnect.md) | Partner Interconnect | Service provider, pairing key, 50 Mbps–50 Gbps, Layer 2 (you run BGP) vs Layer 3 (provider runs BGP) |
+| [GCP54](wiki/lessons/gcp/GCP54%20-%20Cross-Cloud%20Interconnect.md) | Cross-Cloud Interconnect | Google-provisioned links to AWS/Azure/OCI/Alibaba, primary + redundant ports, SLA, MACsec scope, NCC site-to-site |
+| [GCP55](wiki/lessons/gcp/GCP55%20-%20Module%20Introduction%20-%20Cloud%20VPN.md) | Module Introduction - Cloud VPN | Module map: overview, HA VPN topologies, lab, path selection, NCC |
+| [GCP56](wiki/lessons/gcp/GCP56%20-%20Cloud%20VPN%20Overview.md) | Cloud VPN Overview | When to use VPN, HA VPN (2 interfaces, BGP, 99.99%) vs Classic VPN, selective advertisement |
+| [GCP57](wiki/lessons/gcp/GCP57%20-%20HA%20VPN%20Topologies.md) | HA VPN Topologies | Peer redundancy types, AWS (4 tunnels, TGW ECMP), HA-to-HA, HA VPN over Interconnect (2 routers), active/passive |
+| [GCP58](wiki/labs/GCP58%20-%20Lab%20-%20Configuring%20Google%20Cloud%20HA%20VPN.md) | Lab: Configuring Google Cloud HA VPN | Hands-on: two VPCs, HA VPN gateways, 4 tunnels, BGP on 169.254/30s, global routing for region 2, tunnel failover |
+| [GCP59](wiki/lessons/gcp/GCP59%20-%20Influence%20Best%20Path%20Selection.md) | Influence Best Path Selection | Advertised route priority → BGP MED (0–65535, default 100, lower wins) + region-to-region cost 201–9999 in global mode |
+| [GCP60](wiki/lessons/gcp/GCP60%20-%20Network%20Connectivity%20Center.md) | Network Connectivity Center | Hub with VPC spokes and hybrid spokes (VPN, VLAN, router appliance), site-to-site data transfer |
 
 The geolocation traffic-steering lab lives in [wiki/labs/gcp-geolocation-lab.md](wiki/labs/gcp-geolocation-lab.md). Progress: [wiki/certs/gcp-networking.md](wiki/certs/gcp-networking.md)
 
@@ -237,6 +261,10 @@ Step-by-step explanations of every course scenario (context → architecture dia
 | [GQ04](wiki/quizzes/gcp/GQ04_DDoS_Protection.md) | DDoS Protection Module Quiz (Coursera graded) | GCP24–GCP28 |
 | [GQ05](wiki/quizzes/gcp/GQ05_Controlling_Access_to_VPC_Networks.md) | Controlling Access to VPC Networks Module Quiz (Coursera graded) | GCP29–GCP35 |
 | [GQ06](wiki/quizzes/gcp/GQ06_Advanced_Security_Monitoring.md) | Advanced Security Monitoring and Analysis Module Quiz (Coursera graded) | GCP36–GCP38 |
+| [GQ07](wiki/quizzes/gcp/GQ07_Hybrid_Load_Balancing_and_Traffic_Management.md) | Hybrid Load Balancing and Traffic Management Quiz (Coursera graded) | GCP40–GCP44 |
+| [GQ08](wiki/quizzes/gcp/GQ08_Caching_and_Optimizing_Load_Balancing.md) | Caching and Optimizing Load Balancing Quiz (Coursera graded) | GCP44–GCP48 |
+| [GQ09](wiki/quizzes/gcp/GQ09_Connectivity_Options.md) | Connectivity Options Quiz (Coursera graded) | GCP50–GCP54 |
+| [GQ10](wiki/quizzes/gcp/GQ10_Cloud_VPN.md) | Cloud VPN Quiz (pending submission) | GCP55–GCP60 |
 
 ### Wireshark 101
 
@@ -288,6 +316,9 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [GCP28 lab](wiki/labs/GCP28%20-%20Lab%20-%20Configuring%20Traffic%20Blocklisting%20with%20Google%20Cloud%20Armor.md) | Cloud Armor blocklist of one client IP at Google's edge; verify with curl and policy logs |
 | [GCP32 lab](wiki/labs/GCP32%20-%20Lab%20-%20Configuring%20VPC%20Firewalls.md) | Firewall rules end to end: implied rules, target tags, NAT'd external-IP ping, priority and egress |
 | [GCP34 lab](wiki/labs/GCP34%20-%20Lab%20-%20Getting%20Started%20with%20Cloud%20IDS.md) | Detect with Cloud IDS, respond with a priority-1 firewall deny, verify with firewall logs |
+| [GCP43 lab](wiki/labs/GCP43%20-%20Lab%20-%20Configuring%20Traffic%20Management%20with%20a%20Load%20Balancer.md) | Hands-on: regional internal ALB, proxy-only subnet, blue/green backend services, 70/30 weighted route rule |
+| [GCP47 lab](wiki/labs/GCP47%20-%20Lab%20-%20Cloud%20Armor%20Edge%20Security%20Policies%20for%20Cloud%20CDN.md) | Hands-on GSP878: cache populated, origin deleted, deny-all edge policy 403, removed → 200 from cache (Age) |
+| [GCP58 lab](wiki/labs/GCP58%20-%20Lab%20-%20Configuring%20Google%20Cloud%20HA%20VPN.md) | Hands-on: two VPCs, HA VPN gateways, 4 tunnels, BGP on 169.254/30s, global routing for region 2, tunnel failover |
 
 ---
 
@@ -307,7 +338,7 @@ Anytime  Google AI Professional Certificate
 | Certification | Status |
 |---------------|--------|
 | CompTIA Network+ N10-009 | Course complete, exam prep |
-| Google Cloud Networking (6-course program) | Course 5 in progress |
+| Google Cloud Networking (6-course program) | Course 6 in progress |
 | Wireshark 101: Packet Analysis Essentials (course) | In progress |
 | Kubernetes and Cloud Native Associate (KCNA) | Next |
 | Certified Kubernetes Administrator (CKA) | Planned |

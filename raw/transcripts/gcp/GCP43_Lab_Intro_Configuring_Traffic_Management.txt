@@ -1,0 +1,9 @@
+In this lab, you will create a regional internal application load balancer with
+two back ends. Each back end will be
+an instance group. You will configure
+the load balancer to create a blue
+green deployment; the blue deployment refers to the current version
+of your application. The green deployment refers
+to a new application version. In this lab exercise, you configure the
+load balancer to send 70% of the traffic to
+the blue deployment, and 30% to the green deployment.

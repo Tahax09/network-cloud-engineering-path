@@ -17,6 +17,8 @@ tags: [gcp, load-balancing, backend-service, backend-bucket, application-load-ba
 > 🎛️ **Interactive visualization:** [Hybrid Load Balancer Builder](../../visualizations/gcp/GCP39-41%20-%20Hybrid%20Load%20Balancer%20Builder.html): "Pick a load balancer" and "NEG types" tabs. Opens in your browser.
 
 ## Summary
+> **Source note:** the "Load balancing" lecture (the review that comes before hybrid load balancing) is word-for-word the same transcript as this module introduction, so this page covers both. Order: GCP40 (intro + LB review) → [[GCP41 - Hybrid Load Balancing]] → [[GCP42 - Traffic Management]].
+
 Module 1 of Course 5:
 1. A **Cloud Load Balancing review**
 2. **Hybrid load balancing**

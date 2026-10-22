@@ -75,7 +75,26 @@
 | GCP39 | Load Balancing - Course Introduction | Load Balancing — Introduction | 2026-10-22 | Complete | Pending |
 | GCP40 | Module Introduction - Hybrid Load Balancing and Traffic Management | Load Balancing — Module 1 | 2026-10-22 | Complete | Pending |
 | GCP41 | Hybrid Load Balancing | Load Balancing — Module 1 | 2026-10-22 | Complete | Pending |
-| GCP42 | — | — | — | Pending | — |
+| GCP42 | Traffic Management | Load Balancing — Module 1 | 2026-10-22 | Complete | Yes |
+| GCP43 | Lab: Configuring Traffic Management with a Load Balancer (wiki/labs/) | Load Balancing — Module 1 | 2026-10-22 | Complete | — |
+| GCP44 | Internal Network Load Balancers as Next Hops | Load Balancing — Module 2 | 2026-10-22 | Complete | Yes |
+| GCP45 | Cloud CDN | Load Balancing — Module 2 | 2026-10-22 | Complete | Yes |
+| GCP46 | Google Cloud Armor with Cloud CDN | Load Balancing — Module 2 | 2026-10-22 | Complete | Pending |
+| GCP47 | Lab: Cloud Armor Edge Security Policies for Cloud CDN (wiki/labs/) | Load Balancing — Module 2 | 2026-10-22 | Complete | — |
+| GCP48 | Load Balancer Optimization Strategies | Load Balancing — Module 2 | 2026-10-22 | Complete | Yes |
+| GCP49 | Hybrid and Multicloud - Course Introduction | Hybrid and Multicloud — Introduction | 2026-10-22 | Complete | Pending |
+| GCP50 | Module Introduction - Connectivity Options | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete | Yes |
+| GCP51 | Connectivity Options | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete | Yes |
+| GCP52 | Dedicated Interconnect | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete | Yes |
+| GCP53 | Partner Interconnect | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete | Yes |
+| GCP54 | Cross-Cloud Interconnect | Hybrid and Multicloud — Module 1 | 2026-10-22 | Complete | Yes |
+| GCP55 | Module Introduction - Cloud VPN | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete | Pending |
+| GCP56 | Cloud VPN Overview | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete | Pending |
+| GCP57 | HA VPN Topologies | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete | Pending |
+| GCP58 | Lab: Configuring Google Cloud HA VPN (wiki/labs/) | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete | — |
+| GCP59 | Influence Best Path Selection | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete | Pending |
+| GCP60 | Network Connectivity Center | Hybrid and Multicloud — Module 2 | 2026-10-22 | Complete | Pending |
+| GCP61 | — | — | — | Pending | — |
 
 ## Wireshark 101: Packet Analysis Essentials
 

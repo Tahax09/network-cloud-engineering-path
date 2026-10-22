@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>URL Map and Traffic Split</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#a86a00; --bad:#c9302a; --band:#e2efe7; --band2:#ece6f7; --blue:#1f5fd6; --green:#0f8b7a; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:840px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:74ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.btn{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover,.seg button:hover{border-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text]{font:14px var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}.node.ok{stroke:var(--ok);stroke-width:2.2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.dim{opacity:.35}
+.node.blue{stroke:var(--blue);stroke-width:2.2}.node.green{stroke:var(--green);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}.edge.hl{stroke:var(--accent);stroke-width:2.4}.edge.enc{stroke:var(--ok);stroke-width:4}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}.pk.blue{fill:var(--blue)}.pk.green{fill:var(--green)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}.tag.info{color:var(--accent)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);color:var(--muted);min-width:180px}
+.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.skip td:not(.why){opacity:.55}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:140px minmax(0,1fr) 80px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s;background:var(--accent)}
+.bar i.blue{background:var(--blue)}.bar i.green{background:var(--green)}.bar i.ok{background:var(--ok)}.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr) 120px;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px}
+.steps li .n{font:600 12px var(--f-mono);color:var(--accent)}
+.steps li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.steps li .who{font:600 11px var(--f-mono);text-align:right;color:var(--muted)}
+.steps li .who.you{color:var(--accent)}
+@media (max-width:700px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps li .who{grid-column:2;text-align:left}}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:6px;background:var(--surface)}
+.cell.on{border-color:var(--ok)}.cell.down{border-color:var(--warn);background:var(--sunken)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP42 to GCP43 · Course 5: Load Balancing, Module 1 · Traffic management</div>
+    <h1>URL Map and Traffic Split</h1>
+    <p class="lead">Bola's URL map routes video by host and path, and the advanced mode splits traffic by weight. Test paths against the rules, run a canary split, then replay the blue-green lab from the utility VM.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Simple mode: Bola's video map</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Advanced mode: weighted split</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Blue-green lab</button>
+  </div>
+
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Request</h2>
+        <div class="q"><span class="k">Host</span><div class="seg" id="s-host"><button type="button" data-v="cymbal.com" aria-pressed="true">cymbal.com</button><button type="button" data-v="cymbal.org" aria-pressed="false">cymbal.org</button><button type="button" data-v="cymbal.net" aria-pressed="false">cymbal.net</button></div></div>
+        <div class="q"><label class="k" for="s-path">Path</label><input type="text" id="s-path" value="/video-hd"></div>
+        <div class="seg" id="s-quick"><button type="button" data-v="/video-hd" aria-pressed="false">/video-hd</button><button type="button" data-v="/video-4k" aria-pressed="false">/video-4k</button><button type="button" data-v="/video-hd/clip1" aria-pressed="false">/video-hd/clip1</button><button type="button" data-v="/home" aria-pressed="false">/home</button></div>
+        <label class="chk" for="s-wild"><input type="checkbox" id="s-wild">Add path rule /video-hd/* to video-hd</label>
+        <label class="chk" for="s-any"><input type="checkbox" id="s-any">Host rule uses * instead of cymbal.com</label>
+        <p class="help">Simple mode: the host rule picks a path matcher, then the longest matching path rule wins. Order doesn't matter. A wildcard is only valid right after a slash.</p>
+      </div>
+      <div class="panel">
+        <h2>Evaluation</h2>
+        <div class="scroll"><table class="t"><thead><tr><th>Step / rule</th><th>Target</th><th>Check</th></tr></thead><tbody id="s-rows"></tbody></table></div>
+        <div class="verdict" id="s-verdict"></div>
+        <pre class="cmd" id="s-yaml"></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Route rule weights</h2>
+        <label class="k" for="w-a">service-a weight: <span id="w-av">95</span>, service-b weight: <span id="w-bv">5</span></label>
+        <input type="range" id="w-a" min="0" max="100" value="95">
+        <div class="seg" id="w-phase"><button type="button" data-v="95" aria-pressed="true">Canary 95/5</button><button type="button" data-v="70" aria-pressed="false">Lab 70/30</button><button type="button" data-v="0" aria-pressed="false">Cutover 0/100</button><button type="button" data-v="100" aria-pressed="false">Rollback 100/0</button></div>
+        <div class="seg"><button type="button" class="btn primary" id="w-10">Send 10 requests</button><button type="button" class="btn" id="w-100">Send 100 requests</button><button type="button" class="btn" id="w-reset">Reset counts</button></div>
+        <p class="help">Each request is an independent weighted pick. Small samples wander; large ones settle near the weights.</p>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="w-map" viewBox="0 0 700 220" aria-label="Weighted split"></svg></div>
+        <div class="bars">
+          <div class="brow"><span>service-a</span><div class="bar"><i class="blue" id="w-ba"></i></div><span class="num" id="w-ca">0</span></div>
+          <div class="brow"><span>service-b</span><div class="bar"><i class="green" id="w-bb"></i></div><span class="num" id="w-cb">0</span></div>
+        </div>
+        <p class="help" id="w-txt"></p>
+        <pre class="cmd" id="w-yaml"></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>utility-vm (10.10.20.50)</h2>
+        <label class="k" for="l-blue">Blue weight: <span id="l-bv">70</span>%</label>
+        <input type="range" id="l-blue" min="0" max="100" step="10" value="70">
+        <div class="seg"><button type="button" class="btn primary" id="l-curl">curl 10.10.30.5</button><button type="button" class="btn" id="l-loop">Run the lab's 10 curls</button><button type="button" class="btn" id="l-direct">curl 10.10.20.2 directly</button></div>
+        <label class="chk" for="l-pos"><input type="checkbox" id="l-pos" checked>Proxy-only subnet my-proxy-subnet exists</label>
+        <label class="chk" for="l-fw"><input type="checkbox" id="l-fw" checked>fw-allow-lb-access (10.10.0.0/16) exists</label>
+        <pre class="cmd" id="l-out">Press curl to send a request.</pre>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="l-map" viewBox="0 0 780 360" aria-label="Lab topology"></svg></div>
+        <div class="bars">
+          <div class="brow"><span>blue (IG1, Zone 1)</span><div class="bar"><i class="blue" id="l-b1"></i></div><span class="num" id="l-c1">0</span></div>
+          <div class="brow"><span>green (IG2, Zone 2)</span><div class="bar"><i class="green" id="l-b2"></i></div><span class="num" id="l-c2">0</span></div>
+        </div>
+        <p class="note">The backend's TCP peer is an Envoy proxy in 10.10.40.0/24. The client address appears only if the page reads X-Forwarded-For.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tabs(n){for(let i=1;i<=n;i++){$('t'+i).addEventListener('click',()=>{for(let j=1;j<=n;j++){$('t'+j).setAttribute('aria-selected',i===j);$('p'+j).hidden=i!==j;}});}}
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+function box(svg,x,y,w,h,l,s,cls){el('rect',{x,y,width:w,height:h,rx:8,class:'node '+(cls||'')},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);if(s)el('text',{x:x+10,y:y+38,class:'ns'},svg,s);}
+function animate(path,cls,dur,stop,svg,holder){if(reduce)return;const c=el('circle',{r:5.5,class:'pk '+(cls||'')},svg);const L=path.getTotalLength();let t0=null;function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/dur)%1;const q=path.getPointAtLength(L*Math.min(1,u/.85)*(stop==null?1:stop));c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+
+tabs(3);
+/* ---------- simple mode ---------- */
+seg('s-host',simple);
+$('s-quick').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('s-path').value=b.dataset.v;simple();});
+['s-path','s-wild','s-any'].forEach(id=>$(id).addEventListener('input',simple));
+function simple(){
+  const host=val('s-host'),path=$('s-path').value.trim()||'/',any=$('s-any').checked,wild=$('s-wild').checked;
+  const rules=[{p:'/video-hd',s:'video-hd'},{p:'/video-4k',s:'video-4k'}];if(wild)rules.push({p:'/video-hd/*',s:'video-hd'});
+  const rows=[];let svc,why;
+  const hostOk=any||host==='cymbal.com';
+  rows.push({r:`host rule: ${any?'*':'cymbal.com'}`,t:'pathmap',c:hostOk?'MATCH':'no match',hit:hostOk});
+  if(!hostOk){svc='video-site';why=`${host} doesn't match the host rule, so the URL map's own defaultService answers.`;}
+  else{
+    let best=null;
+    rules.forEach(r=>{let ok,len=0,note;
+      if(r.p.endsWith('/*')){const pre=r.p.slice(0,-1);ok=path.startsWith(pre)&&path.length>pre.length;len=pre.length;note=ok?`prefix ${pre} matches`:(path===pre.slice(0,-1)?`${r.p} does not match the bare path ${pre.slice(0,-1)}`:'prefix differs');}
+      else{ok=path===r.p;len=r.p.length+1000;note=ok?'exact match':'not an exact match';}
+      r.ok=ok;r.len=len;r.note=note;if(ok&&(!best||len>best.len))best=r;});
+    rules.forEach(r=>rows.push({r:`path rule: ${r.p}`,t:r.s,c:(best===r?'WINNER: ':'')+r.note,hit:best===r}));
+    if(best){svc=best.s;why=`Host matched, then the path rule ${best.p} won${best.p.endsWith('/*')?' as the longest matching prefix':' as an exact match (exact beats prefix)'}.`;}
+    else{svc='video-site';why='Host matched, but no path rule matched, so the path matcher\'s defaultService answers.';}
+  }
+  if(/\*/.test(path))why+=' Note: paths you request never contain wildcards; wildcards belong in rules.';
+  $('s-rows').innerHTML=rows.map(x=>`<tr class="${x.hit?'hit':'skip'}"><td>${x.r}</td><td>${x.t}</td><td class="why">${x.c}</td></tr>`).join('')+`<tr class="${!rows.some((x,i)=>i>0&&x.hit)?'hit':'skip'}"><td>defaultService</td><td>video-site</td><td class="why">used when nothing more specific matches</td></tr>`;
+  $('s-verdict').className='verdict ok';$('s-verdict').textContent=`${host}${path} goes to ${svc}. ${why}`;
+  $('s-yaml').textContent=`defaultService: .../backendServices/video-site\nhostRules:\n- hosts: ['${any?'*':'cymbal.com'}']\n  pathMatcher: pathmap\npathMatchers:\n- name: pathmap\n  defaultService: .../backendServices/video-site\n  pathRules:\n  - paths: ['/video-hd'${wild?", '/video-hd/*'":''}]\n    service: .../backendServices/video-hd\n  - paths: ['/video-4k']\n    service: .../backendServices/video-4k`;
+}
+simple();
+/* ---------- weighted ---------- */
+let ca=0,cb=0;
+function wyaml(){const a=+$('w-a').value;$('w-av').textContent=a;$('w-bv').textContent=100-a;
+  $('w-yaml').textContent=`routeRules:\n- priority: 1\n  matchRules:\n  - prefixMatch: ''\n  routeAction:\n    weightedBackendServices:\n    - backendService: .../service-a\n      weight: ${a}\n    - backendService: .../service-b\n      weight: ${100-a}`;
+  wdraw();}
+function wdraw(){const svg=$('w-map');svg.innerHTML='';box(svg,20,80,150,56,'Client','requests');box(svg,240,80,170,56,'URL map','route rule weights','hl');
+  box(svg,500,20,180,56,'service-a',$('w-a').value+'%','blue');box(svg,500,150,180,56,'service-b',(100-$('w-a').value)+'%','green');
+  el('path',{d:'M170 108 L240 108',class:'edge'},svg);el('path',{id:'wa',d:'M410 100 C 455 100, 455 48, 500 48',class:'edge'},svg);el('path',{id:'wb',d:'M410 116 C 455 116, 455 178, 500 178',class:'edge'},svg);}
+function send(n){const a=+$('w-a').value;let x=0,y=0;for(let i=0;i<n;i++){Math.random()*100<a?x++:y++;}ca+=x;cb+=y;const t=ca+cb||1;
+  $('w-ba').style.width=(ca/t*100)+'%';$('w-bb').style.width=(cb/t*100)+'%';$('w-ca').textContent=ca;$('w-cb').textContent=cb;
+  $('w-txt').textContent=`Last batch: ${x} to service-a, ${y} to service-b. Running total ${(ca/t*100).toFixed(1)}% / ${(cb/t*100).toFixed(1)}% against weights ${a} / ${100-a}.`;
+  const svg=$('w-map');for(let i=0;i<Math.min(n,12);i++){const pa=svg.querySelector(i<Math.round(Math.min(n,12)*x/n)?'#wa':'#wb');setTimeout(()=>animate(pa,pa.id==='wa'?'blue':'green',900,null,svg),i*120);}}
+$('w-a').addEventListener('input',()=>{$('w-phase').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));wyaml();});
+seg('w-phase',()=>{$('w-a').value=val('w-phase');wyaml();});
+$('w-10').addEventListener('click',()=>send(10));$('w-100').addEventListener('click',()=>send(100));
+$('w-reset').addEventListener('click',()=>{ca=cb=0;send(0);$('w-txt').textContent='';});
+wyaml();
+/* ---------- lab ---------- */
+let c1=0,c2=0;
+function ldraw(target){const svg=$('l-map');svg.innerHTML='';
+  el('rect',{x:10,y:20,width:760,height:330,rx:12,class:'bandr'},svg);el('text',{x:22,y:14,class:'bl'},svg,'my-internal-app · one region');
+  el('text',{x:30,y:44,class:'bl'},svg,'subnet-a 10.10.20.0/24');el('text',{x:420,y:44,class:'bl'},svg,'subnet-b 10.10.30.0/24');
+  box(svg,30,60,180,56,'utility-vm','10.10.20.50','hl');
+  box(svg,290,60,190,56,'Forwarding rule','10.10.30.5:80');
+  box(svg,290,150,190,56,'URL map my-ilb','blue '+$('l-blue').value+' / green '+(100-$('l-blue').value),'hl');
+  box(svg,560,60,190,56,'my-proxy-subnet','10.10.40.0/24 (Envoy)',$('l-pos').checked?'':'bad');
+  box(svg,40,250,190,60,'instance-group-1','10.10.20.2 · Zone 1 · BLUE','blue');
+  box(svg,540,250,190,60,'instance-group-2','10.10.30.2 · Zone 2 · GREEN','green');
+  el('path',{d:'M210 88 L290 88',class:'edge'},svg);el('path',{d:'M385 116 L385 150',class:'edge'},svg);
+  const pb=el('path',{d:'M290 178 C 200 178, 135 200, 135 250',class:'edge'+(target==='b'?' hl':'')},svg);
+  const pg=el('path',{d:'M480 178 C 570 178, 635 200, 635 250',class:'edge'+(target==='g'?' hl':'')},svg);
+  if(target==='b')animate(pb,'blue',1100,null,svg);if(target==='g')animate(pg,'green',1100,null,svg);}
+function page(ig){return ig===1?`<h1>Internal Load Balancing Lab</h1><h2>Client IP</h2>Your IP address : 10.10.40.${7+Math.floor(Math.random()*20)}<h2>Hostname</h2>Server Hostname: instance-group-1-1zn8<h2>Server Location</h2>Region and Zone: Zone 1`:`<h1>Internal Load Balancing Lab</h1><h2>Client IP</h2>Your IP address : 10.10.40.${7+Math.floor(Math.random()*20)}<h2>Hostname</h2>Server Hostname: instance-group-2-q5wp<h2>Server Location</h2>Region and Zone: Zone 2`;}
+function curl(){if(!$('l-pos').checked){$('l-out').textContent='curl: (7) Failed to connect to 10.10.30.5 port 80\nThe load balancer can\'t be created without a proxy-only subnet in the region.';ldraw();return null;}
+  if(!$('l-fw').checked){$('l-out').textContent='upstream connect error or disconnect/reset before headers\nProxies in 10.10.40.0/24 are blocked by the implied deny-ingress rule.';ldraw();return null;}
+  const b=Math.random()*100<+$('l-blue').value;b?c1++:c2++;const t=c1+c2;
+  $('l-b1').style.width=(c1/t*100)+'%';$('l-b2').style.width=(c2/t*100)+'%';$('l-c1').textContent=c1;$('l-c2').textContent=c2;ldraw(b?'b':'g');return b?1:2;}
+$('l-curl').addEventListener('click',()=>{const r=curl();if(r)$('l-out').textContent=page(r);});
+$('l-loop').addEventListener('click',()=>{let out=[];for(let i=0;i<10;i++){const r=curl();if(!r)return;out.push(`curl 10.10.30.5  ->  instance-group-${r}  (${r===1?'blue':'green'})`);}$('l-out').textContent=out.join('\n')+`\n\nThis run: ${out.filter(x=>x.includes('blue')).length} blue / ${out.filter(x=>x.includes('green')).length} green.`;});
+$('l-direct').addEventListener('click',()=>{$('l-out').textContent=`<h1>Internal Load Balancing Lab</h1><h2>Client IP</h2>Your IP address : 10.10.20.50<h2>Hostname</h2>Server Hostname: instance-group-1-1zn8<h2>Server Location</h2>Region and Zone: Zone 1\n\nDirect to the VM: the client IP is the real one, because no proxy is involved.`;});
+['l-blue','l-pos','l-fw'].forEach(id=>$(id).addEventListener('input',()=>{$('l-bv').textContent=$('l-blue').value;ldraw();}));
+ldraw();
+
+})();
+</script>
+</body>
+</html>
+

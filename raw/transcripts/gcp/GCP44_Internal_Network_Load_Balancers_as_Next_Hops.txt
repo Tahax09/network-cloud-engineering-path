@@ -1,0 +1,106 @@
+Let's cover some additional concepts
+regarding load balancing in this module. In this module, we will discuss
+using internal network load balancers as next hops, including
+benefits, caveats, and some use cases. We will also introduce
+Google Cloud Armor and cloud CDN. We will cover content caching and share some strategies to
+optimize load balancing. Let's get started. Before we cover how to use an internal
+network load balancer as a routing next hop, let's discuss why these
+load balancers are useful. They're fast. Internal network load balancers don't have
+the overhead associated with other types of cloud load balancers. The reduced overhead makes them fast. An internal network load balancer routes
+connections directly from clients to the healthy backend
+without any interruption. There's no immediate device or
+single point of failure. Client requests to the load balancer
+IP address go directly to the healthy backend VMs. Unlike other types of load balancers, there's minimal processing
+of the incoming traffic. Responses from the healthy backend
+VMs go directly to the clients, not back through the load balancer. TCP responses use direct server return. For more information,
+see IP addresses for request and return packets in
+the Google Cloud documentation. Lets consider some use cases for
+internal network load balancers. You can load balance traffic across
+multiple VMs that are functioning as gateway or router VMs. You can use gateway virtual appliances
+as the next hop for a default route. With this configuration, VM instances in
+your virtual private cloud or VPC network send traffic to the Internet through a set
+of load balanced virtual gateway VMs. You can send traffic through multiple load
+balancers in two or more directions by using the same set of multi-NIC gateway or
+router VMs as backends. To accomplish this result,
+you create a load balancer and use it as the next hop for
+a custom static route in each VPC network. Each internal network load balancer
+operates within a single VPC network, distributing traffic to the network
+interfaces of backend VMs in that network. In these use cases,
+the backend services are the gateway VMs, gateway virtual appliances,
+multi-NIC gateways, and router VMs. Because these resources are all internal, it makes sense to access them through
+an internal network load balancer. As we discussed a moment ago, these load
+balancers have lower overhead than other load balancers that Google Cloud offers. Next, let's consider how to access
+these backends even faster. To specify the next hop, you have
+three choices as shown in the table. The main difference concerns the location
+of the next hop load balancer. If the next hop load balancer
+is in the same VPC network, you can specify the forwarding rule
+name and the load balancer region. To use a next hop load balancer
+in a peered VPC network, specify the internal IP address
+of the forwarding rule. You can also specify a next hop
+forwarding rule by its resource link. The forwarding rules network must
+match the routes VPC network. The forwarding rule can be located
+in either the project that contains the forwarding rules network,
+a standalone project, or a shared VPC host project, or
+a shared VPC service project. This use case load balances traffic
+from internal vms to multiple network address translation gateway instances
+that route traffic to the Internet. In this example, an internal
+network load balancer has next hops configured to three compute engine VMs. Each compute engine VM has a NAT
+gateway that runs on it and has can IP forward set to be true. These VMs then forward
+traffic to the Internet. Optionally, you can set up the gateways
+to apply custom logic to fine tune access to the Internet. In addition to exchanging subnet routes,
+you can configure VPC network peering to export and
+import custom static and dynamic routes. Custom static routes that have a next
+hop of the default Internet gateway are excluded. Custom static routes that use next
+hop internal network load balancers are included. You can configure a hub and
+spoke topology with your next hop Firewall virtual appliances located in the hub
+VPC network by doing the following. In the hub VPC network, create an internal
+network load balancer with Firewall virtual appliances as the backends. In the hub VPC network,
+create a custom static route with the destination subnet 10.0.2.2.0/24 and set the next hop to be the internal
+network load balancer, 10.0.1.100. Use VPC network peering to connect
+the hub VPC network to each of the spoke VPC networks. For each peering, configure the hub
+network to export its custom routes and configure the corresponding spoke
+networks to import custom routes. Custom static route created in
+step two with destination subnet 10.0.2.0/24, the route with
+the load balancer next hop is one of the routes that
+the hub network exports. Subject to the routing order, the next
+hop Firewall appliance load balancer in the hub VPC network is available
+in the spoke networks. If global access is enabled, the Firewall appliance is available
+according to the routing order. If global access is disabled, then resources are only available
+to requesters in the same region. Internal network load balancer 1 shown
+on the left distributes traffic from the clients to nic0, the primary
+interface on the backend services. The internal network load balancer 2 shown
+on the right distributes traffic from clients to nic1, the secondary
+interface on the backend services. The result is that clients can connect to
+the backend services through nic0 or nic1. When the load balancer is a next hop for
+a static route, no special configuration is
+needed within the client VMs. Client VMs send packets to the load
+balancer backends through VPC network routing in a bump
+in the wire fashion. Using an internal pass through network
+load balancer as a next hop for a static route provides the same benefits
+as a standalone internal pass through network load balancer. The health check ensures that new
+connections are routed to healthy backend VMs. By using a managed instance group
+as a backend, you can configure autoscaling to grow or shrink the set
+of VMs based on service demand. You must enable global
+access on the VPC network so that the next hop is
+usable from all regions. Whether the next hop is usable depends
+on the global access setting of the load balancer. With global access enabled, the load balancer next hop is accessible
+in all regions of the VPC network. With global access disabled, the load
+balancer next hop is only accessible in the same region as the load balancer. With global access disabled, packets sent
+from another region to a route that uses an internal network load
+balancer next hop are dropped. Even if all health checks fail, the load
+balancer next hop is still in effect. Packets processed by the route are sent
+to one of the next hop load balancer backends. If needed, configure a failover policy. A next hop internal network load balancer
+must use an IP address that is unique to a load balancer forwarding rule. Only one backend service is
+unambiguously referenced. Two or more custom static route next
+hops with the same destination that use different load balancers are never
+distributed by using ECMP. If the routes have unique priorities,
+Google Cloud uses the next hop internal network load balancer from the route
+with the highest priority. If the routes have equal priorities, Google Cloud still selects just one
+next hop internal network load balancer. For packets with identical source IP
+addresses routed to the same backend, use the client IP, NO_DESTINATION, CLIENT_IP_NO_DESTINATION session
+affinity option. There are some additional caveats for using an internal network
+load balancer as a next hop. For example,
+pertain to the use of network tags. For additional information on this and
+other caveats, refer to additional considerations on
+the internal network load balancers as next hop's page in
+the Google Cloud documentation.

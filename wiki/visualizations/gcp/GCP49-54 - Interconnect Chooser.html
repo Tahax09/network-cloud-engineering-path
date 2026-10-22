@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Interconnect Chooser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#a86a00; --bad:#c9302a; --band:#e2efe7; --band2:#ece6f7; --blue:#1f5fd6; --green:#0f8b7a; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:840px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:74ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.btn{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover,.seg button:hover{border-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text]{font:14px var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}.node.ok{stroke:var(--ok);stroke-width:2.2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.dim{opacity:.35}
+.node.blue{stroke:var(--blue);stroke-width:2.2}.node.green{stroke:var(--green);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}.edge.hl{stroke:var(--accent);stroke-width:2.4}.edge.enc{stroke:var(--ok);stroke-width:4}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}.pk.blue{fill:var(--blue)}.pk.green{fill:var(--green)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}.tag.info{color:var(--accent)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);color:var(--muted);min-width:180px}
+.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.skip td:not(.why){opacity:.55}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:140px minmax(0,1fr) 80px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s;background:var(--accent)}
+.bar i.blue{background:var(--blue)}.bar i.green{background:var(--green)}.bar i.ok{background:var(--ok)}.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr) 120px;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px}
+.steps li .n{font:600 12px var(--f-mono);color:var(--accent)}
+.steps li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.steps li .who{font:600 11px var(--f-mono);text-align:right;color:var(--muted)}
+.steps li .who.you{color:var(--accent)}
+@media (max-width:700px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps li .who{grid-column:2;text-align:left}}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:6px;background:var(--surface)}
+.cell.on{border-color:var(--ok)}.cell.down{border-color:var(--warn);background:var(--sunken)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP49 to GCP54 · Course 6: Hybrid and Multicloud, Module 1 · Connectivity options</div>
+    <h1>Interconnect Chooser</h1>
+    <p class="lead">Pick the right way to connect on-prem or another cloud to Google Cloud, size it, build a 99.9% or 99.99% topology, see who does each setup step, and check what MACsec actually encrypts.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Choose an option</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">SLA builder</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Setup steps</button>
+    <button role="tab" id="t4" aria-selected="false" aria-controls="p4">MACsec scope</button>
+  </div>
+
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <div class="q"><span class="k">Far side</span><div class="seg" id="q-far"><button type="button" data-v="onprem" aria-pressed="true">On-prem data center</button><button type="button" data-v="cloud" aria-pressed="false">Another cloud (AWS, Azure, OCI, Alibaba)</button></div></div>
+        <div class="q"><span class="k">Can you reach a Google colocation facility?</span><div class="seg" id="q-colo"><button type="button" data-v="yes" aria-pressed="true">Yes</button><button type="button" data-v="no" aria-pressed="false">No</button></div></div>
+        <div class="q"><label class="k" for="q-bw">Bandwidth needed: <span id="q-bwv"></span></label><input type="range" id="q-bw" min="0" max="16" value="9"></div>
+        <div class="q"><span class="k">Encryption in transit required</span><div class="seg" id="q-enc"><button type="button" data-v="no" aria-pressed="true">No</button><button type="button" data-v="yes" aria-pressed="false">Yes</button></div></div>
+        <div class="q"><span class="k">Needed by</span><div class="seg" id="q-when"><button type="button" data-v="weeks" aria-pressed="true">Weeks are fine</button><button type="button" data-v="today" aria-pressed="false">Today</button></div></div>
+      </div>
+      <div class="panel">
+        <span class="k">Recommended</span><div class="big" id="r-name"></div>
+        <p id="r-why"></p>
+        <div class="facts" id="r-facts"></div>
+        <ul class="checks" id="r-notes"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Place connections</h2>
+        <p class="help">Tick the connections you buy. Each metro has two edge availability domains (EADs) that are never under maintenance at the same time.</p>
+        <div class="grid4" id="sla-grid"></div>
+        <div class="q"><span class="k">Cloud Routers</span><div class="seg" id="sla-cr"><button type="button" data-v="1" aria-pressed="true">1 region</button><button type="button" data-v="2" aria-pressed="false">2 regions (one per metro)</button></div></div>
+        <div class="q"><span class="k">Simulate</span><div class="seg" id="sla-sim"><button type="button" data-v="none" aria-pressed="true">Normal</button><button type="button" data-v="ead" aria-pressed="false">Maintenance in metro 1, EAD 1</button><button type="button" data-v="metro" aria-pressed="false">Metro 1 outage</button></div></div>
+      </div>
+      <div class="panel">
+        <span class="k">SLA tier</span><div class="big" id="sla-tier"></div>
+        <ul class="checks" id="sla-checks"></ul>
+        <div class="verdict" id="sla-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3" role="tabpanel" hidden class="stack">
+    <div class="panel">
+      <div class="q"><span class="k">Connection type</span><div class="seg" id="s-type"><button type="button" data-v="ded" aria-pressed="true">Dedicated</button><button type="button" data-v="l2" aria-pressed="false">Partner, Layer 2</button><button type="button" data-v="l3" aria-pressed="false">Partner, Layer 3</button><button type="button" data-v="cci" aria-pressed="false">Cross-Cloud</button></div></div>
+      <ol class="steps" id="s-steps"></ol>
+      <div class="facts" id="s-facts"></div>
+    </div>
+  </section>
+
+  <section id="p4" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <div class="q"><span class="k">Interconnect type</span><div class="seg" id="m-type"><button type="button" data-v="ded" aria-pressed="true">Dedicated</button><button type="button" data-v="par" aria-pressed="false">Partner</button><button type="button" data-v="cci" aria-pressed="false">Cross-Cloud</button></div></div>
+        <label class="chk" for="m-sec"><input type="checkbox" id="m-sec" checked>MACsec enabled</label>
+        <label class="chk" for="m-ipsec"><input type="checkbox" id="m-ipsec">HA VPN (IPsec) over the Interconnect</label>
+        <label class="chk" for="m-tls"><input type="checkbox" id="m-tls">TLS in the application</label>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="m-map" viewBox="0 0 780 240" aria-label="Encryption scope"></svg></div>
+        <div class="verdict" id="m-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tabs(n){for(let i=1;i<=n;i++){$('t'+i).addEventListener('click',()=>{for(let j=1;j<=n;j++){$('t'+j).setAttribute('aria-selected',i===j);$('p'+j).hidden=i!==j;}});}}
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+function box(svg,x,y,w,h,l,s,cls){el('rect',{x,y,width:w,height:h,rx:8,class:'node '+(cls||'')},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);if(s)el('text',{x:x+10,y:y+38,class:'ns'},svg,s);}
+function animate(path,cls,dur,stop,svg,holder){if(reduce)return;const c=el('circle',{r:5.5,class:'pk '+(cls||'')},svg);const L=path.getTotalLength();let t0=null;function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/dur)%1;const q=path.getPointAtLength(L*Math.min(1,u/.85)*(stop==null?1:stop));c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+
+tabs(4);
+const BW=[0.01,0.05,0.1,0.3,0.5,1,2,3,5,10,20,50,80,100,200,400,800];
+const fmt=g=>g<1?Math.round(g*1000)+' Mbps':g+' Gbps';
+function choose(){
+  const far=val('q-far'),colo=val('q-colo'),bw=BW[+$('q-bw').value],enc=val('q-enc')==='yes',today=val('q-when')==='today';
+  $('q-bwv').textContent=fmt(bw);
+  let name,why,facts=[],notes=[];
+  if(far==='cloud'){name='Cross-Cloud Interconnect';why='Google provisions a dedicated physical link into the other cloud. You buy primary and redundant ports on both sides; no hardware of your own.';
+    const port=bw<=10?10:bw<=100?100:400;const n=Math.max(2,Math.ceil(bw/port)*2);
+    facts=[['Port size',port+' Gbps (10, 100 or 400)'],['Ports to buy',n+' on Google + '+n+' on the other cloud'],['Encrypted by default','No: add MACsec or IPsec'],['Support boundary','Google supports up to the other provider\'s network']];
+  }else if(bw<0.05||(today&&bw<=3)||(enc&&bw<=3&&colo==='no')){name='HA VPN (Cloud VPN)';why=bw<0.05?'Below the 50 Mbps Partner minimum: VPN is the fit.':today?'Needed today: VPN tunnels come up in minutes, while Interconnect takes days to weeks.':'Encryption is required and the bandwidth fits in a few tunnels.';
+    const t=Math.max(2,Math.ceil(bw/1.5));facts=[['Tunnels',t+' (about 1.5 Gbps each over the internet)'],['SLA','99.99% with 2 tunnels on an HA VPN gateway'],['Encrypted','Yes, IPsec'],['Routing','BGP on Cloud Router']];
+  }else if(colo==='yes'&&bw>=10){name='Dedicated Interconnect';why='You can reach a Google colocation facility and need at least 10 Gbps. You supply your own router there and run BGP with Cloud Router.';
+    const ct=bw<=80?10:bw<=800?100:400;const n=Math.min(8,Math.max(1,Math.ceil(bw/ct)));
+    facts=[['Circuits',n+' x '+ct+' Gbps per connection (max 8)'],['Capacity per connection',n*ct+' Gbps'],['For 99.99%','4 connections: 2 metros x 2 EADs'],['Encrypted by default','No: MACsec, HA VPN over Interconnect, or TLS']];
+  }else{name='Partner Interconnect';why=colo==='no'?'No reachable Google colocation facility: connect through a supported service provider.':'Under 10 Gbps: a Dedicated port would be oversized, so Partner attachments fit better.';
+    const n=Math.max(1,Math.ceil(bw/50));facts=[['VLAN attachments',n+' (50 Mbps to 50 Gbps each)'],['Lead time','Days: the provider\'s link to Google already exists'],['BGP','Layer 2: you run it. Layer 3: the provider runs it'],['Encrypted by default','No']];
+  }
+  if(enc&&!name.startsWith('HA VPN'))notes.push(['warn','Encryption required: Interconnect isn\'t encrypted. Add MACsec on the link, HA VPN over Cloud Interconnect, or TLS.']);
+  if(far==='onprem'&&colo==='no'&&bw>50)notes.push(['warn','More than 50 Gbps without a colocation facility: combine several Partner attachments, or reach a colo through a provider for Dedicated.']);
+  if(name==='Dedicated Interconnect')notes.push(['info','Lecture vs docs: the course teaches 8 x 10 or 2 x 100 Gbps. Current docs allow 8 x 10, 8 x 100 or 8 x 400 Gbps circuits.']);
+  $('r-name').textContent=name;$('r-why').textContent=why;
+  $('r-facts').innerHTML=facts.map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');
+  $('r-notes').innerHTML=notes.map(([c,t])=>`<li><span class="tag ${c}">${c==='info'?'NOTE':'WARN'}</span><span>${t}</span></li>`).join('');
+}
+['q-far','q-colo','q-enc','q-when'].forEach(id=>seg(id,choose));$('q-bw').addEventListener('input',choose);choose();
+/* ---------- SLA ---------- */
+const CON={m1e1:true,m1e2:true,m2e1:false,m2e2:false};
+function sla(){
+  $('sla-grid').innerHTML=[['m1e1','Metro 1 (Ashburn)','EAD 1'],['m1e2','Metro 1 (Ashburn)','EAD 2'],['m2e1','Metro 2 (Dallas)','EAD 1'],['m2e2','Metro 2 (Dallas)','EAD 2']].map(([k,m,e])=>{const sim=val('sla-sim');const down=(sim==='ead'&&k==='m1e1')||(sim==='metro'&&k.startsWith('m1'));
+    return `<label class="cell ${CON[k]?(down?'down':'on'):''}" for="c-${k}"><span class="chk"><input type="checkbox" id="c-${k}" ${CON[k]?'checked':''}>${m}</span><span class="help">${e}${CON[k]&&down?' (down)':''}</span></label>`;}).join('');
+  Object.keys(CON).forEach(k=>$('c-'+k).addEventListener('change',e=>{CON[k]=e.target.checked;sla();}));
+  const m1=[CON.m1e1,CON.m1e2],m2=[CON.m2e1,CON.m2e2],cr=+val('sla-cr');
+  const pairM1=m1[0]&&m1[1],pairM2=m2[0]&&m2[1],count=Object.values(CON).filter(Boolean).length;
+  let tier,C=[];
+  if(pairM1&&pairM2&&cr===2){tier='99.99%';}else if(pairM1||pairM2){tier='99.9%';}else tier=count?'No SLA':'Not connected';
+  C.push([pairM1||pairM2?'ok':'bad','A pair in one metro across both EADs'+(pairM1||pairM2?'':' is missing (two connections in the same EAD, or a single connection, carry no SLA)')]);
+  C.push([pairM1&&pairM2?'ok':'bad','A second pair in another metro'+(pairM1&&pairM2?'':' (needed for 99.99%)')]);
+  C.push([cr===2?'ok':'bad','Cloud Routers in two regions with global dynamic routing'+(cr===2?'':' (needed for 99.99%, even if every VM is in one region)')]);
+  $('sla-tier').textContent=tier;
+  $('sla-checks').innerHTML=C.map(([c,t])=>`<li><span class="tag ${c}">${c==='ok'?'OK':'MISSING'}</span><span>${t}</span></li>`).join('');
+  const sim=val('sla-sim');const alive=Object.keys(CON).filter(k=>CON[k]&&!((sim==='ead'&&k==='m1e1')||(sim==='metro'&&k.startsWith('m1'))));
+  const v=$('sla-verdict');
+  if(sim==='none'){v.className='verdict';v.textContent=`${count} connection${count===1?'':'s'} up. Pick a failure to test the design.`;}
+  else if(alive.length){const viaM2=alive.some(k=>k.startsWith('m2'));const needCr=sim==='metro'&&cr===1;
+    v.className='verdict '+(needCr?'warn':'ok');v.textContent=`Still connected through ${alive.length} connection${alive.length>1?'s':''}.`+(sim==='ead'?' The other EAD in metro 1 keeps carrying traffic, which is exactly why EADs exist.':'')+(needCr&&viaM2?' But with one Cloud Router region, a regional disruption could still cut you off: put a router in each metro\'s region.':'');}
+  else{v.className='verdict bad';v.textContent='Disconnected: no surviving connection. Add a connection in the other EAD or metro.';}
+}
+['sla-cr','sla-sim'].forEach(id=>seg(id,sla));sla();
+/* ---------- steps ---------- */
+const ST={
+ ded:{s:[['Order the connection in Google Cloud (location, circuits)','you'],['Google emails the LOA-CFA identifying your assigned ports','google'],['Send the LOA-CFA to the colocation facility for the cross-connect','colo vendor'],['Test light levels, then IP connectivity, with Google\'s test configs','you + google'],['Create VLAN attachments and BGP sessions on Cloud Router','you'],['Configure your on-prem router: VLAN ID, interface IP, peer IP','you']],f:[['Your equipment','Your own router in the colo'],['BGP to Cloud Router','You'],['Capacity','10, 100 or 400 Gbps circuits'],['Key artifact','LOA-CFA']]},
+ l2:{s:[['Order connectivity from a supported service provider','you + provider'],['Create a PARTNER VLAN attachment: get a pairing key','you'],['Give the provider the pairing key, capacity and location','you'],['Provider configures the attachment and emails you','provider'],['Activate the attachment','you'],['Configure BGP from your router to Cloud Router (VLAN ID, IPs from the attachment)','you']],f:[['Your equipment','A router, but the physical link is the provider\'s'],['BGP to Cloud Router','You (Layer 2)'],['Capacity','50 Mbps to 50 Gbps per attachment'],['Key artifact','Pairing key']]},
+ l3:{s:[['Order connectivity from a supported service provider','you + provider'],['Create a PARTNER VLAN attachment (Cloud Router ASN 16550): get a pairing key','you'],['Give the provider the pairing key, capacity and location','you'],['Provider configures the attachment and BGP with Cloud Router','provider'],['Activate the attachment','you'],['Connect your router to the provider as they require (BGP or a static default route)','you + provider']],f:[['Your equipment','Whatever the provider requires'],['BGP to Cloud Router','The provider (Layer 3)'],['Capacity','50 Mbps to 50 Gbps per attachment'],['Key artifact','Pairing key']]},
+ cci:{s:[['Pick supported locations for the other cloud (AWS, Azure, OCI, Alibaba)','you'],['Buy primary and redundant Cross-Cloud Interconnect ports from Google','you'],['Buy matching primary and redundant ports from the other cloud','you'],['Google provisions the physical connection to the other cloud\'s network','google'],['Create VLAN attachments and BGP on both clouds','you'],['Verify; Google supports up to the other provider\'s network edge','you + google']],f:[['Your equipment','None'],['BGP','Cloud Router to the other cloud\'s router'],['Capacity','10, 100 (and 400) Gbps'],['Support','Google can\'t open tickets with the other cloud for you']]}};
+function steps(){const t=ST[val('s-type')];$('s-steps').innerHTML=t.s.map((s,i)=>`<li><span class="n">${i+1}</span><span>${s[0]}</span><span class="who ${s[1]==='you'?'you':''}">${s[1].toUpperCase()}</span></li>`).join('');
+  $('s-facts').innerHTML=t.f.map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');}
+seg('s-type',steps);steps();
+/* ---------- MACsec ---------- */
+function mac(){const t=val('m-type'),sec=$('m-sec').checked,ip=$('m-ipsec').checked,tls=$('m-tls').checked;
+  const far={ded:'Your on-prem router',par:'Provider edge router',cci:'Remote cloud router'}[t];
+  const svg=$('m-map');svg.innerHTML='';
+  box(svg,10,90,140,52,'Workload','on-prem / other cloud','');box(svg,190,90,170,52,far,'','');box(svg,420,90,170,52,'Google peering edge','','');box(svg,640,90,130,52,'VPC VM','inside Google','');
+  el('path',{d:'M150 116 L190 116',class:'edge'+(ip||tls?' enc':'')},svg);
+  el('path',{d:'M360 116 L420 116',class:'edge'+(sec||ip||tls?' enc':'')},svg);
+  el('path',{d:'M590 116 L640 116',class:'edge'+(ip||tls?' enc':'')},svg);
+  el('text',{x:390,y:84,class:'ns','text-anchor':'middle'},svg,sec?'MACsec':'plaintext');
+  el('text',{x:615,y:84,class:'ns','text-anchor':'middle'},svg,ip||tls?'encrypted':'not encrypted');
+  if(ip)el('text',{x:390,y:170,class:'ns','text-anchor':'middle'},svg,'IPsec tunnel spans the whole path (HA VPN over Interconnect)');
+  if(tls)el('text',{x:390,y:190,class:'ns','text-anchor':'middle'},svg,'TLS protects the application data end to end');
+  const v=$('m-verdict');
+  if(ip||tls){v.className='verdict ok';v.textContent='End to end protected.'+(sec?' MACsec adds link-layer protection on the Interconnect hop.':'');}
+  else if(sec){v.className='verdict warn';v.textContent=`MACsec encrypts only between ${far.toLowerCase()} and Google's peering edge router. It doesn't encrypt traffic inside Google's network. Combine it with IPsec or TLS for end-to-end protection.`;}
+  else{v.className='verdict bad';v.textContent='Plaintext the whole way: Cloud Interconnect isn\'t encrypted by default.';}}
+seg('m-type',mac);['m-sec','m-ipsec','m-tls'].forEach(id=>$(id).addEventListener('change',mac));mac();
+
+})();
+</script>
+</body>
+</html>
+

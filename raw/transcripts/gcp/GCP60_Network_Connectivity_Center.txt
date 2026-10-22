@@ -1,0 +1,32 @@
+Now that we've discussed
+various Interconnect options, let's explore Network
+Connectivity Center or NCC; a centralized hub for managing your Google Cloud
+network connections. Zeek, a network engineer
+at Symbol Corporation, is tasked with
+connecting VPC networks across multiple regions to support their global expansion. Their current
+network architecture relies on a complex web of manual configurations and
+lacks centralized visibility, making it difficult to
+manage and troubleshoot. Zeek needs a solution that
+simplifies connectivity, provides comprehensive
+monitoring, and scales seamlessly to accommodate
+their growing network. Network connectivity
+center emerges as the perfect
+solution for Zeek. NCC establishes a
+centralized hub for managing all
+VPC connections, streamlining configuration, and eliminating the need for
+complex manual processes. Its comprehensive
+visibility into network traffic and
+performance metrics allows Zeek to quickly
+identify and resolve issues. Additionally, the inherent
+scalability of NCC ensures that Zeek can easily add new VPC connections
+as Symbol expands, ensuring their network
+remains robust and reliable. NCC adds some useful features
+to Google Cloud Networking. You can integrate third-party
+network appliances between external sites to
+your VPC networks or even between VPC networks. For supported
+regions, you can use the Google Cloud network to configure site-to-site
+data transfer. After configuration,
+external sites use Google Cloud network as a
+WAN, which reduces latency. Network Connectivity Center also lets you centrally manage multi-site
+configurations between your external sites
+and Google Cloud.

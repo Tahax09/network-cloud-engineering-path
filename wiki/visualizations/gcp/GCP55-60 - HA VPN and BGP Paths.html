@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HA VPN and BGP Paths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#a86a00; --bad:#c9302a; --band:#e2efe7; --band2:#ece6f7; --blue:#1f5fd6; --green:#0f8b7a; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:840px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:74ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.btn{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover,.seg button:hover{border-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text]{font:14px var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}.node.ok{stroke:var(--ok);stroke-width:2.2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.dim{opacity:.35}
+.node.blue{stroke:var(--blue);stroke-width:2.2}.node.green{stroke:var(--green);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}.edge.hl{stroke:var(--accent);stroke-width:2.4}.edge.enc{stroke:var(--ok);stroke-width:4}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}.pk.blue{fill:var(--blue)}.pk.green{fill:var(--green)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}.tag.info{color:var(--accent)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);color:var(--muted);min-width:180px}
+.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.skip td:not(.why){opacity:.55}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:140px minmax(0,1fr) 80px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s;background:var(--accent)}
+.bar i.blue{background:var(--blue)}.bar i.green{background:var(--green)}.bar i.ok{background:var(--ok)}.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr) 120px;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px}
+.steps li .n{font:600 12px var(--f-mono);color:var(--accent)}
+.steps li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.steps li .who{font:600 11px var(--f-mono);text-align:right;color:var(--muted)}
+.steps li .who.you{color:var(--accent)}
+@media (max-width:700px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps li .who{grid-column:2;text-align:left}}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:6px;background:var(--surface)}
+.cell.on{border-color:var(--ok)}.cell.down{border-color:var(--warn);background:var(--sunken)}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GCP55 to GCP60 · Course 6: Hybrid and Multicloud, Module 2 · Cloud VPN</div>
+    <h1>HA VPN and BGP Paths</h1>
+    <p class="lead">Match HA VPN gateways to each peer type, replay the HA VPN lab ping by ping, steer traffic between tunnels with advertised route priority (BGP MED), and connect sites through a Network Connectivity Center hub.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">HA VPN topologies</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Lab replay</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">BGP path selection</button>
+    <button role="tab" id="t4" aria-selected="false" aria-controls="p4">NCC hub</button>
+  </div>
+
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <div class="q"><span class="k">Peer side</span><div class="seg" id="tp"><button type="button" data-v="two" aria-pressed="true">Two peer devices</button><button type="button" data-v="one2" aria-pressed="false">One device, two IPs</button><button type="button" data-v="one1" aria-pressed="false">One device, one IP</button><button type="button" data-v="aws" aria-pressed="false">AWS (2 connections)</button><button type="button" data-v="gcp" aria-pressed="false">Another HA VPN gateway</button></div></div>
+        <div class="q"><span class="k">Tunnels configured</span><div class="seg" id="tn"><button type="button" data-v="all" aria-pressed="true">From both interfaces</button><button type="button" data-v="one" aria-pressed="false">Only from interface 0</button></div></div>
+        <div class="q"><span class="k">Routing</span><div class="seg" id="tr"><button type="button" data-v="bgp" aria-pressed="true">BGP (dynamic)</button><button type="button" data-v="static" aria-pressed="false">Static</button></div></div>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="t-map" viewBox="0 0 780 300" aria-label="HA VPN topology"></svg></div>
+        <div class="facts" id="t-facts"></div>
+        <div class="verdict" id="t-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="panel">
+      <ol class="steps" id="l-steps"></ol>
+      <div class="seg"><button type="button" class="btn" id="l-prev">Previous</button><button type="button" class="btn primary" id="l-next">Next task</button><button type="button" class="btn" id="l-p1">ping -c 4 10.1.1.2</button><button type="button" class="btn" id="l-p2">ping -c 2 10.2.1.2</button></div>
+      <div class="grid">
+        <div class="panel"><div class="mapbox"><svg id="l-map" viewBox="0 0 780 300" aria-label="Lab topology"></svg></div></div>
+        <div class="panel"><span class="k">on-prem-instance1</span><pre class="cmd" id="l-out">Run a ping.</pre><div class="facts" id="l-state"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Cloud Router in us-central1 advertises to on-prem</h2>
+        <label class="k" for="m-b0">tunnel0 advertised route priority: <span id="m-v0">100</span></label><input type="range" id="m-b0" min="0" max="1000" step="50" value="100">
+        <label class="k" for="m-b1">tunnel1 advertised route priority: <span id="m-v1">100</span></label><input type="range" id="m-b1" min="0" max="1000" step="50" value="100">
+        <div class="q"><span class="k">VPC dynamic routing mode</span><div class="seg" id="m-mode"><button type="button" data-v="global" aria-pressed="true">Global</button><button type="button" data-v="regional" aria-pressed="false">Regional</button></div></div>
+        <label class="chk" for="m-fail"><input type="checkbox" id="m-fail">tunnel0 fails</label>
+        <label class="k" for="m-load">Traffic from on-prem: <span id="m-lv">2</span> Gbps (each tunnel about 1.5 Gbps)</label><input type="range" id="m-load" min="0.5" max="3" step="0.5" value="2">
+      </div>
+      <div class="panel">
+        <div class="scroll"><table class="t"><thead><tr><th>Prefix</th><th>Region</th><th>MED via tunnel0</th><th>MED via tunnel1</th><th>On-prem picks</th></tr></thead><tbody id="m-rows"></tbody></table></div>
+        <div class="bars"><div class="brow"><span>tunnel0</span><div class="bar"><i id="m-x0"></i></div><span class="num" id="m-n0"></span></div><div class="brow"><span>tunnel1</span><div class="bar"><i class="green" id="m-x1"></i></div><span class="num" id="m-n1"></span></div></div>
+        <div class="verdict" id="m-verdict"></div>
+        <p class="note">Region-to-region costs are Google-generated (201 to 9999); the values shown are examples. Lower MED wins on the peer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p4" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Zeek's hub</h2>
+        <label class="chk" for="n-v1"><input type="checkbox" id="n-v1" checked>VPC spoke: prod-vpc</label>
+        <label class="chk" for="n-v2"><input type="checkbox" id="n-v2" checked>VPC spoke: shared-svc-vpc</label>
+        <label class="chk" for="n-h1"><input type="checkbox" id="n-h1" checked>Hybrid spoke: HA VPN tunnels to the Lisbon branch</label>
+        <label class="chk" for="n-h2"><input type="checkbox" id="n-h2" checked>Hybrid spoke: VLAN attachments to the Dallas data center</label>
+        <label class="chk" for="n-h3"><input type="checkbox" id="n-h3">Hybrid spoke: router appliance (SD-WAN VM)</label>
+        <label class="chk" for="n-s2s"><input type="checkbox" id="n-s2s">Site-to-site data transfer on hybrid spokes</label>
+        <div class="q"><span class="k">Test</span><div class="seg" id="n-test"><button type="button" data-v="vv" aria-pressed="true">prod-vpc to shared-svc-vpc</button><button type="button" data-v="hv" aria-pressed="false">Lisbon to prod-vpc</button><button type="button" data-v="hh" aria-pressed="false">Lisbon to Dallas</button></div></div>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="n-map" viewBox="0 0 780 320" aria-label="NCC hub and spokes"></svg></div>
+        <div class="verdict" id="n-verdict"></div>
+        <p class="note">Two spoke families: VPC spokes (VPC networks) and hybrid spokes (HA VPN tunnels, VLAN attachments, router appliances).</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tabs(n){for(let i=1;i<=n;i++){$('t'+i).addEventListener('click',()=>{for(let j=1;j<=n;j++){$('t'+j).setAttribute('aria-selected',i===j);$('p'+j).hidden=i!==j;}});}}
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+function box(svg,x,y,w,h,l,s,cls){el('rect',{x,y,width:w,height:h,rx:8,class:'node '+(cls||'')},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);if(s)el('text',{x:x+10,y:y+38,class:'ns'},svg,s);}
+function animate(path,cls,dur,stop,svg,holder){if(reduce)return;const c=el('circle',{r:5.5,class:'pk '+(cls||'')},svg);const L=path.getTotalLength();let t0=null;function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/dur)%1;const q=path.getPointAtLength(L*Math.min(1,u/.85)*(stop==null?1:stop));c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+
+tabs(4);
+/* topologies */
+function topo(){const t=val('tp'),n=val('tn'),r=val('tr');const svg=$('t-map');svg.innerHTML='';
+  el('rect',{x:10,y:20,width:250,height:260,rx:12,class:'bandr'},svg);el('text',{x:22,y:14,class:'bl'},svg,'Google Cloud VPC');
+  box(svg,30,60,210,70,'HA VPN gateway','if0 34.0.0.1 · if1 34.0.1.1','hl');box(svg,30,190,210,52,'Cloud Router','BGP per tunnel','');
+  el('path',{d:'M135 130 L135 190',class:'edge'},svg);
+  const peers={two:[['Peer device A','203.0.113.10'],['Peer device B','203.0.113.20']],one2:[['Peer device','IP0 203.0.113.10 · IP1 203.0.113.11']],one1:[['Peer device','single IP 203.0.113.10']],aws:[['AWS connection 0','IP0 · IP1'],['AWS connection 1','IP0 · IP1']],gcp:[['Peer HA VPN gateway','if0 · if1']]}[t];
+  const ys=peers.length===2?[50,180]:[110];peers.forEach((p,i)=>box(svg,520,ys[i],240,60,p[0],p[1],''));
+  const links=[];const aws=t==='aws';
+  const tunnels=aws?[[0,0],[0,0],[1,1],[1,1]]:t==='two'?[[0,0],[1,1]]:[[0,0],[1,0]];
+  tunnels.forEach(([g,p],i)=>{if(n==='one'&&g===1)return;const y1=g===0?82:112,y2=(peers.length===2?ys[p]:ys[0])+(aws?(i%2?42:18):30)+(t!=='two'&&!aws&&peers.length===1?(g?12:-12):0);
+    const pth=el('path',{d:`M240 ${y1} C 380 ${y1}, 380 ${y2}, 520 ${y2}`,class:'edge hl'},svg);links.push(pth);});
+  links.forEach((pth,i)=>setTimeout(()=>animate(pth,'',1400,null,svg),i*250));
+  const red={two:'TWO_IPS_REDUNDANCY',one2:'TWO_IPS_REDUNDANCY',one1:'SINGLE_IP_INTERNALLY_REDUNDANT',aws:'FOUR_IPS_REDUNDANCY',gcp:'none (use --peer-gcp-gateway)'}[t];
+  const tun=aws?(n==='one'?2:4):(n==='one'?1:2);
+  $('t-facts').innerHTML=[['Redundancy type',red],['Tunnels',tun+(aws?' (2 per HA VPN interface)':'')],['Mapping',t==='gcp'?'if0 to if0, if1 to if1':t==='one1'?'both tunnels to the one peer IP':t==='aws'?'if0 to connection 0, if1 to connection 1':'if0 to peer 0, if1 to peer 1'],['ECMP',aws?'Only with an AWS transit gateway':'Equal MEDs on both tunnels']].map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');
+  const v=$('t-verdict');
+  if(r==='static'){v.className='verdict bad';v.textContent='Not possible: tunnels on an HA VPN gateway must use dynamic BGP routing. Static routing is a Classic VPN feature.';}
+  else if(n==='one'){v.className='verdict bad';v.textContent='No 99.99% SLA: there must be a tunnel from each HA VPN interface. This is effectively a single tunnel.';}
+  else{v.className='verdict ok';v.textContent='99.99% SLA on the Google side.'+(t==='one1'?' The single-IP peer is still a single point of failure on your side.':t==='two'?' Two peer devices also make the on-prem side redundant.':'');}
+}
+['tp','tn','tr'].forEach(id=>seg(id,topo));topo();
+/* lab */
+const L=[{t:'Tasks 1 and 2: vpc-demo (10.1.1.0/24 REGION 1, 10.2.1.0/24 REGION 2) and on-prem (192.168.1.0/24)',gw:0,tun:0,bgp:0,fw:0,glob:0,del:0},
+ {t:'Task 3: HA VPN gateways (two public IPs each) and Cloud Routers ASN 65001 / 65002',gw:1,tun:0,bgp:0,fw:0,glob:0,del:0},
+ {t:'Task 4: four tunnels, if0 to if0 and if1 to if1, IKEv2 with a shared secret',gw:1,tun:1,bgp:0,fw:0,glob:0,del:0},
+ {t:'Task 5: BGP interfaces and peers on 169.254.0.0/30 and 169.254.1.0/30',gw:1,tun:1,bgp:1,fw:0,glob:0,del:0},
+ {t:'Task 6a: firewall rules for the remote ranges',gw:1,tun:1,bgp:1,fw:1,glob:0,del:0},
+ {t:'Task 6b: vpc-demo set to GLOBAL dynamic routing',gw:1,tun:1,bgp:1,fw:1,glob:1,del:0},
+ {t:'Task 7: delete vpc-demo-tunnel0 to test failover',gw:1,tun:1,bgp:1,fw:1,glob:1,del:1}];
+let li=0;
+function lr(){$('l-steps').innerHTML=L.map((s,i)=>`<li class="${i===li?'cur':''}"><span class="n">${i+1}</span><span>${s.t}</span><span class="who">${i<li?'done':i===li?'current':''}</span></li>`).join('');
+  const s=L[li];$('l-state').innerHTML=[['Tunnels',s.tun?(s.del?'tunnel0 down, tunnel1 ESTABLISHED':'4 ESTABLISHED (2 pairs)'):'none'],['BGP sessions',s.bgp?(s.del?'1 of 2 up':'2 of 2 up'):'none'],['On-prem learns',s.bgp?(s.glob?'10.1.1.0/24 and 10.2.1.0/24':'10.1.1.0/24 only (regional mode)'):'nothing'],['vpc-demo routing',s.glob?'GLOBAL':'REGIONAL']].map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');ld(s);}
+function ld(s,ping){const svg=$('l-map');svg.innerHTML='';
+  el('rect',{x:10,y:20,width:250,height:260,rx:12,class:'bandr2'},svg);el('text',{x:22,y:14,class:'bl'},svg,'VPC on-prem');
+  el('rect',{x:500,y:20,width:270,height:260,rx:12,class:'bandr'},svg);el('text',{x:512,y:14,class:'bl'},svg,'Global VPC vpc-demo');
+  box(svg,30,200,200,52,'on-prem-instance1','192.168.1.x','hl');box(svg,30,50,200,52,'on-prem-vpn-gw1',s.gw?'router ASN 65002':'not created',s.gw?'':'dim');
+  box(svg,520,50,230,52,'vpc-demo-vpn-gw1',s.gw?'router ASN 65001 (REGION 1)':'not created',s.gw?'':'dim');
+  box(svg,520,140,230,52,'vpc-demo-instance1','10.1.1.2 · REGION 1','');box(svg,520,215,230,52,'vpc-demo-instance2','10.2.1.2 · REGION 2','');
+  if(s.tun){el('path',{d:'M230 66 L520 66',class:'edge '+(s.del?'bad':'hl')},svg);el('path',{d:'M230 88 L520 88',class:'edge hl'},svg);
+    el('text',{x:375,y:60,class:'ns','text-anchor':'middle'},svg,'tunnel0 if0-if0'+(s.bgp?' · BGP 169.254.0.1/.2':''));el('text',{x:375,y:108,class:'ns','text-anchor':'middle'},svg,'tunnel1 if1-if1'+(s.bgp?' · BGP 169.254.1.1/.2':''));}
+  if(ping){const p=el('path',{d:ping.d,class:'edge '+(ping.ok?'ok':'bad')},svg);animate(p,ping.ok?'ok':'bad',1600,ping.ok?null:.5,svg);}}
+function ping(dst){const s=L[li];const r2=dst==='10.2.1.2';let ok=s.tun&&s.bgp&&s.fw&&(!r2||s.glob);let out;
+  if(!s.tun)out='connect: Network is unreachable\n(no tunnels yet)';
+  else if(!s.bgp)out='From 192.168.1.1 icmp_seq=1 Destination Net Unreachable\n(tunnels up, but no BGP: no routes learned)';
+  else if(!s.fw)out=`PING ${dst}: 4 packets transmitted, 0 received, 100% packet loss\n(routes exist, but the implied deny-ingress rule drops the traffic)`;
+  else if(r2&&!s.glob)out='PING 10.2.1.2: 2 packets transmitted, 0 received, 100% packet loss\n(regional mode: the REGION 1 Cloud Router doesn\'t advertise 10.2.1.0/24)';
+  else out=`64 bytes from ${dst}: icmp_seq=1 ttl=62 time=${r2?'34.9':'1.9'} ms\n64 bytes from ${dst}: icmp_seq=2 ttl=62 time=${r2?'32.2':'1.7'} ms\n0% packet loss`+(s.del?'\n(tunnel0 is gone: traffic now uses tunnel1)':'');
+  $('l-out').textContent=out;ld(s,{d:`M230 226 C 360 226, ${s.del?'380 88':'380 70'}, 520 ${r2?241:166}`,ok});}
+$('l-next').addEventListener('click',()=>{li=Math.min(L.length-1,li+1);lr();});$('l-prev').addEventListener('click',()=>{li=Math.max(0,li-1);lr();});
+$('l-p1').addEventListener('click',()=>ping('10.1.1.2'));$('l-p2').addEventListener('click',()=>ping('10.2.1.2'));lr();
+/* MED */
+function med(){const b0=+$('m-b0').value,b1=+$('m-b1').value,glob=val('m-mode')==='global',fail=$('m-fail').checked,load=+$('m-load').value;
+  $('m-v0').textContent=b0;$('m-v1').textContent=b1;$('m-lv').textContent=load;
+  const P=[['10.1.0.0/24','us-central1',0],['10.2.0.0/24','europe-west1',263],['10.3.0.0/24','asia-east1',1120]];
+  let rows=[];P.forEach(([p,r,c])=>{if(!glob&&c>0){rows.push(`<tr class="skip"><td>${p}</td><td>${r}</td><td>not advertised</td><td>not advertised</td><td class="why">regional mode: only us-central1 subnets are advertised</td></tr>`);return;}
+    const m0=b0+c,m1=b1+c;const pick=fail?'tunnel1':m0<m1?'tunnel0':m1<m0?'tunnel1':'both (ECMP)';
+    rows.push(`<tr class="hit"><td>${p}</td><td>${r}</td><td>${fail?'withdrawn':m0}</td><td>${m1}</td><td class="why">${pick}</td></tr>`);});
+  $('m-rows').innerHTML=rows.join('');
+  let t0,t1;if(fail){t0=0;t1=load;}else if(b0<b1){t0=load;t1=0;}else if(b1<b0){t0=0;t1=load;}else{t0=load/2;t1=load/2;}
+  const cap=1.5;const c0=Math.min(t0,cap),c1=Math.min(t1,cap);
+  $('m-x0').style.width=(c0/cap*100)+'%';$('m-x1').style.width=(c1/cap*100)+'%';$('m-x0').className=t0>cap?'bad':'';$('m-x1').className=t1>cap?'bad':'green';
+  $('m-n0').textContent=t0.toFixed(1)+' Gbps';$('m-n1').textContent=t1.toFixed(1)+' Gbps';
+  const v=$('m-verdict');const over=t0>cap||t1>cap;const mode=b0===b1?'active/active (ECMP)':'active/passive';
+  v.className='verdict '+(over?'bad':'ok');
+  v.textContent=`${mode}.`+(fail?` tunnel0 failed: all ${load} Gbps moves to tunnel1.`:'')+(over?` Over the ~1.5 Gbps per-tunnel limit: packets drop. ${b0===b1&&!fail?'':'With active/active, losing one tunnel halves capacity.'} Keep total traffic within one tunnel's capacity, or add tunnels.`:b0===b1&&!fail&&load>cap?'':' Traffic fits.')+(glob?' Cross-region prefixes carry a higher MED because the region-to-region cost is added.':'');}
+['m-b0','m-b1','m-load','m-fail'].forEach(id=>$(id).addEventListener('input',med));seg('m-mode',med);med();
+/* NCC */
+function ncc(){const on=id=>$(id).checked;const s2s=on('n-s2s'),test=val('n-test');const svg=$('n-map');svg.innerHTML='';
+  const hub={x:390,y:160};el('circle',{cx:hub.x,cy:hub.y,r:44,class:'node hl'},svg);el('text',{x:hub.x,y:hub.y+5,class:'nl','text-anchor':'middle'},svg,'NCC hub');
+  const S=[['n-v1','prod-vpc','VPC spoke',60,40],['n-v2','shared-svc-vpc','VPC spoke',60,230],['n-h1','Lisbon branch','Hybrid: HA VPN',560,30],['n-h2','Dallas DC','Hybrid: VLAN attachments',560,140],['n-h3','SD-WAN VM','Hybrid: router appliance',560,250]];
+  const pos={};S.forEach(([id,l,s,x,y])=>{const a=on(id);box(svg,x,y,170,52,l,s,a?(id[2]==='v'?'blue':'green'):'dim');pos[l]=[x+(x<hub.x?170:0),y+26];if(a)el('path',{d:`M${x+(x<hub.x?170:0)} ${y+26} L${hub.x+(x<hub.x?-44:44)} ${hub.y}`,class:'edge'},svg);});
+  let ok,msg,a,b;
+  if(test==='vv'){a='prod-vpc';b='shared-svc-vpc';ok=on('n-v1')&&on('n-v2');msg=ok?'VPC spokes exchange subnet routes through the hub (mesh preset). No peering mesh to manage.':'Both VPCs must be attached as VPC spokes.';}
+  else if(test==='hv'){a='Lisbon branch';b='prod-vpc';ok=on('n-h1')&&on('n-v1');msg=ok?'The hybrid spoke\'s learned routes reach the VPC spoke through the hub.':'Attach both the HA VPN hybrid spoke and the VPC spoke.';}
+  else{a='Lisbon branch';b='Dallas DC';ok=on('n-h1')&&on('n-h2')&&s2s;msg=ok?'Site-to-site data transfer: the branch and the data center talk over Google\'s backbone, used as a WAN.':!(on('n-h1')&&on('n-h2'))?'Attach both hybrid spokes first.':'Both are attached, but without site-to-site data transfer the hub won\'t carry traffic between external sites.';}
+  const v=$('n-verdict');v.className='verdict '+(ok?'ok':'bad');v.textContent=msg;
+  if(pos[a]&&pos[b]){const p=el('path',{d:`M${pos[a][0]} ${pos[a][1]} L${hub.x} ${hub.y} L${pos[b][0]} ${pos[b][1]}`,class:'edge '+(ok?'ok':'bad')},svg);animate(p,ok?'ok':'bad',1800,ok?null:.5,svg);}}
+['n-v1','n-v2','n-h1','n-h2','n-h3','n-s2s'].forEach(id=>$(id).addEventListener('change',ncc));seg('n-test',ncc);ncc();
+
+})();
+</script>
+</body>
+</html>
+

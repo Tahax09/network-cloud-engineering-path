@@ -1,0 +1,77 @@
+Next, let's discuss Partner Interconnect
+starting with the use case. Ken, a network engineer at Symbol
+Corporation, is tasked with connecting symbol's geographically remote
+data center to Google Cloud. However, the data center's
+location doesn't have access to a Dedicated Interconnect
+colocation facility, making a direct connection impossible. Ken requires a solution that offers
+high bandwidth, low latency, and dedicated connectivity to Google Cloud,
+even without a nearby colocation facility. Ken also needs a setup that uses
+the partners underlying infrastructure to connect to Google Cloud. Additionally, the solution needs
+to be secure and reliable, providing robust data protection and
+ensuring seamless operations. Thus, Partner Interconnect
+seems to be an excellent fit. Partner Interconnect is similar
+to Dedicated Interconnect. Dedicated Interconnect and Partner Interconnect have
+technical feature parity. However, the physical connection for Dedicated Interconnect is made
+through a supported service provider. Let's look at a few more differences. Partner Interconnect provides connectivity
+between your on premises network and your VPC network through
+a supported service provider. If your data center is in a physical
+location that can't reach a Dedicated Interconnect
+colocation facility, Partner Interconnect is a good option. If your data needs don't warrant
+using Dedicated Interconnect, consider using Partner Interconnect. Work with a supported service provider to
+connect your VPC and on premises networks. Consider placing the Partner Interconnect
+connection in multiple edge availability domains for redundancy. For a full list of service providers, see supported service providers in
+the Google Cloud documentation. To create a partner
+interconnect connection, follow these order your connection
+from a supported service provider. The service provider will then provide
+the connectivity needed to create a VLAN attachment. Create a VLAN attachment,
+which creates a pairing key. The pairing key is unique and
+lets a service provider identify and connect to the associated cloud router. The service provider uses this key to
+finish configuring your VLAN attachment. Request a connection from
+your service provider. Submit the pairing key and
+other connection details, such as the connection capacity and
+location. Your service provider
+configures your connection. They must confirm that they can
+serve your requested capacity. When the configuration is complete,
+you'll receive an email. In the VLAN attachment
+activate your connection. After the connection is activated,
+it can start passing traffic. Configure the on-premises routers to
+establish a BGP session with your cloud router. To configure your on premises routers,
+use the VLAN id interface IP address and peering IP address provided
+by the VLAN attachment for layer two connections,
+traffic passes through the service provider network to reach the VPC
+network or on premises network. BGP is configured between
+the on-premises router and a cloud router in the VPC
+network as shown in the graphic. For layer two connections,
+you must configure and establish a BGP session between your
+cloud routers and on premises routers. When you configure cloud router,
+you configure VLAN attachments. Each VLAN attachment is a logical
+connection between your on premises network and
+a single region in your VPC network. When creating a VLAN attachment, specify
+a cloud router in the region that contains the subnets that you want to reach. The VLAN attachment automatically
+allocates a VLAN ID and BGP peering IP address. Use that information to configure
+your on-premises router and establish a BGP session
+with your cloud router. For partner interconnect, the VLAN attachment uses a connection that
+your service provider sets up and manages. The service provider
+completes the circuit. For layer three connections, traffic is
+passed to the service provider network. Their network then routes a traffic
+to the correct destination either to the on-premises network or
+to the VPC network. Connectivity between the on
+premises network and the service provider network
+depends on the service provider. For example, the service provider
+might request that you establish a BGP session with them or configure a static
+default route to their network. For Layer 3 connections, your service
+provider establishes a BGP session between your cloud routers and their on-premises
+routers for each VLAN attachment. You don't need to configure BGP
+on your local router, Google and your service provider automatically
+set the correct BGP configurations. Dedicated Interconnect and Partner Interconnect have
+technical feature parity. The biggest difference is where you
+interconnect from a Google colocation facility or from a partner facility. However, there are some
+other points to consider. Use Partner Interconnect when you cannot
+physically connect from a colocation facility where Google has presence, but
+can use a partner colocation facility. Partner Interconnect can
+be procured quickly. The physical configuration already
+exists at the service provider, so there's less infrastructure to set up. Partner Interconnect also is sufficient
+to support bandwidth needs less than 50 gigabits per second. A partner Interconnect connection can
+be scaled based on the number and capacity of your VLAN attachments. Thus, the smallest connection
+is 50 megabits per second. If you need less than 50 megabits per
+second, consider using cloud VPN.

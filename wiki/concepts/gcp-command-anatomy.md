@@ -719,6 +719,130 @@ gcloud compute routers update hybrid-cr --region=asia-south1 --advertisement-mod
 
 ---
 
+## 16. URL maps and traffic management
+→ [[GCP42 - Traffic Management]] · [[GCP43 - Lab - Configuring Traffic Management with a Load Balancer]] · visualization: [URL Map and Traffic Split](../visualizations/gcp/GCP42-43%20-%20URL%20Map%20and%20Traffic%20Split.html)
+
+```bash
+gcloud compute url-maps export web-map --global --destination=web-map.yaml
+gcloud compute url-maps validate --source=web-map.yaml --global          # runs the tests: section, no changes
+gcloud compute url-maps import web-map --global --source=web-map.yaml   # apply (regional: --region=R)
+gcloud compute url-maps add-path-matcher web-map --global --path-matcher-name=pathmap \
+    --default-service=video-site --new-hosts=cymbal.com \
+    --path-rules="/video-hd=video-hd,/video-hd/*=video-hd,/video-4k=video-4k"
+```
+| Piece | Meaning |
+|-------|---------|
+| `export` / `import` | Round-trip the whole map as YAML: the only way to edit advanced `routeRules` (weights, retries, mirroring) |
+| `validate` | Dry run. Evaluates the YAML's `tests:` (host, path, expected service) |
+| `add-path-matcher --path-rules` | Simple mode: path → service. Longest match wins; `/*` only after a slash |
+| `weightedBackendServices` (YAML) | Canary / blue-green split; weights per route rule |
+
+**When:** path- or header-based routing, canary and blue-green releases, redirects and rewrites.
+
+---
+
+## 17. Internal passthrough NLB as next hop
+→ [[GCP44 - Internal Network Load Balancers as Next Hops]] · visualization: [ILB Next Hop Router](../visualizations/gcp/GCP44%20-%20ILB%20Next%20Hop%20Router.html)
+
+```bash
+gcloud compute routes create default-via-fw --network=hub-vpc --destination-range=0.0.0.0/0 --priority=900 \
+    --next-hop-ilb=fw-ilb-fr --next-hop-ilb-region=us-central1          # by name + region: same VPC
+gcloud compute routes create to-spoke2 --network=hub-vpc --destination-range=10.0.2.0/24 \
+    --next-hop-ilb=10.0.1.100                                            # by IP: same VPC or peered VPC
+gcloud compute forwarding-rules update fw-ilb-fr --region=us-central1 --allow-global-access
+gcloud compute networks peerings update hub-to-spoke1 --network=hub-vpc --export-custom-routes
+gcloud compute networks peerings update spoke1-to-hub --network=spoke1-vpc --import-custom-routes
+```
+| Piece | Meaning |
+|-------|---------|
+| `--next-hop-ilb` | The forwarding rule name (+ `--next-hop-ilb-region`), its IP, or its full URL |
+| `--allow-global-access` | Lets clients and routes in other regions use this ILB. Without it, cross-region packets are dropped |
+| `--export/--import-custom-routes` | Hub exports, spokes import, so spokes learn ILB-next-hop routes |
+
+Backends must have `--can-ip-forward`. Consider an ILB **failover policy** (`backend-services update --failover-ratio`, backups with `add-backend --failover`).
+
+---
+
+## 18. Cloud CDN and edge security policies
+→ [[GCP45 - Cloud CDN]] · [[GCP46 - Google Cloud Armor with Cloud CDN]] · [[GCP47 - Lab - Cloud Armor Edge Security Policies for Cloud CDN]] · visualization: [Edge Cache and Armor](../visualizations/gcp/GCP45-48%20-%20Edge%20Cache%20and%20Armor.html)
+
+```bash
+gcloud compute backend-buckets create static-bb --gcs-bucket-name=BUCKET --enable-cdn --cache-mode=CACHE_ALL_STATIC
+gcloud compute backend-services update web-bes --global --enable-cdn --cache-mode=USE_ORIGIN_HEADERS --default-ttl=3600
+gcloud compute url-maps invalidate-cdn-cache web-map --path="/img/*" [--async]
+gcloud compute security-policies create edge-geo --type=CLOUD_ARMOR_EDGE
+gcloud compute security-policies rules create 1000 --security-policy=edge-geo \
+    --expression="origin.region_code == 'XX'" --action=deny-403
+gcloud compute backend-buckets update static-bb --edge-security-policy=edge-geo       # --no-edge-security-policy removes it
+```
+| Piece | Meaning |
+|-------|---------|
+| `--enable-cdn --cache-mode` | Turns on Cloud CDN for the backend: `USE_ORIGIN_HEADERS`, `CACHE_ALL_STATIC` (default via gcloud), `FORCE_CACHE_ALL` |
+| `invalidate-cdn-cache --path` | Purge cached objects. Deleting the origin object does **not** purge cache |
+| `--type=CLOUD_ARMOR_EDGE` | Edge security policy, evaluated **before** cache lookup |
+| `--edge-security-policy` vs `--security-policy` | Edge vs backend policy attachment on a backend service or bucket |
+
+---
+
+## 19. Cloud Interconnect
+→ [[GCP52 - Dedicated Interconnect]] · [[GCP53 - Partner Interconnect]] · [[GCP54 - Cross-Cloud Interconnect]] · visualization: [Interconnect Chooser](../visualizations/gcp/GCP49-54%20-%20Interconnect%20Chooser.html)
+
+```bash
+gcloud compute interconnects locations list                                   # colocation facilities / EADs
+gcloud compute interconnects create ic-1 --customer-name=Cymbal --interconnect-type=DEDICATED \
+    --link-type=LINK_TYPE_ETHERNET_10G_LR --requested-link-count=2 --location=LOCATION --admin-enabled
+gcloud compute interconnects get-diagnostics ic-1                             # light levels, LACP
+gcloud compute interconnects attachments dedicated create att-1 --region=R --router=cr-r \
+    --interconnect=ic-1 --vlan=100 [--bandwidth=BPS_10G]
+gcloud compute interconnects attachments partner create att-p --region=R --router=cr-r \
+    --edge-availability-domain=availability-domain-1                         # returns a pairing key
+gcloud compute interconnects attachments describe att-p --region=R --format="value(pairingKey,state)"
+gcloud compute interconnects attachments partner update att-p --region=R --admin-enabled
+```
+| Piece | Meaning |
+|-------|---------|
+| `--interconnect-type=DEDICATED` / `--link-type` | A physical Dedicated connection: 10G, 100G (or 400G) circuits; link type can't be changed later |
+| `--requested-link-count` | Number of circuits bundled (max 8) |
+| `attachments dedicated` / `partner` | VLAN attachment to a regional Cloud Router. Partner attachments yield a **pairing key** for the provider |
+| `--edge-availability-domain` | Which EAD the partner attachment lands in (use both for redundancy) |
+| `--admin-enabled` | Activate (partner attachments start pending) |
+
+Cross-Cloud Interconnect uses `interconnects create … --interconnect-type=DEDICATED` with a `--remote-location` for the other cloud.
+
+---
+
+## 20. HA VPN and BGP tuning
+→ [[GCP56 - Cloud VPN Overview]] · [[GCP57 - HA VPN Topologies]] · [[GCP58 - Lab - Configuring Google Cloud HA VPN]] · [[GCP59 - Influence Best Path Selection]] · visualization: [HA VPN and BGP Paths](../visualizations/gcp/GCP55-60%20-%20HA%20VPN%20and%20BGP%20Paths.html)
+
+```bash
+gcloud compute vpn-gateways create gw1 --network=vpc-demo --region=R           # 2 interfaces, 2 public IPs
+gcloud compute external-vpn-gateways create onprem-gw --interfaces 0=203.0.113.10,1=203.0.113.20   # TWO_IPS_REDUNDANCY
+gcloud compute routers create cr1 --network=vpc-demo --region=R --asn=65001
+gcloud compute vpn-tunnels create t0 --region=R --vpn-gateway=gw1 --interface=0 \
+    --peer-gcp-gateway=gw-peer | --peer-external-gateway=onprem-gw --peer-external-gateway-interface=0 \
+    --ike-version=2 --shared-secret=SECRET --router=cr1
+gcloud compute routers add-interface cr1 --region=R --interface-name=if-t0 --ip-address=169.254.0.1 --mask-length=30 --vpn-tunnel=t0
+gcloud compute routers add-bgp-peer cr1 --region=R --peer-name=bgp-t0 --interface=if-t0 \
+    --peer-ip-address=169.254.0.2 --peer-asn=65002 [--advertised-route-priority=100]
+gcloud compute routers update-bgp-peer cr1 --region=R --peer-name=bgp-t1 --advertised-route-priority=200   # make t1 standby
+gcloud compute networks update vpc-demo --bgp-routing-mode=GLOBAL
+gcloud compute vpn-tunnels describe t0 --region=R --format="value(status,detailedStatus)"
+gcloud compute routers get-status cr1 --region=R                               # BGP state, learned/best routes
+```
+| Piece | Meaning |
+|-------|---------|
+| `vpn-gateways create` | HA VPN gateway (regional, 2 interfaces) |
+| `external-vpn-gateways create --interfaces` | Describes a non-Google peer: 1 IP (SINGLE_IP_INTERNALLY_REDUNDANT), 2 (TWO_IPS), 4 (FOUR_IPS, e.g. AWS) |
+| `--peer-gcp-gateway` | Peer is another HA VPN gateway (HA-to-HA): match interface numbers |
+| `--ike-version=2 --shared-secret` | IKEv2 with a pre-shared key; both sides must match |
+| `add-interface` + `add-bgp-peer` | One link-local /30 and one BGP session per tunnel |
+| `--advertised-route-priority` | Becomes the BGP **MED**: lower is preferred (0–65535, default 100) |
+| `--bgp-routing-mode=GLOBAL` | Cloud Router advertises and applies routes for all regions (adds region-to-region cost to MED) |
+
+**When:** encrypted hybrid or multicloud links up to a few Gbps, HA VPN over Interconnect for encryption, active/passive steering.
+
+---
+
 ## Linked Pages
 - [[gcp-product-map]] · [[gcp-private-access]] · [[gcp-network-architecture]] · [[gcp-routing]] · [[gcp-dns]]
 - [[certs/gcp-networking]]

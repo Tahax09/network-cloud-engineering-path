@@ -1,0 +1,70 @@
+In this module, you will receive a brief
+overview of Cloud Interconnect and Cloud VPN. You then learn about the three
+types of cloud inerconnect, Dedicated Interconnect, Partner
+Interconnect and Cross-Cloud Interconnect. You also learned about how they can be
+useful and also how to set them up. At the end of the module, there's a short quiz to check your
+understanding of what you learned. Rob, a network engineer
+at Simbel Corporation, is tasked with managing the hybrid
+cloud environment for Simble, which spans Google Cloud and
+Microsoft Azure. As Simble's workload grows, Rob needs a solution to seamlessly
+connect the two cloud platforms and ensure consistent performance and
+security across both environments. Cross-Cloud Interconnect is
+an excellent fit as it offers dedicated high bandwidth connectivity between
+Google Cloud and Microsoft Azure. This would enable them to efficiently
+transfer data between the two platforms and eliminate the latency and bandwidth limitations associated
+with public Internet connections. Additionally, Rob requires a solution
+to be secure and reliable, providing strong data encryption and redundancy
+to guarantee business continuity. With Cross-Cloud Interconnect Google
+provisions a dedicated physical connection between the Google network and that of
+another supported cloud service provider. Google currently supports Amazon Web
+Services, Microsoft Azure, Oracle Cloud infrastructure, and Alibaba Cloud for
+use with Cross-Cloud interconnect. You can use this connection to peer
+your Google Virtual private cloud or VPC network with your network that's
+hosted by the cloud service provider. You identify supported locations where you
+want Google to place your connections. Then you purchase primary and
+redundant Cross-Cloud Interconnect ports. You also buy primary and redundant
+ports from your cloud service provider. After provisioning the connection, Google
+supports the connection up to the point where it reaches the network of
+your other cloud service provider. Note that Google does not guarantee uptime
+from the other cloud service provider and cannot create a support
+ticket on your behalf. Cross-Cloud Interconnect supports
+the adoption of an integrated multicloud strategy. Adopting a multicloud architecture lets
+you avoid being locked in with a single vendor, store data in one cloud while
+hosting business logic in another. Avoid downtime if one cloud has an outage. Use a second cloud for
+disaster recovery and maximize business insights by
+analyzing data in multiple clouds. Without Cross-Cloud Interconnect,
+the options for setting up connectivity are limited and
+all are relatively complex. When you use Cross-Cloud Interconnec, you
+don't have to deploy your own hardware and you eliminate the need to
+work with third parties. You can use Cross-Cloud Interconnect
+as part of a site -o-site data transfer strategy. Site-to-site data transfer is a feature
+of network connectivity center that lets you use the Google network
+as a wide area network. Network Connectivity
+center is discussed later. The cloud interconnect SLA requires you
+to have two connections at minimum, each in a different edge availability
+domain of a metropolitan area. This approach gives you
+99.9% availability. In order to achieve high availability for
+critical applications, you should configure two
+pairs of connections. Each pair must be in
+a different metropolitan area. Within each metropolitan area, you must use two different
+edge availability domains. This approach gives you
+99.99% availability. Cross-Cloud Interconnect connections are
+available in 210 gigabits per second or 100 gigabits per second. For more information, see Cross-Cloud Interconnect overview
+in the Google Cloud documentation. MACsec for Cloud Interconnect helps you
+secure traffic on Cloud Interconnect connections, specifically between your on
+premises router and Google's edge routers. MACsec encrypts traffic on dedicated
+interconnect between Google's peering edge router and an on premises router. Partner Interconnect between
+Google's peering edge router and the service provider's
+peering edge router. Cross Cloud Interconnect between
+Google's peering edge router and a router run by remote cloud. MACsec for cloud Interconnect doesn't provide
+encryption in transit within Google. For stronger security, we recommend
+that you use MACsec with other network security protocols
+such as IPsec and TLS. Let's take a look at an example
+of how you can use Gemini to help you connect the network you created
+to your on premises network. You can explore your options by asking
+Gemini, which should I use, Cloud VPN or Cloud Interconnect? Please provide details supporting the use
+of each according to their respective strengths. Another useful prompt is list the steps
+to generate a report on the past week's performance of my cloud interconnect link,
+including bandwidth utilization, latency, and packet loss. Here's the response to the first prompt. Gemini provides a comparison table
+that covers the various feature differences between Cloud VPN and
+Cloud Interconnect.

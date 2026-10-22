@@ -1,0 +1,4 @@
+Welcome to the Cloud VPN module. Let’s explore Cloud VPN, a service that enables secure encrypted
+connections between your on-premises networks
+and Google Cloud. We’ll explore what Cloud VPN is, how it works, and the various
+use cases it supports.

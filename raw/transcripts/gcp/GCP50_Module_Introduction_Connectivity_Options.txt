@@ -1,0 +1,6 @@
+Welcome to module 1, connectivity options. In this module, we begin by providing a brief overview
+of cloud interconnect and cloud VPN. We then proceed with the discussion of
+the three types of cloud interconnect, Dedicated Interconnect,
+Partner Interconnect, and Cross-Cloud Interconnect. You will learn about how they can be
+useful and also how to set them up. At the end of the module, there's a short quiz to check your
+understanding of what you just learned.

@@ -1,0 +1,166 @@
+Traffic management
+is key to ensuring optimal network performance
+and user experience. In this section,
+we'll delve into a real world use case
+and its implementation. Bola, a Cloud network engineer
+at Cymbal Corporation, is responsible for maintaining their video streaming platform. The website accesses the
+Cymbal store infrastructure using Cloud load balancing. To optimize
+performance and costs, they want to route
+user traffic to different server backends based on the requested video quality. For example, 4K versus HD. What should Bola do? Bola can benefit from traffic management. Traffic management provides
+enhanced features to route load balancer traffic based
+on criteria that you specify. With traffic
+management, you can; implement traffic steering
+based on HTTPS parameters, such as the host, path, headers, and other
+request parameters. Perform request-based and
+response-based actions, such as redirects and
+header transformations, and use traffic policies to fine tune load
+balancing behavior, such as retry policies, request mirroring, and cross origin resource
+sharing or cores. The traffic features that are available can vary
+per load balancer. Check the Google Cloud
+documentation for details. For example, traffic
+management overview for a classic application load balancer, traffic
+management overview for global external
+application load balancers, and traffic management
+overview for regional external
+application load balancers. Recall that in addition
+to traffic management, Cloud load balancing offers backend services
+like health checks, session affinity, balancing
+mode, and capacity scaling. These load balancers
+support traffic management. Global external
+Application Load Balancer, Global classic Application
+Load Balancer, Internal Application
+Load Balancer, and the Regional external
+Application Load Balancer. Other load balancers
+have access to only traffic features
+available in backend services, such as balancing mode
+and session affinity. Not all load balancers support all traffic
+management features. For a complete list of
+traffic management features supported for each
+load balancer, refer to the routing
+and traffic management in the Google Cloud
+documentation. The URL map contains rules
+that define the criteria to use to route incoming traffic to a backend service or
+a backend bucket. Traffic management features
+are configured in a URL map. In other words, the
+load balancer uses the URL map to determine where
+to route incoming traffic. When you configure routing, you can choose between
+the following modes; simple host and path rule or advanced host
+path and route rule. Each URL map can contain only
+one mode or the other mode. A request is first evaluated
+based on the host rule. If the domain matches
+a defined host rule, the system uses its
+associated path matcher to further refine routing. Each host rule
+consists of a list of one or more hosts and
+a single path matcher. If no host rules are defined, the request is routed
+to the default service. The request path is
+compared against available path rules
+with the longest, most specific match
+taking priority. Path rules are evaluated on a longest path
+matches first basis. You can specify the path
+rules in any order. Once the best match is found, the request is sent to the
+corresponding backend service. If no specific host
+and path rules apply, the request is handled by
+the default backend service. This setup allows you to create custom routing
+rules like sending video related requests to a dedicated service while directing general traffic
+to a different backend. Going back to the scenario, Bola can use the URL map
+to distribute traffic. The host rule is cymbal.com, which means any host
+other than cymbal.com, for example, cymbal.org or cymbal.net are directed
+to the default service. Once the host name
+cymbal.com matches, the URL is matched
+for a path rule. The default backend
+service is video site. Requests with the exact
+URL path video-hd are directed to the video
+HD backend service. Requests with the exact URL path video-4k are directed to the
+video-4k backend service. On this slide, you see
+a URL map that routes video traffic to the example we covered in the
+previous slides. This example is shown
+by using a YAML file. You can also use the
+Google Cloud Console to configure URL maps. Let's look at how this example
+works. Default service. The default service defines
+a service where traffic should be routed when no
+matching URL is found. You must specify a default
+service or a backend bucket. The host rules defines a list of host names that are
+processed by this rule. In this example, there's
+only one item in the list, which means that only one
+host rule is defined. This host rule
+contains an asterisk. The asterisk is a wildcard, which matches all hosts. To see where to find the
+matching logic to use, look at the value
+of path matcher. For this host rule, pathMatcher is set to pathmap. Here's a path matchers list, which contains a list
+of path matching rules. The only element in
+this list is path map. Each match rule defines logic to process the traffic that is
+sent to the backend service. In this example, there
+are two sets of paths. One paths list defines valid
+URL paths for the video hd. The other paths list defines valid URL paths
+for the video 4K. If the URL contains a match
+for one of these paths lists, the load balancer routes the traffic to the
+corresponding service. If the traffic
+contains a path that matches none of the paths lists, then it's sent to the
+default backend video site. In other words, the
+traffic is sent to the service denoted by
+pathmatchers/defaultservice. For additional details,
+refer to the documentation. The advanced routing mode
+can choose a rule based on a defined priority and includes additional
+configuration options. Instead of path rules, advanced routing
+uses route rules. Each URL map can include either simple or advanced
+rules, but not both. This URL map contains rules that route 95% of the
+traffic to Service A, and 5% of the traffic
+is routed to Service B. The example shows a
+YAML implementation of an advanced routing mode. You can also use the
+Google Cloud Console to configure URL maps. Let's look at how
+this example works. When no matching
+host rule is found, the default service
+defines a service to use. The field default
+service is required. The host rules works the same way for
+simple routing mode. As in the previous example, this host rule uses the
+asterisk to match all hosts. Because path matcher
+is set to matcher 1, /pathMatchers/matcher1
+defines the matching logic. /pathMatchers/matcher1 contains
+a list of route rules. The route rules
+contain a list of one or more match rules
+and a route action. When URL satisfy
+the match rules, their traffic is processed
+by the route action. In this example, there's only
+one item in match rules. Where prefix match
+equals an empty string, the prefix match condition
+matches the URL path prefix, URLs that start with
+the same string match. In the example, the prefix
+match is the empty string, which matches all URLs. In other words, all URLs
+trigger this match rule, and the route action is applied. The route action defines
+how the traffic is routed. In the example, the route action is set to
+weightedBackendServices. Weighted backend services is
+a list of backend services. A weight value is specified
+for each backend service, representing a percentage
+of the total traffic. Ninety-five percent of the
+traffic is sent to Service A, and 5% of the traffic
+is sent to Service B. The route action can also define traffic policies such as
+retry policies and cores. For a complete list of
+route action values, refer to the Google
+Cloud documentation for the load balancer
+that you're using. In this example, you might
+notice that there are two default service
+key value pairs. One default service
+is associated with the host rules and the other is associated with
+the route rules. If there's no
+matching host rule, the first default
+service is used. If there's no
+matching route rule, the second default
+service is used. Not all load balancers support all traffic
+management features. For a complete list of
+traffic management features supported for each
+load balancer, refer to routing and
+traffic management in the Google Cloud
+documentation. Wild cards are supported, but only after a forward slash. For example, /video/* is
+valid and /video* is invalid. Rule matching does not use regular expressions or
+substring matching. For example, /videos/hd* does
+not match /videos/hd-pdq, because -pdq is a substring and also because it comes
+after the forward slash. /video/* matches /video/hd-pdq. You can also use
+Gemini to learn more. One trick to get
+better responses is to assign Gemini a role. Prime the model to
+assume a specific role, also known as a persona. Adding a role is not
+always necessary, but can enforce a
+certain level of expertise when
+generating a response. Improve performance, and
+tailor's communication style. This technique is particularly useful for getting
+the model to perform highly technical tasks or enforcing specific
+communication styles. The example on the slide shows a sample prompt where Gemini assumes the role of a Google Cloud technical
+support engineer.

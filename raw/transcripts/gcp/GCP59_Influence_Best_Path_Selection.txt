@@ -1,0 +1,38 @@
+Let us next explore how to influence the best
+path selection. When a Cloud router advertises
+prefixes to a BGP pier, it includes a priority for each prefix in the
+advertisement. The advertisement
+is the BGP message, and it includes a root priority. The root priority is stored in the BGP multi-exit
+discriminator or MED attribute, which influences root selection. You can change the advertised
+root priority value on each Cloud VPN tunnel
+or VLAN attachment. This value is then assigned
+to the BGP MED attribute. The MED value affects the
+BGP best path selection. By changing the
+advertised root priority, you influence the
+best path selection. For more information about other factors that influence
+the best path selection, see the BGP protocol
+standard on the ietf.org website or a
+networking tutorial. The advertised root
+priority value applies to all
+prefixes advertised by the BGP session associated with the Cloud VPN tunnel
+or VLAN attachment. Base priorities are whole
+numbers from 0-65535. The highest possible
+base priority is zero. In other words, a lower number indicates a higher priority. The default base
+priority is 100. If you don't specify
+a base priority, the default priority is used. Next, let's talk about the region to region costs
+that can be added to the base priority to set the MED attribute
+on the BGP session. This cost only applies when the VPC is in global
+dynamic routing mode. Region to region costs are
+from 201 through 9,999. The value depends
+on the distance, latency, and other factors
+between two regions. Google generates the region to region cost values and
+you can't modify them. Next, let's look at a sample topology to
+see how this works. In the graphic, you
+see an example of region to region costs
+that Google calculates. Regions that are closer have a lower region cost for traffic
+that flows between them. For example, the regional
+cost between US Central 1 and Europe West 1 is
+lower than the cost between Europe West
+1 and US West 1. For more information, see advertise prefixes
+and priorities in the Google Cloud
+documentation.
