@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="590" viewBox="0 0 680 590" role="img">
+<title>Contoso Clinic Azure architecture</title>
+<desc>Internet reaches Application Gateway in its own subnet inside a VNet. Behind it a VM Scale Set in the web subnet runs instances in Zone 1 and Zone 2. A private endpoint in the data subnet connects over Private Link to Azure SQL Database outside the VNet. Key Vault, managed identity and Azure Monitor sit beside the VNet.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.th{font-size:14px;font-weight:500;fill:#2C2C2A}
+.ts{font-size:12px;font-weight:400;fill:#5F5E5A}
+.arr{stroke:#5F5E5A;stroke-width:1.5;fill:none}
+.c-gray rect{fill:#F1EFE8;stroke:#5F5E5A}.c-gray .th{fill:#2C2C2A}.c-gray .ts{fill:#444441}
+.c-amber rect{fill:#FAEEDA;stroke:#854F0B}.c-amber .th{fill:#633806}.c-amber .ts{fill:#854F0B}
+.c-teal rect{fill:#E1F5EE;stroke:#0F6E56}.c-teal .th{fill:#085041}.c-teal .ts{fill:#0F6E56}
+.c-blue rect{fill:#E6F1FB;stroke:#185FA5}.c-blue .th{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+.c-purple rect{fill:#EEEDFE;stroke:#534AB7}.c-purple .th{fill:#26215C}.c-purple .ts{fill:#3C3489}
+.c-coral rect{fill:#FAECE7;stroke:#993C1D}.c-coral .th{fill:#4A1B0C}.c-coral .ts{fill:#712B13}
+.c-red rect{fill:#FCEBEB;stroke:#A32D2D}.c-red .th{fill:#501313}.c-red .ts{fill:#791F1F}
+.c-green rect{fill:#EAF3DE;stroke:#3B6D11}.c-green .th{fill:#173404}.c-green .ts{fill:#27500A}
+</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="680" height="590" fill="#ffffff"/>
+
+<g class="c-gray"><rect x="250" y="8" width="130" height="28" rx="14" stroke-width="0.5"/>
+<text class="th" x="315" y="22" text-anchor="middle" dominant-baseline="central">Internet users</text></g>
+<line x1="315" y1="36" x2="315" y2="62" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="325" y="50" dominant-baseline="central">HTTP 80</text>
+
+<rect x="10" y="62" width="660" height="520" rx="10" fill="none" stroke="#888780" stroke-width="0.5" stroke-dasharray="6 3"/>
+<text class="ts" x="22" y="74" dominant-baseline="central">Azure region  ·  Resource group: rg-contoso-prod</text>
+
+<rect x="22" y="86" width="500" height="352" rx="10" fill="none" stroke="#1D9E75" stroke-width="0.5" stroke-dasharray="5 3"/>
+<text class="ts" x="34" y="98" dominant-baseline="central">VNet  vnet-prod  10.0.0.0/16</text>
+
+<!-- snet-appgw -->
+<rect x="32" y="106" width="480" height="68" rx="6" fill="none" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="44" y="117" dominant-baseline="central">snet-appgw  10.0.0.0/24  ·  spans all zones</text>
+<g class="c-teal"><rect x="46" y="126" width="452" height="38" rx="8" stroke-width="0.5"/>
+<text class="th" x="272" y="140" text-anchor="middle" dominant-baseline="central">Application Gateway v2 (zone-redundant)</text>
+<text class="ts" x="272" y="155" text-anchor="middle" dominant-baseline="central">Standard public IP · listener · health probe</text></g>
+
+<line x1="150" y1="174" x2="150" y2="224" class="arr" marker-end="url(#arrow)"/>
+<line x1="394" y1="174" x2="394" y2="224" class="arr" marker-end="url(#arrow)"/>
+
+<!-- snet-web -->
+<rect x="32" y="188" width="480" height="146" rx="6" fill="none" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="ts" x="44" y="199" dominant-baseline="central">snet-web  10.0.1.0/24  ·  spans all zones  ·  NSG: 80 only from snet-appgw</text>
+<rect x="38" y="208" width="468" height="120" rx="6" fill="none" stroke="#534AB7" stroke-width="0.5" stroke-dasharray="4 2"/>
+<text class="ts" x="498" y="219" text-anchor="end" dominant-baseline="central">VM Scale Set · autoscale min 2 / max 6</text>
+
+<g class="c-amber"><rect x="50" y="226" width="200" height="64" rx="8" stroke-width="0.5"/>
+<text class="th" x="150" y="244" text-anchor="middle" dominant-baseline="central">VM instance</text>
+<text class="ts" x="150" y="260" text-anchor="middle" dominant-baseline="central">Ubuntu · Node.js app</text>
+<text class="ts" x="150" y="276" text-anchor="middle" dominant-baseline="central">Availability Zone 1</text></g>
+<g class="c-amber"><rect x="294" y="226" width="200" height="64" rx="8" stroke-width="0.5"/>
+<text class="th" x="394" y="244" text-anchor="middle" dominant-baseline="central">VM instance</text>
+<text class="ts" x="394" y="260" text-anchor="middle" dominant-baseline="central">Ubuntu · Node.js app</text>
+<text class="ts" x="394" y="276" text-anchor="middle" dominant-baseline="central">Availability Zone 2</text></g>
+<text class="ts" x="272" y="310" text-anchor="middle" dominant-baseline="central">system-assigned managed identity on every instance</text>
+
+<line x1="272" y1="334" x2="272" y2="372" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="282" y="354" dominant-baseline="central">TCP 1433</text>
+
+<!-- snet-data -->
+<rect x="32" y="360" width="480" height="68" rx="6" fill="none" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="44" y="371" dominant-baseline="central">snet-data  10.0.2.0/24  ·  NSG: 1433 only from snet-web</text>
+<g class="c-blue"><rect x="146" y="380" width="252" height="40" rx="8" stroke-width="0.5"/>
+<text class="th" x="272" y="394" text-anchor="middle" dominant-baseline="central">Private Endpoint (private IP)</text>
+<text class="ts" x="272" y="409" text-anchor="middle" dominant-baseline="central">+ private DNS zone privatelink.database…</text></g>
+
+<line x1="272" y1="428" x2="272" y2="470" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+<text class="ts" x="284" y="450" dominant-baseline="central">Private Link: no public access</text>
+
+<g class="c-purple"><rect x="122" y="470" width="300" height="52" rx="8" stroke-width="0.5"/>
+<text class="th" x="272" y="487" text-anchor="middle" dominant-baseline="central">Azure SQL Database (PaaS)</text>
+<text class="ts" x="272" y="505" text-anchor="middle" dominant-baseline="central">public network access: Disabled</text></g>
+
+<!-- right column -->
+<g class="c-red"><rect x="540" y="190" width="124" height="52" rx="8" stroke-width="0.5"/>
+<text class="th" x="602" y="208" text-anchor="middle" dominant-baseline="central">Key Vault</text>
+<text class="ts" x="602" y="226" text-anchor="middle" dominant-baseline="central">SQL password</text></g>
+<line x1="512" y1="266" x2="570" y2="242" stroke="#A32D2D" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrow)"/>
+<text class="ts" x="602" y="258" text-anchor="middle" dominant-baseline="central">Secrets User role</text>
+<text class="ts" x="602" y="272" text-anchor="middle" dominant-baseline="central">via identity</text>
+
+<g class="c-coral"><rect x="540" y="310" width="124" height="52" rx="8" stroke-width="0.5"/>
+<text class="th" x="602" y="328" text-anchor="middle" dominant-baseline="central">Azure Monitor</text>
+<text class="ts" x="602" y="346" text-anchor="middle" dominant-baseline="central">metrics · alerts</text></g>
+
+<g class="c-gray"><rect x="540" y="400" width="124" height="52" rx="8" stroke-width="0.5"/>
+<text class="th" x="602" y="418" text-anchor="middle" dominant-baseline="central">Cost Management</text>
+<text class="ts" x="602" y="436" text-anchor="middle" dominant-baseline="central">budget alerts</text></g>
+
+<text class="ts" x="340" y="574" text-anchor="middle" dominant-baseline="central">Subnets span all zones in Azure. Zones are chosen per resource (VM, gateway), not per subnet.</text>
+</svg>

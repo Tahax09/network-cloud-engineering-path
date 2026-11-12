@@ -111,6 +111,9 @@
 | WS08 | Creating Profiles | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 | WS09 | Saving Filter Buttons | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
 | WS10 | The Statistics View | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete | Pending |
+| WS11 | The Anatomy of a Packet | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
+| WS12 | The Ethernet Frame | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
+| WS13 | The IP Header | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
 
 ## AWS Cloud Practitioner
 

@@ -2,6 +2,12 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-11-12] ingest | WS11–WS13 — Anatomy of a Packet, Ethernet Frame, IP Header
+From pasted transcripts. Lab 1 frame 1 fields verified with tshark. Corrected lecture slips: IP total length excludes Ethernet; IP checksum is L3 header only; IPv4 RFC 791 (1981). Viz WS11-13 Packet Dissector (static gates pass).
+
+## [2026-10-22] ingest | AZ-900 Azure fundamentals + AZS01 Contoso Clinic scenario
+Created certs/az-900.md, concepts/azure-cloud-concepts.md (Domain 1, shared responsibility matrix), concepts/azure-product-map.md (12 categories + AWS/GCP equivalents), concepts/azure-service-reference.md (what/when/pros/cons), concepts/azure-scenario-framework.md (9-step method, decision rules, Azure vs AWS differences, pitfalls), scenarios/azure/AZS01 (requirements → services, portal + CLI steps, verify), and visualizations/azure/ (azure-contoso-architecture.svg, azure-decision-tree.svg, embedded in the notes). Source: study session, not a course transcript. Next: regions, region pairs, availability zones and the management group → subscription → resource group hierarchy.
+
 ## [2026-10-22] milestone+practice | Google Cloud Networking program complete; GS04–GS07, GPL03–GPL06, Scenario Drill
 Marked the 6-course program complete (cert page, overview, index, README, CLAUDE.md). Open items kept: Course 1 transcripts, GQ02, GQ10 answer key. New practice material for Courses 4–6: scenario walkthroughs GS04 (security, 6), GS05 (load balancing, 6), GS06 (hybrid, 6), GS07 capstone landing zone (decision log across all courses, IP plan, failure drills); practice labs GPL03 (6 security labs, defensive/own-resource only), GPL04 (5 LB labs), GPL05 (5 hybrid labs incl. k3s home lab over HA VPN with strongSwan + FRR), GPL06 capstone Terraform build with 10 milestones. Interactive Scenario Drill (22 cards, rotated answer positions) passes all gates. Linked from index, README, cert page.
 

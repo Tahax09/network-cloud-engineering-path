@@ -45,6 +45,13 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | [[WS09 - Saving Filter Buttons]] | Saving Filter Buttons (Bad TCP, grouping, signatures) | ✅ Complete |
 | [[WS10 - The Statistics View]] | The Statistics View (Conversations, Endpoints) — end of module | ✅ Complete |
 
+### Module 3 - Anatomy of a Packet (name to confirm)
+| ID | Title | Status |
+|----|-------|--------|
+| [[WS11 - The Anatomy of a Packet]] | Encapsulation, dissector chain, encrypted payload vs readable headers | ✅ Complete |
+| [[WS12 - The Ethernet Frame]] | DMAC/SMAC/EtherType (0x0800, 0x0806, 0x86DD), FCS not captured, MTU 1500 | ✅ Complete |
+| [[WS13 - The IP Header]] | IPv4 fields, TTL 255/128/64 hop estimate, IP ID, DF/MF, protocol 6/17, checksum validation off | ✅ Complete |
+
 ## Quizzes
 | ID | Title | Module | Status |
 |----|-------|--------|--------|

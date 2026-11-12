@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="1030" viewBox="0 0 680 1030" role="img">
+<title>Azure architecture design decision tree</title>
+<desc>A top-to-bottom flowchart. Start with resource group and region, then branch on compute type, then on database type, then a linear chain of private endpoint, subnet design, NSG rules and credentials. A traffic-variability question leads to autoscale or fixed instances, then load balancer choice, availability zones, and a cost justification step.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.th{font-size:14px;font-weight:500;fill:#2C2C2A}
+.ts{font-size:12px;font-weight:400;fill:#5F5E5A}
+.arr{stroke:#5F5E5A;stroke-width:1.5;fill:none}
+.c-gray rect{fill:#F1EFE8;stroke:#5F5E5A}.c-gray .th{fill:#2C2C2A}.c-gray .ts{fill:#444441}
+.c-amber rect{fill:#FAEEDA;stroke:#854F0B}.c-amber .th{fill:#633806}.c-amber .ts{fill:#854F0B}
+.c-teal rect{fill:#E1F5EE;stroke:#0F6E56}.c-teal .th{fill:#085041}.c-teal .ts{fill:#0F6E56}
+.c-blue rect{fill:#E6F1FB;stroke:#185FA5}.c-blue .th{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+.c-purple rect{fill:#EEEDFE;stroke:#534AB7}.c-purple .th{fill:#26215C}.c-purple .ts{fill:#3C3489}
+.c-coral rect{fill:#FAECE7;stroke:#993C1D}.c-coral .th{fill:#4A1B0C}.c-coral .ts{fill:#712B13}
+.c-red rect{fill:#FCEBEB;stroke:#A32D2D}.c-red .th{fill:#501313}.c-red .ts{fill:#791F1F}
+.c-green rect{fill:#EAF3DE;stroke:#3B6D11}.c-green .th{fill:#173404}.c-green .ts{fill:#27500A}
+</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="680" height="1030" fill="#ffffff"/>
+
+<g class="c-gray"><rect x="240" y="10" width="200" height="34" rx="17" stroke-width="0.5"/>
+<text class="th" x="340" y="27" text-anchor="middle" dominant-baseline="central">New scenario received</text></g>
+<line x1="340" y1="44" x2="340" y2="62" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-amber"><rect x="100" y="62" width="480" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="78" text-anchor="middle" dominant-baseline="central">Resource group + region + tags</text>
+<text class="ts" x="340" y="95" text-anchor="middle" dominant-baseline="central">subscription → RG is the home of every resource (Azure-specific first step)</text></g>
+<line x1="340" y1="106" x2="340" y2="124" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-blue"><rect x="190" y="124" width="300" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="140" text-anchor="middle" dominant-baseline="central">What type of compute?</text>
+<text class="ts" x="340" y="157" text-anchor="middle" dominant-baseline="central">OS · web app · events · containers</text></g>
+
+<line x1="270" y1="168" x2="85" y2="192" class="arr" marker-end="url(#arrow)"/>
+<line x1="320" y1="168" x2="255" y2="192" class="arr" marker-end="url(#arrow)"/>
+<line x1="360" y1="168" x2="425" y2="192" class="arr" marker-end="url(#arrow)"/>
+<line x1="410" y1="168" x2="595" y2="192" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-amber"><rect x="10" y="192" width="150" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="85" y="208" text-anchor="middle" dominant-baseline="central">VM / Scale Set</text>
+<text class="ts" x="85" y="225" text-anchor="middle" dominant-baseline="central">IaaS · full control</text></g>
+<g class="c-teal"><rect x="180" y="192" width="150" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="255" y="208" text-anchor="middle" dominant-baseline="central">App Service</text>
+<text class="ts" x="255" y="225" text-anchor="middle" dominant-baseline="central">PaaS · web / API</text></g>
+<g class="c-coral"><rect x="350" y="192" width="150" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="425" y="208" text-anchor="middle" dominant-baseline="central">Functions</text>
+<text class="ts" x="425" y="225" text-anchor="middle" dominant-baseline="central">serverless · events</text></g>
+<g class="c-purple"><rect x="520" y="192" width="150" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="595" y="208" text-anchor="middle" dominant-baseline="central">AKS / ACI</text>
+<text class="ts" x="595" y="225" text-anchor="middle" dominant-baseline="central">containers</text></g>
+
+<line x1="85" y1="236" x2="85" y2="254" stroke="#888780" stroke-width="1.5"/>
+<line x1="255" y1="236" x2="255" y2="254" stroke="#888780" stroke-width="1.5"/>
+<line x1="425" y1="236" x2="425" y2="254" stroke="#888780" stroke-width="1.5"/>
+<line x1="595" y1="236" x2="595" y2="254" stroke="#888780" stroke-width="1.5"/>
+<line x1="85" y1="254" x2="595" y2="254" stroke="#888780" stroke-width="1.5"/>
+<line x1="340" y1="254" x2="340" y2="272" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-blue"><rect x="190" y="272" width="300" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="288" text-anchor="middle" dominant-baseline="central">Does it need a database?</text>
+<text class="ts" x="340" y="305" text-anchor="middle" dominant-baseline="central">relational · NoSQL · cache</text></g>
+
+<line x1="280" y1="316" x2="120" y2="340" class="arr" marker-end="url(#arrow)"/>
+<line x1="340" y1="316" x2="340" y2="340" class="arr" marker-end="url(#arrow)"/>
+<line x1="400" y1="316" x2="560" y2="340" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-purple"><rect x="30" y="340" width="180" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="120" y="356" text-anchor="middle" dominant-baseline="central">Azure SQL Database</text>
+<text class="ts" x="120" y="373" text-anchor="middle" dominant-baseline="central">or MySQL / PostgreSQL</text></g>
+<g class="c-green"><rect x="250" y="340" width="180" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="356" text-anchor="middle" dominant-baseline="central">Cosmos DB</text>
+<text class="ts" x="340" y="373" text-anchor="middle" dominant-baseline="central">global NoSQL</text></g>
+<g class="c-coral"><rect x="470" y="340" width="180" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="560" y="356" text-anchor="middle" dominant-baseline="central">Cache for Redis</text>
+<text class="ts" x="560" y="373" text-anchor="middle" dominant-baseline="central">reduce DB load</text></g>
+
+<line x1="120" y1="384" x2="120" y2="402" stroke="#888780" stroke-width="1.5"/>
+<line x1="340" y1="384" x2="340" y2="402" stroke="#888780" stroke-width="1.5"/>
+<line x1="560" y1="384" x2="560" y2="402" stroke="#888780" stroke-width="1.5"/>
+<line x1="120" y1="402" x2="560" y2="402" stroke="#888780" stroke-width="1.5"/>
+<line x1="340" y1="402" x2="340" y2="420" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-blue"><rect x="100" y="420" width="480" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="437" text-anchor="middle" dominant-baseline="central">Should the DB be public?  Never.</text>
+<text class="ts" x="340" y="455" text-anchor="middle" dominant-baseline="central">Private Endpoint + private DNS zone · public access: Disabled</text></g>
+<line x1="340" y1="468" x2="340" y2="486" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-teal"><rect x="100" y="486" width="480" height="58" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="503" text-anchor="middle" dominant-baseline="central">VNet subnet design</text>
+<text class="ts" x="340" y="521" text-anchor="middle" dominant-baseline="central">snet-appgw · snet-web · snet-data</text>
+<text class="ts" x="340" y="535" text-anchor="middle" dominant-baseline="central">subnets span all zones · public IP only on the gateway</text></g>
+<line x1="340" y1="544" x2="340" y2="562" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-coral"><rect x="100" y="562" width="480" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="579" text-anchor="middle" dominant-baseline="central">NSG rules (by source subnet, never 0.0.0.0/0)</text>
+<text class="ts" x="340" y="597" text-anchor="middle" dominant-baseline="central">web ← gateway subnet only · data ← web subnet only</text></g>
+<line x1="340" y1="610" x2="340" y2="628" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-red"><rect x="100" y="628" width="480" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="645" text-anchor="middle" dominant-baseline="central">How are credentials handled?</text>
+<text class="ts" x="340" y="663" text-anchor="middle" dominant-baseline="central">Key Vault + managed identity + Secrets User role (never hardcode)</text></g>
+<line x1="340" y1="676" x2="340" y2="694" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-blue"><rect x="190" y="694" width="300" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="710" text-anchor="middle" dominant-baseline="central">Is traffic variable?</text>
+<text class="ts" x="340" y="727" text-anchor="middle" dominant-baseline="central">"peak load", "thousands of users" → yes</text></g>
+
+<line x1="270" y1="738" x2="170" y2="764" class="arr" marker-end="url(#arrow)"/>
+<line x1="410" y1="738" x2="510" y2="764" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="196" y="750" text-anchor="middle" dominant-baseline="central" style="fill:#1D9E75">Yes</text>
+<text class="ts" x="484" y="750" text-anchor="middle" dominant-baseline="central" style="fill:#888780">No</text>
+
+<g class="c-purple"><rect x="60" y="764" width="220" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="170" y="781" text-anchor="middle" dominant-baseline="central">Autoscale rules</text>
+<text class="ts" x="170" y="798" text-anchor="middle" dominant-baseline="central">min · default · max · scale out AND in</text></g>
+<g class="c-gray"><rect x="420" y="764" width="180" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="510" y="781" text-anchor="middle" dominant-baseline="central">Fixed instances</text>
+<text class="ts" x="510" y="798" text-anchor="middle" dominant-baseline="central">+ load balancer</text></g>
+
+<line x1="170" y1="812" x2="170" y2="830" stroke="#888780" stroke-width="1.5"/>
+<line x1="510" y1="812" x2="510" y2="830" stroke="#888780" stroke-width="1.5"/>
+<line x1="170" y1="830" x2="510" y2="830" stroke="#888780" stroke-width="1.5"/>
+<line x1="340" y1="830" x2="340" y2="848" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-green"><rect x="100" y="848" width="480" height="52" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="866" text-anchor="middle" dominant-baseline="central">Which load balancer?</text>
+<text class="ts" x="340" y="885" text-anchor="middle" dominant-baseline="central">HTTP → App Gateway · TCP → Load Balancer · global → Front Door</text></g>
+<line x1="340" y1="900" x2="340" y2="918" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-green"><rect x="100" y="918" width="480" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="935" text-anchor="middle" dominant-baseline="central">Spread across ≥ 2 Availability Zones</text>
+<text class="ts" x="340" y="953" text-anchor="middle" dominant-baseline="central">zone-redundant gateway · region pair for disaster recovery</text></g>
+<line x1="340" y1="966" x2="340" y2="984" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-gray"><rect x="100" y="984" width="480" height="38" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="999" text-anchor="middle" dominant-baseline="central">Justify cost</text>
+<text class="ts" x="340" y="1013" text-anchor="middle" dominant-baseline="central">Interruptible? No → Reserved, Yes → Spot · unpredictable → pay-as-you-go + autoscale</text></g>
+</svg>

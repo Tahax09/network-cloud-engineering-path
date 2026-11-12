@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Packet Dissector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ds-allow-hardcode:start - self-contained single-file study page: colors live in :root tokens; px are local layout values with no shared theme */
+:root{
+  --bg:#edf1f6; --surface:#ffffff; --sunken:#f5f7fa; --ink:#14213a; --muted:#56647c; --line:#cdd6e2;
+  --accent:#1f5fd6; --accent-soft:#dfe8fb; --ok:#0f8b7a; --warn:#a86a00; --bad:#c9302a; --band:#e2efe7; --band2:#ece6f7; --blue:#1f5fd6; --green:#0f8b7a; --vio:#7a4fd0;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1420;--surface:#152033;--sunken:#111a2a;--ink:#e3e9f3;--muted:#a3b0c4;--line:#2a3a54;--accent:#8aafff;--accent-soft:#1d2d4d;--ok:#3cc4ae;--warn:#f0a93a;--bad:#ff7a6c;--band:#14271f;--band2:#221b33;--blue:#8aafff;--green:#3cc4ae;--vio:#b799f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);padding-inline:16px;padding-block:28px 48px}
+[hidden]{display:none!important}
+.wrap{max-width:1220px;margin:0 auto;display:grid;gap:18px}
+header{display:grid;gap:6px;max-width:840px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,40px)/1.05 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.2 var(--f-display);margin:0}
+h3{font:600 14.5px/1.3 var(--f-body);margin:0}
+p{margin:0}.lead{color:var(--muted);max-width:74ch}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs button{font:600 14px var(--f-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:350px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.k{font:500 12px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.q{display:grid;gap:5px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.btn{font:600 13px var(--f-body);padding:5px 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover,.seg button:hover{border-color:var(--accent)}
+.help{font-size:13px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text]{font:14px var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{accent-color:var(--accent)}
+.mapbox{overflow-x:auto}.mapbox svg{display:block;width:100%;height:auto;min-width:660px}
+.bandr{fill:var(--band)}.bandr2{fill:var(--band2)}
+.bl{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}.node.hl{stroke:var(--accent);stroke-width:2.2}.node.ok{stroke:var(--ok);stroke-width:2.2}.node.bad{stroke:var(--bad);stroke-width:2.4}.node.dim{opacity:.35}
+.node.blue{stroke:var(--blue);stroke-width:2.2}.node.green{stroke:var(--green);stroke-width:2.2}
+.nl{font:600 13px var(--f-body);fill:var(--ink)}.ns{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6}.edge.ok{stroke:var(--ok);stroke-width:2.4}.edge.bad{stroke:var(--bad);stroke-width:2.4;stroke-dasharray:6 4}.edge.hl{stroke:var(--accent);stroke-width:2.4}.edge.enc{stroke:var(--ok);stroke-width:4}
+.pk{fill:var(--accent)}.pk.ok{fill:var(--ok)}.pk.bad{fill:var(--bad)}.pk.blue{fill:var(--blue)}.pk.green{fill:var(--green)}
+.verdict{border-left:4px solid var(--accent);padding:10px 14px;background:var(--sunken);border-radius:0 8px 8px 0;font-size:14px}
+.verdict.ok{border-left-color:var(--ok)}.verdict.bad{border-left-color:var(--bad)}.verdict.warn{border-left-color:var(--warn)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;align-items:start;font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.tag{font:600 11px var(--f-mono);border-radius:999px;padding:1px 8px;border:1px solid currentColor;text-align:center}
+.tag.ok{color:var(--ok)}.tag.bad{color:var(--bad)}.tag.warn{color:var(--warn)}.tag.info{color:var(--accent)}
+.scroll{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font:12.5px/1.35 var(--f-mono)}
+.t th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);background:var(--sunken);white-space:nowrap}
+.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.t td.why{font-family:var(--f-body);color:var(--muted);min-width:180px}
+.t tr.hit td{background:var(--accent-soft);font-weight:500}.t tr.skip td:not(.why){opacity:.55}
+pre.cmd{margin:0;background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:12px/1.5 var(--f-mono);overflow-x:auto;white-space:pre}
+.bars{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:140px minmax(0,1fr) 80px;gap:8px;align-items:center;font-size:13px}
+.bar{height:14px;border-radius:5px;background:var(--sunken);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;transition:width .2s;background:var(--accent)}
+.bar i.blue{background:var(--blue)}.bar i.green{background:var(--green)}.bar i.ok{background:var(--ok)}.bar i.warn{background:var(--warn)}.bar i.bad{background:var(--bad)}
+.num{font:500 12.5px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;background:var(--surface)}
+.fact b{display:block;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr) 120px;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px}
+.steps li .n{font:600 12px var(--f-mono);color:var(--accent)}
+.steps li.cur{border-color:var(--accent);background:var(--accent-soft)}
+.steps li .who{font:600 11px var(--f-mono);text-align:right;color:var(--muted)}
+.steps li .who.you{color:var(--accent)}
+@media (max-width:700px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps li .who{grid-column:2;text-align:left}}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px;display:grid;gap:6px;background:var(--surface)}
+.cell.on{border-color:var(--ok)}.cell.down{border-color:var(--warn);background:var(--sunken)}
+/* ds-allow-hardcode:end */
+</style>
+
+<style>
+/* ds-allow-hardcode:start - layout for the hex grid, colors from tokens */
+.hex{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px;overflow-x:auto}
+.hb{font:500 12.5px var(--f-mono);padding:4px 0;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-width:26px}
+.hb.eth{border-color:var(--accent)}.hb.ip{border-color:var(--ok)}.hb.udp{border-color:var(--vio)}.hb.dns{border-color:var(--warn)}
+.hb.on{background:var(--accent-soft);font-weight:700}
+/* ds-allow-hardcode:end */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">WS11 to WS13 · Wireshark 101 · Anatomy of a Packet</div>
+    <h1>Packet Dissector</h1>
+    <p class="lead">Lab 1 frame 1, a DNS query for www.google.com, taken apart byte by byte. See which bytes are the Ethernet, IP, UDP and DNS fields, how each header points to the next dissector, and what a TTL value says about distance.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Dissect frame 1</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Encapsulation</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">TTL hop estimator</button>
+  </div>
+
+  <section id="p1" role="tabpanel" class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Lab 1 frame 1 · 74 bytes</h2>
+        <p class="help">Click a byte, or a field in the tree. The same bytes light up in both places, like Wireshark's details and bytes panes.</p>
+        <div class="seg" id="layer"><button type="button" data-v="eth" aria-pressed="true">Ethernet II</button><button type="button" data-v="ip" aria-pressed="false">IPv4</button><button type="button" data-v="udp" aria-pressed="false">UDP</button><button type="button" data-v="dns" aria-pressed="false">DNS</button></div>
+        <div class="stack" id="tree"></div>
+      </div>
+      <div class="panel">
+        <span class="k">Bytes (hex)</span>
+        <div class="hex" id="hex"></div>
+        <div class="verdict" id="exp">Pick a field.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p2" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <h2>Box in a box</h2>
+        <p class="help">Each header ends with a "what comes next" value. Step through how Wireshark picks each dissector.</p>
+        <div class="seg"><button type="button" class="btn" id="e-prev">Previous</button><button type="button" class="btn primary" id="e-next">Next layer</button></div>
+        <div class="q"><span class="k">EtherType in this frame</span><div class="seg" id="e-type"><button type="button" data-v="0800" aria-pressed="true">0x0800</button><button type="button" data-v="0806" aria-pressed="false">0x0806</button><button type="button" data-v="86dd" aria-pressed="false">0x86DD</button></div></div>
+        <div class="q"><span class="k">IP protocol</span><div class="seg" id="e-proto"><button type="button" data-v="17" aria-pressed="true">17</button><button type="button" data-v="6" aria-pressed="false">6</button><button type="button" data-v="1" aria-pressed="false">1</button></div></div>
+        <div class="q"><span class="k">Payload</span><div class="seg" id="e-tls"><button type="button" data-v="clear" aria-pressed="true">Clear text</button><button type="button" data-v="tls" aria-pressed="false">TLS encrypted</button></div></div>
+      </div>
+      <div class="panel">
+        <div class="mapbox"><svg id="e-map" viewBox="0 0 760 300" aria-label="Encapsulation layers"></svg></div>
+        <div class="verdict" id="e-verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3" role="tabpanel" hidden class="stack">
+    <div class="grid">
+      <div class="panel">
+        <label class="k" for="ttl">TTL seen at capture: <span id="ttl-v">115</span></label>
+        <input type="range" id="ttl" min="1" max="255" value="115">
+        <span class="k">Lab 1 examples</span>
+        <div class="seg" id="ttl-ex"><button type="button" data-v="255" aria-pressed="false">Client DNS (255)</button><button type="button" data-v="64" aria-pressed="false">Client TCP (64)</button><button type="button" data-v="115" aria-pressed="true">Google (115)</button><button type="button" data-v="62" aria-pressed="false">HA VPN lab ping (62)</button></div>
+      </div>
+      <div class="panel">
+        <div class="facts" id="ttl-facts"></div>
+        <div class="verdict" id="ttl-verdict"></div>
+        <p class="note">Common starting values are 255, 128 and 64. Estimate the start as the smallest of these at or above the TTL you see. It's a clue, not proof: a device can choose any start value.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function el(t,a,p,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tabs(n){for(let i=1;i<=n;i++){$('t'+i).addEventListener('click',()=>{for(let j=1;j<=n;j++){$('t'+j).setAttribute('aria-selected',i===j);$('p'+j).hidden=i!==j;}});}}
+const val=id=>$(id).querySelector('[aria-pressed="true"]').dataset.v;
+function seg(id,fn){$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn();});}
+function box(svg,x,y,w,h,l,s,cls){el('rect',{x,y,width:w,height:h,rx:8,class:'node '+(cls||'')},svg);el('text',{x:x+10,y:y+21,class:'nl'},svg,l);if(s)el('text',{x:x+10,y:y+38,class:'ns'},svg,s);}
+function animate(path,cls,dur,stop,svg,holder){if(reduce)return;const c=el('circle',{r:5.5,class:'pk '+(cls||'')},svg);const L=path.getTotalLength();let t0=null;function f(ts){if(!c.isConnected)return;if(t0==null)t0=ts;const u=((ts-t0)/dur)%1;const q=path.getPointAtLength(L*Math.min(1,u/.85)*(stop==null?1:stop));c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+
+
+tabs(3);
+const HEX='94103e9d0273a45e60e7ce6d08004500003cfc9f0000ff112953c0a80a6cc0a80a01f6af003500288e1c5637010000010000000000000377777706676f6f676c6503636f6d0000010001';
+const B=HEX.match(/../g);
+const F=[
+ ['eth','Destination MAC',0,6,'94:10:3e:9d:02:73 (BelkinIntern_9d:02:73)','Who the frame is for: the home router. The first 3 bytes (94:10:3e) are the vendor OUI, Belkin. IG bit 0 means unicast.'],
+ ['eth','Source MAC',6,12,'a4:5e:60:e7:ce:6d (Apple_e7:ce:6d)','The station that sent this frame: the Mac client. OUI a4:5e:60 is Apple.'],
+ ['eth','Type',12,14,'0x0800 (IPv4)','EtherType. 0x0800 tells Wireshark to decode the next bytes with the IPv4 dissector. 0x0806 would be ARP, 0x86DD IPv6.'],
+ ['ip','Version / header length',14,15,'0x45: version 4, 20 bytes','High nibble 4 = IPv4. Low nibble 5 x 4 bytes = 20-byte header, so no options.'],
+ ['ip','DSCP / ECN',15,16,'0x00: CS0, not ECN-capable','No priority marking. Voice traffic would carry something like EF (46), and only helps if the network honors it.'],
+ ['ip','Total length',16,18,'60','IP header + UDP + DNS = 60 bytes. The Ethernet header is not counted: 14 + 60 = 74-byte frame.'],
+ ['ip','Identification',18,20,'0xfc9f (64671)','Per-packet ID. This client\'s IDs look random from packet to packet; the router in the same capture always sends 0. Patterns like this help fingerprint the OS.'],
+ ['ip','Flags / fragment offset',20,22,'0x0000: DF 0, MF 0, offset 0','Not a fragment. DF 0 means a router could fragment it if needed.'],
+ ['ip','Time to live',22,23,'255','A starting value: the packet hasn\'t crossed a router yet, so the sender is on this segment.'],
+ ['ip','Protocol',23,24,'17 (0x11) = UDP','What comes next. 6 would be TCP, 1 ICMP. Wireshark loads the UDP dissector.'],
+ ['ip','Header checksum',24,26,'0x2953 (validation disabled)','Covers the IP header only. Wireshark skips validation by default because of checksum offload on local captures.'],
+ ['ip','Source IP',26,30,'192.168.10.108','The client. RFC 1918 private space.'],
+ ['ip','Destination IP',30,34,'192.168.10.1','The router, which is also the DNS resolver here.'],
+ ['udp','Source port',34,36,'63151','Ephemeral client port.'],
+ ['udp','Destination port',36,38,'53','DNS. Wireshark uses the port to pick the DNS dissector.'],
+ ['udp','Length',38,40,'40','UDP header (8) + DNS message (32).'],
+ ['udp','Checksum',40,42,'0x8e1c','UDP checksum, also not validated by default.'],
+ ['dns','Transaction ID',42,44,'0x5637','Matches the query to its response.'],
+ ['dns','Flags',44,46,'0x0100: standard query, recursion desired','A normal recursive lookup.'],
+ ['dns','Counts',46,54,'1 question, 0 answers, 0 authority, 0 additional','Queries carry one question.'],
+ ['dns','Query name',54,70,'www.google.com','Length-prefixed labels: 03 www 06 google 03 com 00.'],
+ ['dns','Type / class',70,74,'A (1) / IN (1)','Asking for an IPv4 address.']
+];
+let sel=null;
+function draw(){
+  const lay=val('layer');
+  $('tree').innerHTML=F.map((f,i)=>f[0]===lay?`<button type="button" class="btn" data-i="${i}" aria-pressed="${sel===i}">${f[1]}: ${f[4]}</button>`:'').join('');
+  $('tree').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>pick(+b.dataset.i)));
+  $('hex').innerHTML=B.map((b,i)=>{const fi=F.findIndex(f=>i>=f[2]&&i<f[3]);const on=sel!=null&&i>=F[sel][2]&&i<F[sel][3];return `<button type="button" class="hb ${F[fi][0]} ${on?'on':''}" data-b="${i}" aria-label="byte ${i}">${b}</button>`;}).join('');
+  $('hex').querySelectorAll('.hb').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.b;pick(F.findIndex(f=>i>=f[2]&&i<f[3]));}));
+}
+function pick(i){sel=i;const f=F[i];$('layer').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===f[0]));
+  $('exp').className='verdict ok';$('exp').textContent=`${f[1]} (bytes ${f[2]} to ${f[3]-1}): ${f[4]}. ${f[5]}`;draw();}
+seg('layer',()=>{sel=null;draw();});draw();
+/* encapsulation */
+let step=0;
+function enc(){const t=val('e-type'),p=val('e-proto'),tls=val('e-tls')==='tls';
+  const l3=t==='0800'?'IPv4':t==='0806'?'ARP':'IPv6';
+  const l4=t==='0806'?null:p==='17'?'UDP':p==='6'?'TCP':'ICMP';
+  const app=t==='0806'?null:l4==='UDP'?'DNS (port 53)':l4==='TCP'?(tls?'TLS (port 443)':'HTTP (port 80)'):null;
+  const layers=[['Ethernet II','14-byte header · EtherType 0x'+t.toUpperCase()],[l3,t==='0806'?'who-has / is-at: no layer 4':t==='86dd'?'40-byte header · next header':'20-byte header · protocol '+p]];
+  if(l4)layers.push([l4,l4==='UDP'?'8-byte header':l4==='TCP'?'20+ byte header':'type/code']);
+  if(app)layers.push([app,tls?'payload encrypted':'payload readable']);
+  step=Math.min(step,layers.length-1);
+  const svg=$('e-map');svg.innerHTML='';
+  layers.forEach((l,i)=>{const x=20+i*45,y=20+i*45,w=720-i*90,h=260-i*90;
+    el('rect',{x,y,width:w,height:h,rx:12,class:'node '+(i<=step?'hl':'dim')},svg);
+    el('text',{x:x+12,y:y+22,class:'nl'},svg,l[0]);el('text',{x:x+12,y:y+38,class:'ns'},svg,l[1]);});
+  if(tls&&app&&step===layers.length-1)el('text',{x:380,y:240,class:'nl','text-anchor':'middle'},svg,'LOCKED: content unreadable, headers above still readable');
+  const why=[`Wireshark starts with the Ethernet II dissector. Its EtherType 0x${t.toUpperCase()} says ${l3} comes next.`,
+    t==='0806'?'ARP has no layer 4: it maps IPs to MACs on the local segment. Dissection stops here.':`The ${l3} header's ${t==='86dd'?'next header':'protocol'} field (${p}) says ${l4} comes next.`,
+    l4==='ICMP'?'ICMP carries its own type/code (echo request = 8, echo reply = 0). No ports.':`${l4} ports point to ${app}: Wireshark guesses the application from the port.`,
+    tls?'The payload is TLS: you can\'t read it, but every header above it is still there for troubleshooting.':'The payload is readable, so Wireshark can decode the application fields.'];
+  $('e-verdict').className='verdict ok';$('e-verdict').textContent=why[step];}
+$('e-next').addEventListener('click',()=>{step++;enc();});$('e-prev').addEventListener('click',()=>{step=Math.max(0,step-1);enc();});
+['e-type','e-proto','e-tls'].forEach(id=>seg(id,()=>{step=0;enc();}));enc();
+/* TTL */
+function ttl(){const v=+$('ttl').value;$('ttl-v').textContent=v;const start=v<=64?64:v<=128?128:255;const hops=start-v;
+  $('ttl-facts').innerHTML=[['Likely start',start],['Estimated hops',hops],['Likely sender',start===64?'Linux, macOS TCP, many routers':start===128?'Windows (or a server that uses 128)':'Network gear, some OS services (e.g. this Mac\'s DNS packets)']].map(f=>`<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join('');
+  const v2=$('ttl-verdict');v2.className='verdict '+(hops>30?'warn':'ok');
+  v2.textContent=hops===0?'TTL equals a start value: the sender is on your local segment (no router crossed).':`About ${hops} router hop${hops>1?'s':''} between the sender and your capture point.`+(hops>30?' That\'s unusually far: maybe the start value isn\'t one of the common three.':'');}
+$('ttl').addEventListener('input',()=>{$('ttl-ex').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));ttl();});
+seg('ttl-ex',()=>{$('ttl').value=val('ttl-ex');ttl();});ttl();
+
+})();
+</script>
+</body>
+</html>
+

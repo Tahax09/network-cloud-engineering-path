@@ -51,6 +51,7 @@ An Obsidian knowledge base for self-study in **networking, cloud, and infrastruc
     │   ├── wireshark/            # WQ quizzes
     │   └── interview/            # IQ interview prep
     ├── scenarios/gcp/            # GSxx scenario walkthroughs + topology guide
+    ├── scenarios/azure/          # AZSxx Azure scenario walkthroughs
     └── labs/                     # Hands-on lab notes; labs/practice/ = GPLxx practice labs
 ```
 
@@ -218,6 +219,9 @@ Lab-heavy protocol analysis course, running in parallel with Google Cloud. Cours
 | [WS08](wiki/lessons/wireshark/WS08%20-%20Creating%20Profiles.md) | Creating Profiles | Pre-Lab-SlowNetwork.pcapng | Profile = settings bundle; Copy-from coloring rules; Frame metadata fields |
 | [WS09](wiki/lessons/wireshark/WS09%20-%20Saving%20Filter%20Buttons.md) | Saving Filter Buttons | Pre-Lab-SlowNetwork.pcapng | Bad TCP button, grouped buttons, field references, signature buttons, 4.x syntax fixes |
 | [WS10](wiki/lessons/wireshark/WS10%20-%20The%20Statistics%20View.md) | The Statistics View | Pre-Lab-SlowNetwork.pcapng | Conversations & Endpoints per layer, asymmetric next-hop MACs, tshark -z |
+| [WS11](wiki/lessons/wireshark/WS11%20-%20The%20Anatomy%20of%20a%20Packet.md) | The Anatomy of a Packet | Lab 1-IntrotoWireshark.pcapng | Encapsulation, dissector chain, encrypted payload vs readable headers |
+| [WS12](wiki/lessons/wireshark/WS12%20-%20The%20Ethernet%20Frame.md) | The Ethernet Frame | Lab 1-IntrotoWireshark.pcapng | DMAC/SMAC/EtherType (0x0800, 0x0806, 0x86DD), FCS not captured, MTU 1500 |
+| [WS13](wiki/lessons/wireshark/WS13%20-%20The%20IP%20Header.md) | The IP Header | Lab 1-IntrotoWireshark.pcapng | IPv4 fields, TTL 255/128/64 hop estimate, IP ID, DF/MF, protocol 6/17, checksum validation off |
 
 Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 
@@ -238,6 +242,7 @@ Step-by-step explanations of every course scenario (context → architecture dia
 | [GS05](wiki/scenarios/gcp/GS05%20-%20Load%20Balancing%20Scenarios.md) | Load balancing scenarios: LB picker, canary + header routing, hybrid bursting, geo-licensed CDN, NVA next hop, cost cuts |
 | [GS06](wiki/scenarios/gcp/GS06%20-%20Hybrid%20and%20Multicloud%20Scenarios.md) | Hybrid scenarios: connection picker, 99.99% Interconnect, active/passive HA VPN, Azure CCI + NCC, L3 partner, VPN break-fix |
 | [GS07](wiki/scenarios/gcp/GS07%20-%20Capstone%20-%20Cymbal%20Global%20Landing%20Zone.md) | Capstone design brief + reference landing zone, decision log mapped to all six courses, IP plan, failure drills |
+| [AZS01](wiki/scenarios/azure/AZS01%20-%20Contoso%20Clinic%20Highly%20Available%20Web%20App.md) | Azure scenario: Contoso Clinic highly available web app — requirements → services, architecture + decision-tree diagrams, portal and CLI steps | AZ-900 |
 | [GPL03](wiki/labs/practice/GPL03%20-%20Network%20Security%20Practice%20Labs.md) | Practice labs: Armor throttle preview→enforce, IAM deny, secure-tag firewall policy, DIY mirroring + Wireshark, SWP bypass guard, VPC-SC dry run |
 | [GPL04](wiki/labs/practice/GPL04%20-%20Load%20Balancing%20Practice%20Labs.md) | Practice labs: canary + header URL map, hybrid NEG over HA VPN, CDN cache-mode matrix, NAT gateways as next-hop ILB, LB-utilization autoscaling |
 | [GPL05](wiki/labs/practice/GPL05%20-%20Hybrid%20and%20Multicloud%20Practice%20Labs.md) | Practice labs: MED active/passive, regional vs global advertisements, NCC hybrid spokes, k3s home lab over HA VPN (strongSwan + FRR), break-fix drill |
@@ -310,6 +315,10 @@ Graded quizzes are saved with an answer key and reasoning. Missed questions are 
 | [gcp-private-access](wiki/concepts/gcp-private-access.md) | PGA, PSC, PSA, Cloud NAT + AWS mapping |
 | [gcp-product-map](wiki/concepts/gcp-product-map.md) | Google Cloud products, their use, and AWS/Azure equivalents |
 | [gcp-command-anatomy](wiki/concepts/gcp-command-anatomy.md) | gcloud command anatomy: each part and flag explained, what it does and when to use it |
+| [azure-cloud-concepts](wiki/concepts/azure-cloud-concepts.md) | AZ-900 Domain 1: cloud benefits, CapEx/OpEx, deployment models, shared responsibility |
+| [azure-product-map](wiki/concepts/azure-product-map.md) | 12 Azure service categories with AWS/GCP equivalents |
+| [azure-service-reference](wiki/concepts/azure-service-reference.md) | Azure services: what, when, pros and cons |
+| [azure-scenario-framework](wiki/concepts/azure-scenario-framework.md) | Method, decision tree and pitfalls for Azure scenarios |
 | [wireshark](wiki/concepts/wireshark.md) | Capture workflow, time formats, RTT vs server time, filters, tshark |
 
 ---

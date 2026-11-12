@@ -109,6 +109,9 @@
 | [WS08](lessons/wireshark/WS08%20-%20Creating%20Profiles.md) | Creating Profiles | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
 | [WS09](lessons/wireshark/WS09%20-%20Saving%20Filter%20Buttons.md) | Saving Filter Buttons | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
 | [WS10](lessons/wireshark/WS10%20-%20The%20Statistics%20View.md) | The Statistics View | Pre-Lab-SlowNetwork.pcapng | 2026-10-10 | Complete |
+| [WS11](lessons/wireshark/WS11%20-%20The%20Anatomy%20of%20a%20Packet.md) | The Anatomy of a Packet | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
+| [WS12](lessons/wireshark/WS12%20-%20The%20Ethernet%20Frame.md) | The Ethernet Frame | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
+| [WS13](lessons/wireshark/WS13%20-%20The%20IP%20Header.md) | The IP Header | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
 
 ## Concepts
 
@@ -129,6 +132,10 @@
 | [gcp-private-access](concepts/gcp-private-access.md) | PGA, PSC, PSA, Serverless VPC Access, Cloud NAT comparison + AWS mapping | GCP07–GCP13 |
 | [gcp-product-map](concepts/gcp-product-map.md) | Every major Google Cloud product: what it does + AWS/Azure equivalents; GCP vs AWS conceptual differences | Reference |
 | [gcp-command-anatomy](concepts/gcp-command-anatomy.md) | Every gcloud/CLI command from GCP lessons: parts, flags, what it does, when to use | Reference |
+| [azure-cloud-concepts](concepts/azure-cloud-concepts.md) | AZ-900 Domain 1: 8 cloud benefits, CapEx vs OpEx, deployment models, shared responsibility matrix, IaaS/PaaS/SaaS/serverless | AZ-900 |
+| [azure-product-map](concepts/azure-product-map.md) | 12 Azure service categories with AWS/GCP equivalents, ways to manage Azure, VNet/zone scope differences | Reference |
+| [azure-service-reference](concepts/azure-service-reference.md) | Per-service table: what it does, when to use, pros and cons (compute, networking, storage, DB, identity, governance) | Reference |
+| [azure-scenario-framework](concepts/azure-scenario-framework.md) | 9-step method, decision tree, service-picking rules, Azure vs AWS differences, best practices, common mistakes | AZS01 |
 | [wireshark](concepts/wireshark.md) | Capture points (endpoint/SPAN/TAP/cloud), ring buffers, time formats, RTT vs server time, filters, tshark | WS00–WS10 |
 
 ## Certifications
@@ -138,6 +145,7 @@
 | [network-plus](certs/network-plus.md) | CompTIA Network+ N10-009 | In Progress |
 | [aws-ccp](certs/aws-ccp.md) | AWS Cloud Practitioner | Not Started |
 | [aws-saa](certs/aws-saa.md) | AWS Solutions Architect – Associate | Not Started |
+| [az-900](certs/az-900.md) | Microsoft Azure Fundamentals AZ-900 | In Progress |
 | [gcp-networking](certs/gcp-networking.md) | Google Cloud Networking Specialization | ✅ Complete (Courses 2–6 in wiki) |
 | [wireshark-101](certs/wireshark-101.md) | Wireshark 101: Packet Analysis Essentials (course) | In Progress |
 | [course-catalog](certs/course-catalog.md) | All Coursera programs (Cisco CCNA/CyberOps/Automation/Wireless/SD-WAN, AWS, Azure AZ-900/104, KCNA/CKA/CKS, Docker & K8s, Google AI) with exam mapping | Catalog |
@@ -201,6 +209,12 @@
 | [GPL05](labs/practice/GPL05%20-%20Hybrid%20and%20Multicloud%20Practice%20Labs.md) | Practice labs: MED active/passive, regional vs global advertisements, NCC hybrid spokes, k3s home lab over HA VPN (strongSwan + FRR), break-fix drill |
 | [GPL06](labs/practice/GPL06%20-%20Capstone%20Practice%20Lab.md) | Capstone build in Terraform: 10 verifiable milestones from IP plan to rebuild |
 
+## Scenario Walkthroughs — Azure
+
+| ID | Page | Covers |
+|----|------|--------|
+| [AZS01](scenarios/azure/AZS01%20-%20Contoso%20Clinic%20Highly%20Available%20Web%20App.md) | Contoso Clinic: highly available web app on Azure — requirements → services, architecture diagram, decision tree, portal + CLI steps, verify | AZ-900 Domains 2–3 |
+
 ## Course Resources
 
 | File | Course | Used in |
@@ -243,3 +257,5 @@
 | GCP31 | [Firewall Rule Evaluator](visualizations/gcp/GCP31%20-%20Firewall%20Rule%20Evaluator.html) | Packet builder through priority-sorted rules (deny wins ties, implied rules, stateful return), SA vs tag targets, NGFW policy hierarchy with goto_next, default VPC hardening audit |
 | GCP29–30 | [IAM Access Explorer](visualizations/gcp/GCP29-30%20-%20IAM%20Access%20Explorer.html) | Hierarchy inheritance + deny-first evaluation, networking role matrix, custom role builder, Karen least-privilege scenario |
 | GCP28 | [Cloud Armor at the Edge](visualizations/gcp/GCP28%20-%20Cloud%20Armor%20at%20the%20Edge.html) | POP/GFE routing to closest backend with capacity, stress overflow, blocklist vs allowlist, propagation, policy logs |
+| AZS01 | [Azure Architecture Diagram](visualizations/azure/azure-contoso-architecture.svg) | Contoso Clinic: Application Gateway → VM Scale Set across zones → Private Endpoint → Azure SQL, with Key Vault and managed identity |
+| AZS01 | [Azure Decision Tree](visualizations/azure/azure-decision-tree.svg) | Design decision tree: resource group → compute → database → private access → subnets → NSG → credentials → autoscale → load balancer → zones → cost |
