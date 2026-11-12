@@ -222,6 +222,9 @@ Lab-heavy protocol analysis course, running in parallel with Google Cloud. Cours
 | [WS11](wiki/lessons/wireshark/WS11%20-%20The%20Anatomy%20of%20a%20Packet.md) | The Anatomy of a Packet | Lab 1-IntrotoWireshark.pcapng | Encapsulation, dissector chain, encrypted payload vs readable headers |
 | [WS12](wiki/lessons/wireshark/WS12%20-%20The%20Ethernet%20Frame.md) | The Ethernet Frame | Lab 1-IntrotoWireshark.pcapng | DMAC/SMAC/EtherType (0x0800, 0x0806, 0x86DD), FCS not captured, MTU 1500 |
 | [WS13](wiki/lessons/wireshark/WS13%20-%20The%20IP%20Header.md) | The IP Header | Lab 1-IntrotoWireshark.pcapng | IPv4 fields, TTL 255/128/64 hop estimate, IP ID, DF/MF, protocol 6/17, checksum validation off |
+| [WS14](wiki/lessons/wireshark/WS14%20-%20The%20TCP%20Header.md) | - The TCP Header | Lab 1-IntrotoWireshark.pcapng | Ports, seq/ack, header length 20–60, flags, window, SYN options, bracketed Wireshark fields |
+| [WS15](wiki/lessons/wireshark/WS15%20-%20UDP-based%20Applications.md) | - UDP-based Applications | Lab 1-IntrotoWireshark.pcapng | 8-byte header, connectionless, DNS retries, QUIC |
+| [WS16](wiki/lessons/wireshark/WS16%20-%20Lab%201%20-%20Intro%20to%20Wireshark.md) | - Lab 1: Intro to Wireshark | Lab 1-IntrotoWireshark.pcapng | Capture file comments, 7 IP vs 9 TCP conversations, frame.comment, tcp.analysis.flags |
 
 Progress: [wiki/certs/wireshark-101.md](wiki/certs/wireshark-101.md)
 

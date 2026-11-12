@@ -45,12 +45,16 @@ Lab-heavy course on protocol analysis for troubleshooting and security investiga
 | [[WS09 - Saving Filter Buttons]] | Saving Filter Buttons (Bad TCP, grouping, signatures) | ✅ Complete |
 | [[WS10 - The Statistics View]] | The Statistics View (Conversations, Endpoints) — end of module | ✅ Complete |
 
-### Module 3 - Anatomy of a Packet (name to confirm)
+### Module 3 - How to Interpret Network Traffic
 | ID | Title | Status |
 |----|-------|--------|
 | [[WS11 - The Anatomy of a Packet]] | Encapsulation, dissector chain, encrypted payload vs readable headers | ✅ Complete |
 | [[WS12 - The Ethernet Frame]] | DMAC/SMAC/EtherType (0x0800, 0x0806, 0x86DD), FCS not captured, MTU 1500 | ✅ Complete |
 | [[WS13 - The IP Header]] | IPv4 fields, TTL 255/128/64 hop estimate, IP ID, DF/MF, protocol 6/17, checksum validation off | ✅ Complete |
+| [[WS14 - The TCP Header]] | Ports, seq/ack, header length 20–60, flags, window, SYN options, bracketed Wireshark fields | ✅ Complete |
+| [[WS15 - UDP-based Applications]] | 8-byte header, connectionless, DNS retries, QUIC | ✅ Complete |
+| [[WS16 - Lab 1 - Intro to Wireshark]] | Capture file comments, 7 IP vs 9 TCP conversations, frame.comment, tcp.analysis.flags | ✅ Complete |
+| [[WQ02_How_to_Interpret_Network_Traffic]] | Module quiz | ⏳ Pending |
 
 ## Quizzes
 | ID | Title | Module | Status |

@@ -114,6 +114,9 @@
 | WS11 | The Anatomy of a Packet | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
 | WS12 | The Ethernet Frame | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
 | WS13 | The IP Header | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
+| WS14 | - The TCP Header | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
+| WS15 | - UDP-based Applications | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
+| WS16 | - Lab 1: Intro to Wireshark | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete | Pending |
 
 ## AWS Cloud Practitioner
 

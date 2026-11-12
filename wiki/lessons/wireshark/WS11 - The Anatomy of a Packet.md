@@ -4,7 +4,7 @@ aliases: [WS11]
 title: The Anatomy of a Packet
 course: Wireshark 101 - Packet Analysis Essentials
 cert_track: wireshark
-module: Module 3 - Anatomy of a Packet (module name to confirm)
+module: Module 3 - How to Interpret Network Traffic
 date: 2026-11-12
 status: Complete
 quiz_attempted: No

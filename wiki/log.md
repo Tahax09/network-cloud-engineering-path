@@ -2,6 +2,9 @@
 
 <!-- Format: ## [YYYY-MM-DD] action | description -->
 
+## [2026-11-12] ingest | WS14–WS16, WQ02 — TCP header, UDP, Lab 1
+Module 3 name confirmed (How to Interpret Network Traffic). Lab 1 answers verified with tshark/capinfos. WQ02 saved without key (not graded).
+
 ## [2026-11-12] ingest | WS11–WS13 — Anatomy of a Packet, Ethernet Frame, IP Header
 From pasted transcripts. Lab 1 frame 1 fields verified with tshark. Corrected lecture slips: IP total length excludes Ethernet; IP checksum is L3 header only; IPv4 RFC 791 (1981). Viz WS11-13 Packet Dissector (static gates pass).
 

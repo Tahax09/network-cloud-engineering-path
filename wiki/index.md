@@ -112,6 +112,9 @@
 | [WS11](lessons/wireshark/WS11%20-%20The%20Anatomy%20of%20a%20Packet.md) | The Anatomy of a Packet | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
 | [WS12](lessons/wireshark/WS12%20-%20The%20Ethernet%20Frame.md) | The Ethernet Frame | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
 | [WS13](lessons/wireshark/WS13%20-%20The%20IP%20Header.md) | The IP Header | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
+| [WS14](lessons/wireshark/WS14%20-%20The%20TCP%20Header.md) | - The TCP Header | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
+| [WS15](lessons/wireshark/WS15%20-%20UDP-based%20Applications.md) | - UDP-based Applications | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
+| [WS16](lessons/wireshark/WS16%20-%20Lab%201%20-%20Intro%20to%20Wireshark.md) | - Lab 1: Intro to Wireshark | Lab 1-IntrotoWireshark.pcapng | 2026-11-12 | Complete |
 
 ## Concepts
 
@@ -184,6 +187,7 @@
 | ID | Title | Covers | Date | Status |
 |----|-------|--------|------|--------|
 | [WQ01](quizzes/wireshark/WQ01_Introduction_to_Wireshark.md) | Introduction to Wireshark Quiz (Coursera) | WS00–WS10 | 2026-10-10 | Reviewed |
+| [WQ02](quizzes/wireshark/WQ02_How_to_Interpret_Network_Traffic.md) | How to Interpret Network Traffic Quiz (Coursera) | WS11–WS16 | 2026-11-12 | Pending |
 
 ### Interview Prep — `quizzes/interview/`
 
